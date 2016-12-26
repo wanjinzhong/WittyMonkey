@@ -1,0 +1,9 @@
+1. 基础平台：`J2EE`
+2. 开发框架：
+ * `Spring`
+ * `SpringMVC`
+ * `Hibernate`
+3. 代码托管平台：`git`
+4. 依赖管理工具：`Maven`
+5. 开发工具：`Eclipse`
+6. 云服务器：`腾讯云`
