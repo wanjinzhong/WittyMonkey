@@ -1,0 +1,5 @@
+/WittyMonkey/.metadata/*
+/WittyMonkey/RemoteSystemsTempFiles/*
+
+.classpath
+.project
