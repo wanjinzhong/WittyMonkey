@@ -1,7 +1,7 @@
-/WittyMonkey/.metadata/*
-/WittyMonkey/RemoteSystemsTempFiles/*
+/.metadata/*
+/RemoteSystemsTempFiles/*
 
-/WittyMonkey/Servers/*
+/Servers/*
 
 .classpath
 .project
