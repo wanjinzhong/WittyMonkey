@@ -11,15 +11,13 @@ import com.wittymonkey.entity.Hotel;
 import com.wittymonkey.service.IHotelService;
 
 @Controller
-public class HotelController {
+public class LoginController {
 
 	@Autowired
 	private IHotelService hotelService;
-	@RequestMapping(name="hotel", method = RequestMethod.GET)
+	@RequestMapping(name="toLogin", method = RequestMethod.GET)
 	public String hotel(HttpServletRequest request){
-		int id = Integer.parseInt(request.getParameter("id"));
-		Hotel hotel = hotelService.findHotelById(id);
-		request.getSession().setAttribute("hotel", hotel);
-		return "index";
+
+		return "login";
 	}
 }

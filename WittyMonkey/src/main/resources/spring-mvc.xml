@@ -7,7 +7,7 @@
 		http://www.springframework.org/schema/context 
 		http://www.springframework.org/schema/context/spring-context-4.1.xsd 
 		http://www.springframework.org/schema/mvc 
-		http://www.springframework.org/schema/mvc/spring-mvc-4.1.xsd"> 
+		http://www.springframework.org/schema/mvc/spring-mvc-4.1.xsd">
 
 	<!-- 自动扫描@Controller注入为bean -->
 	<context:component-scan base-package="com.wittymonkey.controller" />
@@ -28,24 +28,25 @@
 			</bean>
 		</mvc:message-converters>
 	</mvc:annotation-driven>
-	
+
 	<!-- 拦截器的配置 -->
-        <!--  <mvc:interceptors>   --> 
-            <!-- 多个拦截器，顺序执行 -->  
-            <!-- <mvc:interceptor>  
-                <mvc:mapping path="/**"/>  
-                <bean class="com.wittymonkey.interceptor.LoginInterceptor"></bean>  
-            </mvc:interceptor>  
-        </mvc:interceptors> -->  
-        
-        
+	<!-- <mvc:interceptors> -->
+	<!-- 多个拦截器，顺序执行 -->
+	<!-- <mvc:interceptor> <mvc:mapping path="/**"/> <bean class="com.wittymonkey.interceptor.LoginInterceptor"></bean> 
+		</mvc:interceptor> </mvc:interceptors> -->
+
+
 	<!-- 对模型视图名称的解析，即在模型视图名称添加前后缀 -->
-	 <bean
+	<bean
 		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<property name="viewClass"
 			value="org.springframework.web.servlet.view.JstlView" />
-		<property name="prefix" value="/" />
+		<property name="prefix" value="/WEB-INF/jsp/" />
 		<property name="suffix" value=".jsp" />
 	</bean>
-
+	<bean id="messageSource"
+		class="org.springframework.context.support.ResourceBundleMessageSource">
+		<property name="basenames" value="i118n/messages"></property>
+		<property name="useCodeAsDefaultMessage" value="true"></property>
+	</bean>
 </beans>
