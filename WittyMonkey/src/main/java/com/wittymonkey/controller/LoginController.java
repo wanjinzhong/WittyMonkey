@@ -20,4 +20,11 @@ public class LoginController {
 
 		return "login";
 	}
+	
+	@RequestMapping(value="index", method=RequestMethod.POST)
+	public String index(HttpServletRequest request){
+		//int userId = Integer.parseInt(request.getParameter("username"));
+		//String password = request.getParameter("password");
+		return "index";
+	}
 }

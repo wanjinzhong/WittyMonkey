@@ -1,36 +1,44 @@
-﻿<!DOCTYPE HTML>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%
+	String contextPath = request.getContextPath();
+%>
+<%@ include file="common/taglib.jsp"%>
+<%@ include file="common/i118n.jsp"%>
+<%@ include file="common/js&css.jsp"%>
+<!DOCTYPE html>
 <html>
 <head>
-<meta charset="utf-8">
-<meta name="renderer" content="webkit|ie-comp|ie-stand">
-<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
-<meta http-equiv="Cache-Control" content="no-siteapp" />
-<LINK rel="Bookmark" href="/favicon.ico" >
-<LINK rel="Shortcut Icon" href="/favicon.ico" />
-<!--[if lt IE 9]>
-<script type="text/javascript" src="lib/html5.js"></script>
-<script type="text/javascript" src="lib/respond.min.js"></script>
-<script type="text/javascript" src="lib/PIE_IE678.js"></script>
-<![endif]-->
-<link rel="stylesheet" type="text/css" href="static/h-ui/css/H-ui.min.css" />
-<link rel="stylesheet" type="text/css" href="static/h-ui.admin/css/H-ui.admin.css" />
-<link rel="stylesheet" type="text/css" href="lib/Hui-iconfont/1.0.7/iconfont.css" />
-<link rel="stylesheet" type="text/css" href="lib/icheck/icheck.css" />
-<link rel="stylesheet" type="text/css" href="static/h-ui.admin/skin/default/skin.css" id="skin" />
-<link rel="stylesheet" type="text/css" href="static/h-ui.admin/css/style.css" />
-<!--[if IE 6]>
-<script type="text/javascript" src="http://lib.h-ui.net/DD_belatedPNG_0.0.8a-min.js" ></script>
-<script>DD_belatedPNG.fix('*');</script>
-<![endif]-->
-<title>H-ui.admin v2.5</title>
-<meta name="keywords" content="H-ui.admin v2.5,H-ui网站后台模版,后台模版下载,后台管理系统模版,HTML后台模版下载">
-<meta name="description" content="H-ui.admin v2.5，是一款由国人开发的轻量级扁平化网站后台模板，完全免费开源的网站后台管理系统模版，适合中小型CMS后台系统。">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title><fmt:message key="name" /></title>
+<link href="lib/Hui-iconfont/1.0.7/iconfont.css" rel="stylesheet"
+	type="text/css" />
 </head>
+<style>
+.navbar-wrapper{
+height: 80px;}
+#logo{
+width: 50px;
+height: 50px;
+}
+</style>
 <body>
-<header class="navbar-wrapper">
+<div class="contextMenu" id="myMenu1">
+	<ul>
+		<li id="open">Open </li>
+		<li id="email">email </li>
+		<li id="save">save </li>
+		<li id="delete">delete </li>
+	</ul>
+</div>
+<div class="contextMenu" id="logo">
+	<ul>
+		<li id="out">退出 </li>
+	</ul>
+</div>
+	<header class="navbar-wrapper">
 	<div class="navbar navbar-fixed-top">
-		<div class="container-fluid cl"> <a class="logo navbar-logo f-l mr-10 hidden-xs" href="/aboutHui.shtml">H-ui.admin</a> <a class="logo navbar-logo-m f-l mr-10 visible-xs" href="/aboutHui.shtml">H-ui</a> <span class="logo navbar-slogan f-l mr-10 hidden-xs">v2.5</span> <a aria-hidden="false" class="nav-toggle Hui-iconfont visible-xs" href="javascript:;">&#xe667;</a>
+		<div class="container-fluid cl"> <a class="logo navbar-logo f-l mr-10 hidden-xs" href="#"><img class="logo" src="pic/logo.gif" /></a> <a aria-hidden="false" class="nav-toggle Hui-iconfont visible-xs" href="javascript:;">&#xe667;</a>
 			<nav class="nav navbar-nav">
 				<ul class="cl">
 					<li class="dropDown dropDown_hover"><a href="javascript:;" class="dropDown_A"><i class="Hui-iconfont">&#xe600;</i> 新增 <i class="Hui-iconfont">&#xe6d5;</i></a>
@@ -177,14 +185,6 @@
 	</div>
 </section>
 
-<div class="contextMenu" id="myMenu1">
-	<ul>
-		<li id="open">Open </li>
-		<li id="email">email </li>
-		<li id="save">save </li>
-		<li id="delete">delete </li>
-	</ul>
-</div>
 
 
 <script type="text/javascript" src="lib/jquery/1.9.1/jquery.min.js"></script> 
@@ -194,6 +194,12 @@
 <script type="text/javascript" src="static/h-ui.admin/js/H-ui.admin.js"></script> 
 <script type="text/javascript">
 $(function(){
+	$(".logo").contextMenu('logo',{
+		bindings:{
+			"out": function(t){
+				window.location.href="toLogin.do";
+				}
+			}});
 	$(".Hui-tabNav-wp").contextMenu('myMenu1', {
 		bindings: {
 			'open': function(t) {

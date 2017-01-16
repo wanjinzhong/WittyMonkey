@@ -31,29 +31,61 @@
 	height: 150px;
 }
 
-h1 {
+h2 {
 	margin-top: 50px;
+	text-align: center;
+}
+
+#username,#password {
+	margin: 0 auto;
+	width: 300px;
+}
+
+.btn {
+	width: 80px;
+}
+
+table {
+	
+}
+
+td {
+	padding-top: 20px;
 	text-align: center;
 }
 </style>
 <body background="pic/login/login.png">
-	<img id="logo" src="pic/logo.gif" />
-	<form id="login-form">
-		<h1 id="fullname">
-			<fmt:message key="fullname" />
-		</h1>
-		<table>
-			<tr>
-				<td>
-					<input type="text" placeholder=<fmt:message key='login.username'/> class="input-text radius"/>
-				</td>
-			</tr>
-		</table>
-	</form>
+	<div class="responsive">
+		<img id="logo" src="pic/logo.gif" />
+		<form id="login-form" action="index.do" method="post">
+			<h2 id="fullname">
+				<fmt:message key="fullname" />
+			</h2>
+			<table>
+				<tr>
+					<td><input id="username" name="username" type="text"
+						placeholder="<fmt:message key='login.username'/>"
+						class="input-text radius" /></td>
+				</tr>
+				<tr>
+					<td><input id="password" name="password" type="text"
+						placeholder="<fmt:message key='login.password'/>"
+						class="input-text radius" /></td>
+				</tr>
+				<tr>
+					<td><input type="submit" class="btn btn-success radius"
+						value=<fmt:message key="login.loginbtn"/>> <input
+						type="button" class="btn btn-secondary radius"
+						value=<fmt:message key="login.registbtn"/>></td>
+				</tr>
+			</table>
+
+		</form>
+	</div>
 </body>
 <script type="text/javascript">
-$(document).ready(function(){
-	$("#fullname").addClass("hui-bouncein");
-})
+	$(document).ready(function() {
+		$("#fullname").addClass("hui-bouncein");
+	})
 </script>
 </html>
