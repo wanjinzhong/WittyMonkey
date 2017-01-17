@@ -99,141 +99,157 @@
 	<aside class="Hui-aside">
 		<input runat="server" id="divScrollValue" type="hidden" value="" />
 		<div class="menu_dropdown bk_2">
-			<dl id="menu-article">
+			<dl id="menu-floor">
 				<dt>
-					<i class="Hui-iconfont">&#xe616;</i> 资讯管理<i
+					<i class="Hui-iconfont">&#xe616;</i> <fmt:message key="index.menu.floor"/><i
 						class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i>
 				</dt>
 				<dd>
 					<ul>
-						<li><a data-href="article-list.html" data-title="资讯管理"
-							href="javascript:void(0)">资讯管理</a></li>
+						<li><a data-href="#" data-title="<fmt:message key="index.menu.floor.summary"/>"
+							href="javascript:void(0)"><fmt:message key="index.menu.floor.summary"/></a></li>
+							<li><a data-href="#" data-title="<fmt:message key="index.menu.floor.add"/>"
+							href="javascript:void(0)"><fmt:message key="index.menu.floor.add"/></a></li>
 					</ul>
 				</dd>
 			</dl>
-			<dl id="menu-picture">
+			<dl id="menu-room">
 				<dt>
-					<i class="Hui-iconfont">&#xe613;</i> 图片管理<i
+					<i class="Hui-iconfont">&#xe613;</i> <fmt:message key="index.menu.room"/><i
 						class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i>
 				</dt>
 				<dd>
 					<ul>
-						<li><a data-href="picture-list.html" data-title="图片管理"
-							href="javascript:void(0)">图片管理</a></li>
+						<li><a data-href="#" data-title="<fmt:message key="index.menu.room.query"/>"
+							href="javascript:void(0)"><fmt:message key="index.menu.room.query"/></a></li>
+							<li><a data-href="#" data-title="<fmt:message key="index.menu.room.add"/>"
+							href="javascript:void(0)"><fmt:message key="index.menu.room.add"/></a></li>
 					</ul>
 				</dd>
 			</dl>
-			<dl id="menu-product">
+			<dl id="menu-checkin">
 				<dt>
-					<i class="Hui-iconfont">&#xe620;</i> 产品管理<i
+					<i class="Hui-iconfont">&#xe620;</i> <fmt:message key="index.menu.checkin"/><i
 						class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i>
 				</dt>
 				<dd>
 					<ul>
-						<li><a data-href="product-brand.html" data-title="品牌管理"
-							href="javascript:void(0)">品牌管理</a></li>
-						<li><a data-href="product-category.html" data-title="分类管理"
-							href="javascript:void(0)">分类管理</a></li>
-						<li><a data-href="product-list.html" data-title="产品管理"
-							href="javascript:void(0)">产品管理</a></li>
+						<li><a data-href="#" data-title="<fmt:message key="index.menu.checkin.checkin"/>"
+							href="javascript:void(0)"><fmt:message key="index.menu.checkin.checkin"/></a></li>
+						<li><a data-href="#" data-title="<fmt:message key="index.menu.checkin.change_room"/>"
+							href="javascript:void(0)"><fmt:message key="index.menu.checkin.change_room"/></a></li>
+						<li><a data-href="#" data-title="<fmt:message key="index.menu.checkin.checkout"/>"
+							href="javascript:void(0)"><fmt:message key="index.menu.checkin.checkout"/></a></li>
 					</ul>
 				</dd>
 			</dl>
-			<dl id="menu-comments">
+			<dl id="menu-materiel">
 				<dt>
-					<i class="Hui-iconfont">&#xe622;</i> 评论管理<i
+					<i class="Hui-iconfont">&#xe622;</i> <fmt:message key="index.menu.materiel "/><i
 						class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i>
 				</dt>
 				<dd>
 					<ul>
-						<li><a data-href="http://h-ui.duoshuo.com/admin/"
-							data-title="评论列表" href="javascript:;">评论列表</a></li>
-						<li><a data-href="feedback-list.html" data-title="意见反馈"
-							href="javascript:void(0)">意见反馈</a></li>
+						<li><a data-href="#"
+							data-title="<fmt:message key="index.menu.meteriel.query"/>" href="javascript:;"><fmt:message key="index.menu.meteriel.query"/></a></li>
+						<li><a data-href="#" data-title="<fmt:message key="index.menu.meteriel.add"/>"
+							href="javascript:void(0)"><fmt:message key="index.menu.meteriel.add"/></a></li>
 					</ul>
 				</dd>
 			</dl>
-			<dl id="menu-member">
+			<dl id="menu-inventory">
 				<dt>
-					<i class="Hui-iconfont">&#xe60d;</i> 会员管理<i
+					<i class="Hui-iconfont">&#xe60d;</i> <fmt:message key="index.menu.inventory"/><i
 						class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i>
 				</dt>
 				<dd>
 					<ul>
-						<li><a data-href="member-list.html" data-title="会员列表"
-							href="javascript:;">会员列表</a></li>
-						<li><a data-href="member-del.html" data-title="删除的会员"
-							href="javascript:;">删除的会员</a></li>
-						<li><a data-href="member-level.html" data-title="等级管理"
-							href="javascript:;">等级管理</a></li>
-						<li><a data-href="member-scoreoperation.html"
-							data-title="积分管理" href="javascript:;">积分管理</a></li>
-						<li><a data-href="member-record-browse.html"
-							data-title="浏览记录" href="javascript:void(0)">浏览记录</a></li>
-						<li><a data-href="member-record-download.html"
-							data-title="下载记录" href="javascript:void(0)">下载记录</a></li>
-						<li><a data-href="member-record-share.html" data-title="分享记录"
-							href="javascript:void(0)">分享记录</a></li>
+						<li><a data-href="#" data-title="<fmt:message key="index.menu.inventory.in"/>"
+							href="javascript:;"><fmt:message key="index.menu.inventory.in"/></a></li>
+						<li><a data-href="#" data-title="<fmt:message key="index.menu.inventory.out"/>"
+							href="javascript:;"><fmt:message key="index.menu.inventory.out"/></a></li>
 					</ul>
 				</dd>
 			</dl>
-			<dl id="menu-admin">
+			<dl id="menu-staff">
 				<dt>
-					<i class="Hui-iconfont">&#xe62d;</i> 管理员管理<i
+					<i class="Hui-iconfont">&#xe62d;</i> <fmt:message key="index.menu.staff"/><i
 						class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i>
 				</dt>
 				<dd>
 					<ul>
-						<li><a data-href="admin-role.html" data-title="角色管理"
-							href="javascript:void(0)">角色管理</a></li>
-						<li><a data-href="admin-permission.html" data-title="权限管理"
-							href="javascript:void(0)">权限管理</a></li>
-						<li><a data-href="admin-list.html" data-title="管理员列表"
-							href="javascript:void(0)">管理员列表</a></li>
+						<li><a data-href="#" data-title="<fmt:message key="index.menu.staff.query"/>"
+							href="javascript:void(0)"><fmt:message key="index.menu.staff.query"/></a></li>
+						<li><a data-href="#" data-title="<fmt:message key="index.menu.staff.add"/>"
+							href="javascript:void(0)"><fmt:message key="index.menu.staff.add"/></a></li>
 					</ul>
 				</dd>
 			</dl>
-			<dl id="menu-tongji">
+			<dl id="menu-leave">
 				<dt>
-					<i class="Hui-iconfont">&#xe61a;</i> 系统统计<i
+					<i class="Hui-iconfont">&#xe61a;</i> <fmt:message key="index.menu.leave"/><i
 						class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i>
 				</dt>
 				<dd>
 					<ul>
-						<li><a data-href="charts-1.html" data-title="折线图"
-							href="javascript:void(0)">折线图</a></li>
-						<li><a data-href="charts-2.html" data-title="时间轴折线图"
-							href="javascript:void(0)">时间轴折线图</a></li>
-						<li><a data-href="charts-3.html" data-title="区域图"
-							href="javascript:void(0)">区域图</a></li>
-						<li><a data-href="charts-4.html" data-title="柱状图"
-							href="javascript:void(0)">柱状图</a></li>
-						<li><a data-href="charts-5.html" data-title="饼状图"
-							href="javascript:void(0)">饼状图</a></li>
-						<li><a data-href="charts-6.html" data-title="3D柱状图"
-							href="javascript:void(0)">3D柱状图</a></li>
-						<li><a data-href="charts-7.html" data-title="3D饼状图"
-							href="javascript:void(0)">3D饼状图</a></li>
+						<li><a data-href="#" data-title="<fmt:message key="index.menu.leave.record"/>"
+							href="javascript:void(0)"><fmt:message key="index.menu.leave.record"/></a></li>
+						<li><a data-href="#" data-title="<fmt:message key="index.menu.leave.add"/>"
+							href="javascript:void(0)"><fmt:message key="index.menu.leave.add"/></a></li>
 					</ul>
 				</dd>
 			</dl>
-			<dl id="menu-system">
+			<dl id="menu-finance">
 				<dt>
-					<i class="Hui-iconfont">&#xe62e;</i> 系统管理<i
+					<i class="Hui-iconfont">&#xe62e;</i> <fmt:message key="index.menu.leave"/><i
 						class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i>
 				</dt>
 				<dd>
 					<ul>
-						<li><a data-href="system-base.html" data-title="系统设置"
-							href="javascript:void(0)">系统设置</a></li>
-						<li><a data-href="system-category.html" data-title="栏目管理"
-							href="javascript:void(0)">栏目管理</a></li>
-						<li><a data-href="system-data.html" data-title="数据字典"
-							href="javascript:void(0)">数据字典</a></li>
-						<li><a data-href="system-shielding.html" data-title="屏蔽词"
-							href="javascript:void(0)">屏蔽词</a></li>
-						<li><a data-href="system-log.html" data-title="系统日志"
-							href="javascript:void(0)">系统日志</a></li>
+						<li><a data-href="#" data-title="<fmt:message key="index.menu.finance.add"/>"
+							href="javascript:void(0)"><fmt:message key="index.menu.finance.add"/></a></li>
+						<li><a data-href="#" data-title="<fmt:message key="index.menu.finance.reimburse"/>"
+							href="javascript:void(0)"><fmt:message key="index.menu.finance.reimburse"/></a></li>
+						<li><a data-href="#" data-title="<fmt:message key="index.menu.finance.salary_change"/>"
+							href="javascript:void(0)"><fmt:message key="index.menu.finance.salary_change"/></a></li>
+						<li><a data-href="#" data-title="<fmt:message key="index.menu.finance.salary"/>"
+							href="javascript:void(0)"><fmt:message key="index.menu.finance.salary"/></a></li>
+					</ul>
+				</dd>
+			</dl>
+			<dl id="menu-report">
+				<dt>
+					<i class="Hui-iconfont">&#xe61a;</i> <fmt:message key="index.menu.report"/><i
+						class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i>
+				</dt>
+				<dd>
+					<ul>
+						<li><a data-href="#" data-title="<fmt:message key="index.menu.report"/>"
+							href="javascript:void(0)"><fmt:message key="index.menu.report"/></a></li>
+					</ul>
+				</dd>
+			</dl>
+			<dl id="menu-notify">
+				<dt>
+					<i class="Hui-iconfont">&#xe61a;</i> <fmt:message key="index.menu.notify"/><i
+						class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i>
+				</dt>
+				<dd>
+					<ul>
+						<li><a data-href="#" data-title="<fmt:message key="index.menu.notify"/>"
+							href="javascript:void(0)"><fmt:message key="index.menu.notify"/></a></li>
+					</ul>
+				</dd>
+			</dl>
+			<dl id="menu-settting">
+				<dt>
+					<i class="Hui-iconfont">&#xe61a;</i> <fmt:message key="index.menu.settting"/><i
+						class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i>
+				</dt>
+				<dd>
+					<ul>
+						<li><a data-href="#" data-title="<fmt:message key="index.menu.settting"/>"
+							href="javascript:void(0)"><fmt:message key="index.menu.settting"/></a></li>
 					</ul>
 				</dd>
 			</dl>
