@@ -42,7 +42,7 @@ h2 {
 }
 
 .btn {
-	width: 80px;
+	width: 125px;
 }
 
 table {
@@ -53,8 +53,12 @@ td {
 	padding-top: 20px;
 	text-align: center;
 }
+#regist{
+	margin-left: 50px;
+}
+
 </style>
-<body background="pic/login/login.png">
+<body id="b" background="pic/login/login.png">
 	<div class="responsive">
 		<img id="logo" src="pic/logo.gif" />
 		<form id="login-form" action="index.do" method="post">
@@ -75,7 +79,7 @@ td {
 				<tr>
 					<td><input type="submit" class="btn btn-success radius"
 						value=<fmt:message key="login.loginbtn"/>> <input
-						type="button" class="btn btn-secondary radius"
+						type="button" id="regist" class="btn btn-secondary radius"
 						value=<fmt:message key="login.registbtn"/>></td>
 				</tr>
 			</table>
