@@ -54,7 +54,7 @@ public interface IGenericDao<T, PK extends Serializable> {
      * @param map
      * @return
      */
-    public  List<T>   queryHQL(String hql,Map<String,?> map);
+    public  List<T>   queryHQL(String hql,Object obj);
     
     /**
      *  根据sql查询
@@ -63,4 +63,5 @@ public interface IGenericDao<T, PK extends Serializable> {
         2017年1月5日下午2:57:08
      */
     public List<Map<String,Object>>  querySQL(String Sql);
+
 }

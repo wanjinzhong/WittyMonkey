@@ -145,7 +145,7 @@
 			</dl>
 			<dl id="menu-materiel">
 				<dt>
-					<i class="Hui-iconfont">&#xe622;</i> <fmt:message key="index.menu.materiel "/><i
+					<i class="Hui-iconfont">&#xe622;</i> <fmt:message key="index.menu.materiel"/><i
 						class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i>
 				</dt>
 				<dd>
@@ -201,7 +201,7 @@
 			</dl>
 			<dl id="menu-finance">
 				<dt>
-					<i class="Hui-iconfont">&#xe62e;</i> <fmt:message key="index.menu.leave"/><i
+					<i class="Hui-iconfont">&#xe62e;</i> <fmt:message key="index.menu.finance"/><i
 						class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i>
 				</dt>
 				<dd>
