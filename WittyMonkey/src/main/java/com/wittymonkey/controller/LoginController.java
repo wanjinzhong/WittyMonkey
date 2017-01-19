@@ -9,6 +9,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.wittymonkey.entity.Hotel;
 import com.wittymonkey.service.IHotelService;
+import com.wittymonkey.util.IDCardValidate;
+import com.wittymonkey.util.ValidateCodeServlet;
+import com.wittymonkey.vo.IDCardInfo;
 
 @Controller
 public class LoginController {
@@ -26,5 +29,13 @@ public class LoginController {
 		//int userId = Integer.parseInt(request.getParameter("username"));
 		//String password = request.getParameter("password");
 		return "index";
+	}
+	
+	@RequestMapping(value="test", method=RequestMethod.GET)
+	public void test(HttpServletRequest request){
+		String id = request.getParameter("id");
+		IDCardInfo info = IDCardValidate.getIDCardInfo(request.getSession().getServletContext(), id);
+		request.getSession().setAttribute("card", info);
+		request.getSession().setAttribute("id", id);
 	}
 }

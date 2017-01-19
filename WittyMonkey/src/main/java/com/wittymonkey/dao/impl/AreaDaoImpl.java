@@ -1,6 +1,7 @@
 package com.wittymonkey.dao.impl;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.stereotype.Repository;
@@ -13,11 +14,14 @@ public class AreaDaoImpl extends GenericDaoImpl<Area> implements IAreaDao {
 
 	@Override
 	public Area getAreaByCode(String code) {
-		Area area = new Area();
-		String hql = "from Area where Area.code = :code";
+		Area area = null;
+		String hql = "from Area where code = :code";
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("code", code);
-		area = (Area) this.queryHQL(hql, map);
+		List<Area> areas = this.queryHQL(hql, map);
+		if (areas != null && areas.size() > 0){
+			area =  this.queryHQL(hql, map).get(0);
+		}
 		return area;
 	}
 

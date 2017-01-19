@@ -6,13 +6,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
+import javax.servlet.ServletContext;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
+import org.springframework.web.context.ContextLoader;
+import org.springframework.web.context.WebApplicationContext;
+import org.springframework.web.context.support.WebApplicationContextUtils;
 
 import com.wittymonkey.entity.Area;
 import com.wittymonkey.service.IAreaService;
+import com.wittymonkey.service.impl.AreaServiceImpl;
 import com.wittymonkey.vo.IDCardInfo;
 
 /**
@@ -21,12 +25,9 @@ import com.wittymonkey.vo.IDCardInfo;
  * @author neilw
  * 
  */
+@Component
 public class IDCardValidate {
 
-	@Autowired
-	private IAreaService areaService;
-	//  静态初始化一个工具类，为了在Spring初始化以前
-	private static IDCardValidate idCardValidate;
 	private static final List<Integer> PARAM = new ArrayList<Integer>();
 	private static final List<Integer> LAST_NUM = new ArrayList<Integer>();
 	static {
@@ -56,18 +57,6 @@ public class IDCardValidate {
 		}
 	}
 	
-	public void setAreaService(IAreaService areaService) {
-		this.areaService = areaService;
-	}
-	/**
-	 * 在初始化之前
-	 */
-	@PostConstruct
-	public void init(){
-		System.out.println("注入");
-		idCardValidate = this;
-		idCardValidate.areaService = this.areaService;
-	}
 	/**
 	 * <h4>身份证正确性校验</h4> 校验规则：<br>
 	 * 1. 将身份证号前17分别依次乘以下系数：<br>
@@ -81,10 +70,16 @@ public class IDCardValidate {
 	 * @return
 	 */
 	public static boolean validate(String id) {
+		if (id.length() != 18){
+			return false;
+		}
 		boolean result = false;
 		int sum = 0;
 		try {
 			for (int i = 0; i < 17; i++) {
+				if(id.charAt(i)<'0' || id.charAt(i) >'9'){
+					return false;
+				}
 				int now = Integer.parseInt(id.substring(i, i + 1));
 				sum += now * PARAM.get(i);
 			}
@@ -115,13 +110,18 @@ public class IDCardValidate {
 		return result;
 	}
 	
-	public static IDCardInfo getIDCardInfo(String id){
+	public static IDCardInfo getIDCardInfo(ServletContext context,String id){
+		WebApplicationContext webApplicationContext = WebApplicationContextUtils.getWebApplicationContext(context);
+		IAreaService areaService = (IAreaService) webApplicationContext.getBean("areaService");
 		if (!validate(id))
 			return null;
 		IDCardInfo idCardInfo = new IDCardInfo();
 		String code = id.substring(0,6);
-		System.out.println(idCardValidate == null);
-		Area area = idCardValidate.areaService.getAreaByCode(code);
+		//System.out.println(idCardValidate == null);
+		Area area = areaService.getAreaByCode(code);
+		if (area == null){
+			return null;
+		}
 		idCardInfo.setArea(area.getName());
 		idCardInfo.setCity(area.getCity().getName());
 		idCardInfo.setProvince(area.getCity().getProvince().getName());
@@ -133,7 +133,7 @@ public class IDCardValidate {
 			// TODO Auto-generated catch block
 			return null;
 		}
-		int sex = Integer.parseInt(id.substring(17,18));
+		int sex = Integer.parseInt(id.substring(16,17));
 		idCardInfo.setSex((sex % 2 == 0)?"F":"M");
 		return idCardInfo;
 	}
