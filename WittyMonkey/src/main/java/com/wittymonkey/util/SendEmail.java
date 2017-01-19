@@ -25,7 +25,7 @@ public class SendEmail {
 			Message msg = new MimeMessage(session);
 			msg.setFrom(new InternetAddress(props.getProperty("address"),props.getProperty("name")));
 			msg.setRecipients(Message.RecipientType.TO,InternetAddress.parse(
-					"1051750377@qq.com"));
+					address));
 			msg.setSubject("测试邮件");
 			msg.setContent("<h1>这是一条测试邮件,本次验证码：" + getValidateCode() + "</h1>","text/html;charset=utf-8");
 			Transport transport = session.getTransport("smtp");
