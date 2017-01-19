@@ -23,11 +23,11 @@ public class SendEmail {
 			Session session = Session.getDefaultInstance(props);
 			session.setDebug(true);
 			Message msg = new MimeMessage(session);
-			msg.setFrom(new InternetAddress(props.getProperty("address")));
+			msg.setFrom(new InternetAddress(props.getProperty("address"),props.getProperty("name")));
 			msg.setRecipients(Message.RecipientType.TO,InternetAddress.parse(
 					"1051750377@qq.com"));
 			msg.setSubject("测试邮件");
-			msg.setText("这是一条测试邮件,本次验证码：" + getValidateCode());
+			msg.setContent("<h1>这是一条测试邮件,本次验证码：" + getValidateCode() + "</h1>","text/html;charset=utf-8");
 			Transport transport = session.getTransport("smtp");
 			// smtp验证，就是你用来发邮件的邮箱用户名密码
 			transport.connect(props.getProperty("smtp"), props.getProperty("address"), props.getProperty("password"));
