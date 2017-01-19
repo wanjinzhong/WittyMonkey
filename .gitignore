@@ -1,6 +1,6 @@
 /.metadata/*
 /RemoteSystemsTempFiles/*
-
+/.recommenders
 /Servers/*
 
 .classpath
