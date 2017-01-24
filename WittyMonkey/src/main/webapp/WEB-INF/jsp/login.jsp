@@ -15,7 +15,7 @@
 	type="text/css" />
 </head>
 <style>
-#login-form {
+#login_form {
 	position: absolute;
 	width: 600px;
 	height: 480px;
@@ -36,7 +36,7 @@ h2 {
 	text-align: center;
 }
 
-#username,#password {
+#username, #password {
 	margin: 0 auto;
 	width: 300px;
 }
@@ -53,19 +53,23 @@ td {
 	padding-top: 20px;
 	text-align: center;
 }
-#regist{
+
+#regist {
 	margin-left: 50px;
 }
 
+.login_form_to_left {
+	
+}
 </style>
 <body id="b" background="pic/login/login.png">
 	<div class="responsive">
 		<img id="logo" src="pic/logo.gif" />
-		<form id="login-form" action="index.do" method="post">
+		<form id="login_form" action="index.do" method="post">
 			<h2 id="fullname">
 				<fmt:message key="fullname" />
 			</h2>
-			<table>
+			<table id="login_table">
 				<tr>
 					<td><input id="username" name="username" type="text"
 						placeholder="<fmt:message key='login.username'/>"
@@ -90,6 +94,18 @@ td {
 <script type="text/javascript">
 	$(document).ready(function() {
 		$("#fullname").addClass("hui-bouncein");
+		$("#regist").click(function() {
+			layer.open({
+				type: 2,
+				area: ['600px',	'500px'],
+				fix: true, //不固定
+				maxmin: false,
+				shade:0.4,
+				title: "注册",
+				content: "toRegist.do"
+			});
+			
+		});
 	})
 </script>
 </html>

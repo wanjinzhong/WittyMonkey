@@ -1,64 +1,57 @@
 package com.wittymonkey.util;
 
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.net.URL;
 import java.util.Properties;
 
-import javax.mail.Authenticator;
 import javax.mail.Message;
 import javax.mail.MessagingException;
-import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+import javax.servlet.http.HttpServletRequest;
 
 
 public class SendEmail {
-	public static void sendValidateCode(String address){
+	public static String sendValidateCode(String address){
 		final Properties props = new Properties();
+		String code = null;
 		try {
-			props.load(ClassLoader.class.getResourceAsStream("/mail.properties"));
+			code = getValidateCode();			
+			props.load(SendEmail.class.getResourceAsStream("/mail.properties"));
 			Session session = Session.getDefaultInstance(props);
 			session.setDebug(true);
 			Message msg = new MimeMessage(session);
 			msg.setFrom(new InternetAddress(props.getProperty("address"),props.getProperty("name")));
 			msg.setRecipients(Message.RecipientType.TO,InternetAddress.parse(
 					address));
-			msg.setSubject("测试邮件");
-			msg.setContent("<h1>这是一条测试邮件,本次验证码：" + getValidateCode() + "</h1>","text/html;charset=utf-8");
+			msg.setSubject("注册验证");
+			msg.setContent("<h2>欢迎注册俏皮猴酒店管理系统,本次验证码：" + code + "</h2>","text/html;charset=utf-8");
 			Transport transport = session.getTransport("smtp");
 			// smtp验证，就是你用来发邮件的邮箱用户名密码
 			transport.connect(props.getProperty("smtp"), props.getProperty("address"), props.getProperty("password"));
 			// 发送
 			transport.sendMessage(msg, msg.getAllRecipients());
 			transport.close();
-			/*HtmlEmail email = new HtmlEmail();
-			email.setHostName(props.getProperty("smtp"));
-			email.setCharset(props.getProperty("encoding"));
-			email.addTo(address);
-			email.setFrom(props.getProperty("address"), props.getProperty("name"));
-			email.setAuthentication(props.getProperty("address"), props.getProperty("password"));
-			email.setSubject("测试邮件");
-			email.setMsg("这是一条测试邮件,本次验证码：" + getValidateCode());
-			email.send();*/
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
-			return;
+			code = null;
 		} catch (IOException e) {
 			e.printStackTrace();
-			return;
+			code = null;
 		} catch (AddressException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
-			return;
+			code = null;
 		} catch (MessagingException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
-			return;
+			code = null;
 		}
 		System.out.println("邮件发送成功");
+		return code;
 	}
 	private static String getValidateCode(){
 		StringBuffer buffer = new StringBuffer();
