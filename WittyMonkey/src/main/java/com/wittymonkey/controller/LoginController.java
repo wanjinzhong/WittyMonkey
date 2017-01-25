@@ -52,8 +52,6 @@ public class LoginController {
 		request.getSession().setAttribute("registCode", code);
 		JSONObject json = new JSONObject();
 		json.put("status", "success");
-		System.out.println(code);
-		System.out.println(json.toJSONString());
 		return json.toJSONString();
 	}
 }

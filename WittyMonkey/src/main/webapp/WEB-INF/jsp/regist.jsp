@@ -4,7 +4,7 @@
 	String contextPath = request.getContextPath();
 %>
 <%@ include file="common/taglib.jsp"%>
-<%@ include file="common/i118n.jsp"%>
+<%@ include file="common/i18n.jsp"%>
 <%@ include file="common/js&css.jsp"%>
 <!DOCTYPE html>
 <html>
@@ -102,26 +102,19 @@ td {
 			},
 			dataType: "text",
 			success : function(data) {
-				alert(data);
 			}
 		});
 		t1 = window.setInterval("cutdown()",1000);
 		$("#get_code").removeClass("btn-secondary");
 		$("#get_code").addClass("disabled");
-		$("#get_code").attr("disabled","disabled");
+		$("#get_code").attr("disabled",true);
 	});
 	function regist() {
 		var myCode = $("#code").val();
-		if (code == null || code == "") {
-			layer.msg("请先获取验证码", {
+		layer.msg("<fmt:message key="regist.getcodefirst" />", {
 				icon : 7,
-				time : 2000
-			//2秒关闭（如果不配置，默认是3秒）
-			}, function() {
-				//do something
+				time : 2000	//2秒关闭（如果不配置，默认是3秒）
 			});
-			return;
-		}
 		//var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
 		//parent.layer.close(index);
 		$.ajax({
@@ -144,7 +137,7 @@ td {
 		} else{
 			$("#get_code").removeClass("disabled");
 			$("#get_code").addClass("btn-secondary");
-			$("#get_code").attr("disabled","enabled");
+			$("#get_code").attr("disabled",false);
 			window.clearInterval(t1);
 			time = 60;
 		}

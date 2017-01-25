@@ -4,7 +4,7 @@
 	String contextPath = request.getContextPath();
 %>
 <%@ include file="common/taglib.jsp"%>
-<%@ include file="common/i118n.jsp"%>
+<%@ include file="common/i18n.jsp"%>
 <%@ include file="common/js&css.jsp"%>
 <!DOCTYPE html>
 <html>
