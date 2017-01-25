@@ -18,7 +18,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table
+@Table(name="permission")
 public class Permission implements Serializable{
 
 	private static final long serialVersionUID = 1L;
@@ -31,7 +31,7 @@ public class Permission implements Serializable{
 	private String name;
 	
 	@Column
-	private String desc;
+	private String description;
 	
 	@ManyToOne(targetEntity = Hotel.class, fetch=FetchType.EAGER)
 	@JoinColumn(name="hotel_id", referencedColumnName="id")
@@ -70,12 +70,20 @@ public class Permission implements Serializable{
 		this.name = name;
 	}
 
-	public String getDesc() {
-		return desc;
+	public String getDescription() {
+		return description;
 	}
 
-	public void setDesc(String desc) {
-		this.desc = desc;
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public List<Role> getRoles() {
+		return roles;
+	}
+
+	public void setRoles(List<Role> roles) {
+		this.roles = roles;
 	}
 
 	public Hotel getHotel() {
