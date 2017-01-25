@@ -15,7 +15,6 @@
 	type="text/css" />
 </head>
 <style>
-
 #logo {
 	width: 150px;
 	height: 150px;
@@ -75,9 +74,9 @@ td {
 					<td><input id="email" name="email" type="text"
 						placeholder="<fmt:message key='regist.email'/>"
 						class="input-text radius" /></td>
-					<td><input
-						type="button" id="get_code" class="btn btn-secondary radius"
-						value=<fmt:message key="regist.get_code"/>></td>
+					<td><input type="button" id="get_code"
+						class="btn btn-secondary radius"
+						value="<fmt:message key='regist.get_code'/>"></td>
 				</tr>
 				<tr>
 					<td><input id="code" name="code" type="text"
@@ -89,52 +88,66 @@ td {
 						value="<fmt:message key="regist.registbtn" />" onclick="regist()">
 				</tr>
 			</table>
-		<input type="hidden" id="registCode"/>
 		</form>
 	</div>
 </body>
 <script type="text/javascript">
-	$("#get_code").click(function (){
+	$("#get_code").click(function() {
 		var email = $("#email").val();
 		$.ajax({
-			type: "GET",
-			url: "getValidateCode.do",
-			data: {"email":email},
-			dataType: "json",
-			success:function(data){
-				$("#registCode").val(data);
+			type : "GET",
+			url : "getValidateCode.do",
+			data : {
+				"email" : email
+			},
+			dataType: "text",
+			success : function(data) {
+				alert(data);
 			}
 		});
+		t1 = window.setInterval("cutdown()",1000);
+		$("#get_code").removeClass("btn-secondary");
+		$("#get_code").addClass("disabled");
+		$("#get_code").attr("disabled","disabled");
 	});
-	function regist(){
-		var code = $("#registCode").val();
+	function regist() {
 		var myCode = $("#code").val();
-		if (code == null || code == ""){
+		if (code == null || code == "") {
 			layer.msg("请先获取验证码", {
-				  icon: 7,
-				  time: 2000 //2秒关闭（如果不配置，默认是3秒）
-				}, function(){
-				  //do something
-				});   
+				icon : 7,
+				time : 2000
+			//2秒关闭（如果不配置，默认是3秒）
+			}, function() {
+				//do something
+			});
 			return;
 		}
-		if (code != myCode){
-			layer.msg("验证码不正确", {
-				  icon: 3,
-				  time: 2000 //2秒关闭（如果不配置，默认是3秒）
-				}, function(){
-				  //do something
-				});   
-			return;
-		}
+		//var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+		//parent.layer.close(index);
 		$.ajax({
-			type: "POST",
-			url: "regist.do",
-			data: $("#regist_form").serialize(),
-			success:function(data){
-				
+			type : "POST",
+			url : "regist.do",
+			data : $("#regist_form").serialize(),
+			success : function(data) {
+				if (data == "success") {
+					var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+					parent.layer.close(index);
+				}
 			}
 		});
+	}
+	var time = 60;
+	function cutdown(){
+		if (time > 0){
+			$("#get_code").val(time);
+			time = time - 1;
+		} else{
+			$("#get_code").removeClass("disabled");
+			$("#get_code").addClass("btn-secondary");
+			$("#get_code").attr("disabled","enabled");
+			window.clearInterval(t1);
+			time = 60;
+		}
 	}
 </script>
 </html>

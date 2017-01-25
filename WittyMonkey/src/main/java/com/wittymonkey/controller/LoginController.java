@@ -8,11 +8,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.wittymonkey.entity.Hotel;
+import com.alibaba.fastjson.JSONObject;
 import com.wittymonkey.service.IHotelService;
 import com.wittymonkey.util.IDCardValidate;
 import com.wittymonkey.util.SendEmail;
-import com.wittymonkey.util.ValidateCodeServlet;
 import com.wittymonkey.vo.IDCardInfo;
 
 @Controller
@@ -51,6 +50,10 @@ public class LoginController {
 		String email = request.getParameter("email");
 		String code = SendEmail.sendValidateCode(email);
 		request.getSession().setAttribute("registCode", code);
-		return code;
+		JSONObject json = new JSONObject();
+		json.put("status", "success");
+		System.out.println(code);
+		System.out.println(json.toJSONString());
+		return json.toJSONString();
 	}
 }
