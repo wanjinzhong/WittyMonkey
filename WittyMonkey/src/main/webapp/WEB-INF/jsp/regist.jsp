@@ -11,8 +11,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title><fmt:message key="name" /></title>
-<link href="lib/Hui-iconfont/1.0.7/iconfont.css" rel="stylesheet"
-	type="text/css" />
+
 </head>
 <style>
 #logo {
@@ -25,9 +24,13 @@ h2 {
 	text-align: center;
 }
 
-#username, #password {
+#loginName, #password, #email, #repassword, #code {
 	margin: 0 auto;
-	width: 300px;
+	width: 400px;
+}
+
+#email {
+	width: 270px;
 }
 
 .btn {
@@ -56,26 +59,25 @@ td {
 		<form id="regist_form" action="index.do" method="post">
 			<table id="login_table">
 				<tr>
-					<td><input id="username" name="username" type="text"
+					<td><input id="loginName" name="loginName" type="text"
 						placeholder="<fmt:message key='regist.username'/>"
-						class="input-text radius" /></td>
+						class="input-text radius" onblur="validateLoginName(this)" /></td>
 				</tr>
 				<tr>
-					<td><input id="password" name="password" type="text"
+					<td><input id="password" name="password" type="password"
 						placeholder="<fmt:message key='regist.password'/>"
-						class="input-text radius" /></td>
+						class="input-text radius" onblur='validatePassword(this)' /></td>
 				</tr>
 				<tr>
-					<td><input id="password" name="repassword" type="text"
+					<td><input id="repassword" name="repassword" type="password"
 						placeholder="<fmt:message key='regist.repassword'/>"
-						class="input-text radius" /></td>
+						class="input-text radius" onblur="validateRepassword(this)" /></td>
 				</tr>
 				<tr>
 					<td><input id="email" name="email" type="text"
 						placeholder="<fmt:message key='regist.email'/>"
-						class="input-text radius" /></td>
-					<td><input type="button" id="get_code"
-						class="btn btn-secondary radius"
+						class="input-text radius" onblur="validateEmail(this)" /> <input
+						type="button" id="get_code" class="btn btn-secondary radius"
 						value="<fmt:message key='regist.get_code'/>"></td>
 				</tr>
 				<tr>
@@ -85,13 +87,14 @@ td {
 				</tr>
 				<tr>
 					<td><input type="button" class="btn btn-success radius"
-						value="<fmt:message key="regist.registbtn" />" onclick="regist()">
+						value="<fmt:message key="regist.registbtn" />" onclick="regist()" />
 				</tr>
 			</table>
 		</form>
 	</div>
 </body>
 <script type="text/javascript">
+	var time = 60;
 	$("#get_code").click(function() {
 		var email = $("#email").val();
 		$.ajax({
@@ -100,45 +103,102 @@ td {
 			data : {
 				"email" : email
 			},
-			dataType: "text",
+			dataType : "text",
 			success : function(data) {
 			}
 		});
-		t1 = window.setInterval("cutdown()",1000);
+		t1 = window.setInterval("cutdown()", 1000);
 		$("#get_code").removeClass("btn-secondary");
 		$("#get_code").addClass("disabled");
-		$("#get_code").attr("disabled",true);
+		$("#get_code").attr("disabled", true);
+		$("#get_code").val(time);
 	});
 	function regist() {
+		if (!validateRegistForm($("#regist_form"))) {
+			return;
+		}
 		var myCode = $("#code").val();
-		layer.msg("<fmt:message key="regist.getcodefirst" />", {
-				icon : 7,
-				time : 2000	//2秒关闭（如果不配置，默认是3秒）
-			});
-		//var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
-		//parent.layer.close(index);
+		validateCode($("#code"));
 		$.ajax({
 			type : "POST",
 			url : "regist.do",
 			data : $("#regist_form").serialize(),
+			dataType : "json",
 			success : function(data) {
-				if (data == "success") {
-					var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
-					parent.layer.close(index);
+				var result = eval("(" + data + ")");
+				var stu = result.status;
+				switch (stu) {
+				case 400:
+					layer.tips($.i18n.prop('regist.input_name_first'),
+							$("#loginName"), {
+								tips : 4
+							});
+					break;
+				case 401:
+					layer.tips($.i18n.prop('regist.user_is_exist'),
+							$("#loginName"), {
+								tips : 4
+							});
+					break;
+				case 410:
+					layer.tips(
+							$.i18n.prop('regist.password_less_six'),
+							$("#password"), {
+								tips : 4
+							});
+					break;
+				case 411:
+					layer.tips(
+							$.i18n.prop('regist.password_not_same'),
+							$("#repassword"), {
+								tips : 4
+							});
+					break;
+				case 420:
+					layer.tips($.i18n.prop('regist.email_is_wrong'),
+							$("#email"), {
+								tips : 4
+							});
+					break;
+				case 430:
+					layer.tips($.i18n.prop('regist.get_code_first'),
+							$("#get_code"), {
+								tips : 1
+							});
+					break;
+				case 431:
+					layer.tips($.i18n.prop('regist.code_is_wrong'),
+							$("#code"), {
+								tips : 4
+							});
+					break;
+				case 200:
+					layer.msg($.i18n.prop('regist.regist_success'), {
+						time : 3000,
+						icon : 1
+					});
+					setTimeout(function() {
+						var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+						parent.layer.close(index); //再执行关闭   
+					}, 3000);
+					parent.$("#username").val($("loginName").val());
+					break;
+				default:
+					break;
 				}
 			}
 		});
 	}
-	var time = 60;
-	function cutdown(){
-		if (time > 0){
+	function cutdown() {
+		if (time > 0) {
 			$("#get_code").val(time);
 			time = time - 1;
-		} else{
+		} else {
 			$("#get_code").removeClass("disabled");
 			$("#get_code").addClass("btn-secondary");
-			$("#get_code").attr("disabled",false);
+			$("#get_code").attr("disabled", false);
 			window.clearInterval(t1);
+			$("#get_code").val($.i18n.prop('regist.get_code'));
 			time = 60;
 		}
 	}

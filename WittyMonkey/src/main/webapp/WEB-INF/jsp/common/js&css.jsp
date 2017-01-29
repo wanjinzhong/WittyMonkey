@@ -9,4 +9,4 @@
 <script type="text/javascript" src="lib/layer/2.1/layer.js"></script>
 <script type="text/javascript" src="lib/jquery/1.9.1/jquery.js"></script>
 <script type="text/javascript" src="js/jquery.i18n.properties.js"></script>
-
+<script type="text/javascript" src="js/common.js"></script>

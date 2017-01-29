@@ -72,9 +72,9 @@
 	</session-config>
 
 	<!-- 验证码的servlet -->
-	<!-- <servlet> <servlet-name>ValidateCodeServlet</servlet-name> <servlet-class>com.wittymonkey.util.ValidateCodeServlet</servlet-class> 
+	<servlet> <servlet-name>ValidateCodeServlet</servlet-name> <servlet-class>com.wittymonkey.util.ValidateCodeServlet</servlet-class> 
 		</servlet> <servlet-mapping> <servlet-name>ValidateCodeServlet</servlet-name> 
-		<url-pattern>/ValidateCodeServlet</url-pattern> </servlet-mapping> -->
+		<url-pattern>/ValidateCodeServlet</url-pattern> </servlet-mapping>
 	<!-- 配置文件下载的servlet -->
 	<!-- <servlet> <servlet-name>DownloadFile</servlet-name> <servlet-class>com.synnex.lms.util.DownloadFile</servlet-class> 
 		</servlet> <servlet-mapping> <servlet-name>DownloadFile</servlet-name> <url-pattern>/DownloadFile</url-pattern> 

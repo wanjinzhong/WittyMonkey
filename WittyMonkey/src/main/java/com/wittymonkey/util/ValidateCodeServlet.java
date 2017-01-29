@@ -40,8 +40,6 @@ public class ValidateCodeServlet extends HttpServlet {
 
 	public static boolean validate(HttpServletRequest request, String validateCode) {
 		// case when : validate code is null
-		if (validateCode == null)
-			throw new RuntimeException("验证码为空");
 		String code = (String) request.getSession().getAttribute(VALIDATE_CODE);
 		return validateCode.toUpperCase().equals(code);
 	}
