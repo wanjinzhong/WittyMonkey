@@ -6,7 +6,7 @@ $(document).ready(function(){
 });
 function loadProperties(name, path, lang){
 	var lang = lang || navigator.language;
-	jQuery.i18n.properties({
+	$.i18n.properties({
 		name: name,
 		path: path,
 		mode: 'map',

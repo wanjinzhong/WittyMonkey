@@ -14,6 +14,7 @@
 <link href="lib/Hui-iconfont/1.0.7/iconfont.css" rel="stylesheet"
 	type="text/css" />
 </head>
+<script type="text/javascript" src="js/common.js"></script>
 <style>
 .navbar-wrapper {
 	height: 80px;
@@ -263,7 +264,7 @@
 		<div id="Hui-tabNav" class="Hui-tabNav hidden-xs">
 			<div class="Hui-tabNav-wp">
 				<ul id="min_title_list" class="acrossTab cl">
-					<li class="active"><span title="我的桌面" data-href="welcome.html">我的桌面</span><em></em></li>
+					<li class="active"><span title="我的桌面" data-href="#">我的桌面</span><em></em></li>
 				</ul>
 			</div>
 			<div class="Hui-tabNav-more btn-group">
@@ -276,7 +277,7 @@
 		<div id="iframe_box" class="Hui-article">
 			<div class="show_iframe">
 				<div style="display: none" class="loading"></div>
-				<iframe scrolling="yes" frameborder="0" src="welcome.html"></iframe>
+				<iframe scrolling="yes" frameborder="0" src="#"></iframe>
 			</div>
 		</div>
 	</section>
@@ -347,23 +348,5 @@
 			layer_show(title, url, w, h);
 		}
 	</script>
-
-	<!--此乃百度统计代码，请自行删除-->
-	<script type="text/javascript">
-		var _hmt = _hmt || [];
-		(function() {
-			var hm = document.createElement("script");
-			hm.src = "//hm.baidu.com/hm.js?080836300300be57b7f34f4b3e97d911";
-			var s = document.getElementsByTagName("script")[0];
-			s.parentNode.insertBefore(hm, s)
-		})();
-		var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://"
-				: " http://");
-		document
-				.write(unescape("%3Cscript src='"
-						+ _bdhmProtocol
-						+ "hm.baidu.com/h.js%3F080836300300be57b7f34f4b3e97d911' type='text/javascript'%3E%3C/script%3E"));
-	</script>
-	<!--/此乃百度统计代码，请自行删除-->
 </body>
 </html>
