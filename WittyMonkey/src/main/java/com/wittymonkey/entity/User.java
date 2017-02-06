@@ -16,6 +16,7 @@ import javax.persistence.JoinColumns;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 /**
@@ -77,6 +78,10 @@ public class User implements Serializable {
 	inverseJoinColumns={@JoinColumn(name = "role_id", referencedColumnName = "id")})
 	private List<Role> roles = new ArrayList<Role>();
 
+	@OneToOne(targetEntity=Setting.class)
+	private Setting setting;
+	
+	
 	@Column
 	private String tel;
 
@@ -237,6 +242,22 @@ public class User implements Serializable {
 
 	public void setLoginCount(int loginCount) {
 		this.loginCount = loginCount;
+	}
+
+	public List<Role> getRoles() {
+		return roles;
+	}
+
+	public void setRoles(List<Role> roles) {
+		this.roles = roles;
+	}
+
+	public Setting getSetting() {
+		return setting;
+	}
+
+	public void setSetting(Setting setting) {
+		this.setting = setting;
 	}
 
 }

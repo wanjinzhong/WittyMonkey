@@ -1,0 +1,13 @@
+var error_500="Server Error !"; 
+var regist_title="Regist";
+var regist_get_code_first="Please get validate code first";
+var regist_regist_success="Regist Success";
+var regist_user_is_exist="Login name is exist";
+var regist_password_less_six="6 charactor at least";
+var regist_password_not_same="Passwords are inconsistent";
+var regist_code_is_wrong="Validate code is wrong";
+var regist_email_is_wrong="Incorrect mailbox format";
+var regist_input_name_first="Please input login name";
+var regist_input_password_first="Please input password";
+var regist_input_validate_code_first="Please input validate code";
+var regist_login_error="Name or password error";
