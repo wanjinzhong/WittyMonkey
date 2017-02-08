@@ -33,7 +33,7 @@ public class User implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int id;
+	private Integer id;
 
 	@Column(name = "real_name")
 	private String realName;
@@ -44,12 +44,6 @@ public class User implements Serializable {
 	@Column(name = "password")
 	private String password;
 
-	@Column
-	private Date birthday;
-
-	@Column
-	private String gender;
-
 	@Column(name = "idcard_no")
 	private String idCardNo;
 
@@ -59,7 +53,7 @@ public class User implements Serializable {
 
 	// 是否离职 0：未离职，1：已离职
 	@Column(name = "is_dimission")
-	private int isDimission;
+	private Integer isDimission;
 
 	// 离职原因或说明
 	@Column(name = "dimission_desc")
@@ -79,6 +73,7 @@ public class User implements Serializable {
 	private List<Role> roles = new ArrayList<Role>();
 
 	@OneToOne(targetEntity=Setting.class)
+	@JoinColumn(name="setting_id", referencedColumnName="id")
 	private Setting setting;
 	
 	
@@ -90,15 +85,6 @@ public class User implements Serializable {
 
 	@Column(name = "regist_date")
 	private Date registDate;
-
-	@Column(name = "last_login_date")
-	private Date lastLoginDate;
-
-	@Column(name = "last_login_ip")
-	private String lastLoginIp;
-
-	@Column(name = "login_count")
-	private int loginCount;
 
 	public int getId() {
 		return id;
@@ -130,22 +116,6 @@ public class User implements Serializable {
 
 	public void setPassword(String password) {
 		this.password = password;
-	}
-
-	public Date getBirthday() {
-		return birthday;
-	}
-
-	public void setBirthday(Date birthday) {
-		this.birthday = birthday;
-	}
-
-	public String getGender() {
-		return gender;
-	}
-
-	public void setGender(String gender) {
-		this.gender = gender;
 	}
 
 	public String getIdCardNo() {
@@ -218,30 +188,6 @@ public class User implements Serializable {
 
 	public void setRegistDate(Date registDate) {
 		this.registDate = registDate;
-	}
-
-	public Date getLastLoginDate() {
-		return lastLoginDate;
-	}
-
-	public void setLastLoginDate(Date lastLoginDate) {
-		this.lastLoginDate = lastLoginDate;
-	}
-
-	public String getLastLoginIp() {
-		return lastLoginIp;
-	}
-
-	public void setLastLoginIp(String lastLoginIp) {
-		this.lastLoginIp = lastLoginIp;
-	}
-
-	public int getLoginCount() {
-		return loginCount;
-	}
-
-	public void setLoginCount(int loginCount) {
-		this.loginCount = loginCount;
 	}
 
 	public List<Role> getRoles() {

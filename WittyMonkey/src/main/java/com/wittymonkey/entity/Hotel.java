@@ -1,13 +1,19 @@
 package com.wittymonkey.entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -23,20 +29,21 @@ public class Hotel implements Serializable{
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
-	private int id;
+	private Integer id;
 	
 	@Column
 	private String name;
 	
-	@Column(name="city_id")
-	private int city;
+	@ManyToOne(targetEntity=Area.class)
+	@JoinColumn(name="area_code", referencedColumnName="code")
+	private Area area;
 	
 	@Column
 	private String place;
 	
 	// 星级
 	@Column
-	private int star;
+	private Integer star;
 	
 	@Column
 	private String tel;
@@ -44,8 +51,8 @@ public class Hotel implements Serializable{
 	@Column
 	private String fax;
 	
-	@Column(name="email")
-	private String Email;
+	@Column
+	private String email;
 	
 	// 开业时间
 	@Column(name="open_date")
@@ -55,24 +62,38 @@ public class Hotel implements Serializable{
 	@Column(name="add_date")
 	private Date addDate;
 	
-	//更新时间
-	@Column(name="update_date")
-	private Date updateDate;
+	@Column(name="entry_datetime")
+	private Date entryDatetime;
+	
+	@ManyToOne(targetEntity=User.class, fetch=FetchType.EAGER)
+	@JoinColumn(name="entry_id", referencedColumnName="id")
+	private User entryUser;
+	
+	@OneToMany(targetEntity=Floor.class, mappedBy="hotel")
+	private List<Floor> floors = new ArrayList<Floor>();
 
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
-	public int getCity() {
-		return city;
+	public String getName() {
+		return name;
 	}
 
-	public void setCity(int city) {
-		this.city = city;
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public Area getArea() {
+		return area;
+	}
+
+	public void setArea(Area area) {
+		this.area = area;
 	}
 
 	public String getPlace() {
@@ -83,11 +104,11 @@ public class Hotel implements Serializable{
 		this.place = place;
 	}
 
-	public int getStar() {
+	public Integer getStar() {
 		return star;
 	}
 
-	public void setStar(int star) {
+	public void setStar(Integer star) {
 		this.star = star;
 	}
 
@@ -108,11 +129,11 @@ public class Hotel implements Serializable{
 	}
 
 	public String getEmail() {
-		return Email;
+		return email;
 	}
 
 	public void setEmail(String email) {
-		Email = email;
+		this.email = email;
 	}
 
 	public Date getOpenDate() {
@@ -131,30 +152,29 @@ public class Hotel implements Serializable{
 		this.addDate = addDate;
 	}
 
-	public Date getUpdateDate() {
-		return updateDate;
+	public Date getEntryDatetime() {
+		return entryDatetime;
 	}
 
-	public void setUpdateDate(Date updateDate) {
-		this.updateDate = updateDate;
+	public void setEntryDatetime(Date entryDatetime) {
+		this.entryDatetime = entryDatetime;
 	}
 
-	public String getName() {
-		return name;
+	public User getEntryUser() {
+		return entryUser;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setEntryUser(User entryUser) {
+		this.entryUser = entryUser;
 	}
 
-	@Override
-	public String toString() {
-		return "Hotel [id=" + id + ", name=" + name + ", city=" + city
-				+ ", place=" + place + ", star=" + star + ", tel=" + tel
-				+ ", fax=" + fax + ", Email=" + Email + ", openDate="
-				+ openDate + ", addDate=" + addDate + ", updateDate="
-				+ updateDate + "]";
+	public List<Floor> getFloors() {
+		return floors;
 	}
-	
+
+	public void setFloors(List<Floor> floors) {
+		this.floors = floors;
+	}
+
 	
 }

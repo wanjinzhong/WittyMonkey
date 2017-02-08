@@ -17,6 +17,11 @@ import javax.persistence.Table;
 @Table(name="city")
 @Entity
 public class City implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private int id;
@@ -33,7 +38,7 @@ public class City implements Serializable{
 	private Province province;
 
 	@OneToMany(targetEntity=Area.class,mappedBy="city")
-	private List<Area> Areas = new ArrayList<Area>();
+	private List<Area> areas = new ArrayList<Area>();
 
 	public int getId() {
 		return id;
@@ -68,11 +73,12 @@ public class City implements Serializable{
 	}
 
 	public List<Area> getAreas() {
-		return Areas;
+		return areas;
 	}
 
 	public void setAreas(List<Area> areas) {
-		Areas = areas;
+		this.areas = areas;
 	}
-	
+
+
 }
