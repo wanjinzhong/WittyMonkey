@@ -176,5 +176,6 @@ public class Hotel implements Serializable{
 		this.floors = floors;
 	}
 
+
 	
 }

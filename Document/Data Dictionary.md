@@ -24,6 +24,16 @@
 |roles|--|List&lt;Role&gt;|所属角色，多个|
 |Setting|setting_id|Setting/int|设置，外键|
 
+## 角色 (Role)
+
+ * 实体类名：`Role`
+ * 数据库字段：`role`
+ * 说明：存储角色信息，如经理，前台，后勤等
+
+|实体属性 |数据库字段|类型|说明|
+|:----:|:----:|:----:|:----:|
+|id|id|Integer/int|自增|
+
 ## 酒店（Hotel）
 
  * 实体类名：`Hotel`

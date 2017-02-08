@@ -24,7 +24,7 @@ public class City implements Serializable{
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
-	private int id;
+	private Integer id;
 	
 	//市的代码
 	@Column
@@ -40,11 +40,11 @@ public class City implements Serializable{
 	@OneToMany(targetEntity=Area.class,mappedBy="city")
 	private List<Area> areas = new ArrayList<Area>();
 
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
@@ -63,7 +63,7 @@ public class City implements Serializable{
 	public void setName(String name) {
 		this.name = name;
 	}
-	
+
 	public Province getProvince() {
 		return province;
 	}
@@ -79,6 +79,8 @@ public class City implements Serializable{
 	public void setAreas(List<Area> areas) {
 		this.areas = areas;
 	}
+
+	
 
 
 }

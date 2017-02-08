@@ -25,7 +25,7 @@ public class Permission implements Serializable{
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
-	private int id;
+	private Integer id;
 	
 	@Column
 	private String name;
@@ -54,11 +54,11 @@ public class Permission implements Serializable{
 	inverseJoinColumns={@JoinColumn(name = "menu_id", referencedColumnName = "id")})
 	private List<Menu> menus = new ArrayList<Menu>();
 
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
@@ -76,14 +76,6 @@ public class Permission implements Serializable{
 
 	public void setDescription(String description) {
 		this.description = description;
-	}
-
-	public List<Role> getRoles() {
-		return roles;
-	}
-
-	public void setRoles(List<Role> roles) {
-		this.roles = roles;
 	}
 
 	public Hotel getHotel() {
@@ -110,6 +102,14 @@ public class Permission implements Serializable{
 		this.entryUser = entryUser;
 	}
 
+	public List<Role> getRoles() {
+		return roles;
+	}
+
+	public void setRoles(List<Role> roles) {
+		this.roles = roles;
+	}
+
 	public List<Menu> getMenus() {
 		return menus;
 	}
@@ -117,5 +117,5 @@ public class Permission implements Serializable{
 	public void setMenus(List<Menu> menus) {
 		this.menus = menus;
 	}
-	
+
 }

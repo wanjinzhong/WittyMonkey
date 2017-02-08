@@ -12,7 +12,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinColumns;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
@@ -51,9 +50,9 @@ public class User implements Serializable {
 	@JoinColumn(name = "hotel_id", referencedColumnName = "id")
 	private Hotel hotel;
 
-	// 是否离职 0：未离职，1：已离职
+	// 是否离职
 	@Column(name = "is_dimission")
-	private Integer isDimission;
+	private Boolean isDimission;
 
 	// 离职原因或说明
 	@Column(name = "dimission_desc")
@@ -86,12 +85,9 @@ public class User implements Serializable {
 	@Column(name = "regist_date")
 	private Date registDate;
 
-	public int getId() {
-		return id;
-	}
 
-	public void setId(int id) {
-		this.id = id;
+	public Integer getId() {
+		return id;
 	}
 
 	public String getRealName() {
@@ -134,12 +130,16 @@ public class User implements Serializable {
 		this.hotel = hotel;
 	}
 
-	public int getIsDimission() {
+	public Boolean getIsDimission() {
 		return isDimission;
 	}
 
-	public void setIsDimission(int isDimission) {
+	public void setIsDimission(Boolean isDimission) {
 		this.isDimission = isDimission;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
 	}
 
 	public String getDimissionDesc() {

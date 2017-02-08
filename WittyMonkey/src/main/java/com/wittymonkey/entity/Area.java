@@ -23,7 +23,7 @@ public class Area implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int id;
+	private Integer id;
 	
 	// 地区编号
 	@Column
@@ -36,11 +36,11 @@ public class Area implements Serializable {
 	@JoinColumn(name = "city_code", referencedColumnName="code")
 	private City city;
 
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
@@ -67,4 +67,6 @@ public class Area implements Serializable {
 	public void setCity(City city) {
 		this.city = city;
 	}
+
+	
 }

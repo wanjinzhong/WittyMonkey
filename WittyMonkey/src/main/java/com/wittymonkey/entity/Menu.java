@@ -30,7 +30,7 @@ public class Menu implements Serializable{
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
-	private int id;
+	private Integer id;
 	
 	@Column
 	private String name;
@@ -47,12 +47,12 @@ public class Menu implements Serializable{
 	
 	@ManyToMany(targetEntity= Permission.class, mappedBy="menus")
 	private List<Permission> permissions = new ArrayList<Permission>();
-	
-	public int getId() {
+
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
@@ -95,5 +95,5 @@ public class Menu implements Serializable{
 	public void setPermissions(List<Permission> permissions) {
 		this.permissions = permissions;
 	}
-
+	
 }
