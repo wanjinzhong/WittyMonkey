@@ -1,9 +1,7 @@
 package com.wittymonkey.entity;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -13,16 +11,15 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 /**
- * 楼层
+ * 日志 
  * @author neilw
  *
  */
 @Entity
 @Table
-public class Floor implements Serializable{
+public class Log implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 
@@ -30,16 +27,6 @@ public class Floor implements Serializable{
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Integer id;
 	
-	@ManyToOne(targetEntity=Hotel.class,fetch=FetchType.EAGER)
-	@JoinColumn(name="hotel_id", referencedColumnName="id")
-	private Hotel hotel;
-	
-	@Column
-	private Integer floor_no;
-	
-	@OneToMany(targetEntity=RoomMaster.class,mappedBy="floor")
-	private List<RoomMaster> roomMasters = new ArrayList<RoomMaster>();
-
 	@Column(name="entry_datetime")
 	private Date entryDatetime;
 	
@@ -47,15 +34,19 @@ public class Floor implements Serializable{
 	@JoinColumn(name="entry_id", referencedColumnName="id")
 	private User entryUser;
 	
-	@Column(length=1024)
-	private String note;
+	@Column(name="entry_ip", length=64)
+	private String entryIp;
 	
-	public String getNote() {
-		return note;
+	//操作类型
+	@Column(name="entry_type")
+	private Integer entryType;
+
+	public Integer getId() {
+		return id;
 	}
 
-	public void setNote(String note) {
-		this.note = note;
+	public void setId(Integer id) {
+		this.id = id;
 	}
 
 	public Date getEntryDatetime() {
@@ -74,37 +65,22 @@ public class Floor implements Serializable{
 		this.entryUser = entryUser;
 	}
 
-	public Integer getId() {
-		return id;
+	public String getEntryIp() {
+		return entryIp;
 	}
 
-	public void setId(Integer id) {
-		this.id = id;
+	public void setEntryIp(String entryIp) {
+		this.entryIp = entryIp;
 	}
 
-	public Hotel getHotel() {
-		return hotel;
+	public Integer getEntryType() {
+		return entryType;
 	}
 
-	public void setHotel(Hotel hotel) {
-		this.hotel = hotel;
+	public void setEntryType(Integer entryType) {
+		this.entryType = entryType;
 	}
-
-	public Integer getFloor_no() {
-		return floor_no;
-	}
-
-	public void setFloor_no(Integer floor_no) {
-		this.floor_no = floor_no;
-	}
-
-	public List<RoomMaster> getRoomMasters() {
-		return roomMasters;
-	}
-
-	public void setRoomMasters(List<RoomMaster> roomMasters) {
-		this.roomMasters = roomMasters;
-	}
+	
 	
 	
 }

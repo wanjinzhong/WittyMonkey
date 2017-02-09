@@ -13,37 +13,43 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+
 /**
- * 城市
+ * 物料类型
  * @author neilw
  *
  */
-@Table(name="city")
 @Entity
-public class City implements Serializable{
-	/**
-	 * 
-	 */
+@Table(name="materiel_type")
+public class MaterielType implements Serializable{
+
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Integer id;
 	
-	//市的代码
-	@Column(length=10)
-	private String code;
+	@ManyToOne(targetEntity=Hotel.class)
+	@JoinColumn(name="hotel_id", referencedColumnName="id")
+	private Hotel hotel;
 	
 	@Column(length=50)
 	private String name;
 	
-	@ManyToOne(targetEntity=Province.class)
-	@JoinColumn(name="province_code", referencedColumnName="code", columnDefinition="varchar(10)")
-	private Province province;
+	@OneToMany(targetEntity=Materiel.class, mappedBy="materielType")
+	private List<Materiel> materiels = new ArrayList<Materiel>();
+	
+	@Column(length=1024)
+	private String note;
+	
+	public String getNote() {
+		return note;
+	}
 
-	@OneToMany(targetEntity=Area.class,mappedBy="city")
-	private List<Area> areas = new ArrayList<Area>();
-
+	public void setNote(String note) {
+		this.note = note;
+	}
 	public Integer getId() {
 		return id;
 	}
@@ -52,12 +58,12 @@ public class City implements Serializable{
 		this.id = id;
 	}
 
-	public String getCode() {
-		return code;
+	public Hotel getHotel() {
+		return hotel;
 	}
 
-	public void setCode(String code) {
-		this.code = code;
+	public void setHotel(Hotel hotel) {
+		this.hotel = hotel;
 	}
 
 	public String getName() {
@@ -68,23 +74,13 @@ public class City implements Serializable{
 		this.name = name;
 	}
 
-	public Province getProvince() {
-		return province;
+	public List<Materiel> getMateriels() {
+		return materiels;
 	}
 
-	public void setProvince(Province province) {
-		this.province = province;
+	public void setMateriels(List<Materiel> materiels) {
+		this.materiels = materiels;
 	}
-
-	public List<Area> getAreas() {
-		return areas;
-	}
-
-	public void setAreas(List<Area> areas) {
-		this.areas = areas;
-	}
-
 	
-
-
+	
 }

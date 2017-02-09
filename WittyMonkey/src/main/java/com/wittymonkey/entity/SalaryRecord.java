@@ -1,9 +1,7 @@
 package com.wittymonkey.entity;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -12,19 +10,17 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 /**
- * 菜单实体，并不保存任何菜单功能及详细内容。
- * 只是为了为权限赋予操作这些菜单的权力
- * @author Neil
+ * 工资变动记录
+ * @author neilw
  *
  */
 @Entity
-@Table(name="menu")
-public class Menu implements Serializable{
+@Table(name="salary_record")
+public class SalaryRecord implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
 
@@ -32,21 +28,22 @@ public class Menu implements Serializable{
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Integer id;
 	
-	@Column(length=20)
-	private String name;
+	@ManyToOne(targetEntity=User.class)
+	@JoinColumn(name="user_id", referencedColumnName="id")
+	private User user;
 	
 	@Column
-	private String description;
+	private Double salary;
 	
 	@Column(name="entry_datetime")
 	private Date entryDatetime;
-
+	
 	@ManyToOne(targetEntity=User.class, fetch=FetchType.EAGER)
 	@JoinColumn(name="entry_id", referencedColumnName="id")
 	private User entryUser;
 	
-	@ManyToMany(targetEntity= Permission.class, mappedBy="menus")
-	private List<Permission> permissions = new ArrayList<Permission>();
+	@Column(length=1024)
+	private String note;
 
 	public Integer getId() {
 		return id;
@@ -56,20 +53,20 @@ public class Menu implements Serializable{
 		this.id = id;
 	}
 
-	public String getName() {
-		return name;
+	public User getUser() {
+		return user;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setUser(User user) {
+		this.user = user;
 	}
 
-	public String getDescription() {
-		return description;
+	public Double getSalary() {
+		return salary;
 	}
 
-	public void setDescription(String description) {
-		this.description = description;
+	public void setSalary(Double salary) {
+		this.salary = salary;
 	}
 
 	public Date getEntryDatetime() {
@@ -88,12 +85,12 @@ public class Menu implements Serializable{
 		this.entryUser = entryUser;
 	}
 
-	public List<Permission> getPermissions() {
-		return permissions;
+	public String getNote() {
+		return note;
 	}
 
-	public void setPermissions(List<Permission> permissions) {
-		this.permissions = permissions;
+	public void setNote(String note) {
+		this.note = note;
 	}
 	
 }

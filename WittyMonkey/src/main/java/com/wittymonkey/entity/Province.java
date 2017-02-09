@@ -28,11 +28,11 @@ public class Province implements Serializable{
 	private Integer id;
 	
 	//省的代码
-	@Column
+	@Column(length=10)
 	private String code;
 	
 	//省的名字
-	@Column
+	@Column(length=50)
 	private String name;
 	
 	@OneToMany(targetEntity=City.class,mappedBy="province")

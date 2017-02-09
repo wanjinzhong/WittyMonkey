@@ -11,45 +11,75 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
 /**
  * 房间基本信息
+ * 
  * @author Neil
  *
  */
 @Entity
-@Table(name="room_master")
-public class RoomMaster implements Serializable{
+@Table(name = "room_master")
+public class RoomMaster implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
-	
-	@ManyToOne(targetEntity=Floor.class)
-	@JoinColumn(name="floor_id", referencedColumnName="id")
+
+	@ManyToOne(targetEntity = Floor.class)
+	@JoinColumn(name = "floor_id", referencedColumnName = "id")
 	private Floor floor;
-	
+
 	@Column
 	private Double area;
-	
+
 	@Column
 	private Double price;
-	
+
 	// 单人床数量
-	@Column(name="singe_bed_num")
+	@Column(name = "singe_bed_num")
 	private Integer singleBedNum;
-	
+
 	// 双人床数量
-	@Column(name="double_bed_num")
+	@Column(name = "double_bed_num")
 	private Integer doubleBedNum;
-	
+
 	// 可入住人数
-	@Column(name="available_num")
+	@Column(name = "available_num")
 	private Integer availableNum;
 
-	@OneToOne(targetEntity=RoomExt.class, mappedBy="roomMaster")
+	// 房间状态
+	@Column
+	private Integer status;
+
+	@OneToOne(targetEntity = RoomExt.class, mappedBy = "roomMaster")
 	private RoomExt roomExt;
+
+	// 缩略图URL
+	@Column
+	private String thumbUrl;
+
+	@Column(length=1024)
+	private String note;
+	
+	public String getNote() {
+		return note;
+	}
+
+	public void setNote(String note) {
+		this.note = note;
+	}
+	
+	public String getThumbUrl() {
+		return thumbUrl;
+	}
+
+	public void setThumbUrl(String thumbUrl) {
+		this.thumbUrl = thumbUrl;
+	}
+
 	public Integer getId() {
 		return id;
 	}
@@ -105,6 +135,21 @@ public class RoomMaster implements Serializable{
 	public void setAvailableNum(Integer availableNum) {
 		this.availableNum = availableNum;
 	}
-	
-	
+
+	public Integer getStatus() {
+		return status;
+	}
+
+	public void setStatus(Integer status) {
+		this.status = status;
+	}
+
+	public RoomExt getRoomExt() {
+		return roomExt;
+	}
+
+	public void setRoomExt(RoomExt roomExt) {
+		this.roomExt = roomExt;
+	}
+
 }

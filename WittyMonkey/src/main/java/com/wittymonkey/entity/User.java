@@ -34,29 +34,21 @@ public class User implements Serializable {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
 
-	@Column(name = "real_name")
+	@Column(name = "real_name", length=20)
 	private String realName;
 
-	@Column(name = "login_name")
+	@Column(name = "login_name", length=20)
 	private String loginName;
 
-	@Column(name = "password")
+	@Column(name = "password", length=20)
 	private String password;
 
-	@Column(name = "idcard_no")
+	@Column(name = "idcard_no", length=20)
 	private String idCardNo;
 
 	@ManyToOne(targetEntity = Hotel.class, fetch = FetchType.EAGER)
 	@JoinColumn(name = "hotel_id", referencedColumnName = "id")
 	private Hotel hotel;
-
-	// 是否离职
-	@Column(name = "is_dimission")
-	private Boolean isDimission;
-
-	// 离职原因或说明
-	@Column(name = "dimission_desc")
-	private String dimissionDesc;
 
 	@Column(name = "entry_datetime")
 	private Date entryDatetime;
@@ -76,15 +68,25 @@ public class User implements Serializable {
 	private Setting setting;
 	
 	
-	@Column
+	@Column(length=15)
 	private String tel;
 
-	@Column
+	@Column(length=50)
 	private String email;
 
 	@Column(name = "regist_date")
 	private Date registDate;
 
+	@Column(length=1024)
+	private String note;
+
+	public String getNote() {
+		return note;
+	}
+
+	public void setNote(String note) {
+		this.note = note;
+	}
 
 	public Integer getId() {
 		return id;
@@ -130,24 +132,9 @@ public class User implements Serializable {
 		this.hotel = hotel;
 	}
 
-	public Boolean getIsDimission() {
-		return isDimission;
-	}
-
-	public void setIsDimission(Boolean isDimission) {
-		this.isDimission = isDimission;
-	}
-
+	
 	public void setId(Integer id) {
 		this.id = id;
-	}
-
-	public String getDimissionDesc() {
-		return dimissionDesc;
-	}
-
-	public void setDimissionDesc(String dimissionDesc) {
-		this.dimissionDesc = dimissionDesc;
 	}
 
 	public Date getEntryDatetime() {

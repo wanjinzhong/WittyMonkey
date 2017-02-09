@@ -16,13 +16,13 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 /**
- * 楼层
+ * 财务类型
  * @author neilw
  *
  */
 @Entity
-@Table
-public class Floor implements Serializable{
+@Table(name="finance_type")
+public class FinanceType implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 
@@ -30,16 +30,23 @@ public class Floor implements Serializable{
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Integer id;
 	
-	@ManyToOne(targetEntity=Hotel.class,fetch=FetchType.EAGER)
+	// 收/支
+	@Column
+	private Integer type;
+	
+	@Column(length=20)
+	private String name;
+	
+	@ManyToOne(targetEntity=Hotel.class)
 	@JoinColumn(name="hotel_id", referencedColumnName="id")
 	private Hotel hotel;
 	
-	@Column
-	private Integer floor_no;
-	
-	@OneToMany(targetEntity=RoomMaster.class,mappedBy="floor")
-	private List<RoomMaster> roomMasters = new ArrayList<RoomMaster>();
+	@OneToMany(targetEntity= Finance.class, mappedBy="financeType")
+	private List<Finance> finances = new ArrayList<Finance>();
 
+	@Column(length=1024)
+	private String note;
+	
 	@Column(name="entry_datetime")
 	private Date entryDatetime;
 	
@@ -47,17 +54,6 @@ public class Floor implements Serializable{
 	@JoinColumn(name="entry_id", referencedColumnName="id")
 	private User entryUser;
 	
-	@Column(length=1024)
-	private String note;
-	
-	public String getNote() {
-		return note;
-	}
-
-	public void setNote(String note) {
-		this.note = note;
-	}
-
 	public Date getEntryDatetime() {
 		return entryDatetime;
 	}
@@ -74,12 +70,36 @@ public class Floor implements Serializable{
 		this.entryUser = entryUser;
 	}
 
+	public String getNote() {
+		return note;
+	}
+
+	public void setNote(String note) {
+		this.note = note;
+	}
+
 	public Integer getId() {
 		return id;
 	}
 
 	public void setId(Integer id) {
 		this.id = id;
+	}
+
+	public Integer getType() {
+		return type;
+	}
+
+	public void setType(Integer type) {
+		this.type = type;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	public Hotel getHotel() {
@@ -90,20 +110,12 @@ public class Floor implements Serializable{
 		this.hotel = hotel;
 	}
 
-	public Integer getFloor_no() {
-		return floor_no;
+	public List<Finance> getFinances() {
+		return finances;
 	}
 
-	public void setFloor_no(Integer floor_no) {
-		this.floor_no = floor_no;
-	}
-
-	public List<RoomMaster> getRoomMasters() {
-		return roomMasters;
-	}
-
-	public void setRoomMasters(List<RoomMaster> roomMasters) {
-		this.roomMasters = roomMasters;
+	public void setFinances(List<Finance> finances) {
+		this.finances = finances;
 	}
 	
 	

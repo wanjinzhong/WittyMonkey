@@ -17,7 +17,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
- * 酒店实体类
+ * 酒店
  * @author Neil
  *
  */
@@ -31,7 +31,7 @@ public class Hotel implements Serializable{
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Integer id;
 	
-	@Column
+	@Column(length=50)
 	private String name;
 	
 	@ManyToOne(targetEntity=Area.class)
@@ -45,13 +45,13 @@ public class Hotel implements Serializable{
 	@Column
 	private Integer star;
 	
-	@Column
+	@Column(length=20)
 	private String tel;
 	
-	@Column
+	@Column(length=20)
 	private String fax;
 	
-	@Column
+	@Column(length=50)
 	private String email;
 	
 	// 开业时间
@@ -71,6 +71,29 @@ public class Hotel implements Serializable{
 	
 	@OneToMany(targetEntity=Floor.class, mappedBy="hotel")
 	private List<Floor> floors = new ArrayList<Floor>();
+
+	@Column(length=1024)
+	private String note;
+	
+	// 是否停业
+	@Column
+	private Boolean isClose;
+	
+	public Boolean getIsClose() {
+		return isClose;
+	}
+
+	public void setIsClose(Boolean isClose) {
+		this.isClose = isClose;
+	}
+
+	public String getNote() {
+		return note;
+	}
+
+	public void setNote(String note) {
+		this.note = note;
+	}
 
 	public Integer getId() {
 		return id;

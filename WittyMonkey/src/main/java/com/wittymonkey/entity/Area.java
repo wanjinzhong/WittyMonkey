@@ -26,14 +26,14 @@ public class Area implements Serializable {
 	private Integer id;
 	
 	// 地区编号
-	@Column
+	@Column(length=10)
 	private String code;
 
-	@Column
+	@Column(length=50)
 	private String name;
 	
 	@ManyToOne(targetEntity = City.class)
-	@JoinColumn(name = "city_code", referencedColumnName="code")
+	@JoinColumn(name = "city_code")
 	private City city;
 
 	public Integer getId() {

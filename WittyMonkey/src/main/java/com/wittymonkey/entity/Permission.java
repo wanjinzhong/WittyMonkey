@@ -27,10 +27,10 @@ public class Permission implements Serializable{
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Integer id;
 	
-	@Column
+	@Column(length=50)
 	private String name;
 	
-	@Column
+	@Column(length=1024)
 	private String description;
 	
 	@ManyToOne(targetEntity = Hotel.class, fetch=FetchType.EAGER)

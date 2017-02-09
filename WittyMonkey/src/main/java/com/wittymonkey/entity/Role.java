@@ -35,7 +35,7 @@ public class Role implements Serializable{
 	@JoinColumn(name="hotel_id", referencedColumnName="id")
 	private Hotel hotel;
 	
-	@Column
+	@Column(length=50)
 	private String name;
 	
 	@Column(name="entry_datetime")
@@ -53,7 +53,17 @@ public class Role implements Serializable{
 	joinColumns = { @JoinColumn(name = "role_id", referencedColumnName = "id") },
 	inverseJoinColumns={@JoinColumn(name = "permission_id", referencedColumnName = "id")})
 	private List<Permission> permissions = new ArrayList<Permission>();
+	
+	@Column(length=1024)
+	private String note;
+	
+	public String getNote() {
+		return note;
+	}
 
+	public void setNote(String note) {
+		this.note = note;
+	}
 	public Integer getId() {
 		return id;
 	}

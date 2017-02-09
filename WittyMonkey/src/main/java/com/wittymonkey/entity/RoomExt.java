@@ -60,10 +60,11 @@ public class RoomExt implements Serializable{
 	@Column(name="breakfast_num")
 	private Integer breakfastNum;
 	
-	@Column(name="other_facility")
+	// 其它设施
+	@Column(name="other_facility", length=1024)
 	private String otherFacility;
 	
-	@Column
+	@Column(length=1024)
 	private String note;
 
 	public Integer getId(){
