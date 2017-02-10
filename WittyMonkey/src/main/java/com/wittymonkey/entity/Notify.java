@@ -14,7 +14,11 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-
+/**
+ * 通知，类似于站内信和邮件功能
+ * @author neilw
+ *
+ */
 @Entity
 @Table
 public class Notify implements Serializable{

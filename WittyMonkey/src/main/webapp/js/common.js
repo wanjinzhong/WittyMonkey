@@ -1,18 +1,4 @@
-/**
- * 国际化
- */
-$(document).ready(function(){
-	loadProperties("messages", "i18n/");
-});
-function loadProperties(name, path, lang){
-	var lang = lang || navigator.language;
-	$.i18n.properties({
-		name: name,
-		path: path,
-		mode: 'map',
-		language: lang
-	})
-}
+
 /**
  * 验证用户名
  * @param nameInp
@@ -21,7 +7,7 @@ function loadProperties(name, path, lang){
 function validateLoginName(nameInp){
 	var name = $(nameInp).val();
 	if (name == null || name == ""){
-		layer.tips($.i18n.prop("regist.input_name_first"),nameInp,{tips:4});
+		layer.tips(regist_input_name_first,nameInp,{tips:4});
 		return false;
 	}
 	$.ajax({
@@ -32,14 +18,14 @@ function validateLoginName(nameInp){
 		success: function(data) {
 			var result = eval("(" + data + ")");
 			if (result.status == 200){
-				layer.tips($.i18n.prop("regist.user_is_exist"),nameInp,{tips:4});
+				layer.tips(regist_user_is_exist,nameInp,{tips:4});
 				return false;
 			} else{
 				return true;
 			}
 		},
 		error: function(data) {
-			layer.msg($.i18n.prop("error_500"),{time:3000, icon: 5});
+			layer.msg(error_500,{time:3000, icon: 5});
 		}
 	});
 	return true;
@@ -52,10 +38,10 @@ function validateLoginName(nameInp){
 function validatePassword(pwdInp){
 	var password = $(pwdInp).val();
 	if ( password.length == 0) {
-		layer.tips($.i18n.prop("regist.input_password_first"),pwdInp,{tips:4});
+		layer.tips(regist_input_password_first,pwdInp,{tips:4});
 		return false;
 	} else if ( password.length < 6) {
-		layer.tips($.i18n.prop("regist.password_less_six"),pwdInp,{tips:4});
+		layer.tips(regist_password_less_six,pwdInp,{tips:4});
 		return false;
 	} else {
 		return true;
@@ -70,7 +56,7 @@ function validateRepassword(repwdInp){
 	var password = $("#password").val();
 	var repassword = $(repwdInp).val();
 	if (password != repassword){
-		layer.tips($.i18n.prop("regist.password_not_same"), repwdInp,{tips:4});
+		layer.tips(regist_password_not_same, repwdInp,{tips:4});
 		return false;
 	} else {
 		return true;
@@ -85,7 +71,7 @@ function validateEmail(email){
 	var emailStr = $(email).val();
 	var reg = /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+/;
 	if (!reg.test(emailStr)){
-		layer.tips($.i18n.prop("regist.email_is_wrong"), email,{tips:4});
+		layer.tips(regist_email_is_wrong, email,{tips:4});
 		return false;
 	} else {
 		return true;
@@ -110,10 +96,10 @@ function validateCode(codeInp) {
 		success: function(data){
 			var result = eval("(" + data + ")");
 			if (result.status == 400){
-				layer.tips($.i18n.prop("regist.get_code_first"), codeBtn,{tips:1});
+				layer.tips(regist_get_code_first, codeBtn,{tips:1});
 				return false;
 			} else if (result.status == 401){
-				layer.tips($.i18n.prop("regist.code_is_wrong"), codeInp,{tips:4});
+				layer.tips(regist_code_is_wrong, codeInp,{tips:4});
 				return false;
 			}else if (result.status == 201){
 				return true;

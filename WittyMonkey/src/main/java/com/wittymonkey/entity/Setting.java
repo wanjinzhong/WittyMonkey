@@ -7,8 +7,13 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
-
+/**
+ * 设置
+ * @author neilw
+ *
+ */
 @Entity
 @Table
 public class Setting implements Serializable{
@@ -19,10 +24,8 @@ public class Setting implements Serializable{
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Integer id;
 	
-	/**
-	 * 语言
-	 */
-	@Column(columnDefinition="VARCHAR(10) default 'cn'")
+	//语言
+	@Column(columnDefinition="VARCHAR(10) default 'zh_CN'")
 	private String lang;
 
 	public Integer getId() {
@@ -40,5 +43,5 @@ public class Setting implements Serializable{
 	public void setLang(String lang) {
 		this.lang = lang;
 	}
-	
+
 }

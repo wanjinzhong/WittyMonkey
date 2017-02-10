@@ -16,7 +16,11 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-
+/**
+ * 权限
+ * @author neilw
+ *
+ */
 @Entity
 @Table(name="permission")
 public class Permission implements Serializable{

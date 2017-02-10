@@ -100,7 +100,8 @@ public class LoginController {
 			if (!userService.validateLogin(user)){
 				json.put("status", 430);
 			} else {
-				request.getSession().setAttribute("loginUser", user);
+				User loginUser = userService.getUserByLoginName(loginName);
+				request.getSession().setAttribute("loginUser", loginUser);
 				json.put("status", 200);
 				json.put("url", "index.do");
 			}

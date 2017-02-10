@@ -2,9 +2,14 @@
 	pageEncoding="UTF-8"%>
 <%
 	String contextPath = request.getContextPath();
+	String lang;
+	if (request.getLocale().equals(java.util.Locale.US)){
+		lang = "en_US";
+	} else{
+		lang = "zh_CN";
+	}
 %>
 <%@ include file="common/taglib.jsp"%>
-<%@ include file="common/i18n.jsp"%>
 <%@ include file="common/js&css.jsp"%>
 <!DOCTYPE html>
 <html>
@@ -13,7 +18,8 @@
 <title><fmt:message key="name" /></title>
 <link href="lib/Hui-iconfont/1.0.7/iconfont.css" rel="stylesheet"
 	type="text/css" />
-	<script type="text/javascript" src="js/common.js"></script>
+<script type="text/javascript" src="i18n/messages_<%=lang%>.js"></script>
+<fmt:setBundle basename="i18n/messages" />
 </head>
 <style>
 #login_form {
@@ -113,7 +119,7 @@ td {
 				fix : true,
 				maxmin : false,
 				shade : 0.4,
-				title : $.i18n.prop('regist.title'),
+				title : regist_title,
 				content : "toRegist.do"
 			});
 
@@ -126,19 +132,19 @@ td {
 	function login() {
 		var form = $("#login_form");
 		if ($("#loginName").val() == "") {
-			layer.tips($.i18n.prop("regist.input_name_first"), $("#loginName"),
+			layer.tips(regist_input_name_first, $("#loginName"),
 					{
 						tips : 4
 					});
 			return;
 		} else if ($("#password").val() == "") {
-			layer.tips($.i18n.prop("regist.input_password_first"),
+			layer.tips(regist_input_password_first,
 					$("#password"), {
 						tips : 4
 					});
 			return;
 		} else if ($("#validateCode").val() == "") {
-			layer.tips($.i18n.prop("regist.input_validate_code_first"),
+			layer.tips(regist_input_validate_code_first,
 					$("#validateCode"), {
 						tips : 4
 					});
@@ -154,36 +160,35 @@ td {
 					var result = eval("(" + data + ")");
 					switch (result.status) {
 					case 400:
-						layer.msg($.i18n
-								.prop('regist.input_name_first'), {
+						layer.msg(regist_input_name_first, {
 							time : 3000,
 							icon : 5
 						});
 						return;
 						break;
 					case 410:
-						layer.msg($.i18n.prop('regist.input_password_first'), {
+						layer.msg(regist_input_password_first, {
 							time : 3000,
 							icon : 5
 						});
 						return;
 						break;
 					case 420:
-						layer.msg($.i18n.prop('regist.input_validate_code_first'), {
+						layer.msg(regist_input_validate_code_first, {
 							time : 3000,
 							icon : 5
 						});
 						return;
 						break;
 					case 421:
-						layer.msg($.i18n.prop('regist.code_is_wrong'), {
+						layer.msg(regist_code_is_wrong, {
 							time : 3000,
 							icon : 5
 						});
 						return;
 						break;
 					case 430:
-						layer.msg($.i18n.prop('regist.login_error'), {
+						layer.msg(regist_login_error, {
 							time : 3000,
 							icon : 5
 						});

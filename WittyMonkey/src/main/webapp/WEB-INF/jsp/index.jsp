@@ -1,10 +1,10 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
+<%@ page language="java" contentType="text/html; charset=UTF-8" import="com.wittymonkey.entity.User"
 	pageEncoding="UTF-8"%>
 <%
-	String contextPath = request.getContextPath();
+	User loginUser = (User) session.getAttribute("loginUser");
+	String lang = loginUser.getSetting().getLang();
 %>
 <%@ include file="common/taglib.jsp"%>
-<%@ include file="common/i18n.jsp"%>
 <%@ include file="common/js&css.jsp"%>
 <!DOCTYPE html>
 <html>
@@ -15,6 +15,9 @@
 	type="text/css" />
 </head>
 <script type="text/javascript" src="js/common.js"></script>
+<!-- 根据设置动态加载js语言 -->
+<script type="text/javascript" src="i18n/messages_<%=lang%>.js"></script>
+<fmt:setBundle basename="i18n/messages_${loginUser.setting.lang }"/>
 <style>
 .navbar-wrapper {
 	height: 80px;

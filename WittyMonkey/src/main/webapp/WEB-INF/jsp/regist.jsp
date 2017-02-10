@@ -1,10 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8" import="com.wittymonkey.entity.User"%>
 <%
 	String contextPath = request.getContextPath();
+	String lang;
+	if (request.getLocale().equals(java.util.Locale.US)) {
+		lang = "en_US";
+	} else {
+		lang = "zh_CN";
+	}
 %>
 <%@ include file="common/taglib.jsp"%>
-<%@ include file="common/i18n.jsp"%>
 <%@ include file="common/js&css.jsp"%>
 <!DOCTYPE html>
 <html>
@@ -12,6 +17,8 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title><fmt:message key="name" /></title>
 <script type="text/javascript" src="js/common.js"></script>
+<script type="text/javascript" src="i18n/messages_<%=lang%>.js"></script>
+<fmt:setBundle basename="i18n/messages" />
 </head>
 <style>
 #logo {
@@ -141,15 +148,13 @@ td {
 							});
 					break;
 				case 410:
-					layer.tips(
-							$.i18n.prop('regist.password_less_six'),
+					layer.tips($.i18n.prop('regist.password_less_six'),
 							$("#password"), {
 								tips : 4
 							});
 					break;
 				case 411:
-					layer.tips(
-							$.i18n.prop('regist.password_not_same'),
+					layer.tips($.i18n.prop('regist.password_not_same'),
 							$("#repassword"), {
 								tips : 4
 							});
@@ -167,8 +172,8 @@ td {
 							});
 					break;
 				case 431:
-					layer.tips($.i18n.prop('regist.code_is_wrong'),
-							$("#code"), {
+					layer.tips($.i18n.prop('regist.code_is_wrong'), $("#code"),
+							{
 								tips : 4
 							});
 					break;

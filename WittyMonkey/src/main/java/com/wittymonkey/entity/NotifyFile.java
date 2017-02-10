@@ -10,7 +10,11 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-
+/**
+ * 通知中包含的文件
+ * @author neilw
+ *
+ */
 @Entity
 @Table(name="notify_file")
 public class NotifyFile implements Serializable{
