@@ -19,7 +19,7 @@ public class UserServiceImpl implements IUserService {
 	}
 
 	@Override
-	public void addUser(User user) {
+	public void saveUser(User user) {
 		userDao.save(user);
 	}
 
@@ -30,6 +30,11 @@ public class UserServiceImpl implements IUserService {
 		} else {
 			return true;
 		}
+	}
+
+	@Override
+	public User getUserById(Integer id) {
+		return userDao.getUserById(id);
 	}
 
 }

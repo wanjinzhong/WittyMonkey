@@ -88,7 +88,7 @@ function validateCode(codeInp) {
 	var codeBtn = $("get_code");
 	$.ajax({
 		type : "GET",
-		url : "validateCode.do",
+		url : "validateEmailCode.do",
 		data: {
 			"code" : code 
 		},
@@ -101,7 +101,7 @@ function validateCode(codeInp) {
 			} else if (result.status == 401){
 				layer.tips(regist_code_is_wrong, codeInp,{tips:4});
 				return false;
-			}else if (result.status == 201){
+			}else if (result.status == 200){
 				return true;
 			}
 		}

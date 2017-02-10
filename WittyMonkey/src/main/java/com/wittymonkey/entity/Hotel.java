@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -15,6 +16,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.Cascade;
 
 /**
  * 酒店
@@ -65,7 +68,7 @@ public class Hotel implements Serializable{
 	@Column(name="entry_datetime")
 	private Date entryDatetime;
 	
-	@ManyToOne(targetEntity=User.class, fetch=FetchType.EAGER)
+	@ManyToOne(targetEntity=User.class, fetch=FetchType.EAGER, cascade={CascadeType.PERSIST,CascadeType.MERGE})
 	@JoinColumn(name="entry_id", referencedColumnName="id")
 	private User entryUser;
 	

@@ -11,3 +11,4 @@ var regist_input_name_first="Please input login name";
 var regist_input_password_first="Please input password";
 var regist_input_validate_code_first="Please input validate code";
 var regist_login_error="Name or password error";
+var regist_get_code="Get code"

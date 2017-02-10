@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -46,7 +47,7 @@ public class User implements Serializable {
 	@Column(name = "idcard_no", length=20)
 	private String idCardNo;
 
-	@ManyToOne(targetEntity = Hotel.class, fetch = FetchType.EAGER)
+	@ManyToOne(targetEntity = Hotel.class, fetch = FetchType.EAGER,cascade={CascadeType.PERSIST,CascadeType.MERGE})
 	@JoinColumn(name = "hotel_id", referencedColumnName = "id")
 	private Hotel hotel;
 
@@ -63,7 +64,7 @@ public class User implements Serializable {
 	inverseJoinColumns={@JoinColumn(name = "role_id", referencedColumnName = "id")})
 	private List<Role> roles = new ArrayList<Role>();
 
-	@OneToOne(targetEntity=Setting.class, fetch=FetchType.EAGER)
+	@OneToOne(targetEntity=Setting.class, fetch=FetchType.EAGER,cascade={CascadeType.PERSIST,CascadeType.MERGE})
 	@JoinColumn(name="setting_id", referencedColumnName="id")
 	private Setting setting;
 	

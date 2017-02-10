@@ -10,8 +10,12 @@ public class HotelDaoImpl extends GenericDaoImpl<Hotel> implements IHotelDao {
 
 	@Override
 	public Hotel findHotelById(int id) {
-		
 		return (Hotel) this.load(id);
+	}
+
+	@Override
+	public void saveHotel(Hotel hotel) {
+		save(hotel);
 	}
 
 }

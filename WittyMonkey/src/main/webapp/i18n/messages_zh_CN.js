@@ -11,3 +11,4 @@ var regist_input_name_first="请输入用户名";
 var regist_input_password_first="请输入密码";
 var regist_input_validate_code_first="请输入验证码";
 var regist_login_error="用户名或密码错误";
+var regist_get_code="获取验证码"

@@ -6,6 +6,12 @@ import com.wittymonkey.entity.User;
 
 public interface IUserDao extends IGenericDao<User, Serializable>{
 	/**
+	 * 根据id获取用户
+	 * @param id
+	 * @return
+	 */
+	public User getUserById(Integer id);
+	/**
 	 * 根据登陆名获取用户
 	 * @param loginName
 	 * @return
@@ -18,4 +24,6 @@ public interface IUserDao extends IGenericDao<User, Serializable>{
 	 * @return
 	 */
 	public User getUserByLoginNameAndPassword(User user);
+	
+	public void saveUser(User user);
 }

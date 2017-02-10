@@ -39,4 +39,25 @@ public class UserDaoImpl extends GenericDaoImpl<User> implements IUserDao {
 		}
 	}
 
+	@Override
+	public void saveUser(User user) {
+		save(user);
+		getCurrentSession().flush();
+	}
+
+	@Override
+	public User getUserById(Integer id) {
+		String hql = "from User where id = :id";
+		Map<String, Object> param = new HashMap<String, Object>();
+		param.put("id",id);
+		List<User> users = queryHQL(hql, param); 
+		if (users == null || users.isEmpty()){
+			return null;
+		} else {
+			return users.get(0);
+		}
+	}
+	
+	
+
 }

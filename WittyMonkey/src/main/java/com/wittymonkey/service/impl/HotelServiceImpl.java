@@ -20,7 +20,7 @@ public class HotelServiceImpl implements IHotelService {
 
 	@Override
 	public void saveHotel(Hotel hotel) {
-		hotelDao.save(hotel);
+		hotelDao.saveHotel(hotel);
 	}
 
 }

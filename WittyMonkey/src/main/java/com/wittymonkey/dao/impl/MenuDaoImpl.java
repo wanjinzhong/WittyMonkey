@@ -10,4 +10,10 @@ import com.wittymonkey.entity.Menu;
 @Repository(value="menuDao")
 public class MenuDaoImpl extends GenericDaoImpl<Menu> implements IMenuDao {
 
+	@Override
+	public List<Menu> getAll() {
+		String hql = "from Menu";
+		return queryHQL(hql, null);
+	}
+
 }

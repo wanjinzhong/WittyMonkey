@@ -136,49 +136,49 @@ td {
 				var stu = result.status;
 				switch (stu) {
 				case 400:
-					layer.tips($.i18n.prop('regist.input_name_first'),
+					layer.tips(regist_input_name_first,
 							$("#loginName"), {
 								tips : 4
 							});
 					break;
 				case 401:
-					layer.tips($.i18n.prop('regist.user_is_exist'),
+					layer.tips(regist_user_is_exist,
 							$("#loginName"), {
 								tips : 4
 							});
 					break;
 				case 410:
-					layer.tips($.i18n.prop('regist.password_less_six'),
+					layer.tips(regist_password_less_six,
 							$("#password"), {
 								tips : 4
 							});
 					break;
 				case 411:
-					layer.tips($.i18n.prop('regist.password_not_same'),
+					layer.tips(regist_password_not_same,
 							$("#repassword"), {
 								tips : 4
 							});
 					break;
 				case 420:
-					layer.tips($.i18n.prop('regist.email_is_wrong'),
+					layer.tips(regist_email_is_wrong,
 							$("#email"), {
 								tips : 4
 							});
 					break;
 				case 430:
-					layer.tips($.i18n.prop('regist.get_code_first'),
+					layer.tips(regist_get_code_first,
 							$("#get_code"), {
 								tips : 1
 							});
 					break;
 				case 431:
-					layer.tips($.i18n.prop('regist.code_is_wrong'), $("#code"),
+					layer.tips(regist_code_is_wrong, $("#code"),
 							{
 								tips : 4
 							});
 					break;
 				case 200:
-					layer.msg($.i18n.prop('regist.regist_success'), {
+					layer.msg(regist_regist_success, {
 						time : 3000,
 						icon : 1
 					});
@@ -203,7 +203,7 @@ td {
 			$("#get_code").addClass("btn-secondary");
 			$("#get_code").attr("disabled", false);
 			window.clearInterval(t1);
-			$("#get_code").val($.i18n.prop('regist.get_code'));
+			$("#get_code").val(regist_get_code);
 			time = 60;
 		}
 	}

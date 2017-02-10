@@ -12,4 +12,10 @@ public interface IHotelDao extends IGenericDao<Hotel, Serializable>{
 	 */
 	public Hotel findHotelById(int id);
 	
+	/**
+	 * 保存hotel
+	 * @param hotel
+	 */
+	public void saveHotel(Hotel hotel);
+	
 }

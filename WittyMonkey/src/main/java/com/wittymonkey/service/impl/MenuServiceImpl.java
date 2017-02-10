@@ -17,7 +17,7 @@ public class MenuServiceImpl implements IMenuService {
 	
 	@Override
 	public List<Menu> getAll() {
-		return menuDao.findAll();
+		return menuDao.getAll();
 	}
 
 }

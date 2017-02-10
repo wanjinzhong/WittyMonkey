@@ -3,6 +3,12 @@ package com.wittymonkey.service;
 import com.wittymonkey.entity.User;
 
 public interface IUserService {
+	
+	/**
+	 * 根据id获取用户
+	 * @return
+	 */
+	public User getUserById(Integer id);
 	/**
 	 * 根据登陆名查询用户
 	 * @param loginName
@@ -14,7 +20,7 @@ public interface IUserService {
 	 * 添加用户
 	 * @param user
 	 */
-	public void addUser(User user);
+	public void saveUser(User user);
 	
 	/**
 	 * 验证用户名和密码

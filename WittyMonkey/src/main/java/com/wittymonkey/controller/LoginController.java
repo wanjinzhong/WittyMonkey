@@ -53,6 +53,8 @@ public class LoginController {
 		return "regist";
 	}
 
+	
+	
 	/**
 	 * 
 	 * @param request
@@ -144,7 +146,7 @@ public class LoginController {
 	public String validateEmailCode(HttpServletRequest request) {
 		JSONObject json = new JSONObject();
 		String myCode = request.getParameter("code");
-		json.put("status", validateInpEmailCode(request, myCode));
+		json.put("status", validateInpEmailCode(request));
 		return json.toJSONString();
 
 	}
@@ -227,19 +229,22 @@ public class LoginController {
 		} else if (!validateEmail(email)) {
 			json.put("status", 420);
 			return json.toJSONString();
-		} else if (validateInpEmailCode(request, myCode) == 400) {
+		} else if (validateInpEmailCode(request) == 400) {
 			json.put("status", 430);
 			return json.toJSONString();
-		} else if (validateInpEmailCode(request, myCode) == 401) {
+		} else if (validateInpEmailCode(request) == 401) {
 			json.put("status", 431);
 			return json.toJSONString();
 		} else {
+			User system = userService.getUserById(0);
 			Date now = new Date();
 			// 添加酒店
 			Hotel hotel = new Hotel();
 			hotel.setAddDate(now);
 			hotel.setEntryDatetime(now);
+			hotel.setEntryUser(system);
 			hotelService.saveHotel(hotel);
+			
 			// 添加用户设置
 			Setting setting = new Setting();
 			setting.setLang("zh_CN");
@@ -252,18 +257,15 @@ public class LoginController {
 			user.setHotel(hotel);
 			user.setRegistDate(now);
 			user.setEntryDatetime(now);
-			user.setEntryUser(user);
+			user.setEntryUser(system);
 			user.setSetting(setting);
-			userService.addUser(user);
-			// 设置酒店操作人
-			hotel.setEntryUser(user);
-			hotelService.saveHotel(hotel);
+			userService.saveUser(user);
 			// 添加角色
 			Role role = new Role();
 			role.setHotel(hotel);
 			role.setEntryDatetime(now);
 			role.setName("Admin(经理)");
-			role.setEntryUser(user);
+			role.setEntryUser(system);
 			role.setMenus(menuService.getAll());
 			role.getUsers().add(user);
 			roleService.saveRole(role);
@@ -305,7 +307,7 @@ public class LoginController {
 		}
 		return json.toJSONString();
 	}
-
+	
 	/**
 	 * 用户名是否存在
 	 * 
@@ -359,7 +361,8 @@ public class LoginController {
 		Pattern regex = Pattern.compile(check);
 		return regex.matcher(email).matches();
 	}
-
+	
+	
 	/**
 	 * 验证 邮件验证码
 	 * 
@@ -384,8 +387,9 @@ public class LoginController {
 	 *         </tr>
 	 *         </table>
 	 */
-	public int validateInpEmailCode(HttpServletRequest request, String myCode) {
+	public int validateInpEmailCode(HttpServletRequest request) {
 		String realCode = (String) request.getSession().getAttribute("registCode");
+		String myCode = request.getParameter("code");
 		if (realCode == null) {
 			return 400;
 		} else if (myCode.equals(realCode)) {
