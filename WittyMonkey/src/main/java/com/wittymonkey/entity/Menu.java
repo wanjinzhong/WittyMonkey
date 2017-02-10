@@ -45,8 +45,8 @@ public class Menu implements Serializable{
 	@JoinColumn(name="entry_id", referencedColumnName="id")
 	private User entryUser;
 	
-	@ManyToMany(targetEntity= Permission.class, mappedBy="menus")
-	private List<Permission> permissions = new ArrayList<Permission>();
+	@ManyToMany(targetEntity= Role.class, mappedBy="menus")
+	private List<Role> roles = new ArrayList<Role>();
 
 	public Integer getId() {
 		return id;
@@ -88,12 +88,14 @@ public class Menu implements Serializable{
 		this.entryUser = entryUser;
 	}
 
-	public List<Permission> getPermissions() {
-		return permissions;
+	public List<Role> getRoles() {
+		return roles;
 	}
 
-	public void setPermissions(List<Permission> permissions) {
-		this.permissions = permissions;
+	public void setRoles(List<Role> roles) {
+		this.roles = roles;
 	}
+
+	
 	
 }

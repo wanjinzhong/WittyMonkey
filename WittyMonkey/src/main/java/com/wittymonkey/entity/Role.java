@@ -48,11 +48,12 @@ public class Role implements Serializable{
 	@ManyToMany(targetEntity=User.class, mappedBy="roles")
 	private List<User> users = new ArrayList<User>();
 
-	@ManyToMany(targetEntity=Permission.class)
-	@JoinTable(name = "role_permission", 
+	// 该权限可操作的菜单
+	@ManyToMany(targetEntity=Menu.class)
+	@JoinTable(name = "role_menu", 
 	joinColumns = { @JoinColumn(name = "role_id", referencedColumnName = "id") },
-	inverseJoinColumns={@JoinColumn(name = "permission_id", referencedColumnName = "id")})
-	private List<Permission> permissions = new ArrayList<Permission>();
+	inverseJoinColumns={@JoinColumn(name = "menu_id", referencedColumnName = "id")})
+	private List<Menu> menus = new ArrayList<Menu>();
 	
 	@Column(length=1024)
 	private String note;
@@ -112,12 +113,13 @@ public class Role implements Serializable{
 		this.users = users;
 	}
 
-	public List<Permission> getPermissions() {
-		return permissions;
+	public List<Menu> getMenus() {
+		return menus;
 	}
 
-	public void setPermissions(List<Permission> permissions) {
-		this.permissions = permissions;
+	public void setMenus(List<Menu> menus) {
+		this.menus = menus;
 	}
+
 	
 }

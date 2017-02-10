@@ -11,4 +11,5 @@ public interface IHotelDao extends IGenericDao<Hotel, Serializable>{
 	 * @return
 	 */
 	public Hotel findHotelById(int id);
+	
 }

@@ -1,5 +1,6 @@
 package com.wittymonkey.controller;
 
+import java.util.Date;
 import java.util.regex.Pattern;
 
 import javax.servlet.http.HttpServletRequest;
@@ -11,13 +12,17 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSONObject;
+import com.wittymonkey.entity.Hotel;
+import com.wittymonkey.entity.Role;
+import com.wittymonkey.entity.Setting;
 import com.wittymonkey.entity.User;
 import com.wittymonkey.service.IHotelService;
+import com.wittymonkey.service.IMenuService;
+import com.wittymonkey.service.IRoleService;
+import com.wittymonkey.service.ISettingService;
 import com.wittymonkey.service.IUserService;
-import com.wittymonkey.util.IDCardValidate;
 import com.wittymonkey.util.SendEmail;
 import com.wittymonkey.util.ValidateCodeServlet;
-import com.wittymonkey.vo.IDCardInfo;
 
 @Controller
 public class LoginController {
@@ -28,6 +33,15 @@ public class LoginController {
 	@Autowired
 	private IUserService userService;
 
+	@Autowired
+	private ISettingService settingService;
+	
+	@Autowired
+	private IMenuService menuService;
+	
+	@Autowired
+	private IRoleService roleService;
+	
 	@RequestMapping(value = "toLogin", method = RequestMethod.GET)
 	public String toLogin(HttpServletRequest request) {
 
@@ -220,11 +234,40 @@ public class LoginController {
 			json.put("status", 431);
 			return json.toJSONString();
 		} else {
+			Date now = new Date();
+			// 添加酒店
+			Hotel hotel = new Hotel();
+			hotel.setAddDate(now);
+			hotel.setEntryDatetime(now);
+			hotelService.saveHotel(hotel);
+			// 添加用户设置
+			Setting setting = new Setting();
+			setting.setLang("zh_CN");
+			settingService.saveSetting(setting);
+			// 添加用户
 			User user = new User();
 			user.setLoginName(loginName);
 			user.setPassword(password);
 			user.setEmail(email);
+			user.setHotel(hotel);
+			user.setRegistDate(now);
+			user.setEntryDatetime(now);
+			user.setEntryUser(user);
+			user.setSetting(setting);
 			userService.addUser(user);
+			// 设置酒店操作人
+			hotel.setEntryUser(user);
+			hotelService.saveHotel(hotel);
+			// 添加角色
+			Role role = new Role();
+			role.setHotel(hotel);
+			role.setEntryDatetime(now);
+			role.setName("Admin(经理)");
+			role.setEntryUser(user);
+			role.setMenus(menuService.getAll());
+			role.getUsers().add(user);
+			roleService.saveRole(role);
+			
 			json.put("status", 200);
 			return json.toJSONString();
 		}

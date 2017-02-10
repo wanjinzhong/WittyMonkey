@@ -18,4 +18,9 @@ public class HotelServiceImpl implements IHotelService {
 		return hotelDao.findHotelById(id);
 	}
 
+	@Override
+	public void saveHotel(Hotel hotel) {
+		hotelDao.save(hotel);
+	}
+
 }
