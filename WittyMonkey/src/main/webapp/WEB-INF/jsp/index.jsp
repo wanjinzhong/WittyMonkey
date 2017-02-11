@@ -13,6 +13,7 @@
 <title><fmt:message key="name" /></title>
 <link href="lib/Hui-iconfont/1.0.7/iconfont.css" rel="stylesheet"
 	type="text/css" />
+<link href="style/common.css" rel="stylesheet" type="text/css"/>
 </head>
 <script type="text/javascript" src="js/common.js"></script>
 <!-- 根据设置动态加载js语言 -->

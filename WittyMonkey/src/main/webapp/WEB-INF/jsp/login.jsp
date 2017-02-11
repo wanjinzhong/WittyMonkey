@@ -18,6 +18,7 @@
 <title><fmt:message key="name" /></title>
 <link href="lib/Hui-iconfont/1.0.7/iconfont.css" rel="stylesheet"
 	type="text/css" />
+	<link href="style/common.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="i18n/messages_<%=lang%>.js"></script>
 <fmt:setBundle basename="i18n/messages" />
 </head>
@@ -115,7 +116,7 @@ td {
 		$("#regist").click(function() {
 			layer.open({
 				type : 2,
-				area : [ '750px', '500px' ],
+				area : [ '750px', '600px' ],
 				fix : true,
 				maxmin : false,
 				shade : 0.4,

@@ -1,8 +1,10 @@
 package com.wittymonkey.dao;
 
 import java.io.Serializable;
+import java.util.List;
 
 import com.wittymonkey.entity.Area;
+import com.wittymonkey.entity.City;
 /**
  * 
  * @author neilw
@@ -15,4 +17,11 @@ public interface IAreaDao extends IGenericDao<Area, Serializable>{
 	 * @return
 	 */
 	public Area getAreaByCode(String code);
+	
+	/**
+	 * 根据城市获取所有地区
+	 * @param city
+	 * @return
+	 */
+	public List<Area> getAllByCity(City city);
 }

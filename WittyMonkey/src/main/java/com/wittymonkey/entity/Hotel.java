@@ -17,8 +17,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import org.hibernate.annotations.Cascade;
-
 /**
  * 酒店
  * @author Neil
@@ -77,6 +75,18 @@ public class Hotel implements Serializable{
 
 	@Column(length=1024)
 	private String note;
+	
+	// 法人名字
+	@Column(name="legal_name",length=20)
+	private String legalName;
+	
+	// 法人身份证号
+	@Column(name="legal_idcard",length=18)
+	private String legalIdCard;
+	
+	// 营业执照编号
+	@Column(name="license_no", length=15)
+	private String licenseNo;
 	
 	// 是否停业
 	@Column
@@ -202,6 +212,28 @@ public class Hotel implements Serializable{
 		this.floors = floors;
 	}
 
+	public String getLegalName() {
+		return legalName;
+	}
 
-	
+	public void setLegalName(String legalName) {
+		this.legalName = legalName;
+	}
+
+	public String getLegalIdCard() {
+		return legalIdCard;
+	}
+
+	public void setLegalIdCard(String legalIdCard) {
+		this.legalIdCard = legalIdCard;
+	}
+
+	public String getLicenseNo() {
+		return licenseNo;
+	}
+
+	public void setLicenseNo(String licenseNo) {
+		this.licenseNo = licenseNo;
+	}
+
 }

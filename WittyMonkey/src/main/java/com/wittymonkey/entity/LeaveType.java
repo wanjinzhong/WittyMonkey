@@ -1,9 +1,12 @@
 package com.wittymonkey.entity;
 
 import java.io.Serializable;
+import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -31,7 +34,7 @@ public class LeaveType implements Serializable{
 	@Column(name="total_time")
 	private Double totalTime;
 	
-	@ManyToOne(targetEntity=Hotel.class)
+	@ManyToOne(targetEntity=Hotel.class, cascade={CascadeType.PERSIST,CascadeType.MERGE})
 	@JoinColumn(name="hotel_id", referencedColumnName="id")
 	private Hotel hotel;
 	
@@ -41,7 +44,30 @@ public class LeaveType implements Serializable{
 	
 	@Column(length=1024)
 	private String note;
+	
+	public Date getEntryDatetime() {
+		return entryDatetime;
+	}
 
+	public void setEntryDatetime(Date entryDatetime) {
+		this.entryDatetime = entryDatetime;
+	}
+
+	public User getEntryUser() {
+		return entryUser;
+	}
+
+	public void setEntryUser(User entryUser) {
+		this.entryUser = entryUser;
+	}
+
+	@Column(name="entry_datetime")
+	private Date entryDatetime;
+	
+	@ManyToOne(targetEntity=User.class, fetch=FetchType.EAGER, cascade={CascadeType.PERSIST,CascadeType.MERGE})
+	@JoinColumn(name="entry_id", referencedColumnName="id")
+	private User entryUser;
+	
 	public Integer getId() {
 		return id;
 	}

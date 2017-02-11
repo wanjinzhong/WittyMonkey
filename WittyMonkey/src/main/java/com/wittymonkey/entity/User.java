@@ -44,7 +44,7 @@ public class User implements Serializable {
 	@Column(name = "password", length=20)
 	private String password;
 
-	@Column(name = "idcard_no", length=20)
+	@Column(name = "idcard_no", length=18)
 	private String idCardNo;
 
 	@ManyToOne(targetEntity = Hotel.class, fetch = FetchType.EAGER,cascade={CascadeType.PERSIST,CascadeType.MERGE})

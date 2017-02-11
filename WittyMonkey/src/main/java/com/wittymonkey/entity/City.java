@@ -31,14 +31,14 @@ public class City implements Serializable{
 	private Integer id;
 	
 	//市的代码
-	@Column(length=10)
-	private String code;
+	@Column
+	private Integer code;
 	
 	@Column(length=50)
 	private String name;
 	
 	@ManyToOne(targetEntity=Province.class)
-	@JoinColumn(name="province_code", referencedColumnName="code", columnDefinition="varchar(10)")
+	@JoinColumn(name="province_code", referencedColumnName="code")
 	private Province province;
 
 	@OneToMany(targetEntity=Area.class,mappedBy="city")
@@ -52,11 +52,11 @@ public class City implements Serializable{
 		this.id = id;
 	}
 
-	public String getCode() {
+	public Integer getCode() {
 		return code;
 	}
 
-	public void setCode(String code) {
+	public void setCode(Integer code) {
 		this.code = code;
 	}
 

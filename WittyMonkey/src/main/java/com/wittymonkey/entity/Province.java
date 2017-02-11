@@ -28,8 +28,8 @@ public class Province implements Serializable{
 	private Integer id;
 	
 	//省的代码
-	@Column(length=10)
-	private String code;
+	@Column
+	private Integer code;
 	
 	//省的名字
 	@Column(length=50)
@@ -46,11 +46,11 @@ public class Province implements Serializable{
 		this.id = id;
 	}
 
-	public String getCode() {
+	public Integer getCode() {
 		return code;
 	}
 
-	public void setCode(String code) {
+	public void setCode(Integer code) {
 		this.code = code;
 	}
 

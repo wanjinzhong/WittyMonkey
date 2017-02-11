@@ -1,0 +1,9 @@
+@CHARSET "UTF-8";
+body{
+	font-family: "Microsoft Yahei";
+	font-size: 15px;
+}
+#form_title{
+	font-size: 20px;
+	font-weight: bold;
+}

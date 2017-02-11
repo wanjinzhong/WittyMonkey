@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import com.wittymonkey.dao.IAreaDao;
 import com.wittymonkey.entity.Area;
+import com.wittymonkey.entity.City;
 
 @Repository(value = "areaDao")
 public class AreaDaoImpl extends GenericDaoImpl<Area> implements IAreaDao {
@@ -23,6 +24,14 @@ public class AreaDaoImpl extends GenericDaoImpl<Area> implements IAreaDao {
 			area =  this.queryHQL(hql, map).get(0);
 		}
 		return area;
+	}
+
+	@Override
+	public List<Area> getAllByCity(City city) {
+		String hql = "from Area where city.code = :cityCode order by code asc";
+		Map<String, Object> param = new HashMap<String,Object>();
+		param.put("cityCode", city.getCode());
+		return queryHQL(hql, param);
 	}
 
 }

@@ -1,6 +1,8 @@
 package com.wittymonkey.controller;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.regex.Pattern;
 
 import javax.servlet.http.HttpServletRequest;
@@ -12,12 +14,22 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSONObject;
+import com.wittymonkey.entity.Area;
+import com.wittymonkey.entity.City;
 import com.wittymonkey.entity.Hotel;
+import com.wittymonkey.entity.LeaveType;
+import com.wittymonkey.entity.MaterielType;
+import com.wittymonkey.entity.Province;
 import com.wittymonkey.entity.Role;
 import com.wittymonkey.entity.Setting;
 import com.wittymonkey.entity.User;
+import com.wittymonkey.service.IAreaService;
+import com.wittymonkey.service.ICityService;
 import com.wittymonkey.service.IHotelService;
+import com.wittymonkey.service.ILeaveTypeService;
+import com.wittymonkey.service.IMaterielTypeService;
 import com.wittymonkey.service.IMenuService;
+import com.wittymonkey.service.IProvinceService;
 import com.wittymonkey.service.IRoleService;
 import com.wittymonkey.service.ISettingService;
 import com.wittymonkey.service.IUserService;
@@ -35,13 +47,28 @@ public class LoginController {
 
 	@Autowired
 	private ISettingService settingService;
-	
+
 	@Autowired
 	private IMenuService menuService;
-	
+
 	@Autowired
 	private IRoleService roleService;
-	
+
+	@Autowired
+	private IMaterielTypeService materielTypeService;
+
+	@Autowired
+	private ILeaveTypeService leaveTypeService;
+
+	@Autowired
+	private IProvinceService provinceService;
+
+	@Autowired
+	private ICityService cityService;
+
+	@Autowired
+	private IAreaService areaService;
+
 	@RequestMapping(value = "toLogin", method = RequestMethod.GET)
 	public String toLogin(HttpServletRequest request) {
 
@@ -50,11 +77,15 @@ public class LoginController {
 
 	@RequestMapping(value = "toRegist", method = RequestMethod.GET)
 	public String toRegist(HttpServletRequest request) {
-		return "regist";
+		List<Province> provinces = provinceService.getAll();
+		List<City> cities = cityService.getAllByProvince(provinces.get(0));
+		List<Area> areas = areaService.getAllByCity(cities.get(0));
+		request.getSession().setAttribute("provinces", provinces);
+		request.getSession().setAttribute("cities", cities);
+		request.getSession().setAttribute("areas", areas);
+		return "regist_hotel";
 	}
 
-	
-	
 	/**
 	 * 
 	 * @param request
@@ -97,23 +128,23 @@ public class LoginController {
 		String loginName = request.getParameter("loginName");
 		String password = request.getParameter("password");
 		String code = request.getParameter("code");
-		if (loginName == null || loginName.equals("")){
+		if (loginName == null || loginName.equals("")) {
 			json.put("status", 400);
 			return json.toJSONString();
-		} else if (password == null || password.equals("")){
+		} else if (password == null || password.equals("")) {
 			json.put("status", 410);
 			return json.toJSONString();
-		} else if (code == null || code.trim().equals("")){
+		} else if (code == null || code.trim().equals("")) {
 			json.put("status", 420);
 			return json.toJSONString();
-		} else if (!ValidateCodeServlet.validate(request, code)){
+		} else if (!ValidateCodeServlet.validate(request, code)) {
 			json.put("status", 421);
 			return json.toJSONString();
 		} else {
 			User user = new User();
 			user.setLoginName(loginName);
 			user.setPassword(password);
-			if (!userService.validateLogin(user)){
+			if (!userService.validateLogin(user)) {
 				json.put("status", 430);
 			} else {
 				User loginUser = userService.getUserByLoginName(loginName);
@@ -126,10 +157,10 @@ public class LoginController {
 	}
 
 	@RequestMapping(value = "index", method = RequestMethod.GET)
-	public String index(HttpServletRequest request){
+	public String index(HttpServletRequest request) {
 		return "index";
 	}
-	
+
 	@RequestMapping(value = "getValidateCode", method = RequestMethod.GET)
 	@ResponseBody
 	public String getValidateCode(HttpServletRequest request) {
@@ -150,17 +181,16 @@ public class LoginController {
 		return json.toJSONString();
 
 	}
-	
+
 	@RequestMapping(value = "validatePicCode", method = RequestMethod.GET)
 	@ResponseBody
-	public String validatePicCode(HttpServletRequest request){
+	public String validatePicCode(HttpServletRequest request) {
 		JSONObject json = new JSONObject();
 		String myCode = request.getParameter("code");
 		json.put("status", validateInpPicCode(request, myCode));
 		return json.toJSONString();
 	}
-	
-	
+
 	/**
 	 * 注册
 	 * 
@@ -236,43 +266,114 @@ public class LoginController {
 			json.put("status", 431);
 			return json.toJSONString();
 		} else {
-			User system = userService.getUserById(0);
-			Date now = new Date();
-			// 添加酒店
-			Hotel hotel = new Hotel();
-			hotel.setAddDate(now);
-			hotel.setEntryDatetime(now);
-			hotel.setEntryUser(system);
-			hotelService.saveHotel(hotel);
-			
-			// 添加用户设置
-			Setting setting = new Setting();
-			setting.setLang("zh_CN");
-			settingService.saveSetting(setting);
-			// 添加用户
-			User user = new User();
-			user.setLoginName(loginName);
-			user.setPassword(password);
-			user.setEmail(email);
-			user.setHotel(hotel);
-			user.setRegistDate(now);
-			user.setEntryDatetime(now);
-			user.setEntryUser(system);
-			user.setSetting(setting);
-			userService.saveUser(user);
-			// 添加角色
-			Role role = new Role();
-			role.setHotel(hotel);
-			role.setEntryDatetime(now);
-			role.setName("Admin(经理)");
-			role.setEntryUser(system);
-			role.setMenus(menuService.getAll());
-			role.getUsers().add(user);
-			roleService.saveRole(role);
-			
+			registToDatabase(loginName, password, email);
 			json.put("status", 200);
 			return json.toJSONString();
 		}
+	}
+
+	/**
+	 * 数据库初始化
+	 * 
+	 * @param loginName
+	 * @param password
+	 * @param email
+	 */
+	private void registToDatabase(String loginName, String password, String email) {
+		User system = userService.getUserById(0);
+		Date now = new Date();
+		// 添加酒店
+		Hotel hotel = new Hotel();
+		hotel.setAddDate(now);
+		hotel.setEntryDatetime(now);
+		hotel.setEntryUser(system);
+		hotel.setIsClose(false);
+
+		// 添加用户设置
+		Setting setting = new Setting();
+		setting.setLang("zh_CN");
+		settingService.saveSetting(setting);
+
+		// 添加用户
+		User user = new User();
+		user.setLoginName(loginName);
+		user.setPassword(password);
+		user.setEmail(email);
+		user.setHotel(hotel);
+		user.setRegistDate(now);
+		user.setEntryDatetime(now);
+		user.setEntryUser(system);
+		user.setSetting(setting);
+		userService.saveUser(user);
+
+		// 添加初始化请假类型
+		// 事假
+		LeaveType affair = new LeaveType();
+		affair.setDeduct(0.0);
+		affair.setName("affair");
+		affair.setEntryDatetime(now);
+		affair.setEntryUser(system);
+		affair.setHotel(hotel);
+		// 年假
+		LeaveType year = new LeaveType();
+		year.setDeduct(0.0);
+		year.setName("year");
+		year.setEntryDatetime(now);
+		year.setEntryUser(system);
+		year.setHotel(hotel);
+		// 婚假
+		LeaveType marry = new LeaveType();
+		marry.setDeduct(0.0);
+		marry.setName("marry");
+		marry.setEntryDatetime(now);
+		marry.setEntryUser(system);
+		marry.setHotel(hotel);
+		// 丧假
+		LeaveType funeral = new LeaveType();
+		funeral.setDeduct(0.0);
+		funeral.setName("funeral");
+		funeral.setEntryDatetime(now);
+		funeral.setEntryUser(system);
+		funeral.setHotel(hotel);
+		// 病假
+		LeaveType sick = new LeaveType();
+		sick.setDeduct(0.0);
+		sick.setName("sick");
+		sick.setEntryDatetime(now);
+		sick.setEntryUser(system);
+		sick.setHotel(hotel);
+		// 产假
+		LeaveType maternity = new LeaveType();
+		maternity.setDeduct(0.0);
+		maternity.setName("maternity");
+		maternity.setEntryDatetime(now);
+		maternity.setEntryUser(system);
+		maternity.setHotel(hotel);
+
+		List<LeaveType> leaveTypes = new ArrayList<LeaveType>();
+		leaveTypes.add(affair);
+		leaveTypes.add(year);
+		leaveTypes.add(marry);
+		leaveTypes.add(funeral);
+		leaveTypes.add(sick);
+		leaveTypes.add(maternity);
+		leaveTypeService.saveList(leaveTypes);
+
+		// 添加默认物料类型
+		MaterielType materielType = new MaterielType();
+		materielType.setName("Other");
+		materielType.setHotel(hotel);
+		materielTypeService.saveMaterielType(materielType);
+
+		// 添加角色
+		Role role = new Role();
+		role.setHotel(hotel);
+		role.setEntryDatetime(now);
+		role.setName("Admin(经理)");
+		role.setEntryUser(system);
+		role.setMenus(menuService.getAll());
+		role.getUsers().add(user);
+		roleService.saveRole(role);
 	}
 
 	/**
@@ -307,7 +408,7 @@ public class LoginController {
 		}
 		return json.toJSONString();
 	}
-	
+
 	/**
 	 * 用户名是否存在
 	 * 
@@ -361,8 +462,7 @@ public class LoginController {
 		Pattern regex = Pattern.compile(check);
 		return regex.matcher(email).matches();
 	}
-	
-	
+
 	/**
 	 * 验证 邮件验证码
 	 * 
@@ -398,6 +498,7 @@ public class LoginController {
 			return 401;
 		}
 	}
+
 	/**
 	 * 验证 图片验证码
 	 * 
@@ -422,7 +523,7 @@ public class LoginController {
 	 *         </tr>
 	 *         </table>
 	 */
-	public int validateInpPicCode(HttpServletRequest request, String myCode){
+	public int validateInpPicCode(HttpServletRequest request, String myCode) {
 		String realCode = (String) request.getSession().getAttribute(ValidateCodeServlet.VALIDATE_CODE);
 		if (myCode == null) {
 			return 400;
@@ -432,4 +533,5 @@ public class LoginController {
 			return 401;
 		}
 	}
+
 }
