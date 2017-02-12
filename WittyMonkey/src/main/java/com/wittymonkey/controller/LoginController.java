@@ -86,6 +86,10 @@ public class LoginController {
 		return "regist_hotel";
 	}
 
+	@RequestMapping(value="toRegistUser", method=RequestMethod.GET)
+	public String toRegistUser(HttpServletRequest request){
+		return "regist_user";
+	}
 	/**
 	 * 
 	 * @param request

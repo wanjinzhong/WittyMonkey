@@ -17,13 +17,18 @@ public class AreaServiceImpl implements IAreaService {
 	private IAreaDao areaDao;
 
 	@Override
-	public Area getAreaByCode(String code) {
+	public Area getAreaByCode(Integer code) {
 		return areaDao.getAreaByCode(code);
 	}
 
 	@Override
 	public List<Area> getAllByCity(City city) {
-		return areaDao.getAllByCity(city);
+		return areaDao.getAllByCity(city.getCode());
+	}
+
+	@Override
+	public List<Area> getAllByCity(Integer code) {
+		return areaDao.getAllByCity(code);
 	}
 
 }

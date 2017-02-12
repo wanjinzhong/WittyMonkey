@@ -11,4 +11,5 @@ var regist_input_name_first="Please input login name";
 var regist_input_password_first="Please input password";
 var regist_input_validate_code_first="Please input validate code";
 var regist_login_error="Name or password error";
-var regist_get_code="Get code"
+var regist_get_code="Get code";
+var regist_license_tip="Registration number 15 above the right of the business license";

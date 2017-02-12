@@ -16,12 +16,12 @@ public interface IAreaDao extends IGenericDao<Area, Serializable>{
 	 * @param code
 	 * @return
 	 */
-	public Area getAreaByCode(String code);
+	public Area getAreaByCode(Integer code);
 	
 	/**
 	 * 根据城市获取所有地区
 	 * @param city
 	 * @return
 	 */
-	public List<Area> getAllByCity(City city);
+	public List<Area> getAllByCity(Integer code);
 }

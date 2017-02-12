@@ -116,7 +116,7 @@ public class IDCardValidate {
 		if (!validate(id))
 			return null;
 		IDCardInfo idCardInfo = new IDCardInfo();
-		String code = id.substring(0,6);
+		Integer code = Integer.parseInt(id.substring(0,6));
 		//System.out.println(idCardValidate == null);
 		Area area = areaService.getAreaByCode(code);
 		if (area == null){

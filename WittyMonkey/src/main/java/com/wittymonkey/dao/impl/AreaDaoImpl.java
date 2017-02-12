@@ -14,7 +14,7 @@ import com.wittymonkey.entity.City;
 public class AreaDaoImpl extends GenericDaoImpl<Area> implements IAreaDao {
 
 	@Override
-	public Area getAreaByCode(String code) {
+	public Area getAreaByCode(Integer code) {
 		Area area = null;
 		String hql = "from Area where code = :code";
 		Map<String, Object> map = new HashMap<String, Object>();
@@ -27,10 +27,10 @@ public class AreaDaoImpl extends GenericDaoImpl<Area> implements IAreaDao {
 	}
 
 	@Override
-	public List<Area> getAllByCity(City city) {
+	public List<Area> getAllByCity(Integer code) {
 		String hql = "from Area where city.code = :cityCode order by code asc";
 		Map<String, Object> param = new HashMap<String,Object>();
-		param.put("cityCode", city.getCode());
+		param.put("cityCode", code);
 		return queryHQL(hql, param);
 	}
 
