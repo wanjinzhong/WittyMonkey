@@ -130,7 +130,6 @@ public class IDCardValidate {
 		try {
 			idCardInfo.setBirthday(sdf.parse(date));
 		} catch (ParseException e) {
-			// TODO Auto-generated catch block
 			return null;
 		}
 		int sex = Integer.parseInt(id.substring(16,17));

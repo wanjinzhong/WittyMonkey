@@ -16,10 +16,10 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title><fmt:message key="name"/></title>
-    <link href="lib/Hui-iconfont/1.0.7/iconfont.css" rel="stylesheet"
-          type="text/css"/>
     <link href="style/common.css" rel="stylesheet" type="text/css"/>
     <script type="text/javascript" src="i18n/messages_<%=lang%>.js"></script>
+    <%--alibaba iconfont字体图标--%>
+    <script type="text/javascript" src="//at.alicdn.com/t/font_cnbfa2urlf03sor.js"></script>
     <fmt:setBundle basename="i18n/messages"/>
 </head>
 <style type="text/css">
@@ -103,13 +103,15 @@
         height: 20px;
     }
 
-    #hotel_icon {
-        width: 40px;
-        height: 40px;
+    #form_title {
+        line-height: 40px;
         margin-left: 10px;
+        vertical-align: top;
     }
 
-    #form_title {
+    #icon_hotel {
+        width: 40px;
+        height: 40px;
         margin-left: 10px;
     }
 </style>
@@ -127,8 +129,10 @@
         key="regist.step.complete"/></span>
 </div>
 <div id="regist_hotel">
-    <img src="pic/regist/hotel_icon.png" id="hotel_icon"/>
-    <span id="form_title"><fmt:message key="regist.hotel.title"/></span>
+        <svg id="icon_hotel" class="icon" aria-hidden="true">
+            <use xlink:href="#icon-jiudian"></use>
+        </svg>
+        <span id="form_title"><fmt:message key="regist.hotel.title"/></span>
     <div id="regist_form">
         <form id="hotel_form" action="toRegistUser.do" method="POST">
             <table>
@@ -144,7 +148,9 @@
                     <td><input type="text" class="input-text radius"
                                name="licenseNo" value="${registHotel.licenseNo }"
                                onkeypress="validatePlace(this)"/></td>
-                    <td><img id="question" src="pic/regist/question.png"></td>
+                    <td><svg id="question" class="icon" aria-hidden="true">
+                        <use xlink:href="#icon-wenhao"></use>
+                    </svg></td>
                 </tr>
                 <tr>
                     <td class="td_title"><fmt:message
@@ -160,7 +166,7 @@
                 </tr>
                 <tr>
                     <td class="td_title"><fmt:message key="regist.hotel.place"/></td>
-                    <td><select id="province" name="provinceCode" onchange="setPlace(this)">
+                    <td><select id="province" name="provinceCode" onblur="validateLicenseNo(this)">
                         <c:forEach items="${provinces }" var="province">
                             <c:if test="${registHotelProvinceCode eq  province.code}">
                                 <option value="${province.code }" selected="selected">${province.name}</option>
@@ -279,14 +285,14 @@
                         var areasHtml = "";
                         for (var i in cities) {
                             citiesHtml += "<option value='" + cities[i].code + "'";
-                            if (result.cityCode == cities[i].code ){
+                            if (result.cityCode == cities[i].code) {
                                 citiesHtml += "selected='selected'"
                             }
                             citiesHtml += ">" + cities[i].name + "</option>";
                         }
                         for (var i in areas) {
                             areasHtml += "<option value='" + areas[i].code + "'";
-                            if (result.areaCode == areas[i].code ){
+                            if (result.areaCode == areas[i].code) {
                                 areasHtml += "selected='selected'"
                             }
                             areasHtml += ">" + areas[i].name + "</option>";

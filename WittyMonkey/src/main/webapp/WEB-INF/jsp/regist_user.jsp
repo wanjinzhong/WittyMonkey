@@ -16,8 +16,8 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title><fmt:message key="name" /></title>
-<link href="lib/Hui-iconfont/1.0.7/iconfont.css" rel="stylesheet"
-	type="text/css" />
+	<%--alibaba iconfont字体图标--%>
+	<script type="text/javascript" src="//at.alicdn.com/t/font_cnbfa2urlf03sor.js"></script>
 <link href="style/common.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="i18n/messages_<%=lang%>.js"></script>
 <script type="text/javascript" src="js/common.js"></script>
@@ -110,7 +110,9 @@ select {
 }
 
 #form_title {
+	line-height: 40px;
 	margin-left: 10px;
+	vertical-align: top;
 }
 
 #code {
@@ -121,6 +123,11 @@ select {
 	float: right;
 	width: 100px;
 	height: 31px;
+}
+#icon_user {
+	width: 40px;
+	height: 40px;
+	margin-left: 10px;
 }
 </style>
 <body>
@@ -137,7 +144,10 @@ select {
 				key="regist.step.complete" /></span>
 	</div>
 	<div id="regist_hotel">
-		<img src="pic/regist/user_icon.png" id="user_icon"> <span
+		<svg id="icon_user" class="icon" aria-hidden="true">
+			<use xlink:href="#icon-yonghuzhuce"></use>
+		</svg>
+		 <span
 			id="form_title"><fmt:message key="regist.user.title" /></span>
 		<div id="regist_form">
 			<form id="user_form">

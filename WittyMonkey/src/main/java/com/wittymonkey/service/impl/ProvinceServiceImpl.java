@@ -17,7 +17,6 @@ public class ProvinceServiceImpl implements IProvinceService{
 	
 	@Override
 	public List<Province> getAll() {
-		// TODO Auto-generated method stub
 		return provinceDao.getAll();
 	}
 

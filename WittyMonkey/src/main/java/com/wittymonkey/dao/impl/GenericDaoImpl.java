@@ -227,7 +227,6 @@ public class GenericDaoImpl<T> implements IGenericDao<T, Serializable> {
 
 	@Override
 	public List<T> findAll(T t) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 }

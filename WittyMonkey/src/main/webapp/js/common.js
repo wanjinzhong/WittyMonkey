@@ -28,9 +28,6 @@ function validateLicenseNo(inp) {
 		layer.tips(regist_validate_hotel_licenseNo_wrong,inp,{tips:2});
 		return false;
 	}
-	$.ajax({
-
-	});
 }
 
 /**
