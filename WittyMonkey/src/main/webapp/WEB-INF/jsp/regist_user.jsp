@@ -99,7 +99,7 @@ select {
 	margin-right: 10px;
 }
 
-#confirmBtn {
+#prevBtn {
 	margin-right: 10px;
 }
 
@@ -140,7 +140,7 @@ select {
 		<img src="pic/regist/user_icon.png" id="user_icon"> <span
 			id="form_title"><fmt:message key="regist.user.title" /></span>
 		<div id="regist_form">
-			<form>
+			<form id="user_form">
 				<table>
 					<tr>
 						<td class="td_title"><fmt:message
@@ -192,10 +192,10 @@ select {
 				class="btn btn-danger radius" onclick="closeMe()" /> <input
 				type="button" value="<fmt:message key="regist.btn.prev"/>"
 				onclick="javascript:window.location='toRegistHotel.do'"
-				class="btn btn-success radius" id="confirmBtn" /><input
-				id="nextBtn" type="button"
-				value="<fmt:message key="regist.btn.confirm"/>"
-				class="btn btn-success radius" />
+				class="btn btn-success radius" id="prevBtn" /><input
+                id="confirmBtn" type="button"
+                value="<fmt:message key="regist.btn.confirm"/>"
+                class="btn btn-success radius" onclick="regist()"/>
 		</div>
 	</div>
 </body>
@@ -220,15 +220,15 @@ select {
 		$("#get_code").val(time);
 	});
 	function regist() {
-		if (!validateRegistForm($("#regist_form"))) {
-			return;
-		}
+//		if (!validateRegistForm($("#regist_form"))) {
+//			return;
+//		}
 		var myCode = $("#code").val();
 		validateCode($("#code"));
 		$.ajax({
 			type : "POST",
 			url : "regist.do",
-			data : $("#regist_form").serialize(),
+			data : $("#user_form").serialize(),
 			dataType : "json",
 			success : function(data) {
 				var result = eval("(" + data + ")");
@@ -276,7 +276,7 @@ select {
 					});
 					setTimeout(function() {
 						var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
-						parent.layer.close(index); //再执行关闭   
+						parent.layer.close(index); //再执行关闭
 					}, 3000);
 					parent.$("#username").val($("loginName").val());
 					break;
@@ -301,7 +301,7 @@ select {
 	}
 	function closeMe() {
 		var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
-		parent.layer.close(index); //再执行关闭 
+		parent.layer.close(index); //再执行关闭
 	}
 </script>
 </html>

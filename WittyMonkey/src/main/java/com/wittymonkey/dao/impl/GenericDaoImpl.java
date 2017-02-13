@@ -55,7 +55,7 @@ public class GenericDaoImpl<T> implements IGenericDao<T, Serializable> {
 		return this.getCurrentSession().createCriteria(entityClass).list();
 	}
 
-	/**
+	/*/**
 	 * 查询条件的绑定
 	 * 
 	 * @param t
@@ -105,7 +105,7 @@ public class GenericDaoImpl<T> implements IGenericDao<T, Serializable> {
 		return criteria;
 	}*/
 
-	/**
+	/*/**
 	 * 判断对象是否为空
 	 * 
 	 * @param obj
@@ -139,7 +139,7 @@ public class GenericDaoImpl<T> implements IGenericDao<T, Serializable> {
 		return result;
 	}*/
 
-	/**
+	/*/**
 	 * 查询总条数
 	 * 
 	 * @param t
@@ -180,7 +180,7 @@ public class GenericDaoImpl<T> implements IGenericDao<T, Serializable> {
 	}
 
 	@Override
-	public List<T> queryHQL(String hql, Object object) {
+	public List<T> queryListHQL(String hql, Object object) {
 		Session session = this.getCurrentSession();
 		Query query = session.createQuery(hql);
 		if (object != null){
@@ -207,7 +207,16 @@ public class GenericDaoImpl<T> implements IGenericDao<T, Serializable> {
 		return result;
 	}
 
- 
+	@Override
+	public T queryOneHql(String hql, Object obj) {
+		List<T> list = queryListHQL(hql, obj);
+		if (list != null && list.size() > 0){
+			return list.get(0);
+		}
+		return null;
+	}
+
+
 	@Override
 	public List<Map<String,Object>> querySQL(String sql) {
 		Session session = this.getCurrentSession();

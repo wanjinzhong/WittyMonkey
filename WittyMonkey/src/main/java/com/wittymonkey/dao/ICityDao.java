@@ -7,5 +7,16 @@ import com.wittymonkey.entity.City;
 
 public interface ICityDao extends IGenericDao<City, Serializable> {
 
-	public List<City> getAllByProvince(Integer code);
+	/**
+	 * 根据省获取所有市
+	 * @param code
+	 * @return
+	 */
+	List<City> getAllByProvince(Integer code);
+
+	/**
+	 * 根据市代码获取市
+	 * @return
+	 */
+	City getCityByCode(Integer code);
 }

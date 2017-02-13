@@ -32,7 +32,7 @@ public class SendEmail {
 			msg.setSubject("注册验证");
 			msg.setContent("<h2>欢迎注册俏皮猴酒店管理系统,本次验证码：" + code + "</h2>","text/html;charset=utf-8");
 			Transport transport = session.getTransport("smtp");
-			// smtp验证，就是你用来发邮件的邮箱用户名密码
+			// smtp验证，用来发邮件的邮箱用户名密码
 			transport.connect(props.getProperty("smtp"), props.getProperty("address"), props.getProperty("password"));
 			// 发送
 			transport.sendMessage(msg, msg.getAllRecipients());
@@ -50,7 +50,6 @@ public class SendEmail {
 			e.printStackTrace();
 			code = null;
 		}
-		System.out.println("邮件发送成功");
 		return code;
 	}
 	private static String getValidateCode(){

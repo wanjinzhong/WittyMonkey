@@ -17,7 +17,15 @@ public class CityDaoImpl extends GenericDaoImpl<City> implements ICityDao{
 		String hql = "from City where province.code = :provinceCode order by code asc";
 		Map<String, Object> param = new HashMap<String,Object>();
 		param.put("provinceCode", code);
-		return queryHQL(hql, param);
+		return queryListHQL(hql, param);
+	}
+
+	@Override
+	public City getCityByCode(Integer code) {
+		String hql = "from City where code = :code";
+		Map<String, Object> param = new HashMap<String, Object>();
+		param.put("code", code);
+		return queryOneHql(hql,code);
 	}
 
 }

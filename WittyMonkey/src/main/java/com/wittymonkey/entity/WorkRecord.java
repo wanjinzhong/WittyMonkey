@@ -59,7 +59,7 @@ public class WorkRecord implements Serializable{
 	private User entryUser;
 	
 	@ManyToMany(targetEntity=Role.class)
-	@JoinTable(name = "user_role", 
+	@JoinTable(name = "workrecord_role",
 	joinColumns = { @JoinColumn(name = "user_id", referencedColumnName = "id") },
 	inverseJoinColumns={@JoinColumn(name = "role_id", referencedColumnName = "id")})
 	private List<Role> roles = new ArrayList<Role>();

@@ -11,5 +11,12 @@ public interface IProvinceService {
 	 * 
 	 * @return
 	 */
-	public List<Province> getAll();
+	List<Province> getAll();
+
+	/**
+	 * 根据省代码获取省
+	 * @param code
+	 * @return
+	 */
+	Province getProvinceByCode(Integer code);
 }

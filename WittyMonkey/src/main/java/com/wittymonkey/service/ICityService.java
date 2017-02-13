@@ -7,7 +7,10 @@ import com.wittymonkey.entity.Province;
 
 public interface ICityService {
 
-	public List<City> getAllByProvince(Province province);
-	
-	public List<City> getAllByProvince(Integer code);
+	List<City> getAllByProvince(Province province);
+
+	List<City> getAllByProvince(Integer code);
+
+	City getCityByCode(Integer code);
+
 }

@@ -17,7 +17,7 @@ public class UserDaoImpl extends GenericDaoImpl<User> implements IUserDao {
 		String hql = "from User where loginName = :loginName";
 		Map<String, Object> param = new HashMap<String, Object>();
 		param.put("loginName", loginName);
-		List<User> users = queryHQL(hql, param);
+		List<User> users = queryListHQL(hql, param);
 		if (users == null || users.isEmpty()) {
 			return null;
 		} else {
@@ -31,7 +31,7 @@ public class UserDaoImpl extends GenericDaoImpl<User> implements IUserDao {
 		Map<String, Object> param = new HashMap<String, Object>();
 		param.put("loginName", user.getLoginName());
 		param.put("password", user.getPassword());
-		List<User> users = queryHQL(hql, param);
+		List<User> users = queryListHQL(hql, param);
 		if (users == null || users.isEmpty()) {
 			return null;
 		} else {
@@ -50,7 +50,7 @@ public class UserDaoImpl extends GenericDaoImpl<User> implements IUserDao {
 		String hql = "from User where id = :id";
 		Map<String, Object> param = new HashMap<String, Object>();
 		param.put("id",id);
-		List<User> users = queryHQL(hql, param); 
+		List<User> users = queryListHQL(hql, param);
 		if (users == null || users.isEmpty()){
 			return null;
 		} else {

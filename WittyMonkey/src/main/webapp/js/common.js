@@ -1,3 +1,37 @@
+/**
+ * 验证酒店名称
+ * @param nameInp
+ * @returns {boolean}
+ */
+function validateHotelName(nameInp){
+	var name = $(nameInp).val();
+	if (name == null || name == ""){
+		layer.tips(regist_validate_hotel_name_null,nameInp,{tips:2});
+		return false;
+	}
+	if(name.length > 50){
+		layer.tips(messageOfValidateLength(regist_hotel_name,50),nameInp,{tips:2});
+		return false;
+	}
+}
+/**
+ * 验证营业执照编号
+ * @param inp
+ */
+function validateLicenseNo(inp) {
+	var licenseNo = $(inp).val();
+	if (licenseNo == null || licenseNo == ""){
+		layer.tips(regist_validate_hotel_licenseNo_null,inp,{tips:2});
+		return false;
+	}
+	if (licenseNo.length != 15){
+		layer.tips(regist_validate_hotel_licenseNo_wrong,inp,{tips:2});
+		return false;
+	}
+	$.ajax({
+
+	});
+}
 
 /**
  * 验证用户名

@@ -13,7 +13,7 @@ public class MenuDaoImpl extends GenericDaoImpl<Menu> implements IMenuDao {
 	@Override
 	public List<Menu> getAll() {
 		String hql = "from Menu";
-		return queryHQL(hql, null);
+		return queryListHQL(hql, null);
 	}
 
 }

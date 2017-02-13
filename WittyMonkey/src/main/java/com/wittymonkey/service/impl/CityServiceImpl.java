@@ -25,4 +25,9 @@ public class CityServiceImpl implements ICityService {
 		return cityDao.getAllByProvince(code);
 	}
 
+	@Override
+	public City getCityByCode(Integer code) {
+		return cityDao.getCityByCode(code);
+	}
+
 }

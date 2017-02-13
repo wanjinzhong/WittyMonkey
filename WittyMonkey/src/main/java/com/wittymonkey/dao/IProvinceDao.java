@@ -12,4 +12,10 @@ public interface IProvinceDao extends IGenericDao<Province, Serializable>{
 	 * @return
 	 */
 	public List<Province> getAll();
+
+	/**
+	 * 根据省代码获取省
+	 * @return
+	 */
+	public Province getProvinceByCode(Integer code);
 }

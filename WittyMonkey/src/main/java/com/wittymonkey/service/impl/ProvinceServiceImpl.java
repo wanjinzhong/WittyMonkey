@@ -21,4 +21,9 @@ public class ProvinceServiceImpl implements IProvinceService{
 		return provinceDao.getAll();
 	}
 
+	@Override
+	public Province getProvinceByCode(Integer code) {
+		return provinceDao.getProvinceByCode(code);
+	}
+
 }
