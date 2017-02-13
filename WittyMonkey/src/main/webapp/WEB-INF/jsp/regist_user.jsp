@@ -20,6 +20,7 @@
 	type="text/css" />
 <link href="style/common.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="i18n/messages_<%=lang%>.js"></script>
+<script type="text/javascript" src="js/common.js"></script>
 <fmt:setBundle basename="i18n/messages" />
 </head>
 <style type="text/css">
@@ -77,6 +78,7 @@
 table {
 	width: 500px;
 	margin: 0 auto;
+	margin-top: 10px;
 }
 
 td {
@@ -89,11 +91,36 @@ select {
 
 #btnGroup {
 	margin-top: 5px;
+	margin-right: 10px;
 	float: right;
 }
 
 #closeBtn {
 	margin-right: 10px;
+}
+
+#confirmBtn {
+	margin-right: 10px;
+}
+
+#user_icon {
+	width: 40px;
+	height: 40px;
+	margin-left: 10px;
+}
+
+#form_title {
+	margin-left: 10px;
+}
+
+#code {
+	width: 280px;
+}
+
+#get_code {
+	float: right;
+	width: 100px;
+	height: 31px;
 }
 </style>
 <body>
@@ -110,56 +137,51 @@ select {
 				key="regist.step.complete" /></span>
 	</div>
 	<div id="regist_hotel">
-		<span id="form_title"><fmt:message key="regist.hotel.title" /></span>
+		<img src="pic/regist/user_icon.png" id="user_icon"> <span
+			id="form_title"><fmt:message key="regist.user.title" /></span>
 		<div id="regist_form">
 			<form>
 				<table>
 					<tr>
 						<td class="td_title"><fmt:message
-								key="regist.hotel.hotel_name" /></td>
+								key="regist.user.login_name" /></td>
 						<td><input type="text" class="input-text radius"
-							name="hotelName" /></td>
+							name="loginName" onblur="validateLoginName(this)" /></td>
 					</tr>
 					<tr>
 						<td class="td_title"><fmt:message
-								key="regist.hotel.legal_name" /></td>
+								key="regist.user.real_name" /></td>
 						<td><input type="text" class="input-text radius"
-							name="legalName" /></td>
+							name="realName" /></td>
 					</tr>
 					<tr>
-						<td class="td_title"><fmt:message
-								key="regist.hotel.legal_idcard" /></td>
-						<td><input type="text" class="input-text radius"
-							name="legalIdCard" /></td>
+						<td><fmt:message key='regist.user.password' /></td>
+						<td class="td_title"><input id="password" name="password"
+							type="password" class="input-text radius"
+							onblur='validatePassword(this)' /></td>
 					</tr>
 					<tr>
-						<td class="td_title"><fmt:message
-								key="regist.hotel.license_no" /></td>
-						<td><input type="text" class="input-text radius"
-							name="licenseNo" /></td>
+						<td><fmt:message key='regist.user.repassword' /></td>
+						<td class="td_title"><input id="repassword" name="repassword"
+							type="password" class="input-text radius"
+							onblur="validateRepassword(this)" /></td>
 					</tr>
 					<tr>
-						<td class="td_title"><fmt:message key="regist.hotel.place" /></td>
-						<td><select id="province" onchange="setPlace(this)">
-								<c:forEach items="${provinces }" var="province">
-									<option value="${province.code }">${province.name}</option>
-								</c:forEach>
-								<option value="0"><fmt:message
-										key="regist.hotel.place.overseas" /></option>
-						</select> &nbsp;&nbsp; <select id="city" onchange="setPlace(this)">
-								<c:forEach items="${cities }" var="city">
-									<option value="${city.code }">${city.name}</option>
-								</c:forEach>
-						</select> &nbsp;&nbsp; <select id="area">
-								<c:forEach items="${areas }" var="area">
-									<option value="${area.code }">${area.name}</option>
-								</c:forEach>
-						</select></td>
+						<td><fmt:message key="regist.user.idcard" /></td>
+						<td><input type="text" class="input-text radius" /></td>
 					</tr>
 					<tr>
-						<td class="td_title"><fmt:message
-								key="regist.hotel.place.detail" /></td>
-						<td><textarea class="textarea radius" name="placeDetail"></textarea></td>
+						<td><fmt:message key='regist.user.email' /></td>
+						<td class="td_title"><input id="email" name="email"
+							type="text" class="input-text radius"
+							onblur="validateEmail(this)" /></td>
+					</tr>
+					<tr>
+						<td><fmt:message key='regist.user.code' /></td>
+						<td class="td_title"><input id="code" name="code" type="text"
+							class="input-text radius" /><input type="button" id="get_code"
+							class="btn btn-secondary radius"
+							value="<fmt:message key='regist.user.get_code'/>"></td>
 					</tr>
 				</table>
 			</form>
@@ -168,48 +190,116 @@ select {
 			<input id="closeBtn" type="button"
 				value="<fmt:message key="regist.btn.close"/>"
 				class="btn btn-danger radius" onclick="closeMe()" /> <input
+				type="button" value="<fmt:message key="regist.btn.prev"/>"
+				onclick="javascript:window.location='toRegistHotel.do'"
+				class="btn btn-success radius" id="confirmBtn" /><input
 				id="nextBtn" type="button"
-				value="<fmt:message key="regist.btn.save_and_next"/>"
+				value="<fmt:message key="regist.btn.confirm"/>"
 				class="btn btn-success radius" />
 		</div>
 	</div>
 </body>
 <script type="text/javascript">
-	function setPlace(obj) {
-		var type = $(obj).attr("id");
-		var url;
-		if (type == "province") {
-			url = "getCityByProvince.do";
-		} else if (type == "city") {
- 			url = "getAreaByCity.do";
-		}
-		var code = $(obj).val();
+	var time = 60;
+	$("#get_code").click(function() {
+		var email = $("#email").val();
 		$.ajax({
-			url : url,
+			type : "GET",
+			url : "getValidateCode.do",
 			data : {
-				"code" : code
+				"email" : email
 			},
+			dataType : "text",
+			success : function(data) {
+			}
+		});
+		t1 = window.setInterval("cutdown()", 1000);
+		$("#get_code").removeClass("btn-secondary");
+		$("#get_code").addClass("disabled");
+		$("#get_code").attr("disabled", true);
+		$("#get_code").val(time);
+	});
+	function regist() {
+		if (!validateRegistForm($("#regist_form"))) {
+			return;
+		}
+		var myCode = $("#code").val();
+		validateCode($("#code"));
+		$.ajax({
+			type : "POST",
+			url : "regist.do",
+			data : $("#regist_form").serialize(),
 			dataType : "json",
 			success : function(data) {
-				var cities = JSON.parse(data);
-				var str = "";
-				for (var i in cities) {
-					str += "<option value='" + cities[i].code + "'>" + cities[i].name + "</option>"
-				}
-				if (type == "province") {
-					$("#city").html(str);
-					if (str == ""){
-						$("#area").html("");
-					} else{
-						setPlace($("#city"));
-					}
-				} else if (type == "city") {
-					$("#area").html(str);
+				var result = eval("(" + data + ")");
+				var stu = result.status;
+				switch (stu) {
+				case 400:
+					layer.tips(regist_input_name_first, $("#loginName"), {
+						tips : 4
+					});
+					break;
+				case 401:
+					layer.tips(regist_user_is_exist, $("#loginName"), {
+						tips : 4
+					});
+					break;
+				case 410:
+					layer.tips(regist_password_less_six, $("#password"), {
+						tips : 4
+					});
+					break;
+				case 411:
+					layer.tips(regist_password_not_same, $("#repassword"), {
+						tips : 4
+					});
+					break;
+				case 420:
+					layer.tips(regist_email_is_wrong, $("#email"), {
+						tips : 4
+					});
+					break;
+				case 430:
+					layer.tips(regist_get_code_first, $("#get_code"), {
+						tips : 1
+					});
+					break;
+				case 431:
+					layer.tips(regist_code_is_wrong, $("#code"), {
+						tips : 4
+					});
+					break;
+				case 200:
+					layer.msg(regist_regist_success, {
+						time : 3000,
+						icon : 1
+					});
+					setTimeout(function() {
+						var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+						parent.layer.close(index); //再执行关闭   
+					}, 3000);
+					parent.$("#username").val($("loginName").val());
+					break;
+				default:
+					break;
 				}
 			}
 		});
 	}
-	function closeMe(){
+	function cutdown() {
+		if (time > 0) {
+			$("#get_code").val(time);
+			time = time - 1;
+		} else {
+			$("#get_code").removeClass("disabled");
+			$("#get_code").addClass("btn-secondary");
+			$("#get_code").attr("disabled", false);
+			window.clearInterval(t1);
+			$("#get_code").val(regist_get_code);
+			time = 60;
+		}
+	}
+	function closeMe() {
 		var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
 		parent.layer.close(index); //再执行关闭 
 	}

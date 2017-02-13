@@ -7,7 +7,7 @@
 function validateLoginName(nameInp){
 	var name = $(nameInp).val();
 	if (name == null || name == ""){
-		layer.tips(regist_input_name_first,nameInp,{tips:4});
+		layer.tips(regist_input_name_first,nameInp,{tips:2});
 		return false;
 	}
 	$.ajax({
@@ -18,7 +18,7 @@ function validateLoginName(nameInp){
 		success: function(data) {
 			var result = eval("(" + data + ")");
 			if (result.status == 200){
-				layer.tips(regist_user_is_exist,nameInp,{tips:4});
+				layer.tips(regist_user_is_exist,nameInp,{tips:2});
 				return false;
 			} else{
 				return true;
@@ -38,10 +38,10 @@ function validateLoginName(nameInp){
 function validatePassword(pwdInp){
 	var password = $(pwdInp).val();
 	if ( password.length == 0) {
-		layer.tips(regist_input_password_first,pwdInp,{tips:4});
+		layer.tips(regist_input_password_first,pwdInp,{tips:2});
 		return false;
 	} else if ( password.length < 6) {
-		layer.tips(regist_password_less_six,pwdInp,{tips:4});
+		layer.tips(regist_password_less_six,pwdInp,{tips:2});
 		return false;
 	} else {
 		return true;
@@ -56,7 +56,7 @@ function validateRepassword(repwdInp){
 	var password = $("#password").val();
 	var repassword = $(repwdInp).val();
 	if (password != repassword){
-		layer.tips(regist_password_not_same, repwdInp,{tips:4});
+		layer.tips(regist_password_not_same, repwdInp,{tips:2});
 		return false;
 	} else {
 		return true;
@@ -71,7 +71,7 @@ function validateEmail(email){
 	var emailStr = $(email).val();
 	var reg = /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+/;
 	if (!reg.test(emailStr)){
-		layer.tips(regist_email_is_wrong, email,{tips:4});
+		layer.tips(regist_email_is_wrong, email,{tips:2});
 		return false;
 	} else {
 		return true;

@@ -75,21 +75,66 @@ public class LoginController {
 		return "login";
 	}
 
-	@RequestMapping(value = "toRegist", method = RequestMethod.GET)
-	public String toRegist(HttpServletRequest request) {
+	@RequestMapping(value="toRegist", method=RequestMethod.GET)
+	public String toRegist(HttpServletRequest request){
+		return toRegistHotel(request);
+	}
+	
+	@RequestMapping(value = "toRegistHotel", method = RequestMethod.GET)
+	public String toRegistHotel(HttpServletRequest request) {
 		List<Province> provinces = provinceService.getAll();
-		List<City> cities = cityService.getAllByProvince(provinces.get(0));
-		List<Area> areas = areaService.getAllByCity(cities.get(0));
+		String provinceCode = (String) request.getSession().getAttribute("registHotelProvinceCode");
+		String cityCode = (String) request.getSession().getAttribute("registHotelCityCode");
+		List<City> cities;
+		List<Area> areas;
+		if (provinceCode != null) {
+			cities = cityService.getAllByProvince(Integer.parseInt(provinceCode));
+		} else {
+			cities = cityService.getAllByProvince(provinces.get(0));
+		}
+		if (cityCode != null) {
+			areas = areaService.getAllByCity(Integer.parseInt(cityCode));
+		} else {
+			areas = areaService.getAllByCity(cities.get(0));
+		}
 		request.getSession().setAttribute("provinces", provinces);
 		request.getSession().setAttribute("cities", cities);
 		request.getSession().setAttribute("areas", areas);
 		return "regist_hotel";
 	}
-
-	@RequestMapping(value="toRegistUser", method=RequestMethod.GET)
-	public String toRegistUser(HttpServletRequest request){
+	
+	@RequestMapping(value = "toRegistUser", method = RequestMethod.POST)
+	public String toRegistUser(HttpServletRequest request) {
+		String hotelName = request.getParameter("hotelName");
+		String legalName = request.getParameter("legalName");
+		String legalIdCard = request.getParameter("legalIdCard");
+		String licenseNo = request.getParameter("licenseNo");
+		String provinceCode = request.getParameter("provinceCode");
+		String cityCode = request.getParameter("cityCode");
+		String areaCode = request.getParameter("areaCode");
+		String placeDetail = request.getParameter("placeDetail");
+		Hotel hotel = new Hotel();
+		hotel.setName(hotelName);
+		hotel.setLegalName(legalName);
+		hotel.setLegalIdCard(legalIdCard);
+		hotel.setLicenseNo(licenseNo);
+		if (areaCode == null) {
+			if (cityCode == null) {
+				hotel.setPlaceCode(Integer.parseInt(provinceCode));
+			} else {
+				hotel.setPlaceCode(Integer.parseInt(cityCode));
+			}
+		} else {
+			hotel.setPlaceCode(Integer.parseInt(areaCode));
+		}
+		hotel.setPlaceDetail(placeDetail);
+		request.getSession().setAttribute("registHotel", hotel);
+		request.getSession().setAttribute("registHotelProvinceCode", provinceCode);
+		request.getSession().setAttribute("registHotelCityCode", cityCode);
+		request.getSession().setAttribute("registHotelAreaCode", areaCode);
 		return "regist_user";
 	}
+
 	/**
 	 * 
 	 * @param request

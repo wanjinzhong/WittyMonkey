@@ -77,6 +77,7 @@
 table {
 	width: 500px;
 	margin: 0 auto;
+	margin-top: 10px;
 }
 
 td {
@@ -84,11 +85,12 @@ td {
 }
 
 select {
-	width: 100px;
+	width: 90px;
 }
 
 #btnGroup {
 	margin-top: 5px;
+	margin-right: 10px;
 	float: right;
 }
 
@@ -99,6 +101,14 @@ select {
 #question {
 	width: 20px;
 	height: 20px;
+}
+#hotel_icon{
+	width: 40px;
+	height: 40px;
+	margin-left: 10px;
+}
+#form_title{
+	margin-left: 10px;
 }
 </style>
 <body>
@@ -115,50 +125,67 @@ select {
 				key="regist.step.complete" /></span>
 	</div>
 	<div id="regist_hotel">
+		<img src="pic/regist/hotel_icon.png" id="hotel_icon"/>
 		<span id="form_title"><fmt:message key="regist.hotel.title" /></span>
 		<div id="regist_form">
-			<form>
+			<form id="hotel_form" action="toRegistUser.do" method="POST">
 				<table>
 					<tr>
 						<td class="td_title"><fmt:message
 								key="regist.hotel.hotel_name" /></td>
 						<td><input type="text" class="input-text radius"
-							name="hotelName" /></td>
+							name="hotelName" value="${registHotel.name }"/></td>
 					</tr>
 					<tr>
 						<td class="td_title"><fmt:message
 								key="regist.hotel.legal_name" /></td>
 						<td><input type="text" class="input-text radius"
-							name="legalName" /></td>
+							name="legalName" value="${registHotel.legalName }"/></td>
 					</tr>
 					<tr>
 						<td class="td_title"><fmt:message
 								key="regist.hotel.legal_idcard" /></td>
 						<td><input type="text" class="input-text radius"
-							name="legalIdCard" /></td>
+							name="legalIdCard" value="${registHotel.legalIdCard }"/></td>
 						<td><img id="question" src="pic/regist/question.png"></td>
 					</tr>
 					<tr>
 						<td class="td_title"><fmt:message
-								key="regist.hotel.license_no" /></td>
+								key="regist.hotel.license_no"/></td>
 						<td><input type="text" class="input-text radius"
-							name="licenseNo" /></td>
+							name="licenseNo" value="${registHotel.licenseNo }"/></td>
 					</tr>
 					<tr>
 						<td class="td_title"><fmt:message key="regist.hotel.place" /></td>
-						<td><select id="province" onchange="setPlace(this)">
+						<td><select id="province" name="provinceCode" onchange="setPlace(this)">
 								<c:forEach items="${provinces }" var="province">
-									<option value="${province.code }">${province.name}</option>
+									<c:if test="${registHotelProvinceCode eq  province.code}">
+										<option value="${province.code }" selected="selected">${province.name}</option>
+									</c:if>
+									<c:if test="${registHotelProvinceCode ne  province.code}">
+										<option value="${province.code }">${province.name}</option>
+									</c:if>
 								</c:forEach>
 								<option value="0"><fmt:message
 										key="regist.hotel.place.overseas" /></option>
-						</select> &nbsp;&nbsp; <select id="city" onchange="setPlace(this)">
+						</select> &nbsp;&nbsp; <select id="city" onchange="setPlace(this)" name="cityCode">
 								<c:forEach items="${cities }" var="city">
-									<option value="${city.code }">${city.name}</option>
+									<c:if test="${registHotelCityCode eq  city.code}">
+										<option value="${city.code }" selected="selected">${city.name}</option>
+									</c:if>
+									<c:if test="${registHotelCityCode ne  city.code}">
+										<option value="${city.code }">${city.name}</option>
+									</c:if>
 								</c:forEach>
-						</select> &nbsp;&nbsp; <select id="area">
+						</select> &nbsp;&nbsp; <select id="area" name="areaCode">
 								<c:forEach items="${areas }" var="area">
 									<option value="${area.code }">${area.name}</option>
+									<c:if test="${registHotelAreaCode eq  area.code}">
+										<option value="${area.code }" selected="selected">${area.name}</option>
+									</c:if>
+									<c:if test="${registHotelAreaCode ne  area.code}">
+										<option value="${area.code }">${area.name}</option>
+									</c:if>
 								</c:forEach>
 						</select></td>
 					</tr>
@@ -232,7 +259,7 @@ select {
 		parent.layer.close(index); //再执行关闭 
 	}
 	function toNext() {
-		window.location = "toRegistUser.do"
+		$("#hotel_form").submit();
 	}
 </script>
 </html>

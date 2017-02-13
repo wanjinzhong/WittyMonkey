@@ -35,12 +35,11 @@ public class Hotel implements Serializable{
 	@Column(length=50)
 	private String name;
 	
-	@ManyToOne(targetEntity=Area.class)
-	@JoinColumn(name="area_code", referencedColumnName="code")
-	private Area area;
+	@Column(name="palce_code")
+	private Integer placeCode;
 	
-	@Column
-	private String place;
+	@Column(name="place_detail")
+	private String placeDetail;
 	
 	// 星级
 	@Column
@@ -92,6 +91,12 @@ public class Hotel implements Serializable{
 	@Column
 	private Boolean isClose;
 	
+	@OneToMany(targetEntity=MaterielType.class, cascade={CascadeType.ALL})
+	private List<MaterielType> materielTypes = new ArrayList<MaterielType>();
+	
+	@OneToMany(targetEntity=LeaveType.class, cascade={CascadeType.ALL})
+	private List<LeaveType> leaveTypes = new ArrayList<LeaveType>();
+	
 	public Boolean getIsClose() {
 		return isClose;
 	}
@@ -124,20 +129,22 @@ public class Hotel implements Serializable{
 		this.name = name;
 	}
 
-	public Area getArea() {
-		return area;
+	
+
+	public Integer getPlaceCode() {
+		return placeCode;
 	}
 
-	public void setArea(Area area) {
-		this.area = area;
+	public void setPlaceCode(Integer placeCode) {
+		this.placeCode = placeCode;
 	}
 
-	public String getPlace() {
-		return place;
+	public String getPlaceDetail() {
+		return placeDetail;
 	}
 
-	public void setPlace(String place) {
-		this.place = place;
+	public void setPlaceDetail(String placeDetail) {
+		this.placeDetail = placeDetail;
 	}
 
 	public Integer getStar() {
@@ -236,4 +243,21 @@ public class Hotel implements Serializable{
 		this.licenseNo = licenseNo;
 	}
 
+	public List<MaterielType> getMaterielTypes() {
+		return materielTypes;
+	}
+
+	public void setMaterielTypes(List<MaterielType> materielTypes) {
+		this.materielTypes = materielTypes;
+	}
+
+	public List<LeaveType> getLeaveTypes() {
+		return leaveTypes;
+	}
+
+	public void setLeaveTypes(List<LeaveType> leaveTypes) {
+		this.leaveTypes = leaveTypes;
+	}
+
+	
 }
