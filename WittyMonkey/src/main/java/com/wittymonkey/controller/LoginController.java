@@ -5,9 +5,10 @@ import java.util.Date;
 import java.util.List;
 import java.util.regex.Pattern;
 
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 
+import com.wittymonkey.util.IDCardValidate;
+import com.wittymonkey.util.MD5Util;
 import com.wittymonkey.vo.SimplePlace;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -137,6 +138,54 @@ public class LoginController {
         return "regist_user";
     }
 
+    @RequestMapping(value = "toPrev", method = RequestMethod.POST)
+    public String toPrev(HttpServletRequest request) {
+        String loginName = request.getParameter("loginName");
+        String realName = request.getParameter("realName");
+        String idCard = request.getParameter("idCard");
+        String email = request.getParameter("email");
+        String code = request.getParameter("code");
+        User user = new User();
+        user.setLoginName(loginName);
+        user.setRealName(realName);
+        user.setIdCardNo(idCard);
+        user.setEmail(email);
+        request.getSession().setAttribute("registUser", user);
+        request.getSession().setAttribute("registCode", code);
+        return "regist_hotel";
+    }
+
+    /**
+     * 验证身份证号
+     *
+     * @param request
+     * @return <table border="1" cellspacing="0">
+     * <tr>
+     * <th>代码</th>
+     * <th>说明</th>
+     * </tr>
+     * <tr>
+     * <td>200</td>
+     * <td>验证通过</td>
+     * </tr>
+     * <tr>
+     * <td>400</td>
+     * <td>验证失败</td>
+     * </tr>
+     */
+    @RequestMapping(value = "validateIdCard", method = RequestMethod.GET)
+    @ResponseBody
+    public String validateIdCard(HttpServletRequest request) {
+        JSONObject json = new JSONObject();
+        String idCard = request.getParameter("idCard");
+        if (IDCardValidate.validate(idCard)) {
+            json.put("status", 200);
+        } else {
+            json.put("status", 400);
+        }
+        return json.toJSONString();
+    }
+
     /**
      * @param request
      * @return JsonString: {"status", code}
@@ -194,10 +243,14 @@ public class LoginController {
             User user = new User();
             user.setLoginName(loginName);
             user.setPassword(password);
-            if (!userService.validateLogin(user)) {
+            if (!userService.validateLoginByLoginName(loginName, password) &&
+                    !userService.validateLoginByEmail(loginName, password)) {
                 json.put("status", 430);
             } else {
                 User loginUser = userService.getUserByLoginName(loginName);
+                if (loginUser == null){
+                    loginUser = userService.getUserByEmail(loginName);
+                }
                 request.getSession().setAttribute("loginUser", loginUser);
                 json.put("status", 200);
                 json.put("url", "index.do");
@@ -336,6 +389,10 @@ public class LoginController {
      * <td>邮箱格式不正确</td>
      * </tr>
      * <tr>
+     * <td>421</td>
+     * <td>邮箱已被注册</td>
+     * </tr>
+     * <tr>
      * <td>430</td>
      * <td>没有获取验证码</td>
      * </tr>
@@ -363,32 +420,33 @@ public class LoginController {
         System.out.println(myCode);
         if (loginName == null || loginName.trim().equals("")) {
             json.put("status", 400);
-            return json.toJSONString();
         } else if (isLoginNameExist(loginName)) {
             json.put("status", 401);
-            return json.toJSONString();
         } else if (password == null || password.trim().equals("") || password.length() < 6) {
             json.put("status", 410);
-            return json.toJSONString();
         } else if (!password.equals(repassword)) {
             json.put("status", 411);
-            return json.toJSONString();
         } else if (!validateEmail(email)) {
             json.put("status", 420);
-            return json.toJSONString();
-//        } else if (validateInpEmailCode(request) == 400) {
-//            json.put("status", 430);
-//            return json.toJSONString();
-//        } else if (validateInpEmailCode(request) == 401) {
-//            json.put("status", 431);
-//            return json.toJSONString();
+        } else if (!isEmailExist(email.toLowerCase())) {
+            json.put("status", 421);
+        } else if (validateInpEmailCode(request) == 400) {
+            json.put("status", 430);
+        } else if (validateInpEmailCode(request) == 401) {
+            json.put("status", 431);
         } else {
             // 注册酒店
             Hotel hotel = (Hotel) request.getSession().getAttribute("registHotel");
             registToDatabase(hotel, loginName, password, email);
             json.put("status", 200);
-            return json.toJSONString();
+            json.put("url", "toComplete.do");
         }
+        return json.toJSONString();
+    }
+
+    @RequestMapping(value = "toComplete", method = RequestMethod.GET)
+    public String toComplete(HttpServletRequest request) {
+        return "regist_complete";
     }
 
     /**
@@ -474,8 +532,8 @@ public class LoginController {
         // 添加用户
         User user = new User();
         user.setLoginName(loginName);
-        user.setPassword(password);
-        user.setEmail(email);
+        user.setPassword(MD5Util.encrypt(password));
+        user.setEmail(email.toLowerCase());
         user.setHotel(hotel);
         user.getRoles().add(role);
         user.setRegistDate(now);
@@ -520,6 +578,47 @@ public class LoginController {
     }
 
     /**
+     * 验证邮箱是否存在
+     *
+     * @param request
+     * @return {"status": code}
+     * <table border="1" cellspacing="0">
+     * <tr>
+     * <th>代码</th>
+     * <th>说明</th>
+     * </tr>
+     * <tr>
+     * <td>200</td>
+     * <td>邮箱存在</td>
+     * </tr>
+     * <tr>
+     * <td>201</td>
+     * <td>邮箱不存在</td>
+     * </tr>
+     * <tr>
+     * <td>400</td>
+     * <td>邮箱格式不正确</td>
+     * </tr>
+     * </table>
+     */
+    @RequestMapping(value = "validateEmail", method = RequestMethod.GET)
+    @ResponseBody
+    public String validateEmail(HttpServletRequest request) {
+        JSONObject json = new JSONObject();
+        String email = request.getParameter("email");
+        if (!validateEmail(email.toLowerCase())) {
+            json.put("status", 400);
+            return json.toJSONString();
+        }
+        if (isEmailExist(email)) {
+            json.put("status", 200);
+        } else {
+            json.put("status", 201);
+        }
+        return json.toJSONString();
+    }
+
+    /**
      * 用户名是否存在
      *
      * @param loginName
@@ -543,6 +642,33 @@ public class LoginController {
             return false;
         } else {
             return true;
+        }
+    }
+
+    /**
+     * 根据邮箱查找用户是否存在
+     *
+     * @param email
+     * @return <table border="1" cellspacing="0">
+     * <tr>
+     * <th>代码</th>
+     * <th>说明</th>
+     * </tr>
+     * <tr>
+     * <td>true</td>
+     * <td>用户存在</td>
+     * </tr>
+     * <tr>
+     * <td>false</td>
+     * <td>用户不存在</td>
+     * </tr>
+     * </table>
+     */
+    public boolean isEmailExist(String email) {
+        if (userService.getUserByEmail(email.toLowerCase()) != null) {
+            return true;
+        } else {
+            return false;
         }
     }
 

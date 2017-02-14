@@ -121,7 +121,7 @@ td {
 		$("#get_code").val(time);
 	});
 	function regist() {
-		if (!validateRegistForm($("#regist_form"))) {
+		if (!validateRegistUserForm($("#regist_form"))) {
 			return;
 		}
 		var myCode = $("#code").val();

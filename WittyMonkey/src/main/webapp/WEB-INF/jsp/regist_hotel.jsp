@@ -11,6 +11,7 @@
 %>
 <%@ include file="common/taglib.jsp" %>
 <%@ include file="common/js&css.jsp" %>
+<%@include file="common/iconfont.jsp"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -18,8 +19,8 @@
     <title><fmt:message key="name"/></title>
     <link href="style/common.css" rel="stylesheet" type="text/css"/>
     <script type="text/javascript" src="i18n/messages_<%=lang%>.js"></script>
+    <script type="text/javascript" src="js/common.js"></script>
     <%--alibaba iconfont字体图标--%>
-    <script type="text/javascript" src="//at.alicdn.com/t/font_cnbfa2urlf03sor.js"></script>
     <fmt:setBundle basename="i18n/messages"/>
 </head>
 <style type="text/css">
@@ -129,44 +130,50 @@
         key="regist.step.complete"/></span>
 </div>
 <div id="regist_hotel">
-        <svg id="icon_hotel" class="icon" aria-hidden="true">
-            <use xlink:href="#icon-jiudian"></use>
-        </svg>
-        <span id="form_title"><fmt:message key="regist.hotel.title"/></span>
+    <svg id="icon_hotel" class="icon" aria-hidden="true">
+        <use xlink:href="#icon-jiudian"></use>
+    </svg>
+    <span id="form_title"><fmt:message key="regist.hotel.title"/></span>
     <div id="regist_form">
         <form id="hotel_form" action="toRegistUser.do" method="POST">
             <table>
                 <tr>
                     <td class="td_title"><fmt:message
                             key="regist.hotel.hotel_name"/></td>
-                    <td><input type="text" class="input-text radius"
-                               name="hotelName" value="${registHotel.name }"/></td>
+                    <td><input type="text" class="input-text radius" id="hotelName"
+                               name="hotelName" value="${registHotel.name }" onblur="validateHotelName(this)"/></td>
                 </tr>
                 <tr>
                     <td class="td_title"><fmt:message
                             key="regist.hotel.license_no"/></td>
                     <td><input type="text" class="input-text radius"
                                name="licenseNo" value="${registHotel.licenseNo }"
-                               onkeypress="validatePlace(this)"/></td>
-                    <td><svg id="question" class="icon" aria-hidden="true">
-                        <use xlink:href="#icon-wenhao"></use>
-                    </svg></td>
+                               id="licenseNo"
+                               onkeypress="validatePlace(this)" onblur="if(validateLicenseNo(this))validatePlace(this)"/></td>
+                    <td>
+                        <svg id="question" class="icon" aria-hidden="true">
+                            <use xlink:href="#icon-wenhao"></use>
+                        </svg>
+                    </td>
                 </tr>
                 <tr>
                     <td class="td_title"><fmt:message
                             key="regist.hotel.legal_name"/></td>
                     <td><input type="text" class="input-text radius"
-                               name="legalName" value="${registHotel.legalName }"/></td>
+                               id="legalName"
+                               name="legalName" value="${registHotel.legalName }"
+                               onblur="validateLegalName(this)"/></td>
                 </tr>
                 <tr>
                     <td class="td_title"><fmt:message
                             key="regist.hotel.legal_idcard"/></td>
                     <td><input type="text" class="input-text radius"
-                               name="legalIdCard" value="${registHotel.legalIdCard }"/></td>
+                               name="legalIdCard" id="idCard" value="${registHotel.legalIdCard }"
+                               onblur="validateIdCard(this)"/></td>
                 </tr>
                 <tr>
                     <td class="td_title"><fmt:message key="regist.hotel.place"/></td>
-                    <td><select id="province" name="provinceCode" onblur="validateLicenseNo(this)">
+                    <td><select id="province" name="provinceCode">
                         <c:forEach items="${provinces }" var="province">
                             <c:if test="${registHotelProvinceCode eq  province.code}">
                                 <option value="${province.code }" selected="selected">${province.name}</option>
@@ -201,7 +208,9 @@
                 <tr>
                     <td class="td_title"><fmt:message
                             key="regist.hotel.place.detail"/></td>
-                    <td><textarea class="textarea radius" name="placeDetail"></textarea></td>
+                    <td><textarea class="textarea radius"
+                                  id="placeDetail" name="placeDetail"
+                                  onblur="validatePlaceDetail(this)">${registHotel.placeDetail}</textarea></td>
                 </tr>
             </table>
         </form>
@@ -265,7 +274,11 @@
     }
     function validatePlace(obj) {
         var code = $(obj).val();
-        if (code == "" || code.length < 6) {
+        var reg = /(^[0-9]*$)/;
+        if (!reg.test(code)) {
+            layer.tips(regist_validate_number_only, obj, {tips: 2});
+            return;
+        } else if (code == "" || code.length < 6) {
             return;
         } else {
             $.ajax({
@@ -311,7 +324,9 @@
         parent.layer.close(index); //再执行关闭
     }
     function toNext() {
-        $("#hotel_form").submit();
+        if (validateRegistHotelForm($("#hotel_form"))) {
+            $("#hotel_form").submit();
+        }
     }
 </script>
 </html>

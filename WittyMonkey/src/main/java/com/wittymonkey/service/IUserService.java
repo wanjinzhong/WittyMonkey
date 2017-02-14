@@ -8,23 +8,30 @@ public interface IUserService {
 	 * 根据id获取用户
 	 * @return
 	 */
-	public User getUserById(Integer id);
+	User getUserById(Integer id);
 	/**
 	 * 根据登陆名查询用户
 	 * @param loginName
 	 * @return
 	 */
-	public User getUserByLoginName(String loginName);
-	
+	User getUserByLoginName(String loginName);
+
+	/**
+	 * 根据邮箱查找用户
+	 * @param email
+	 * @return
+	 */
+	User getUserByEmail(String email);
+
 	/**
 	 * 添加用户
 	 * @param user
 	 */
-	public void saveUser(User user);
+	void saveUser(User user);
 	
 	/**
 	 * 验证用户名和密码
-	 * @param user
+	 * @param
 	 * @return
 	 * <table border="1" cellspacing="0">
 	 * <tr><th>代码</th><th>说明</th></tr>
@@ -32,5 +39,17 @@ public interface IUserService {
 	 * <tr><td>false</td><td>验证失败</td></tr>
 	 * </table>
 	 */
-	public boolean validateLogin(User user);
+	boolean validateLoginByLoginName(String email, String password);
+
+	/**
+	 * 验证邮箱和密码
+	 * @param
+	 * @return
+	 * <table border="1" cellspacing="0">
+	 * <tr><th>代码</th><th>说明</th></tr>
+	 * <tr><td>true</td><td>验证通过</td></tr>
+	 * <tr><td>false</td><td>验证失败</td></tr>
+	 * </table>
+	 */
+	boolean validateLoginByEmail(String email, String password);
 }

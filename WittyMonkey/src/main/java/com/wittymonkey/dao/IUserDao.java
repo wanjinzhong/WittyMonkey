@@ -10,20 +10,36 @@ public interface IUserDao extends IGenericDao<User, Serializable>{
 	 * @param id
 	 * @return
 	 */
-	public User getUserById(Integer id);
+	User getUserById(Integer id);
 	/**
 	 * 根据登陆名获取用户
 	 * @param loginName
 	 * @return
 	 */
-	public User getUserByLoginName(String loginName);
+	User getUserByLoginName(String loginName);
 	
 	/**
 	 * 根据登陆名和密码获取用户（用于登陆验证）
-	 * @param user
+	 * @param
 	 * @return
 	 */
-	public User getUserByLoginNameAndPassword(User user);
+	User getUserByLoginNameAndPassword(String loginName, String password);
+
+	/**
+	 * 根据邮箱和密码获取用户（用于登陆验证）
+	 * @param
+	 * @return
+	 */
+	User getUserByEmailAndPassword(String email,String password);
 	
-	public void saveUser(User user);
+	void saveUser(User user);
+
+	/**
+	 * 根据邮箱查找用户
+	 * @param email
+	 * @return
+	 */
+	User getUserByEmail(String email);
+
+
 }

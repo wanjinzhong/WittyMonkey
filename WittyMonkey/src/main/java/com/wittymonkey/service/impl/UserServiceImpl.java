@@ -1,5 +1,6 @@
 package com.wittymonkey.service.impl;
 
+import com.wittymonkey.util.MD5Util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,17 +20,30 @@ public class UserServiceImpl implements IUserService {
 	}
 
 	@Override
+	public User getUserByEmail(String email) {
+		return userDao.getUserByEmail(email);
+	}
+
+	@Override
 	public void saveUser(User user) {
 		userDao.save(user);
 	}
 
 	@Override
-	public boolean validateLogin(User user) {
-		if (userDao.getUserByLoginNameAndPassword(user) == null) {
+	public boolean validateLoginByLoginName(String loginName, String password) {
+		if (userDao.getUserByLoginNameAndPassword(loginName, MD5Util.encrypt(password)) == null) {
 			return false;
 		} else {
 			return true;
 		}
+	}
+
+	@Override
+	public boolean validateLoginByEmail(String email, String password) {
+		if (userDao.getUserByEmailAndPassword(email, MD5Util.encrypt(password)) == null){
+			return false;
+		}
+		return true;
 	}
 
 	@Override
