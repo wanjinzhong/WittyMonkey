@@ -1,24 +1,27 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" import="com.wittymonkey.entity.User"
 	pageEncoding="UTF-8"%>
 <%
-	User loginUser = (User) session.getAttribute("loginUser");
-	String lang = loginUser.getSetting().getLang();
+	//User loginUser = (User) session.getAttribute("loginUser");
+	//String lang = loginUser.getSetting().getLang();
+	String lang = "zh_CN";
 %>
 <%@ include file="common/taglib.jsp"%>
 <%@ include file="common/js&css.jsp"%>
+<%@ include file="common/iconfont.jsp"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title><fmt:message key="name" /></title>
-<link href="lib/Hui-iconfont/1.0.7/iconfont.css" rel="stylesheet"
+<link href="style/common.css" rel="stylesheet"
 	type="text/css" />
 <link href="style/common.css" rel="stylesheet" type="text/css"/>
 </head>
 <script type="text/javascript" src="js/common.js"></script>
 <!-- 根据设置动态加载js语言 -->
 <script type="text/javascript" src="i18n/messages_<%=lang%>.js"></script>
-<fmt:setBundle basename="i18n/messages_${loginUser.setting.lang }"/>
+<%--<fmt:setBundle basename="i18n/messages_${loginUser.setting.lang }"/>--%>
+<fmt:setBundle basename="i18n/messages"/>
 <style>
 .navbar-wrapper {
 	height: 80px;
@@ -106,7 +109,9 @@
 		<div class="menu_dropdown bk_2">
 			<dl id="menu-floor">
 				<dt>
-					<i class="Hui-iconfont">&#xe616;</i> <fmt:message key="index.menu.floor"/><i
+					<svg class="icon" aria-hidden="true">
+						<use xlink:href="#icon-mayishangchengdaizhifudengicon09"></use>
+					</svg> <fmt:message key="index.menu.floor"/><i
 						class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i>
 				</dt>
 				<dd>
@@ -120,7 +125,9 @@
 			</dl>
 			<dl id="menu-room">
 				<dt>
-					<i class="Hui-iconfont">&#xe613;</i> <fmt:message key="index.menu.room"/><i
+					<svg class="icon" aria-hidden="true">
+						<use xlink:href="#icon-fangjian"></use>
+					</svg> <fmt:message key="index.menu.room"/><i
 						class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i>
 				</dt>
 				<dd>
@@ -134,7 +141,9 @@
 			</dl>
 			<dl id="menu-checkin">
 				<dt>
-					<i class="Hui-iconfont">&#xe620;</i> <fmt:message key="index.menu.checkin"/><i
+					<svg class="icon" aria-hidden="true">
+						<use xlink:href="#icon-icon_bagCheck"></use>
+					</svg> <fmt:message key="index.menu.checkin"/><i
 						class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i>
 				</dt>
 				<dd>
@@ -150,7 +159,9 @@
 			</dl>
 			<dl id="menu-materiel">
 				<dt>
-					<i class="Hui-iconfont">&#xe622;</i> <fmt:message key="index.menu.materiel"/><i
+					<svg class="icon" aria-hidden="true">
+						<use xlink:href="#icon-daoluputonghuowuyunshu"></use>
+					</svg> <fmt:message key="index.menu.materiel"/><i
 						class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i>
 				</dt>
 				<dd>
@@ -164,7 +175,9 @@
 			</dl>
 			<dl id="menu-inventory">
 				<dt>
-					<i class="Hui-iconfont">&#xe60d;</i> <fmt:message key="index.menu.inventory"/><i
+					<svg class="icon" aria-hidden="true">
+						<use xlink:href="#icon-kucun"></use>
+					</svg> <fmt:message key="index.menu.inventory"/><i
 						class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i>
 				</dt>
 				<dd>
@@ -178,7 +191,9 @@
 			</dl>
 			<dl id="menu-staff">
 				<dt>
-					<i class="Hui-iconfont">&#xe62d;</i> <fmt:message key="index.menu.staff"/><i
+					<svg class="icon" aria-hidden="true">
+						<use xlink:href="#icon-yuangong"></use>
+					</svg> <fmt:message key="index.menu.staff"/><i
 						class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i>
 				</dt>
 				<dd>
@@ -192,7 +207,9 @@
 			</dl>
 			<dl id="menu-leave">
 				<dt>
-					<i class="Hui-iconfont">&#xe61a;</i> <fmt:message key="index.menu.leave"/><i
+					<svg class="icon" aria-hidden="true">
+						<use xlink:href="#icon-qingjia"></use>
+					</svg> <fmt:message key="index.menu.leave"/><i
 						class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i>
 				</dt>
 				<dd>
@@ -206,7 +223,9 @@
 			</dl>
 			<dl id="menu-finance">
 				<dt>
-					<i class="Hui-iconfont">&#xe62e;</i> <fmt:message key="index.menu.finance"/><i
+					<svg class="icon" aria-hidden="true">
+						<use xlink:href="#icon-caiwu"></use>
+					</svg> <fmt:message key="index.menu.finance"/><i
 						class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i>
 				</dt>
 				<dd>
@@ -224,7 +243,9 @@
 			</dl>
 			<dl id="menu-report">
 				<dt>
-					<i class="Hui-iconfont">&#xe61a;</i> <fmt:message key="index.menu.report"/><i
+					<svg class="icon" aria-hidden="true">
+						<use xlink:href="#icon-buchongiconsvg14"></use>
+					</svg> <fmt:message key="index.menu.report"/><i
 						class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i>
 				</dt>
 				<dd>
@@ -236,7 +257,9 @@
 			</dl>
 			<dl id="menu-notify">
 				<dt>
-					<i class="Hui-iconfont">&#xe61a;</i> <fmt:message key="index.menu.notify"/><i
+					<svg class="icon" aria-hidden="true">
+						<use xlink:href="#icon-tongzhi"></use>
+					</svg> <fmt:message key="index.menu.notify"/><i
 						class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i>
 				</dt>
 				<dd>
@@ -248,7 +271,9 @@
 			</dl>
 			<dl id="menu-settting">
 				<dt>
-					<i class="Hui-iconfont">&#xe61a;</i> <fmt:message key="index.menu.settting"/><i
+					<svg class="icon" aria-hidden="true">
+						<use xlink:href="#icon-shezhi"></use>
+					</svg> <fmt:message key="index.menu.settting"/><i
 						class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i>
 				</dt>
 				<dd>
@@ -281,7 +306,7 @@
 		<div id="iframe_box" class="Hui-article">
 			<div class="show_iframe">
 				<div style="display: none" class="loading"></div>
-				<iframe scrolling="yes" frameborder="0" src="#"></iframe>
+				<iframe scrolling="yes" frameborder="0" src="welcome.jsp"></iframe>
 			</div>
 		</div>
 	</section>
