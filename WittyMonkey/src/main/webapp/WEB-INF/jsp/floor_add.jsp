@@ -103,10 +103,10 @@
                         case 200:
                             layer.msg(floor_manage_add_success, {
                                 icon: 1,
+                                time: 2000
                             }, function () {
-                                closeMe();
                                 parent.location.reload();
-                                    "";
+                                closeMe();
                             });
                             ;
                             break;

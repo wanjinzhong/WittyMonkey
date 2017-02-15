@@ -69,8 +69,22 @@
                     <td>${floor.floorNo}</td>
                     <td>${fn:length(floor.roomMasters)}</td>
                     <td>${floor.note}</td>
-                    <td>${floor.entryUser.name}</td>
-                    <td>${floor.entryDateTime}</td>
+                    <td>${floor.entryUser.realName}</td>
+                    <td>${floor.entryDatetime}</td>
+                    <td>
+                        <span class="btn btn-success radius">
+                            <svg class="icon" aria-hidden="true">
+                                <use xlink:href="#icon-bianji"></use>
+                            </svg>
+                            <fmt:message key="edit"/>
+                        </span>
+                        <span class="btn btn-danger radius">
+                            <svg class="icon" aria-hidden="true">
+                                <use xlink:href="#icon-shanchu1"></use>
+                            </svg>
+                            <fmt:message key="delete"/>
+                        </span>
+                    </td>
                 </tr>
             </c:forEach>
         </table>

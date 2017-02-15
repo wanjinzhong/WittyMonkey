@@ -2,6 +2,7 @@ package com.wittymonkey.controller;
 
 import com.wittymonkey.dao.IHotelDao;
 import com.wittymonkey.dao.IUserDao;
+import com.wittymonkey.entity.Floor;
 import com.wittymonkey.entity.Hotel;
 import com.wittymonkey.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Collections;
+import java.util.Comparator;
 
 /**
  * Created by neilw on 2017/2/15.
@@ -34,6 +37,12 @@ public class IndexController {
     public String toFloorManage(HttpServletRequest request){
         User user = userDao.getUserByLoginName("lyf");
         request.getSession().setAttribute("loginUser", user);
+        Collections.sort(user.getHotel().getFloors(), new Comparator<Floor>() {
+            @Override
+            public int compare(Floor o1, Floor o2) {
+                return o1.getFloorNo() - o2.getFloorNo();
+            }
+        });
         request.getSession().setAttribute("hotel", user.getHotel());
         return "floor_manage";
     }
