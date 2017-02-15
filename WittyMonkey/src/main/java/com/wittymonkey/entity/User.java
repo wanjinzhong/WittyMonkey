@@ -58,8 +58,8 @@ public class User implements Serializable {
 	@JoinColumn(name = "entry_id", referencedColumnName = "id")
 	private User entryUser;
 
-	@ManyToMany(targetEntity=Role.class, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-	@JoinTable(name = "user_role", 
+	@ManyToMany(targetEntity=Role.class, cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.EAGER)
+	@JoinTable(name = "user_role",
 	joinColumns = { @JoinColumn(name = "user_id", referencedColumnName = "id") },
 	inverseJoinColumns={@JoinColumn(name = "role_id", referencedColumnName = "id")})
 	private List<Role> roles = new ArrayList<Role>();

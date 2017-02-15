@@ -34,8 +34,8 @@ public class Floor implements Serializable{
 	@JoinColumn(name="hotel_id", referencedColumnName="id")
 	private Hotel hotel;
 	
-	@Column
-	private Integer floor_no;
+	@Column(name="floor_no")
+	private Integer floorNo;
 	
 	@OneToMany(targetEntity=RoomMaster.class,mappedBy="floor")
 	private List<RoomMaster> roomMasters = new ArrayList<RoomMaster>();
@@ -90,14 +90,6 @@ public class Floor implements Serializable{
 		this.hotel = hotel;
 	}
 
-	public Integer getFloor_no() {
-		return floor_no;
-	}
-
-	public void setFloor_no(Integer floor_no) {
-		this.floor_no = floor_no;
-	}
-
 	public List<RoomMaster> getRoomMasters() {
 		return roomMasters;
 	}
@@ -105,6 +97,12 @@ public class Floor implements Serializable{
 	public void setRoomMasters(List<RoomMaster> roomMasters) {
 		this.roomMasters = roomMasters;
 	}
-	
-	
+
+	public Integer getFloorNo() {
+		return floorNo;
+	}
+
+	public void setFloorNo(Integer floorNo) {
+		this.floorNo = floorNo;
+	}
 }

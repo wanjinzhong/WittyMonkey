@@ -164,11 +164,11 @@
             <table>
                 <tr>
                     <td id="loginNameHint"><fmt:message key="regist.user.login_name"/>:</td>
-                    <td id="loginName">123123123</td>
+                    <td id="loginName">${loginUserName}</td>
                 </tr>
                 <tr>
                     <td id="emailHint"><fmt:message key="regist.user.email"/>:</td>
-                    <td id="email">12312!qq.com</td>
+                    <td id="email">${loginUserEmail}</td>
                 </tr>
             </table>
         </div>

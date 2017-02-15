@@ -1,5 +1,10 @@
 package com.wittymonkey.controller;
 
+import com.wittymonkey.dao.IHotelDao;
+import com.wittymonkey.dao.IUserDao;
+import com.wittymonkey.entity.Hotel;
+import com.wittymonkey.entity.User;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -11,6 +16,9 @@ import javax.servlet.http.HttpServletRequest;
  */
 @Controller
 public class IndexController {
+
+    @Autowired
+    private IUserDao userDao;
 
     @RequestMapping(value = "toMyDesk", method = RequestMethod.GET)
     public String toMyDesk(HttpServletRequest request){
@@ -24,6 +32,9 @@ public class IndexController {
 
     @RequestMapping(value = "toFloorManage", method = RequestMethod.GET)
     public String toFloorManage(HttpServletRequest request){
+        User user = userDao.getUserByLoginName("lyf");
+        request.getSession().setAttribute("loginUser", user);
+        request.getSession().setAttribute("hotel", user.getHotel());
         return "floor_manage";
     }
 

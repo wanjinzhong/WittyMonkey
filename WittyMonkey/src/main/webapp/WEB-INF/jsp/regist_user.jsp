@@ -89,20 +89,6 @@
         width: 100px;
     }
 
-    #btnGroup {
-        margin-top: 5px;
-        margin-right: 10px;
-        float: right;
-    }
-
-    #closeBtn {
-        margin-right: 10px;
-    }
-
-    #prevBtn {
-        margin-right: 10px;
-    }
-
     #form_title {
         line-height: 40px;
         margin-left: 10px;
@@ -189,10 +175,11 @@
                 <tr>
                     <td><fmt:message key='regist.user.code'/></td>
                     <td class="td_title"><input id="code" name="code" type="text"
-                                                class="input-text radius" value="${registCode}"/><input type="button"
-                                                                                                        id="get_code"
-                                                                                                        class="btn btn-secondary radius"
-                                                                                                        value="<fmt:message key='regist.user.get_code'/>">
+                                                class="input-text radius" value="${registCode}"/>
+                        <input type="button"
+                               id="get_code"
+                               class="btn btn-secondary radius"
+                               value="<fmt:message key='regist.user.get_code'/>">
                     </td>
                 </tr>
             </table>
@@ -315,9 +302,6 @@
             time = 60;
         }
     }
-    function closeMe() {
-        var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
-        parent.layer.close(index); //再执行关闭
-    }
+
 </script>
 </html>

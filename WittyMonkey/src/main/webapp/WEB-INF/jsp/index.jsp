@@ -31,6 +31,10 @@
         width: 50px;
         height: 50px;
     }
+    #hotel_name{
+        color: white;
+        line-height: 40px;
+    }
 </style>
 <body>
 <div class="contextMenu" id="myMenu1">
@@ -50,37 +54,19 @@
     <div class="navbar navbar-fixed-top">
         <div class="container-fluid cl">
             <a class="logo navbar-logo f-l mr-10 hidden-xs" href="#"><img
-                    class="logo" src="pic/logo.gif"/></a> <a aria-hidden="false"
-                                                             class="nav-toggle Hui-iconfont visible-xs"
-                                                             href="javascript:;">&#xe667;</a>
-            <nav class="nav navbar-nav">
-                <ul class="cl">
-                    <li class="dropDown dropDown_hover"><a href="javascript:;"
-                                                           class="dropDown_A"><i class="Hui-iconfont">&#xe600;</i> 新增 <i
-                            class="Hui-iconfont">&#xe6d5;</i></a>
-                        <ul class="dropDown-menu menu radius box-shadow">
-                            <li><a href="javascript:;"
-                                   onclick="article_add('添加资讯','article-add.html')"><i
-                                    class="Hui-iconfont">&#xe616;</i> 资讯</a></li>
-                            <li><a href="javascript:;"
-                                   onclick="picture_add('添加资讯','picture-add.html')"><i
-                                    class="Hui-iconfont">&#xe613;</i> 图片</a></li>
-                            <li><a href="javascript:;"
-                                   onclick="product_add('添加资讯','product-add.html')"><i
-                                    class="Hui-iconfont">&#xe620;</i> 产品</a></li>
-                            <li><a href="javascript:;"
-                                   onclick="member_add('添加用户','member-add.html','','510')"><i
-                                    class="Hui-iconfont">&#xe60d;</i> 用户</a></li>
-                        </ul>
-                    </li>
-                </ul>
-            </nav>
+                    class="logo" src="pic/logo.gif"/></a>
+            <span id="hotel_name">${hotel.name}</span>
             <nav id="Hui-userbar"
                  class="nav navbar-nav navbar-userbar hidden-xs">
                 <ul class="cl">
-                    <li>超级管理员</li>
-                    <li class="dropDown dropDown_hover"><a href="#"
-                                                           class="dropDown_A">admin <i class="Hui-iconfont">&#xe6d5;</i></a>
+                    <li>
+                        <c:forEach items="${loginUser.roles}" var="role" varStatus="index">
+                            ${role.name}
+                            <c:if test="${fn:length(loginUser.roles) < index.index + 1}">/</c:if>
+                        </c:forEach>
+                    </li>
+                    <li class="dropDown dropDown_hover">
+                        <a href="#" class="dropDown_A">${loginUser.realName} <i class="Hui-iconfont">&#xe6d5;</i></a>
                         <ul class="dropDown-menu menu radius box-shadow">
                             <li><a href="#">个人信息</a></li>
                             <li><a href="#">切换账户</a></li>
@@ -121,8 +107,8 @@
             </dt>
             <dd>
                 <ul>
-                    <li><a data-href="toFloorSummary.do" data-title="<fmt:message key="index.menu.floor.summary"/>"
-                           href="javascript:void(0)"><fmt:message key="index.menu.floor.summary"/></a></li>
+                    <%--<li><a data-href="toFloorSummary.do" data-title="<fmt:message key="index.menu.floor.summary"/>"--%>
+                           <%--href="javascript:void(0)"><fmt:message key="index.menu.floor.summary"/></a></li>--%>
                     <li><a data-href="/toFloorManage.do" data-title="<fmt:message key="index.menu.floor"/>"
                            href="javascript:void(0)"><fmt:message key="index.menu.floor"/></a></li>
                 </ul>

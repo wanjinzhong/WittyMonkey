@@ -69,7 +69,7 @@ public class Hotel implements Serializable{
 	@JoinColumn(name="entry_id", referencedColumnName="id")
 	private User entryUser;
 	
-	@OneToMany(targetEntity=Floor.class, mappedBy="hotel")
+	@OneToMany(targetEntity=Floor.class, mappedBy="hotel", fetch = FetchType.EAGER)
 	private List<Floor> floors = new ArrayList<Floor>();
 
 	@Column(length=1024)

@@ -117,7 +117,6 @@ td {
 			layer.open({
 				type : 2,
 				area : [ '750px', '600px' ],
-				fix : true,
 				maxmin : false,
 				shade : 0.4,
 				title : regist_title,

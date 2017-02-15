@@ -252,6 +252,7 @@ public class LoginController {
                     loginUser = userService.getUserByEmail(loginName);
                 }
                 request.getSession().setAttribute("loginUser", loginUser);
+                request.getSession().setAttribute("hotel", loginUser.getHotel());
                 json.put("status", 200);
                 json.put("url", "index.do");
             }
@@ -327,8 +328,6 @@ public class LoginController {
             List<Area> areas;
             cities = cityService.getAllByProvince(Integer.parseInt(provinceCode));
             areas = areaService.getAllByCity(Integer.parseInt(cityCode));
-            System.out.println("市：" + cities.size());
-            System.out.println("区：" + areas.size());
             List<SimplePlace> simpleCities = new ArrayList<SimplePlace>();
             List<SimplePlace> simpleAreas = new ArrayList<SimplePlace>();
             for (int i = 0; i < cities.size(); i++) {
@@ -428,7 +427,7 @@ public class LoginController {
             json.put("status", 411);
         } else if (!validateEmail(email)) {
             json.put("status", 420);
-        } else if (!isEmailExist(email.toLowerCase())) {
+        } else if (isEmailExist(email.toLowerCase())) {
             json.put("status", 421);
         } else if (validateInpEmailCode(request) == 400) {
             json.put("status", 430);
@@ -437,7 +436,9 @@ public class LoginController {
         } else {
             // 注册酒店
             Hotel hotel = (Hotel) request.getSession().getAttribute("registHotel");
-            registToDatabase(hotel, loginName, password, email);
+            registToDatabase(hotel, loginName, password,realName, email);
+            request.getSession().setAttribute("loginUserName", loginName);
+            request.getSession().setAttribute("loginUserEmail",email);
             json.put("status", 200);
             json.put("url", "toComplete.do");
         }
@@ -446,6 +447,7 @@ public class LoginController {
 
     @RequestMapping(value = "toComplete", method = RequestMethod.GET)
     public String toComplete(HttpServletRequest request) {
+
         return "regist_complete";
     }
 
@@ -456,7 +458,7 @@ public class LoginController {
      * @param password
      * @param email
      */
-    private void registToDatabase(Hotel hotel, String loginName, String password, String email) {
+    private void registToDatabase(Hotel hotel, String loginName, String password, String realName, String email) {
         User system = userService.getUserById(0);
         Date now = new Date();
         // 添加初始化请假类型
@@ -532,6 +534,7 @@ public class LoginController {
         // 添加用户
         User user = new User();
         user.setLoginName(loginName);
+        user.setRealName(realName);
         user.setPassword(MD5Util.encrypt(password));
         user.setEmail(email.toLowerCase());
         user.setHotel(hotel);
@@ -723,6 +726,7 @@ public class LoginController {
     public int validateInpEmailCode(HttpServletRequest request) {
         String realCode = (String) request.getSession().getAttribute("registCode");
         String myCode = request.getParameter("code");
+        System.out.println(realCode);
         if (realCode == null) {
             return 400;
         } else if (myCode.equals(realCode)) {

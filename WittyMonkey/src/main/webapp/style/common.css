@@ -13,3 +13,21 @@ body{
 	fill: currentColor;
 	overflow: hidden;
 }
+#refresh_btn{
+	width: 20px;
+	height: 20px;
+}
+td{
+	text-align: center;
+}
+#main{
+	margin: 20px;
+}
+#btnGroup {
+	margin-top: 5px;
+	margin-right: 10px;
+	float: right;
+}
+#btnGroup input {
+	margin-left: 10px;
+}
