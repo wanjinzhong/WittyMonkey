@@ -1,4 +1,4 @@
-<%@ page import="com.wittymonkey.entity.User" %><%--
+<%--
   Created by IntelliJ IDEA.
   User: neilw
   Date: 2017/2/15
@@ -24,6 +24,7 @@
         margin-top: 20px;
     }
 </style>
+<body>
 <div>
     <nav class="breadcrumb">
         <svg class="icon" aria-hidden="true">
