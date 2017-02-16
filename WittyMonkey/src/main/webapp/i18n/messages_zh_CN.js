@@ -47,5 +47,6 @@ var page_first = "首页";
 var page_last = "尾页";
 var page_prev = "上一页";
 var page_next = "下一页";
-var page_to = "第";
+var page_to = "到第";
 var page_page = "页";
+var btn_page_yes = "确定";

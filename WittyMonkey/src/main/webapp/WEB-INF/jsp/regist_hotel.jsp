@@ -82,6 +82,7 @@
     }
 
     td {
+        text-align: left;
         padding: 5px;
     }
 

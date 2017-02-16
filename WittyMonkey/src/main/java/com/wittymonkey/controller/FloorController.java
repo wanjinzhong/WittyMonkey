@@ -193,22 +193,28 @@ public class FloorController {
     public String getFloorByPage(HttpServletRequest request) {
         JSONObject json = new JSONObject();
         Integer curr = Integer.parseInt(request.getParameter("curr"));
-        Integer pageSize = Integer.parseInt(request.getParameter("pageSize"));
+//        Integer pageSize = Integer.parseInt(request.getParameter("pageSize"));
+        User loginUser = (User) request.getSession().getAttribute("loginUser");
+        Integer pageSize = loginUser.getSetting().getPageSize();
         Hotel hotel = (Hotel) request.getSession().getAttribute("hotel");
         Page page = new Page();
         page.setPageSize(pageSize);
         page.setCurrPage(curr);
         Integer count = floorService.getTotal(hotel.getId());
         List<Floor> floors = floorService.getFloorByHotel(hotel.getId(), (curr-1) * pageSize, pageSize);
+        Collections.sort(floors, new Comparator<Floor>() {
+            @Override
+            public int compare(Floor o1, Floor o2) {
+                return o1.getFloorNo() - o2.getFloorNo();
+            }
+        });
         List<SimpleFloor> simpleFloors = ChangeToSimple.floorList(floors);
         json.put("count", count);
+        json.put("pageSize", pageSize);
         JSONArray array = new JSONArray();
-        array.addAll(floors);
+        array.addAll(simpleFloors);
         json.put("data", array);
-        Map<String, Object> map = new HashMap<String, Object>();
-        map.put("count", count);
-        map.put("data", simpleFloors);
-        return json.toJSONString(map, SerializerFeature.DisableCircularReferenceDetect);
+        return json.toJSONString();
     }
 
     /**

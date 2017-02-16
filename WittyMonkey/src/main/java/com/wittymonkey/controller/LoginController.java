@@ -530,6 +530,7 @@ public class LoginController {
         // 添加用户设置
         Setting setting = new Setting();
         setting.setLang("zh_CN");
+        setting.setPageSize(10);
 
         // 添加用户
         User user = new User();

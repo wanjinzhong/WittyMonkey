@@ -24,9 +24,13 @@ public class Setting implements Serializable{
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Integer id;
 	
-	//语言
+	// 语言
 	@Column(columnDefinition="VARCHAR(10) default 'zh_CN'")
 	private String lang;
+
+	// 每页数据条数
+	@Column(columnDefinition = "int default 10")
+	private Integer pageSize;
 
 	public Integer getId() {
 		return id;
@@ -44,4 +48,11 @@ public class Setting implements Serializable{
 		this.lang = lang;
 	}
 
+	public Integer getPageSize() {
+		return pageSize;
+	}
+
+	public void setPageSize(Integer pageSize) {
+		this.pageSize = pageSize;
+	}
 }

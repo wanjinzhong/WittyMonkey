@@ -35,15 +35,9 @@ public class IndexController {
 
     @RequestMapping(value = "toFloorManage", method = RequestMethod.GET)
     public String toFloorManage(HttpServletRequest request){
-        User user = userDao.getUserByLoginName("lyf");
-        request.getSession().setAttribute("loginUser", user);
-        Collections.sort(user.getHotel().getFloors(), new Comparator<Floor>() {
-            @Override
-            public int compare(Floor o1, Floor o2) {
-                return o1.getFloorNo() - o2.getFloorNo();
-            }
-        });
-        request.getSession().setAttribute("hotel", user.getHotel());
+//        User user = userDao.getUserByLoginName("lyf");
+//        request.getSession().setAttribute("loginUser", user);
+//        request.getSession().setAttribute("hotel", user.getHotel());
         return "floor_manage";
     }
 

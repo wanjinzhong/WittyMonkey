@@ -125,6 +125,7 @@
     }
 
     td {
+        text-align: left;
         padding-bottom: 10px;
     }
 

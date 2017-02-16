@@ -1,4 +1,4 @@
-<%--
+<%@ page import="com.wittymonkey.entity.User" %><%--
   Created by IntelliJ IDEA.
   User: neilw
   Date: 2017/2/15
@@ -6,11 +6,6 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%
-    //User loginUser = (User) session.getAttribute("loginUser");
-    //String lang = loginUser.getSetting().getLang();
-    String lang = "zh_CN";
-%>
 <%@ include file="common/taglib.jsp" %>
 <%@ include file="common/js&css.jsp" %>
 <%@ include file="common/iconfont.jsp" %>
@@ -22,9 +17,8 @@
 </head>
 <script type="text/javascript" src="js/common.js"></script>
 <!-- 根据设置动态加载js语言 -->
-<script type="text/javascript" src="i18n/messages_<%=lang%>.js"></script>
-<%--<fmt:setBundle basename="i18n/messages_${loginUser.setting.lang }"/>--%>
-<fmt:setBundle basename="i18n/messages"/>
+<script type="text/javascript" src="i18n/messages_${loginUser.setting.lang }.js"></script>
+<fmt:setBundle basename="i18n/messages_${loginUser.setting.lang }"/>
 <style type="text/css">
     table {
         margin-top: 20px;
@@ -49,7 +43,7 @@
     <div id="main">
         <input type="button" class="btn btn-secondary radius" value="<fmt:message key="floor.btn.add"/>"
                onclick="showAddFloor()"/>
-        <table class="table table-border table-bordered table-hover table-bg" >
+        <table class="table table-border table-bordered table-hover table-bg">
             <thead>
             <tr>
                 <th width="100px"><fmt:message key="floor.manage.floor_no"/></th>
@@ -60,13 +54,7 @@
                 <th width="200px"><fmt:message key="opertion"/></th>
             </tr>
             </thead>
-            <c:if test="${fn:length(hotel.floors) eq 0}">
-                <tr class="text-c">
-                    <td colspan="6"><fmt:message key="no_data"/></td>
-                </tr>
-            </c:if>
             <tbody id="dataTabel">
-
             </tbody>
         </table>
         <div id="page"></div>
@@ -79,14 +67,14 @@
     });
 
     function page(curr) {
-        var pageSize = 3;
         $.ajax({
             type: "GET",
             url: "getFloorByPage.do",
-            data: {"pageSize": pageSize || 3, "curr": curr || 1},
+            data: {"curr": curr || 1},
             dataType: "json",
             success: function (data) {
                 var res = eval("(" + data + ")");
+                var pageSize = res["pageSize"];
                 laypage({
                     cont: "page",
                     pages: Math.ceil(res["count"] / pageSize),
@@ -95,6 +83,7 @@
                     last: page_last,
                     prev: page_prev,
                     next: page_next,
+                    skip: true,
                     jump: function (obj, first) {
                         if (!first) {
                             page(obj.curr);
@@ -108,28 +97,34 @@
 
     function refreshTable(obj) {
         var html = "";
-        for (var i in obj) {
-            html += "<tr class='text-c'>" +
-                "<td>" + obj[i].floorNo + "</td>" +
-                "<td>" + obj[i].roomNum + "</td>" +
-                "<td>" + obj[i].note + "</td>" +
-                "<td>" + obj[i].entryUser + "</td>" +
-                "<td>" + formatDate(obj[i].entryDatetime) + "</td>" +
-                "<td>" +
-                "<span style='margin-right:10px;' class='btn btn-success radius' onclick='editFloor(" + obj[i].floorNo + ")'>" +
-                "<svg class='icon' aria-hidden='true'>" +
-                "<use xlink:href='#icon-bianji'></use>" +
-                "</svg>" +
-                "<fmt:message key='edit'/>" +
-                "</span>" +
-                "<span class='btn btn-danger radius' onclick='deleteFloor(" + obj[i].floorNo + ")'>" +
-                "<svg class='icon' aria-hidden='true'>" +
-                "<use xlink:href='#icon-shanchu1'></use>" +
-                "</svg>" +
-                "<fmt:message key='delete'/>" +
-                "</span>" +
-                "</td>" +
-                "</tr>";
+        if (obj.length == 0) {
+            html = '<tr class="text-c">' +
+                '<td colspan="6"><fmt:message key="no_data"/></td>' +
+                '</tr>"';
+        } else {
+            for (var i in obj) {
+                html += "<tr class='text-c'>" +
+                    "<td>" + obj[i].floorNo + "</td>" +
+                    "<td>" + obj[i].roomNum + "</td>" +
+                    "<td>" + obj[i].note + "</td>" +
+                    "<td>" + obj[i].entryUser + "</td>" +
+                    "<td>" + formatDate(obj[i].entryDatetime) + "</td>" +
+                    "<td>" +
+                    "<span style='margin-right:10px;' class='btn btn-success radius' onclick='editFloor(" + obj[i].floorNo + ")'>" +
+                    "<svg class='icon' aria-hidden='true'>" +
+                    "<use xlink:href='#icon-bianji'></use>" +
+                    "</svg>" +
+                    "<fmt:message key='edit'/>" +
+                    "</span>" +
+                    "<span class='btn btn-danger radius' onclick='deleteFloor(" + obj[i].floorNo + ")'>" +
+                    "<svg class='icon' aria-hidden='true'>" +
+                    "<use xlink:href='#icon-shanchu1'></use>" +
+                    "</svg>" +
+                    "<fmt:message key='delete'/>" +
+                    "</span>" +
+                    "</td>" +
+                    "</tr>";
+            }
         }
         $("#dataTabel").html(html);
     }
@@ -165,7 +160,7 @@
                                     icon: 1,
                                     time: 2000
                                 }, function () {
-                                    parent.location.reload();
+                                    window.location.reload();
                                     closeMe();
                                 });
                                 break;
