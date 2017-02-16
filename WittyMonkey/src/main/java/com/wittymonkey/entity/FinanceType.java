@@ -1,5 +1,7 @@
 package com.wittymonkey.entity;
 
+import com.alibaba.fastjson.annotation.JSONField;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
@@ -36,7 +38,7 @@ public class FinanceType implements Serializable{
 	
 	@Column(length=20)
 	private String name;
-	
+
 	@ManyToOne(targetEntity=Hotel.class)
 	@JoinColumn(name="hotel_id", referencedColumnName="id")
 	private Hotel hotel;

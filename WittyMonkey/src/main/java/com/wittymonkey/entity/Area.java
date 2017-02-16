@@ -1,5 +1,7 @@
 package com.wittymonkey.entity;
 
+import com.alibaba.fastjson.annotation.JSONField;
+
 import java.io.Serializable;
 
 import javax.persistence.Column;
@@ -31,7 +33,7 @@ public class Area implements Serializable {
 
 	@Column(length=50)
 	private String name;
-	
+
 	@ManyToOne(targetEntity = City.class)
 	@JoinColumn(name = "city_code", referencedColumnName="code")
 	private City city;

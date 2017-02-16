@@ -1,6 +1,6 @@
 package com.wittymonkey.util;
 
-import com.sun.org.apache.xml.internal.security.utils.Base64;
+import com.sun.org.apache.xerces.internal.impl.dv.util.Base64;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;

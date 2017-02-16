@@ -1,5 +1,7 @@
 package com.wittymonkey.entity;
 
+import com.alibaba.fastjson.annotation.JSONField;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
@@ -29,20 +31,20 @@ public class Floor implements Serializable{
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Integer id;
-	
+
 	@ManyToOne(targetEntity=Hotel.class,fetch=FetchType.EAGER)
 	@JoinColumn(name="hotel_id", referencedColumnName="id")
 	private Hotel hotel;
 	
 	@Column(name="floor_no")
 	private Integer floorNo;
-	
+
 	@OneToMany(targetEntity=RoomMaster.class,mappedBy="floor")
 	private List<RoomMaster> roomMasters = new ArrayList<RoomMaster>();
 
 	@Column(name="entry_datetime")
 	private Date entryDatetime;
-	
+
 	@ManyToOne(targetEntity=User.class, fetch=FetchType.EAGER)
 	@JoinColumn(name="entry_id", referencedColumnName="id")
 	private User entryUser;

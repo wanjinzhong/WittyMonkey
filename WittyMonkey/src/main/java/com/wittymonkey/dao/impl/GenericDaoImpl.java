@@ -2,16 +2,14 @@ package com.wittymonkey.dao.impl;
 
 import java.io.Serializable;
 import java.sql.Date;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import org.hibernate.Criteria;
-import org.hibernate.Query;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
+import org.hibernate.*;
 import org.hibernate.transform.Transformers;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -183,6 +181,23 @@ public class GenericDaoImpl<T> implements IGenericDao<T, Serializable> {
 	public List<T> queryListHQL(String hql, Object object) {
 		Session session = this.getCurrentSession();
 		Query query = session.createQuery(hql);
+		setParam(query, object);
+		List<T> result = query.list();
+		return result;
+	}
+
+	@Override
+	public List<T> queryListHQL(String hql, Object obj, Integer first, Integer total) {
+		Session session = this.getCurrentSession();
+		Query query = session.createQuery(hql);
+		setParam(query, obj);
+		query.setFirstResult(first);
+		query.setMaxResults(total);
+		List<T> result = query.list();
+		return result;
+	}
+
+	public void setParam(Query query, Object object) {
 		if (object != null){
 			Map<String, ?> params = (Map<String, ?>) object;
 			Iterator<?> iterator = params.entrySet().iterator();
@@ -202,9 +217,6 @@ public class GenericDaoImpl<T> implements IGenericDao<T, Serializable> {
 
 			}
 		}
-		
-		List<T> result = query.list();
-		return result;
 	}
 
 	@Override
@@ -218,11 +230,58 @@ public class GenericDaoImpl<T> implements IGenericDao<T, Serializable> {
 
 
 	@Override
-	public List<Map<String,Object>> querySQL(String sql) {
+	public List<T> queryListSQL(String sql, Object object) {
 		Session session = this.getCurrentSession();
-		//将结果化为map的形式
-		 Query  query = session.createSQLQuery(sql).setResultTransformer(Transformers.ALIAS_TO_ENTITY_MAP);
+		SQLQuery query = session.createSQLQuery(sql);
+		setParam(query, object);
+		query.addEntity(entityClass);
 		return query.list();
+	}
+
+	@Override
+	public List<T> queryListSQL(String sql, Object obj, Integer first, Integer total) {
+		Session session = this.getCurrentSession();
+		SQLQuery query = session.createSQLQuery(sql);
+		setParam(query, obj);
+		query.setFirstResult(first);
+		query.setMaxResults(total);
+		query.addEntity(entityClass);
+		return query.list();
+	}
+
+	@Override
+	public T queryOneSQL(String sql, Object object) {
+		List<T> list = queryListSQL(sql, object);
+		if (list != null && list.size() > 0){
+			return list.get(0);
+		}
+		return null;
+	}
+
+	@Override
+	public Integer executeSQL(String sql, Object object){
+		Integer result;
+		SQLQuery query = this.getCurrentSession().createSQLQuery(sql);
+		setParam(query,object);
+		result = query.executeUpdate();
+		return result;
+	}
+
+	@Override
+	public Integer countHQL(String hql, Object object) {
+		Session session = this.getCurrentSession();
+		Query query = session.createQuery(hql);
+		setParam(query, object);
+		return ((Number)query.uniqueResult()).intValue();
+	}
+
+	@Override
+	public Integer countSQL(String sql, Object object) {
+		Session session = this.getCurrentSession();
+		Query query = session.createSQLQuery(sql);
+		setParam(query, object);
+		String result = query.uniqueResult().toString();
+		return ((Number)query.uniqueResult()).intValue();
 	}
 
 	@Override

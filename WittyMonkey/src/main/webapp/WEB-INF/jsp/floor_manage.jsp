@@ -14,6 +14,7 @@
 <%@ include file="common/taglib.jsp" %>
 <%@ include file="common/js&css.jsp" %>
 <%@ include file="common/iconfont.jsp" %>
+<%@ include file="common/laypage.jsp" %>
 <html>
 <head>
     <title><fmt:message key="floor.manage.title"/></title>
@@ -48,15 +49,15 @@
     <div id="main">
         <input type="button" class="btn btn-secondary radius" value="<fmt:message key="floor.btn.add"/>"
                onclick="showAddFloor()"/>
-        <table class="table table-border table-bordered table-hover table-bg">
+        <table class="table table-border table-bordered table-hover table-bg" >
             <thead>
             <tr>
-                <th><fmt:message key="floor.manage.floor_no"/></th>
-                <th><fmt:message key="floor.manage.room.num"/></th>
+                <th width="100px"><fmt:message key="floor.manage.floor_no"/></th>
+                <th width="100px"><fmt:message key="floor.manage.room.num"/></th>
                 <th><fmt:message key="note"/></th>
-                <th><fmt:message key="floor.manage.entry_user"/></th>
-                <th><fmt:message key="floor.manage.entry_date"/></th>
-                <th><fmt:message key="opertion"/></th>
+                <th width="150px"><fmt:message key="floor.manage.entry_user"/></th>
+                <th width="200px"><fmt:message key="floor.manage.entry_date"/></th>
+                <th width="200px"><fmt:message key="opertion"/></th>
             </tr>
             </thead>
             <c:if test="${fn:length(hotel.floors) eq 0}">
@@ -64,37 +65,129 @@
                     <td colspan="6"><fmt:message key="no_data"/></td>
                 </tr>
             </c:if>
-            <c:forEach items="${hotel.floors}" var="floor" varStatus="index">
-                <tr class="text-c">
-                    <td>${floor.floorNo}</td>
-                    <td>${fn:length(floor.roomMasters)}</td>
-                    <td>${floor.note}</td>
-                    <td>${floor.entryUser.realName}</td>
-                    <td>${floor.entryDatetime}</td>
-                    <td>
-                        <span class="btn btn-success radius">
-                            <svg class="icon" aria-hidden="true">
-                                <use xlink:href="#icon-bianji"></use>
-                            </svg>
-                            <fmt:message key="edit"/>
-                        </span>
-                        <span class="btn btn-danger radius">
-                            <svg class="icon" aria-hidden="true">
-                                <use xlink:href="#icon-shanchu1"></use>
-                            </svg>
-                            <fmt:message key="delete"/>
-                        </span>
-                    </td>
-                </tr>
-            </c:forEach>
+            <tbody id="dataTabel">
+
+            </tbody>
         </table>
+        <div id="page"></div>
     </div>
 </div>
 </body>
 <script type="text/javascript">
-    function showAddFloor(){
+    $(document).ready(function () {
+        page();
+    });
+
+    function page(curr) {
+        var pageSize = 3;
+        $.ajax({
+            type: "GET",
+            url: "getFloorByPage.do",
+            data: {"pageSize": pageSize || 3, "curr": curr || 1},
+            dataType: "json",
+            success: function (data) {
+                var res = eval("(" + data + ")");
+                laypage({
+                    cont: "page",
+                    pages: Math.ceil(res["count"] / pageSize),
+                    curr: curr || 1,
+                    first: page_first,
+                    last: page_last,
+                    prev: page_prev,
+                    next: page_next,
+                    jump: function (obj, first) {
+                        if (!first) {
+                            page(obj.curr);
+                        }
+                        refreshTable(res["data"]);
+                    }
+                });
+            }
+        })
+    }
+
+    function refreshTable(obj) {
+        var html = "";
+        for (var i in obj) {
+            html += "<tr class='text-c'>" +
+                "<td>" + obj[i].floorNo + "</td>" +
+                "<td>" + obj[i].roomNum + "</td>" +
+                "<td>" + obj[i].note + "</td>" +
+                "<td>" + obj[i].entryUser + "</td>" +
+                "<td>" + formatDate(obj[i].entryDatetime) + "</td>" +
+                "<td>" +
+                "<span style='margin-right:10px;' class='btn btn-success radius' onclick='editFloor(" + obj[i].floorNo + ")'>" +
+                "<svg class='icon' aria-hidden='true'>" +
+                "<use xlink:href='#icon-bianji'></use>" +
+                "</svg>" +
+                "<fmt:message key='edit'/>" +
+                "</span>" +
+                "<span class='btn btn-danger radius' onclick='deleteFloor(" + obj[i].floorNo + ")'>" +
+                "<svg class='icon' aria-hidden='true'>" +
+                "<use xlink:href='#icon-shanchu1'></use>" +
+                "</svg>" +
+                "<fmt:message key='delete'/>" +
+                "</span>" +
+                "</td>" +
+                "</tr>";
+        }
+        $("#dataTabel").html(html);
+    }
+    function deleteFloor(floorNo) {
+        layer.confirm(floor_manage_delete_hint, {icon: 7, title: floor_manage_delete_title},
+            function (index) {
+                $.ajax({
+                    url: "deleteFloor.do",
+                    data: {"floorNo": floorNo},
+                    dataType: "json",
+                    type: "GET",
+                    success: function (data) {
+                        var result = eval("(" + data + ")");
+                        switch (result.status) {
+                            case 400:
+                                layer.msg(floor_manage_delete_not_exist, {
+                                    icon: 2, time: 2000
+                                }, function () {
+                                    parent.location.reload();
+                                    closeMe();
+                                });
+                                break;
+                            case 500:
+                                layer.msg(error_500, {
+                                    icon: 2, time: 2000
+                                }, function () {
+                                    parent.location.reload();
+                                    closeMe();
+                                });
+                                break;
+                            case 200:
+                                layer.msg(floor_manage_delete_success, {
+                                    icon: 1,
+                                    time: 2000
+                                }, function () {
+                                    parent.location.reload();
+                                    closeMe();
+                                });
+                                break;
+                        }
+                    }
+                });
+                layer.close(index);
+            });
+    }
+    function editFloor(obj) {
         layer.open({
-            type : 2,
+            type: 2,
+            area: ['700px', '350px'],
+            maxmin: false,
+            shade: 0.4,
+            title: floor_manage_edit_title,
+            content: "toEditFloor.do?floorNo=" + obj
+        });
+    }
+    function showAddFloor() {
+        layer.open({
+            type: 2,
             area: ['700px', '350px'],
             maxmin: false,
             shade: 0.4,

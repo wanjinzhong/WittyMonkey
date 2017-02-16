@@ -60,12 +60,14 @@
 <body>
 <div id="border">
     <form id="add_form">
+        <!-- java端处理方式 -->
+        <input type="hidden" name="method" value="add"/>
         <table>
 
             <tr>
                 <td><fmt:message key="floor.manage.floor_no"/></td>
                 <td><input type="text" class="input-text radius" name="floorNo"
-                           id="floorNo" onblur="validateFloorNo(this)"></td>
+                           id="floorNo" onblur="validateFloorNo('add',this)"></td>
             </tr>
             <tr>
                 <td><fmt:message key="note"/></td>
@@ -82,10 +84,10 @@
 </div>
 <script type="text/javascript">
     function save() {
-        if (validateFloorNo($("#floorNo"))) {
+        if (validateFloorNo("add", $("#floorNo"))) {
             $.ajax({
                 type: "GET",
-                url: "addFloor.do",
+                url: "saveFloor.do",
                 data: $("#add_form").serialize(),
                 dataType: "json",
                 success: function (data) {
@@ -100,7 +102,15 @@
                         case 410:
                             layer.tips(messageOfValidateLength($("note"), 1024), $("#note"), {tips: 2});
                             break;
-                        case 200:
+                        case 500:
+                        layer.msg(error_500, {
+                            icon: 2, time: 2000
+                        }, function () {
+                            parent.location.reload();
+                            closeMe();
+                        });
+                        break;
+                        case 200 :
                             layer.msg(floor_manage_add_success, {
                                 icon: 1,
                                 time: 2000
@@ -108,11 +118,11 @@
                                 parent.location.reload();
                                 closeMe();
                             });
-                            ;
                             break;
                     }
                 }
-            });
+            })
+            ;
         }
     }
 </script>

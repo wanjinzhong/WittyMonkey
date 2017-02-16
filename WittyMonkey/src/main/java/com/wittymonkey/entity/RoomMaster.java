@@ -1,5 +1,7 @@
 package com.wittymonkey.entity;
 
+import com.alibaba.fastjson.annotation.JSONField;
+
 import java.io.Serializable;
 
 import javax.persistence.Column;
@@ -14,142 +16,162 @@ import javax.persistence.Table;
 
 /**
  * 房间基本信息
- * 
- * @author Neil
  *
+ * @author Neil
  */
 @Entity
 @Table(name = "room_master")
 public class RoomMaster implements Serializable {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Integer id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Integer id;
 
-	@ManyToOne(targetEntity = Floor.class)
-	@JoinColumn(name = "floor_id", referencedColumnName = "id")
-	private Floor floor;
+    @ManyToOne(targetEntity = Floor.class)
+    @JoinColumn(name = "floor_id", referencedColumnName = "id")
+    private Floor floor;
 
-	@Column
-	private Double area;
+    @Column
+    private Double area;
 
-	@Column
-	private Double price;
+    @Column(length = 10)
+    private String number;
 
-	// 单人床数量
-	@Column(name = "singe_bed_num")
-	private Integer singleBedNum;
+    @Column(length = 20)
+    private String name;
 
-	// 双人床数量
-	@Column(name = "double_bed_num")
-	private Integer doubleBedNum;
+    @Column
+    private Double price;
 
-	// 可入住人数
-	@Column(name = "available_num")
-	private Integer availableNum;
+    // 单人床数量
+    @Column(name = "singe_bed_num")
+    private Integer singleBedNum;
 
-	// 房间状态
-	@Column
-	private Integer status;
+    // 双人床数量
+    @Column(name = "double_bed_num")
+    private Integer doubleBedNum;
 
-	@OneToOne(targetEntity = RoomExt.class, mappedBy = "roomMaster")
-	private RoomExt roomExt;
+    // 可入住人数
+    @Column(name = "available_num")
+    private Integer availableNum;
 
-	// 缩略图URL
-	@Column
-	private String thumbUrl;
+    // 房间状态
+    @Column
+    private Integer status;
 
-	@Column(length=1024)
-	private String note;
-	
-	public String getNote() {
-		return note;
-	}
+    @OneToOne(targetEntity = RoomExt.class, mappedBy = "roomMaster")
+    private RoomExt roomExt;
 
-	public void setNote(String note) {
-		this.note = note;
-	}
-	
-	public String getThumbUrl() {
-		return thumbUrl;
-	}
+    // 缩略图URL
+    @Column
+    private String thumbUrl;
 
-	public void setThumbUrl(String thumbUrl) {
-		this.thumbUrl = thumbUrl;
-	}
+    @Column(length = 1024)
+    private String note;
 
-	public Integer getId() {
-		return id;
-	}
+    public String getNote() {
+        return note;
+    }
 
-	public void setId(Integer id) {
-		this.id = id;
-	}
+    public void setNote(String note) {
+        this.note = note;
+    }
 
-	public Floor getFloor() {
-		return floor;
-	}
+    public String getThumbUrl() {
+        return thumbUrl;
+    }
 
-	public void setFloor(Floor floor) {
-		this.floor = floor;
-	}
+    public void setThumbUrl(String thumbUrl) {
+        this.thumbUrl = thumbUrl;
+    }
 
-	public Double getArea() {
-		return area;
-	}
+    public Integer getId() {
+        return id;
+    }
 
-	public void setArea(Double area) {
-		this.area = area;
-	}
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
-	public Double getPrice() {
-		return price;
-	}
+    public Floor getFloor() {
+        return floor;
+    }
 
-	public void setPrice(Double price) {
-		this.price = price;
-	}
+    public void setFloor(Floor floor) {
+        this.floor = floor;
+    }
 
-	public Integer getSingleBedNum() {
-		return singleBedNum;
-	}
+    public Double getArea() {
+        return area;
+    }
 
-	public void setSingleBedNum(Integer singleBedNum) {
-		this.singleBedNum = singleBedNum;
-	}
+    public void setArea(Double area) {
+        this.area = area;
+    }
 
-	public Integer getDoubleBedNum() {
-		return doubleBedNum;
-	}
+    public Double getPrice() {
+        return price;
+    }
 
-	public void setDoubleBedNum(Integer doubleBedNum) {
-		this.doubleBedNum = doubleBedNum;
-	}
+    public void setPrice(Double price) {
+        this.price = price;
+    }
 
-	public Integer getAvailableNum() {
-		return availableNum;
-	}
+    public Integer getSingleBedNum() {
+        return singleBedNum;
+    }
 
-	public void setAvailableNum(Integer availableNum) {
-		this.availableNum = availableNum;
-	}
+    public void setSingleBedNum(Integer singleBedNum) {
+        this.singleBedNum = singleBedNum;
+    }
 
-	public Integer getStatus() {
-		return status;
-	}
+    public Integer getDoubleBedNum() {
+        return doubleBedNum;
+    }
 
-	public void setStatus(Integer status) {
-		this.status = status;
-	}
+    public void setDoubleBedNum(Integer doubleBedNum) {
+        this.doubleBedNum = doubleBedNum;
+    }
 
-	public RoomExt getRoomExt() {
-		return roomExt;
-	}
+    public Integer getAvailableNum() {
+        return availableNum;
+    }
 
-	public void setRoomExt(RoomExt roomExt) {
-		this.roomExt = roomExt;
-	}
+    public void setAvailableNum(Integer availableNum) {
+        this.availableNum = availableNum;
+    }
 
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
+
+    public RoomExt getRoomExt() {
+        return roomExt;
+    }
+
+    public void setRoomExt(RoomExt roomExt) {
+        this.roomExt = roomExt;
+    }
+
+    public String getNumber() {
+        return number;
+    }
+
+    public void setNumber(String number) {
+        this.number = number;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 }

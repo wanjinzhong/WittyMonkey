@@ -17,6 +17,10 @@ body{
 	width: 20px;
 	height: 20px;
 }
+
+th{
+	text-align: center !important;
+}
 td{
 	text-align: center;
 }

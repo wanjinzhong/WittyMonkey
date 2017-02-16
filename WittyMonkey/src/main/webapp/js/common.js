@@ -342,7 +342,7 @@ function validateRegistHotelForm(form) {
  * @param inp
  * @returns {boolean}
  */
-function validateFloorNo(inp) {
+function validateFloorNo(method, inp) {
     var no = $(inp).val();
     var reg = /^-?\d{1,3}$/;
     if (!reg.test(no)) {
@@ -353,7 +353,7 @@ function validateFloorNo(inp) {
         $.ajax({
             type: "GET",
             url: "validateFloorNo.do",
-            data: {"floorNo": no},
+            data: {"floorNo": no, "method": method},
             dataType: "json",
             async: false,
             success: function (data) {
@@ -406,4 +406,32 @@ function validateAddFloor(form) {
 function closeMe() {
     var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
     parent.layer.close(index); //再执行关闭
+}
+
+function formatDate(obj) {
+    var time = new Date(obj);
+    var year = time.getFullYear();
+    var month = time.getMonth()+1;
+    var date = time.getDate();
+    var hour = time.getHours();
+    var minutes = time.getMinutes();
+    var second = time.getSeconds();
+
+    //月，日，时，分，秒 小于10时，补0
+    if(month<10){
+        month = "0" + month;
+    }
+    if(date<10){
+        date = "0" + date;
+    }
+    if(hour <10){
+        hour = "0" + hour;
+    }
+    if(minutes <10){
+        minutes = "0" + minutes;
+    }
+    if(second <10){
+        second = "0" + second ;
+    }
+    return year + "-" + month + "-" + date + " " + hour + ":" + minutes + ":" + second;
 }

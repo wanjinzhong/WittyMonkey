@@ -1,5 +1,7 @@
 package com.wittymonkey.entity;
 
+import com.alibaba.fastjson.annotation.JSONField;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
@@ -31,7 +33,7 @@ public class Role implements Serializable{
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Integer id;
-	
+
 	@ManyToOne(targetEntity=Hotel.class, fetch=FetchType.EAGER,cascade={CascadeType.PERSIST,CascadeType.MERGE})
 	@JoinColumn(name="hotel_id", referencedColumnName="id")
 	private Hotel hotel;

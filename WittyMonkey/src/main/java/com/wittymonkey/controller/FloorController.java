@@ -1,10 +1,17 @@
 package com.wittymonkey.controller;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.wittymonkey.entity.Floor;
 import com.wittymonkey.entity.Hotel;
 import com.wittymonkey.entity.User;
 import com.wittymonkey.service.IFloorService;
+import com.wittymonkey.util.ChangeToSimple;
+import com.wittymonkey.vo.Page;
+import com.wittymonkey.vo.SimpleFloor;
+import org.omg.CORBA.Request;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,7 +19,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.Date;
+import java.sql.SQLException;
+import java.util.*;
 
 /**
  * Created by neilw on 2017/2/15.
@@ -20,19 +28,32 @@ import java.util.Date;
 @Controller
 public class FloorController {
 
+    public static final String UPDATE = "update";
+    public static final String ADD = "add";
+    public static final String DELETE = "delete";
+
     @Autowired
     private IFloorService floorService;
 
     @RequestMapping(value = "toAddFloor", method = RequestMethod.GET)
-    public String toAddFloor(HttpServletRequest request){
+    public String toAddFloor(HttpServletRequest request) {
         return "floor_add";
     }
 
+    @RequestMapping(value = "toEditFloor", method = RequestMethod.GET)
+    public String toEditFloor(HttpServletRequest request) {
+        Integer floorNo = Integer.parseInt(request.getParameter("floorNo"));
+        Hotel hotel = (Hotel) request.getSession().getAttribute("hotel");
+        Floor floor = floorService.getFloorByNo(hotel.getId(), floorNo);
+        request.getSession().setAttribute("editFloor", floor);
+        return "floor_edit";
+    }
+
     /**
-     * 添加楼层
+     * 保存楼层（包括添加和更新）
+     *
      * @param request
-     * @return
-     * <table border="1" cellspacing="0">
+     * @return <table border="1" cellspacing="0">
      * <tr>
      * <th>代码</th>
      * <th>说明</th>
@@ -53,33 +74,52 @@ public class FloorController {
      * <td>410</td>
      * <td>备注长度超限</td>
      * </tr>
+     * <tr>
+     * <td>500</td>
+     * <td>服务器出错</td>
+     * </tr>
      * </table>
      */
-    @RequestMapping(value = "addFloor", method = RequestMethod.GET)
+    @RequestMapping(value = "saveFloor", method = RequestMethod.GET)
     @ResponseBody
-    public String addFloor(HttpServletRequest request){
+    public String saveFloor(HttpServletRequest request) {
         JSONObject json = new JSONObject();
         String floorNo = request.getParameter("floorNo");
         String note = request.getParameter("note");
+        String method = request.getParameter("method");
+        Floor editFloor = (Floor) request.getSession().getAttribute("editFloor");
         Hotel hotel = (Hotel) request.getSession().getAttribute("hotel");
         User user = (User) request.getSession().getAttribute("loginUser");
         int status;
-        int validateFloorNoRes = validateFloorNo(hotel,floorNo);
-        if (validateFloorNoRes == 200){
+        int validateFloorNoRes = validateFloorNo(request, method, floorNo);
+        if (validateFloorNoRes == 200) {
             status = 400;
         } else if (validateFloorNoRes == 400) {
             status = 401;
         } else {
-            if (note.length() > 1024){
+            if (note.length() > 1024) {
                 status = 410;
             } else {
-                Floor floor = new Floor();
-                floor.setHotel(hotel);
-                floor.setFloorNo(Integer.parseInt(floorNo));
-                floor.setNote(note);
-                floor.setEntryUser(user);
-                floor.setEntryDatetime(new Date());
-                floorService.saveFloor(floor);
+                if (method.equals(ADD)) {
+                    Floor floor = new Floor();
+                    floor.setHotel(hotel);
+                    floor.setFloorNo(Integer.parseInt(floorNo));
+                    floor.setNote(note);
+                    floor.setEntryUser(user);
+                    floor.setEntryDatetime(new Date());
+                    floorService.saveFloor(floor);
+                } else if (method.equals(UPDATE)) {
+                    Floor floor = floorService.getFloorByNo(hotel.getId(), editFloor.getFloorNo());
+                    floor.setFloorNo(Integer.parseInt(floorNo));
+                    floor.setNote(note);
+                    floor.setEntryUser(user);
+                    floor.setEntryDatetime(new Date());
+                    try {
+                        floorService.updateFloor(floor);
+                    } catch (SQLException e) {
+                        status = 500;
+                    }
+                }
                 status = 200;
             }
         }
@@ -87,22 +127,95 @@ public class FloorController {
         return json.toJSONString();
     }
 
+    /**
+     * 删除楼层
+     *
+     * @param request
+     * @return <table border="1" cellspacing="0">
+     * <tr>
+     * <th>代码</th>
+     * <th>说明</th>
+     * </tr>
+     * <tr>
+     * <td>200</td>
+     * <td>删除成功</td>
+     * </tr>
+     * <tr>
+     * <td>400</td>
+     * <td>楼层号不存在</td>
+     * </tr>
+     * <tr>
+     * <td>500</td>
+     * <td>服务器错误</td>
+     * </tr>
+     * </table>
+     */
+    @RequestMapping(value = "deleteFloor", method = RequestMethod.GET)
+    @ResponseBody
+    public String deleteFloor(HttpServletRequest request) {
+        JSONObject json = new JSONObject();
+        String floorNo = request.getParameter("floorNo");
+        Hotel hotel = (Hotel) request.getSession().getAttribute("hotel");
+        int status = 500;
+        switch (validateFloorNo(request, DELETE, floorNo)) {
+            case 201:
+                status = 400;
+                break;
+            case 400:
+                status = 410;
+                break;
+            case 200:
+                Floor floor = floorService.getFloorByNo(hotel.getId(), Integer.parseInt(floorNo));
+                try {
+                    floorService.deleteFloor(floor);
+                } catch (SQLException e) {
+                    status = 500;
+                }
+                status = 200;
+                break;
+        }
+        json.put("status", status);
+        return json.toJSONString();
+    }
 
     @RequestMapping(value = "validateFloorNo", method = RequestMethod.GET)
     @ResponseBody
-    public String validateFloorNo(HttpServletRequest request){
+    public String validateFloorNo(HttpServletRequest request) {
         JSONObject json = new JSONObject();
         String floorNoStr = request.getParameter("floorNo");
-        Hotel hotel = (Hotel) request.getSession().getAttribute("hotel");
-        json.put("status", validateFloorNo(hotel,floorNoStr));
+        String method = request.getParameter("method");
+        json.put("status", validateFloorNo(request, method, floorNoStr));
         return json.toJSONString();
+    }
+
+    @RequestMapping(value = "getFloorByPage", method = RequestMethod.GET)
+    @ResponseBody
+    public String getFloorByPage(HttpServletRequest request) {
+        JSONObject json = new JSONObject();
+        Integer curr = Integer.parseInt(request.getParameter("curr"));
+        Integer pageSize = Integer.parseInt(request.getParameter("pageSize"));
+        Hotel hotel = (Hotel) request.getSession().getAttribute("hotel");
+        Page page = new Page();
+        page.setPageSize(pageSize);
+        page.setCurrPage(curr);
+        Integer count = floorService.getTotal(hotel.getId());
+        List<Floor> floors = floorService.getFloorByHotel(hotel.getId(), (curr-1) * pageSize, pageSize);
+        List<SimpleFloor> simpleFloors = ChangeToSimple.floorList(floors);
+        json.put("count", count);
+        JSONArray array = new JSONArray();
+        array.addAll(floors);
+        json.put("data", array);
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("count", count);
+        map.put("data", simpleFloors);
+        return json.toJSONString(map, SerializerFeature.DisableCircularReferenceDetect);
     }
 
     /**
      * 验证楼层号
+     *
      * @param
-     * @return
-     * <table border="1" cellspacing="0">
+     * @return <table border="1" cellspacing="0">
      * <tr>
      * <th>代码</th>
      * <th>说明</th>
@@ -119,19 +232,32 @@ public class FloorController {
      * <td>400</td>
      * <td>输入错误</td>
      * </tr>
+     * <tr>
+     * <td>500</td>
+     * <td>服务器错误</td>
+     * </tr>
      * </table>
      */
-    public Integer validateFloorNo(Hotel hotel, String floorNoStr){
+    public Integer validateFloorNo(HttpServletRequest request, String method, String floorNoStr) {
         Integer floorNo = null;
+        Integer editFloorNo = null;
+        Hotel hotel = (Hotel) request.getSession().getAttribute("hotel");
         try {
             floorNo = Integer.parseInt(floorNoStr);
+            if (method.equals(UPDATE)) {
+                editFloorNo = ((Floor) request.getSession().getAttribute("editFloor")).getFloorNo();
+            }
         } catch (NumberFormatException e) {
             return 400;
         }
-        if (floorService.isFloorExist(hotel.getId(), floorNo)){
-           return 200;
-        } else{
+        if (floorService.isFloorExist(hotel.getId(), floorNo)) {
+            if (method.equals(ADD) || method.equals(DELETE) ||
+                    (method.equals(UPDATE) && floorNo != editFloorNo)) {
+                return 200;
+            }
+        } else {
             return 201;
         }
+        return 500;
     }
 }
