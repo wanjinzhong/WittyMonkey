@@ -106,6 +106,9 @@
         height: 40px;
         margin-left: 10px;
     }
+    #province, #city, #area{
+        width: 50px !important;
+    }
 </style>
 <body>
 <fmt:setBundle basename="i18n/messages"/>
@@ -126,7 +129,7 @@
     </svg>
     <span id="form_title"><fmt:message key="regist.hotel.title"/></span>
     <div id="regist_form">
-        <form id="hotel_form" action="toRegistUser.do" method="POST">
+        <form id="hotel_form" class="layui-form" action="toRegistUser.do" method="POST">
             <table>
                 <tr>
                     <td class="td_title"><fmt:message

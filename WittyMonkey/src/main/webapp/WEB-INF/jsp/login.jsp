@@ -69,10 +69,6 @@ td {
 #regist {
 	margin-left: 50px;
 }
-
-.login_form_to_left {
-	
-}
 </style>
 <body id="b" background="pic/login/login.png">
 	<div class="responsive">

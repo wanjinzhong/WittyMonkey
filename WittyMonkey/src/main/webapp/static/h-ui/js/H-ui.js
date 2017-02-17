@@ -553,7 +553,7 @@ function getCookie(name) {
 }
 $(function(){
 	/*****表单*****/
-    $.Huifocusblur(".input-text,.textarea");
+   // $.Huifocusblur(".input-text,.textarea");
 	/*按钮loading*/
 	$('.btn-loading').click(function () {
 		var $btn = $(this);
@@ -564,7 +564,7 @@ $(function(){
 		}, 3000);
 	});	
 	/**/
-	$.Huiselect("#divselect","#inputselect");
+	//$.Huiselect("#divselect","#inputselect");
 
 	/*全选*/
 	$("table thead th input:checkbox").on("click" , function(){
@@ -675,7 +675,7 @@ $(function(){
 	);
 	
 	/*Huialert*/
-	$.Huihover('.Huialert i');
+//	$.Huihover('.Huialert i');
 	$(".Huialert i").on("click",function(){
 		var Huialert = $(this).parents(".Huialert");
 		Huialert.fadeOut("normal",function(){
