@@ -1,202 +1,68 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+         pageEncoding="UTF-8" %>
 <%
-	String contextPath = request.getContextPath();
-	String lang;
-	if (request.getLocale().equals(java.util.Locale.US)){
-		lang = "en_US";
-	} else{
-		lang = "zh_CN";
-	}
+    String contextPath = request.getContextPath();
+    String lang;
+    if (request.getLocale().equals(java.util.Locale.US)) {
+        lang = "en_US";
+    } else {
+        lang = "zh_CN";
+    }
 %>
-<%@ include file="common/taglib.jsp"%>
-<%@ include file="common/js&css.jsp"%>
+<%@ include file="common/taglib.jsp" %>
+<%@ include file="common/js&css.jsp" %>
 <!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title><fmt:message key="name" /></title>
-<link href="lib/Hui-iconfont/1.0.7/iconfont.css" rel="stylesheet"
-	type="text/css" />
-	<link href="style/common.css" rel="stylesheet" type="text/css"/>
-<script type="text/javascript" src="i18n/messages_<%=lang%>.js"></script>
-<fmt:setBundle basename="i18n/messages" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title><fmt:message key="name"/></title>
+    <link href="style/common.css" rel="stylesheet" type="text/css"/>
+    <script type="text/javascript" src="i18n/messages_<%=lang%>.js"></script>
+    <script type="text/javascript" src="js/login.js"></script>
+    <link type="text/css" rel="stylesheet" href="style/login.css"/>
+    <fmt:setBundle basename="i18n/messages"/>
 </head>
-<style>
-#login_form {
-	position: absolute;
-	width: 600px;
-	height: 480px;
-	left: 50%;
-	top: 50%;
-	background-image: url(pic/login/login_background.png);
-	background-size: cover;
-	margin: -240px 0 0 -300px;
-}
-
-#logo {
-	width: 150px;
-	height: 150px;
-}
-
-h2 {
-	margin-top: 50px;
-	text-align: center;
-}
-
-#loginName, #password {
-	margin: 0 auto;
-	width: 300px;
-}
-
-#code {
-	width: 195px;
-}
-
-.btn {
-	width: 125px;
-}
-
-table {
-	
-}
-
-td {
-	padding-top: 20px;
-	text-align: center;
-}
-
-#regist {
-	margin-left: 50px;
-}
-</style>
 <body id="b" background="pic/login/login.png">
-	<div class="responsive">
-		<img id="logo" src="pic/logo.gif" />
-		<form id="login_form" action="login.do" method="post">
-			<h2 id="fullname">
-				<fmt:message key="fullname" />
-			</h2>
-			<table id="login_table">
-				<tr>
-					<td><input id="loginName" name="loginName" type="text"
-						placeholder="<fmt:message key='login.loginname'/>"
-						class="input-text radius" /></td>
-				</tr>
-				<tr>
-					<td><input id="password" name="password" type="password"
-						placeholder="<fmt:message key='login.password'/>"
-						class="input-text radius" /></td>
-				</tr>
-				<tr>
-					<td><input type="text" id="code" name="code"
-						class="input-text radius"
-						placeholder="<fmt:message key='login.validateCode'/>" /> <a
-						href="javascript:changeCode();"><img id="codeImage"
-							src="ValidateCodeServlet" /></a></td>
-				</tr>
-				<tr>
-					<td><input type="button" class="btn btn-success radius"
-						value="<fmt:message key="login.loginbtn"/>" onclick="login()" /> <input
-						type="button" id="regist" class="btn btn-secondary radius"
-						value="<fmt:message key="login.registbtn"/>"></td>
-				</tr>
-			</table>
+<div class="responsive">
+    <img id="logo" src="pic/logo.gif"/>
+    <div class="layui-form">
+        <form id="login_form" style=" background-image: url(pic/login/login_background.png);" class="layui-form"
+              action="login.do" method="post">
+			<span id="fullname">
+				<fmt:message key="fullname"/>
+			</span>
+            <table id="login_table">
+                <tr>
+                    <td>
+                        <input id="loginName" name="loginName" type="text"
+                               placeholder="<fmt:message key='login.loginname'/>"
+                               class="layui-input"/></td>
+                </tr>
+                <tr>
+                    <td><input id="password" name="password" type="password"
+                               placeholder="<fmt:message key='login.password'/>"
+                               class="layui-input"/></td>
+                </tr>
+                <tr>
+                    <td>
+                        <div style="width: 200px; display: inline-block;">
+                            <input type="text" id="code" name="code"
+                                   class="layui-input"
+                                   placeholder="<fmt:message key='login.validateCode'/>"/>
+                        </div>
+                        <a href="javascript:changeCode();">
+                            <img id="codeImage" src="ValidateCodeServlet"/></a></td>
+                </tr>
+                <tr>
+                    <td><input type="button" class="layui-btn layui-btn-radius"
+                               value="<fmt:message key="login.loginbtn"/>" onclick="login()"/> <input
+                            type="button" id="regist" class="layui-btn layui-btn-radius layui-btn-normal"
+                            value="<fmt:message key="login.registbtn"/>"></td>
+                </tr>
+            </table>
 
-		</form>
-	</div>
+        </form>
+    </div>
+</div>
 </body>
-<script type="text/javascript">
-	$(document).ready(function() {
-		$("#fullname").addClass("hui-bouncein");
-		$("#regist").click(function() {
-			layer.open({
-				type : 2,
-				area : [ '750px', '600px' ],
-				maxmin : false,
-				shade : 0.4,
-				title : regist_title,
-				content : "toRegist.do"
-			});
-
-		});
-	})
-	function changeCode() {
-		var time = new Date().getTime();
-		$("#codeImage").attr("src", "ValidateCodeServlet?time=" + time);
-	}
-	function login() {
-		var form = $("#login_form");
-		if ($("#loginName").val() == "") {
-			layer.tips(regist_input_name_first, $("#loginName"),
-					{
-						tips : 4
-					});
-			return;
-		} else if ($("#password").val() == "") {
-			layer.tips(regist_input_password_first,
-					$("#password"), {
-						tips : 4
-					});
-			return;
-		} else if ($("#validateCode").val() == "") {
-			layer.tips(regist_input_validate_code_first,
-					$("#validateCode"), {
-						tips : 4
-					});
-			return;
-		} else {
-			var code = $("#validatePicCode").val();
-			$.ajax({
-				type : "POST",
-				url : "login.do",
-				data : $("#login_form").serialize(),
-				dataType : "json",
-				success : function(data) {
-					var result = eval("(" + data + ")");
-					switch (result.status) {
-					case 400:
-						layer.msg(regist_input_name_first, {
-							time : 3000,
-							icon : 5
-						});
-						return;
-						break;
-					case 410:
-						layer.msg(regist_input_password_first, {
-							time : 3000,
-							icon : 5
-						});
-						return;
-						break;
-					case 420:
-						layer.msg(regist_input_validate_code_first, {
-							time : 3000,
-							icon : 5
-						});
-						return;
-						break;
-					case 421:
-						layer.msg(regist_code_is_wrong, {
-							time : 3000,
-							icon : 5
-						});
-						return;
-						break;
-					case 430:
-						layer.msg(regist_login_error, {
-							time : 3000,
-							icon : 5
-						});
-						return;
-						break;
-					case 200:
-						window.location = result.url;
-						break;
-					}
-				}
-			});
-		}
-	}
-</script>
 </html>

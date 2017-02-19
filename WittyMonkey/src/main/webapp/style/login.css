@@ -1,0 +1,57 @@
+#login_form {
+    position: absolute;
+    width: 600px;
+    height: 480px;
+    left: 50%;
+    top: 50%;
+    background-size: cover;
+    margin: -240px 0 0 -300px;
+}
+
+#logo {
+    width: 150px;
+    height: 150px;
+}
+
+h2 {
+    margin-top: 50px;
+    text-align: center;
+}
+
+#loginName, #password {
+    margin: 0 auto;
+    width: 300px;
+}
+
+#code {
+    width: 195px;
+}
+
+.btn {
+    width: 125px;
+}
+
+table {
+    margin: 0 auto;
+}
+
+td {
+    padding-top: 20px;
+    text-align: center;
+}
+
+#regist {
+    margin-left: 50px;
+}
+
+.layui-btn {
+    width: 120px;
+}
+
+#fullname {
+    display: inline-block;
+    margin-top: 50px;
+    font-size: 28px;
+    width: 100%;
+    text-align: center;
+}

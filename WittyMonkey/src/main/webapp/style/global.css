@@ -14,8 +14,8 @@
 
 /* 头部 */
 .header{height: 65px; border-bottom: 1px solid #404553;  background-color: #393D49; color: #fff;}
-.logo{position: absolute; left: 0; top: 18px;}
-.logo img{width: 82px; height: 31px;}
+.logo{position: absolute; left: 0;top:0px;}
+.logo img{width: 50px; height: 50px; margin-top: 7px}
 
 .header .layui-nav{position: absolute; right: 0; top: 0; padding: 0; background: none;}
 .header .layui-nav .layui-nav-item{margin: 0 20px; line-height: 66px;}
@@ -30,7 +30,8 @@
 .header-index{background-color: #080018; border: none;}
 
 .layui-layout-admin .header-demo{border-bottom-color: #1AA094; background-color: #fff;}
-.header-demo .logo{left: 40px;}
+.header-demo .logo{left: 40px; width: 500px;}
+.header-demo .logo span{font-size: 18px;}
 .header-demo .layui-nav{top: 0;}
 .header-demo .layui-nav .layui-nav-item{margin: 0 10px; line-height: 70px;}
 .header-demo .layui-nav .layui-nav-item a{color: #999;}
@@ -262,6 +263,7 @@ body .site-demo-nav .layui-nav-item{line-height: 40px}
 }
 
 .admin-nav-card{
+    height: 100%;
 	border: 0;
 	margin: 0;
 	box-shadow:none;
@@ -326,18 +328,7 @@ body .site-demo-nav .layui-nav-item{line-height: 40px}
 /**/
 .admin-main {margin: 15px;}
 
-.admin-side-toggle{
-	position: absolute; cursor: pointer;
-    z-index: 19940201;
-    left: 200px;
-    color: white;
-    text-align: center;
-    width: 30px;
-    height: 30px;
-    background-color: #1AA094;
-    line-height: 30px;
-    top: 25%;
-}
+
 .admin-side-toggle:hover{
 	background-color: #5FB878;
 }
@@ -351,7 +342,7 @@ body .site-demo-nav .layui-nav-item{line-height: 40px}
 
 
 /* 适配多设备 */
-@media screen and (max-width: 750px) {
+/*@media screen and (max-width: 750px) {
   .layui-main{width: auto; margin: 0 10px;}
   .logo,
   .header-demo .logo{left: 10px;}
@@ -411,3 +402,4 @@ body .site-demo-nav .layui-nav-item{line-height: 40px}
   .admin-side-toggle ,.admin-header-item{display: none;}
   .admin-header-item-mobile{ display: block; }
 }
+*/

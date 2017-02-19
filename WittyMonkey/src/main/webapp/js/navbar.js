@@ -1,10 +1,9 @@
 /** navbar.js By Beginner Emain:zheng_jinfan@126.com HomePage:http://www.zhengjinfan.cn */
-layui.define(['element', 'common'], function(exports) {
-	"use strict";
+layui.define(['element', 'exception'], function(exports) {
 	var $ = layui.jquery,
 		layer = parent.layer === undefined ? layui.layer : parent.layer,
 		element = layui.element(),
-		common = layui.common,
+		exception = layui.exception,
 		cacheName = 'tb_navbar';
 
 	var Navbar = function() {
@@ -16,7 +15,7 @@ layui.define(['element', 'common'], function(exports) {
 			data: undefined, //数据源
 			url: undefined, //数据源地址
 			type: 'GET', //读取方式
-			cached: false, //是否使用缓存
+			cached: true, //是否使用缓存
 			spreadOne:false //设置是否只展开一个二级菜单
 		};
 		this.v = '0.0.1';
@@ -25,7 +24,7 @@ layui.define(['element', 'common'], function(exports) {
 		var _that = this;
 		var _config = _that.config;
 		if(typeof(_config.elem) !== 'string' && typeof(_config.elem) !== 'object') {
-			common.throwError('Navbar error: elem参数未定义或设置出错，具体设置格式请参考文档API.');
+            exception.throwError('Navbar error: elem参数未定义或设置出错，具体设置格式请参考文档API.');
 		}
 		var $container;
 		if(typeof(_config.elem) === 'string') {
@@ -35,10 +34,10 @@ layui.define(['element', 'common'], function(exports) {
 			$container = _config.elem;
 		}
 		if($container.length === 0) {
-			common.throwError('Navbar error:找不到elem参数配置的容器，请检查.');
+			exception.throwError('Navbar error:找不到elem参数配置的容器，请检查.');
 		}
 		if(_config.data === undefined && _config.url === undefined) {
-			common.throwError('Navbar error:请为Navbar配置数据源.')
+			exception.throwError('Navbar error:请为Navbar配置数据源.')
 		}
 		if(_config.data !== undefined && typeof(_config.data) === 'object') {
 			var html = getHtml(_config.data);
@@ -65,7 +64,7 @@ layui.define(['element', 'common'], function(exports) {
 							element.init();
 						},
 						error: function(xhr, status, error) {
-							common.msgError('Navbar error:' + error);
+							exception.msgError('Navbar error:' + error);
 						},
 						complete: function(xhr, status) {
 							_that.config.elem = $container;
@@ -91,7 +90,7 @@ layui.define(['element', 'common'], function(exports) {
 						element.init();
 					},
 					error: function(xhr, status, error) {
-						common.msgError('Navbar error:' + error);
+                        exception.msgError('Navbar error:' + error);
 					},
 					complete: function(xhr, status) {
 						_that.config.elem = $container;
@@ -130,7 +129,7 @@ layui.define(['element', 'common'], function(exports) {
 		var that = this;
 		var _con = that.config.elem;
 		if(typeof(events) !== 'string') {
-			common.throwError('Navbar error:事件名配置出错，请参考API文档.');
+            exception.throwError('Navbar error:事件名配置出错，请参考API文档.');
 		}
 		var lIndex = events.indexOf('(');
 		var eventName = events.substr(0, lIndex);
@@ -188,7 +187,8 @@ layui.define(['element', 'common'], function(exports) {
 	 * 获取html字符串
 	 * @param {Object} data
 	 */
-	function getHtml(data) {
+	function getHtml(datas) {
+		var data = eval("(" + datas + ")");
 		var ulHtml = '<ul class="layui-nav layui-nav-tree beg-navbar">';
 		for(var i = 0; i < data.length; i++) {
 			if(data[i].spread) {
@@ -199,11 +199,12 @@ layui.define(['element', 'common'], function(exports) {
 			if(data[i].children !== undefined && data[i].children.length > 0) {
 				ulHtml += '<a href="javascript:;">';
 				if(data[i].icon !== undefined && data[i].icon !== '') {
-					if(data[i].icon.indexOf('fa-') !== -1) {
+					/*if(data[i].icon.indexOf('fa-') !== -1) {
 						ulHtml += '<i class="fa ' + data[i].icon + '" aria-hidden="true" data-icon="' + data[i].icon + '"></i>';
 					} else {
 						ulHtml += '<i class="layui-icon" data-icon="' + data[i].icon + '">' + data[i].icon + '</i>';
-					}
+					}*/
+					ulHtml += ' <svg class="icon" aria-hidden="true"><use xlink:href="' + data[i].icon  + '"></use></svg>';
 				}
 				ulHtml += '<cite>' + data[i].title + '</cite>'
 				ulHtml += '</a>';
@@ -212,11 +213,12 @@ layui.define(['element', 'common'], function(exports) {
 					ulHtml += '<dd>';
 					ulHtml += '<a href="javascript:;" data-url="' + data[i].children[j].href + '">';
 					if(data[i].children[j].icon !== undefined && data[i].children[j].icon !== '') {
-						if(data[i].children[j].icon.indexOf('fa-') !== -1) {
+						/*if(data[i].children[j].icon.indexOf('fa-') !== -1) {
 							ulHtml += '<i class="fa ' + data[i].children[j].icon + '" data-icon="' + data[i].children[j].icon + '" aria-hidden="true"></i>';
 						} else {
 							ulHtml += '<i class="layui-icon" data-icon="' + data[i].children[j].icon + '">' + data[i].children[j].icon + '</i>';
-						}
+						}*/
+                        ulHtml += ' <svg class="icon" aria-hidden="true"><use xlink:href="' + data[i].icon  + '"></use></svg>';
 					}
 					ulHtml += '<cite>' + data[i].children[j].title + '</cite>';
 					ulHtml += '</a>';
@@ -227,11 +229,12 @@ layui.define(['element', 'common'], function(exports) {
 				var dataUrl = (data[i].href !== undefined && data[i].href !== '') ? 'data-url="' + data[i].href + '"' : '';
 				ulHtml += '<a href="javascript:;" ' + dataUrl + '>';
 				if(data[i].icon !== undefined && data[i].icon !== '') {
-					if(data[i].icon.indexOf('fa-') !== -1) {
+					/*if(data[i].icon.indexOf('fa-') !== -1) {
 						ulHtml += '<i class="fa ' + data[i].icon + '" aria-hidden="true" data-icon="' + data[i].icon + '"></i>';
 					} else {
 						ulHtml += '<i class="layui-icon" data-icon="' + data[i].icon + '">' + data[i].icon + '</i>';
-					}
+					}*/
+                    ulHtml += ' <svg class="icon" aria-hidden="true"><use xlink:href="' + data[i].icon  + '"></use></svg>';
 				}
 				ulHtml += '<cite>' + data[i].title + '</cite>'
 				ulHtml += '</a>';

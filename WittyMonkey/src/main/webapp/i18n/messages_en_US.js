@@ -49,4 +49,6 @@ var page_prev = "Prev";
 var page_next = "Next";
 var page_to = "To";
 var page_page = "page";
-var btn_page_yes = "Go"
+var btn_page_yes = "Go";
+var btn_edit = "Edit";
+var btn_delete = "Delete";

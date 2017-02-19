@@ -1,0 +1,26 @@
+table {
+    margin-top: 20px;
+}
+.refreshBtn{
+    font-size: 20px;
+    position: absolute;
+    top: 0px;
+    right: 20px;
+}
+.newFloorBtn{
+    font-size: 15px;
+    height: 35px;
+}
+.editBtn, .deleteBtn{
+    font-size: 13px;
+}
+.editBtn:hover{
+    border-color: #1E9FFF;
+    color: #1E9FFF;
+    transition: border-color, color 0.5s,0.5s;
+}
+.deleteBtn:hover{
+    border-color: #FF5722;
+    color: #FF5722;
+    transition: border-color, color 0.5s,0.5s;
+}

@@ -1,0 +1,138 @@
+.place{
+    width: 95px; display: inline-block;
+}
+.place dl{
+    max-height: 150px;
+}
+.img_circle {
+    height: 50px;
+    width: 50px;
+}
+
+.img_line {
+    height: 50px;
+    width: 250px;
+}
+
+#proccess {
+    position: absolute;
+    left: 50px;
+    top: 10px;
+}
+
+#regist_hotel {
+    position: absolute;
+    top: 100px;
+    left: 30px;
+}
+
+
+.hotel {
+    position: absolute;
+    font-size: 12px;
+    left: -18px;
+    font-weight: bold;
+}
+
+.user {
+    position: absolute;
+    left: 275px;
+}
+
+.complete {
+    position: absolute;
+    left: 615px;
+}
+
+table {
+    width: 500px;
+    margin: 0 auto;
+    margin-top: 10px;
+}
+
+td {
+    text-align: left;
+    padding: 5px;
+}
+
+select {
+    width: 90px;
+}
+
+#question {
+    width: 20px;
+    height: 20px;
+}
+
+#form_title {
+    line-height: 40px;
+    margin-left: 10px;
+    vertical-align: top;
+}
+
+#icon_hotel {
+    width: 40px;
+    height: 40px;
+    margin-left: 10px;
+}
+#province, #city, #area{
+    width: 50px;
+}
+
+.regist_step {
+    font-size: 12px;
+}
+
+.hotel {
+    position: absolute;
+    left: -18px;
+}
+
+.user {
+    position: absolute;
+    left: 275px;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.complete {
+    position: absolute;
+    left: 615px;
+}
+
+#regist_form {
+    border: 2px solid #eeeeee;
+    border-radius: 10px;
+    width: 690px;
+    height: 370px;
+    margin-top: 10px;
+}
+
+table {
+    width: 500px;
+    margin: 0 auto;
+    margin-top: 10px;
+}
+
+td {
+    text-align: left;
+    padding: 5px;
+}
+
+select {
+    width: 100px;
+}
+
+#get_code {
+    float: right;
+}
+
+#icon_user {
+    width: 40px;
+    height: 40px;
+    margin-left: 10px;
+}
+.codeInpDiv{
+    width: 220px;
+    display: inline-block;
+}

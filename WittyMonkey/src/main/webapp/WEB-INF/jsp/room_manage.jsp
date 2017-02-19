@@ -8,8 +8,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="common/taglib.jsp" %>
 <%@ include file="common/js&css.jsp" %>
-<%@ include file="common/iconfont.jsp" %>
-<%@ include file="common/laypage.jsp" %>
 <html>
 <head>
     <title><fmt:message key="floor.manage.title"/></title>

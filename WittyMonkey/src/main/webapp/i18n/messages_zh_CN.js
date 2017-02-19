@@ -50,3 +50,5 @@ var page_next = "下一页";
 var page_to = "到第";
 var page_page = "页";
 var btn_page_yes = "确定";
+var btn_edit = "编辑";
+var btn_delete = "删除";

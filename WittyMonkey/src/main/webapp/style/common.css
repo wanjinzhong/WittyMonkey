@@ -1,7 +1,11 @@
 @CHARSET "UTF-8";
 body{
 	font-family: "Microsoft Yahei";
+	font-size: 15px !important;
+}
+.layui-form-label{
 	font-size: 15px;
+	width: 100px;
 }
 #form_title{
 	font-size: 20px;
