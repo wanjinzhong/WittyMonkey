@@ -27,9 +27,7 @@
             <i class="refreshBtn layui-icon layui-btn layui-btn-small" onclick="reload();">&#x1002;</i>
     </nav>
     <div id="main">
-        <%--<input type="button" class="btn btn-secondary radius" value="<fmt:message key="floor.btn.add"/>"--%>
-               <%--onclick="showAddFloor()"/>--%>
-            <i class="newFloorBtn layui-icon layui-btn layui-btn-radius layui-btn-normal" onclick="showAddFloor()">&#xe61f; <fmt:message key="floor.btn.add"/></i>
+            <i class="newBtn layui-icon layui-btn layui-btn-radius layui-btn-normal" onclick="showAddFloor()">&#xe61f; <fmt:message key="floor.btn.add"/></i>
             <table class="layui-table">
             <thead>
             <tr>

@@ -1,0 +1,29 @@
+#border {
+    position: absolute;
+    left: 30px;
+    top: 30px;
+}
+
+#add_form {
+    border: 2px solid #eeeeee;
+    border-radius: 10px;
+    width: 640px;
+    height: 200px;
+    /*margin: 20px auto;*/
+
+}
+
+table {
+    width: 400px;
+    margin: 0 auto;
+    margin-top: 20px;
+}
+
+#note {
+    height: 100px;
+}
+
+td {
+    text-align: right;
+    padding: 5px;
+}

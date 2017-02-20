@@ -8,26 +8,28 @@ layui.use(['layer', 'form'], function () {
     form = layui.form();
     layer = layui.layer;
 });
-$("#get_code").click(function () {
-    var email = $("#email").val();
-    if (!validateEmail($("#email"))) {
-        return false;
-    }
-    $.ajax({
-        type: "GET",
-        url: "getValidateCode.do",
-        data: {
-            "email": email
-        },
-        dataType: "text",
-        success: function (data) {
+$(document).ready(function () {
+    $("#get_code").click(function () {
+        var email = $("#email").val();
+        if (!validateEmail($("#email"))) {
+            return false;
         }
+        $.ajax({
+            type: "GET",
+            url: "getValidateCode.do",
+            data: {
+                "email": email
+            },
+            dataType: "text",
+            success: function (data) {
+            }
+        });
+        t1 = window.setInterval("cutdown()", 1000);
+        $("#get_code").removeClass("btn-secondary");
+        $("#get_code").addClass("disabled");
+        $("#get_code").attr("disabled", true);
+        $("#get_code").val(time);
     });
-    t1 = window.setInterval("cutdown()", 1000);
-    $("#get_code").removeClass("btn-secondary");
-    $("#get_code").addClass("disabled");
-    $("#get_code").attr("disabled", true);
-    $("#get_code").val(time);
 });
 function prev() {
     $("#user_form").attr("action", "toPrev.do");

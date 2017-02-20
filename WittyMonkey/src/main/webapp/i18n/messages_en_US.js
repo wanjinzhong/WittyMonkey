@@ -52,3 +52,4 @@ var page_page = "page";
 var btn_page_yes = "Go";
 var btn_edit = "Edit";
 var btn_delete = "Delete";
+var room_add_title = "New Room";

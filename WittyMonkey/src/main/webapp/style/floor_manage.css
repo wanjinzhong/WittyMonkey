@@ -1,16 +1,6 @@
 table {
     margin-top: 20px;
 }
-.refreshBtn{
-    font-size: 20px;
-    position: absolute;
-    top: 0px;
-    right: 20px;
-}
-.newFloorBtn{
-    font-size: 15px;
-    height: 35px;
-}
 .editBtn, .deleteBtn{
     font-size: 13px;
 }

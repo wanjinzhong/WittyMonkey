@@ -262,6 +262,10 @@ public class LoginController {
 
     @RequestMapping(value = "index", method = RequestMethod.GET)
     public String index(HttpServletRequest request) {
+        // 测试数据
+        User user = userService.getUserById(1);
+        request.getSession().setAttribute("loginUser",user);
+        request.getSession().setAttribute("hotel",user.getHotel());
         return "index";
     }
 

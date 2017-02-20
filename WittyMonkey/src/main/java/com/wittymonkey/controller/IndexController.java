@@ -32,8 +32,7 @@ public class IndexController {
     @RequestMapping(value = "getMenu", method = RequestMethod.GET)
     @ResponseBody
     public String getMenu(HttpServletRequest request) {
-        //User user = (User) request.getSession().getAttribute("loginUser");
-        User user = userDao.getUserById(2);
+        User user = (User) request.getSession().getAttribute("loginUser");
         String lang = user.getSetting().getLang();
         Properties props = new Properties();
         JSONArray jsonArray = new JSONArray();
@@ -163,12 +162,12 @@ public class IndexController {
             //工资更改
             JSONObject salaryChange = new JSONObject();
             salaryChange.put("title", props.getProperty("index.menu.finance.salary_change"));
-            salaryChange.put("href","/toFinanceSalaryChange.do");
+            salaryChange.put("href","toFinanceSalaryChange.do");
             financeChildren.add(salaryChange);
             //工资记录
             JSONObject salary = new JSONObject();
             salary.put("title", props.getProperty("index.menu.finance.salary"));
-            salary.put("href", "/toFinanceSalary.do");
+            salary.put("href", "toFinanceSalary.do");
             financeChildren.add(salary);
             financeMenu.put("children", financeChildren);
             jsonArray.add(financeMenu);
@@ -178,7 +177,7 @@ public class IndexController {
             reportMenu.put("title", props.getProperty("index.menu.report"));
             reportMenu.put("icon", "#icon-buchongiconsvg14");
             reportMenu.put("spread",false);
-            reportMenu.put("href", "/toReport.do");
+            reportMenu.put("href", "toReport.do");
             jsonArray.add(reportMenu);
 
             //通知
@@ -186,7 +185,7 @@ public class IndexController {
             notifyMenu.put("title", props.getProperty("index.menu.notify"));
             notifyMenu.put("icon","#icon-tongzhi");
             notifyMenu.put("spread", false);
-            notifyMenu.put("href", "/toNotify.do");
+            notifyMenu.put("href", "toNotify.do");
             jsonArray.add(notifyMenu);
 
             //信息

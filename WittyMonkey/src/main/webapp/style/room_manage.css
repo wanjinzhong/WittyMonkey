@@ -1,0 +1,115 @@
+.roomBorder {
+    width: 180px;
+    height: 80px;
+    border-radius: 10px;
+    padding: 10px;
+    padding-top: 5px;
+    transition: background-color, box-shadow 0.8s, 0.8s;
+    margin: 10px;
+    display: inline-block;
+    box-shadow: 2px 2px 2px #A9A9A9;
+}
+
+.roomBorder:hover {
+    box-shadow: 4px 4px 4px #C0C0C0;
+    cursor: pointer;
+}
+
+.roomBorder1 {
+    background-color: #EE6363;
+}
+
+.roomBorder1:hover {
+    background-color: #EE3B3B;
+}
+
+.roomBorder2 {
+    background-color: #7CCD7C;
+}
+
+.roomBorder2:hover {
+    background-color: #66CD00;
+}
+
+.roomBorder3 {
+    background-color: #6495ED;
+}
+
+.roomBorder3:hover {
+    background-color: #4876FF;
+}
+
+.roomBorder4 {
+    background-color: #EEB422;
+}
+
+.roomBorder4:hover {
+    background-color: #EE9A49;
+}
+
+.number {
+    color: white;
+    font-size: 30px;
+}
+.name{
+    color: #fff;
+}
+
+.hint{
+    float: right;
+    margin-right: 60px;
+}
+
+.hint div {
+    width: 16px;
+    height: 16px;
+    border-radius: 8px;
+    display: inline-block;
+
+}
+
+.red {
+    background-color: #EE6363;
+}
+
+.green {
+    background-color: #7CCD7C;
+}
+
+.blue {
+    background-color: #6495ED;
+}
+
+.yellow {
+    background-color: #EEB422;
+}
+
+.hint span {
+    display: inline-block;
+    line-height: 20px;
+    vertical-align: top;
+    font-size: 12px;
+}
+
+#container {
+    margin: 10px;
+}
+
+.btn_opt {
+    text-align: right;
+    margin-top: 20px;
+}
+.btn_opt li{
+    float: right;
+    font-size: 14px;
+    padding: 3px;
+    transition: color 0.5s;
+    margin-left: 10px;
+}
+.btn_opt li:hover{
+    cursor: pointer;
+    color: #fff;
+}
+.icon{
+    color: #fff !important;
+}

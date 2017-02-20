@@ -83,9 +83,9 @@
                     <cite>控制面板</cite>
                 </li>
             </ul>
-            <div class="layui-tab-content" style="min-height: 150px; min-width: 500px; padding: 5px 0 0 0;">
+            <div class="layui-tab-content">
                 <div class="layui-tab-item layui-show">
-                    <iframe src="toRoomManage.do"></iframe>
+                    <iframe src="toRoomManage.do" class="frame-content"></iframe>
                 </div>
             </div>
         </div>

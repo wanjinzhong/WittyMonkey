@@ -1,0 +1,28 @@
+.input{
+    width: 200px;
+}
+.checkbox{
+    text-align: left;
+}
+.add-form{
+    width: 100%;
+}
+.layui-form{
+    width: 500px;
+    margin:0 auto;
+    padding: 5px;
+}
+table{
+    width: 100%;
+}
+.layui-form-label{
+    width: 100px;
+}
+.add-form {
+    border: 2px solid #eeeeee;
+    border-radius: 10px;
+    width: 690px;
+    height: 500px;
+    margin-top: 10px;
+    margin-left: 50px;
+}

@@ -52,3 +52,4 @@ var page_page = "页";
 var btn_page_yes = "确定";
 var btn_edit = "编辑";
 var btn_delete = "删除";
+var room_add_title = "新增房间"
