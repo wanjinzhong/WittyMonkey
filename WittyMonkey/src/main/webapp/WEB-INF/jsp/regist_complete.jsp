@@ -174,7 +174,7 @@
         </div>
     </div>
     <div id="btnGroup">
-        <input class="btn btn-success radius" type="button" value="<fmt:message key="btn.complete"/>"
+        <input class="layui-btn layui-btn-radius" type="button" value="<fmt:message key="btn.complete"/>"
                onclick="complete()">
     </div>
 </div>

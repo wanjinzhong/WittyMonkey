@@ -50,6 +50,7 @@ var page_next = "下一页";
 var page_to = "到第";
 var page_page = "页";
 var btn_page_yes = "确定";
+var no_data = "暂时还没有数据";
 var btn_edit = "编辑";
 var btn_delete = "删除";
 var room_add_title = "新增房间";

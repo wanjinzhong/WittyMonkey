@@ -53,8 +53,8 @@
                 <td><label class="layui-form-label"><fmt:message key="room.add.floor_no"/></label></td>
                 <td>
                     <div class="input inner"><select name="floorNo" id="floorNo">
-                        <c:forEach items="${floors}" var="floor">
-                            <option value="${floor.id}">${floor.floorNo}</option>
+                        <c:forEach items="${floors}" var="f">
+                            <option value="${f.id}">${f.floorNo}</option>
                         </c:forEach>
                     </select>
                     </div>

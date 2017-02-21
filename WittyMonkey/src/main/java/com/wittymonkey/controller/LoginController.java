@@ -263,7 +263,7 @@ public class LoginController {
     @RequestMapping(value = "index", method = RequestMethod.GET)
     public String index(HttpServletRequest request) {
         // 测试数据
-        User user = userService.getUserById(1);
+        User user = userService.getUserByLoginName("lyf");
         request.getSession().setAttribute("loginUser",user);
         request.getSession().setAttribute("hotel",user.getHotel());
         return "index";
