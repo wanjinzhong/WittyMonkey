@@ -1,7 +1,9 @@
 package com.wittymonkey.util;
 
 import com.wittymonkey.entity.Floor;
+import com.wittymonkey.entity.RoomMaster;
 import com.wittymonkey.vo.SimpleFloor;
+import com.wittymonkey.vo.SimpleRoom;
 import sun.java2d.pipe.SpanShapeRenderer;
 
 import java.util.ArrayList;
@@ -24,5 +26,26 @@ public class ChangeToSimple {
             simpleFloors.add(simpleFloor);
         }
         return simpleFloors;
+    }
+
+    public static List<SimpleRoom> roomList(List<RoomMaster> roomMasters){
+        List<SimpleRoom> simpleRooms = new ArrayList<SimpleRoom>();
+        for (RoomMaster room : roomMasters){
+            SimpleRoom simpleRoom = new SimpleRoom();
+            simpleRoom.setFloorNo(room.getFloor().getFloorNo());
+            simpleRoom.setArea(room.getArea());
+            simpleRoom.setName(room.getName());
+            simpleRoom.setNumber(room.getNumber());
+            simpleRoom.setPrice(room.getPrice());
+            simpleRoom.setSingleBedNum(room.getSingleBedNum());
+            simpleRoom.setDoubleBedNum(room.getDoubleBedNum());
+            simpleRoom.setAvailableNum(room.getAvailableNum());
+            simpleRoom.setStatus(room.getStatus());
+            simpleRoom.setThumbUrl(room.getThumbUrl());
+            simpleRoom.setEntryDatetime(room.getEntryDatetime());
+            simpleRoom.setUserName(room.getEntryUser().getRealName());
+            simpleRooms.add(simpleRoom);
+        }
+        return simpleRooms;
     }
 }

@@ -39,7 +39,7 @@ public class Floor implements Serializable{
 	@Column(name="floor_no")
 	private Integer floorNo;
 
-	@OneToMany(targetEntity=RoomMaster.class,mappedBy="floor")
+	@OneToMany(targetEntity=RoomMaster.class,mappedBy="floor", fetch = FetchType.EAGER)
 	private List<RoomMaster> roomMasters = new ArrayList<RoomMaster>();
 
 	@Column(name="entry_datetime")

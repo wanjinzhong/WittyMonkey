@@ -193,7 +193,6 @@ public class FloorController {
     public String getFloorByPage(HttpServletRequest request) {
         JSONObject json = new JSONObject();
         Integer curr = Integer.parseInt(request.getParameter("curr"));
-//        Integer pageSize = Integer.parseInt(request.getParameter("pageSize"));
         User loginUser = (User) request.getSession().getAttribute("loginUser");
         Integer pageSize = loginUser.getSetting().getPageSize();
         Hotel hotel = (Hotel) request.getSession().getAttribute("hotel");

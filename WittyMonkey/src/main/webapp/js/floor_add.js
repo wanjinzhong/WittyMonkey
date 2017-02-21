@@ -43,7 +43,6 @@ function save() {
                         break;
                 }
             }
-        })
-        ;
+        });
     }
 }

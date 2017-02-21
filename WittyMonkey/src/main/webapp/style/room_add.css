@@ -14,6 +14,11 @@
 }
 table{
     width: 100%;
+    margin-left: -100px;
+    margin-top: 20px;
+}
+td{
+    padding-top: 10px;
 }
 .layui-form-label{
     width: 100px;
@@ -21,8 +26,11 @@ table{
 .add-form {
     border: 2px solid #eeeeee;
     border-radius: 10px;
-    width: 690px;
-    height: 500px;
-    margin-top: 10px;
-    margin-left: 50px;
+    width: 930px;
+    height: 550px;
+    margin-top: 20px;
+    margin-left: 30px;
+}
+#btnGroup{
+    margin-right: 30px;
 }

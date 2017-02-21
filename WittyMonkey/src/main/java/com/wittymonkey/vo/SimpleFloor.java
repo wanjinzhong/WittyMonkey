@@ -1,13 +1,16 @@
 package com.wittymonkey.vo;
 
 import com.wittymonkey.entity.Floor;
+import jdk.nashorn.internal.runtime.regexp.joni.Regex;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
  * Created by neilw on 2017/2/16.
  */
-public class SimpleFloor {
+public class SimpleFloor implements Serializable{
+
     private Integer id;
     private Integer floorNo;
     private Integer roomNum;

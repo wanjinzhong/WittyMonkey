@@ -56,10 +56,6 @@ public class RoomExt implements Serializable{
 	@Column(name="extra_bed")
 	private Boolean extraBed;
 	
-	// 早餐数量
-	@Column(name="breakfast_num")
-	private Integer breakfastNum;
-	
 	// 其它设施
 	@Column(name="other_facility", length=1024)
 	private String otherFacility;
@@ -145,14 +141,6 @@ public class RoomExt implements Serializable{
 
 	public void setExtraBed(Boolean extraBed) {
 		this.extraBed = extraBed;
-	}
-
-	public Integer getBreakfastNum() {
-		return breakfastNum;
-	}
-
-	public void setBreakfastNum(Integer breakfastNum) {
-		this.breakfastNum = breakfastNum;
 	}
 
 	public String getOtherFacility() {

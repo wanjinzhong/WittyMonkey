@@ -3,16 +3,9 @@ package com.wittymonkey.entity;
 import com.alibaba.fastjson.annotation.JSONField;
 
 import java.io.Serializable;
+import java.util.Date;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 /**
  * 房间基本信息
@@ -57,26 +50,39 @@ public class RoomMaster implements Serializable {
     @Column(name = "available_num")
     private Integer availableNum;
 
-    // 房间状态
+    // 房间状态(0:空闲，1：预订，2：入住，3：打扫)
     @Column
     private Integer status;
 
-    @OneToOne(targetEntity = RoomExt.class, mappedBy = "roomMaster")
+    @OneToOne(targetEntity = RoomExt.class, cascade = {CascadeType.ALL})
+    @JoinColumn(name = "room_ext_id", referencedColumnName = "id")
     private RoomExt roomExt;
 
     // 缩略图URL
     @Column
     private String thumbUrl;
 
-    @Column(length = 1024)
-    private String note;
+    @Column(name = "entry_datetime")
+    private Date entryDatetime;
 
-    public String getNote() {
-        return note;
+    @ManyToOne(targetEntity = User.class, fetch = FetchType.EAGER)
+    @JoinColumn(name = "entry_id", referencedColumnName = "id")
+    private User entryUser;
+
+    public Date getEntryDatetime() {
+        return entryDatetime;
     }
 
-    public void setNote(String note) {
-        this.note = note;
+    public void setEntryDatetime(Date entryDatetime) {
+        this.entryDatetime = entryDatetime;
+    }
+
+    public User getEntryUser() {
+        return entryUser;
+    }
+
+    public void setEntryUser(User entryUser) {
+        this.entryUser = entryUser;
     }
 
     public String getThumbUrl() {

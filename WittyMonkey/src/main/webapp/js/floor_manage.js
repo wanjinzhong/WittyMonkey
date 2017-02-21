@@ -2,44 +2,12 @@
  * Created by Neil on 2017/2/20.
  */
 var layer;
-layui.use('layer',function () {
+var laypage;
+layui.use(['layer', 'laypage'],function () {
     layer = layui.layer;
+    laypage = layui.laypage;
+    page("getFloorByPage.do");
 });
-$(document).ready(function () {
-    page();
-});
-
-function reload() {
-    location.replace(location.href);
-}
-function page(curr) {
-    $.ajax({
-        type: "GET",
-        url: "getFloorByPage.do",
-        data: {"curr": curr || 1},
-        dataType: "json",
-        success: function (data) {
-            var res = eval("(" + data + ")");
-            var pageSize = res["pageSize"];
-            laypage({
-                cont: "page",
-                pages: Math.ceil(res["count"] / pageSize),
-                curr: curr || 1,
-                first: page_first,
-                last: page_last,
-                prev: page_prev,
-                next: page_next,
-                skip: true,
-                jump: function (obj, first) {
-                    if (!first) {
-                        page(obj.curr);
-                    }
-                    refreshTable(res["data"]);
-                }
-            });
-        }
-    })
-}
 
 function refreshTable(obj) {
     var html = "";
