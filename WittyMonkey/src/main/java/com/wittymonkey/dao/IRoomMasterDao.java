@@ -25,4 +25,5 @@ public interface IRoomMasterDao extends IGenericDao<RoomMaster, Serializable>{
     Integer getTotalByCondition(Integer type, Object content);
 
     List<RoomMaster> getRoomByCondition(Integer type, Object content, Integer first, Integer total);
+
 }

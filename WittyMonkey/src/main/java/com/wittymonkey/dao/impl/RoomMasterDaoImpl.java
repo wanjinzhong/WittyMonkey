@@ -63,8 +63,8 @@ public class RoomMasterDaoImpl extends GenericDaoImpl<RoomMaster> implements IRo
         if (type == RoomController.TYPE_STATUS) {
             hql += "status = ?";
             result = countHQL(hql, Integer.parseInt(String.valueOf(content)));
-        } else if (type == RoomController.TYPE_FLOOR_NO) {
-            hql += "floor.floorNo = ?";
+        } else if (type == RoomController.TYPE_FLOOR_ID) {
+            hql += "floor.id = ?";
             result = countHQL(hql, Integer.parseInt(String.valueOf(content)));
         } else if (type == RoomController.TYPE_ROOM_NO) {
             hql += "number = ?";
@@ -86,8 +86,8 @@ public class RoomMasterDaoImpl extends GenericDaoImpl<RoomMaster> implements IRo
         if (type == RoomController.TYPE_STATUS) {
             hql += "status = ?";
             result = queryListHQL(hql, Integer.parseInt(String.valueOf(content)), first, total);
-        } else if (type == RoomController.TYPE_FLOOR_NO) {
-            hql += "floor.floorNo = ?";
+        } else if (type == RoomController.TYPE_FLOOR_ID) {
+            hql += "floor.id = ?";
             result = queryListHQL(hql, Integer.parseInt(String.valueOf(content)), first, total);
         } else if (type == RoomController.TYPE_ROOM_NO) {
             hql += "number = ?";

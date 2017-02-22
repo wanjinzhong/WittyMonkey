@@ -123,12 +123,28 @@ function changeType(obj) {
     var html;
     if (type == 0) {
         html = '<select name="searchContent" lay-verify="required" id="searchContent">' +
-            '<option value=""></option>' +
             '<option value="0" selected>' + room_hint_free + '</option>' +
             '<option value="1" >' + room_hint_booked + '</option>' +
             '<option value="2">' + room_hint_checkin + '</option>' +
             '<option value="3">' + room_hint_clean + '</option>' +
             '</select>';
+    } else if (type == 1) {
+        $.ajax({
+            url: "getFloor.do",
+            dataType: "json",
+            type: "get",
+            success: function (data) {
+                var res = eval("(" + data + ")");
+                var html;
+                html = '<select name="searchContent" lay-verify="required" id="searchContent">';
+                for (var i in res) {
+                    html += '<option value="' + res[i]["id"] + '">' + res[i]["floorNo"] + '</option>';
+                }
+                html += '</select>';
+                $(".searchContent").html(html);
+                form.render("select");
+            }
+        });
     } else {
         html = '<input type="text" class="layui-input" name="searchContent" id="searchContent"/>';
     }

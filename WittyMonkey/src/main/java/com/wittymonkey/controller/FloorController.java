@@ -188,6 +188,22 @@ public class FloorController {
         return json.toJSONString();
     }
 
+    @RequestMapping(value = "getFloor", method = RequestMethod.GET)
+    @ResponseBody
+    public String getFloor(HttpServletRequest request){
+        JSONArray json = new JSONArray();
+        Hotel hotel = ((User) request.getSession().getAttribute("loginUser")).getHotel();
+        List<Floor> floors = floorService.getFloorByHotel(hotel.getId(), null, null);
+        Collections.sort(floors, new Comparator<Floor>() {
+            @Override
+            public int compare(Floor o1, Floor o2) {
+                return o1.getFloorNo() - o2.getFloorNo();
+            }
+        });
+        List<SimpleFloor> simpleFloors = ChangeToSimple.floorList(floors);
+        json.addAll(simpleFloors);
+        return json.toJSONString();
+    }
     @RequestMapping(value = "getFloorByPage", method = RequestMethod.GET)
     @ResponseBody
     public String getFloorByPage(HttpServletRequest request) {

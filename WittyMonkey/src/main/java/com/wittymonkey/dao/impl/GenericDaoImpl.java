@@ -199,8 +199,11 @@ public class GenericDaoImpl<T> implements IGenericDao<T, Serializable> {
         } else {
             setParam(query, obj);
         }
-        query.setFirstResult(first);
-        query.setMaxResults(total);
+        if (first != null && total != null) {
+            query.setFirstResult(first);
+            query.setMaxResults(total);
+        }
+
         List<T> result = query.list();
         return result;
     }

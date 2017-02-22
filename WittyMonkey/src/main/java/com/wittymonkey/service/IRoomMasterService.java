@@ -18,4 +18,6 @@ public interface IRoomMasterService {
     Integer getTotalByCondition(Integer type, Object content);
 
     List<RoomMaster> getRoomByCondition(Integer type, Object content, Integer first, Integer total);
+
+    List<RoomMaster> getRoomByCondition(Integer type, Object content);
 }

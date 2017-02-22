@@ -42,6 +42,11 @@ public class RoomMasterServiceImpl implements IRoomMasterService{
     }
 
     @Override
+    public List<RoomMaster> getRoomByCondition(Integer type, Object content) {
+        return roomMasterDao.getRoomByCondition(type,content, null, null);
+    }
+
+    @Override
     public List<RoomMaster> getRoomByCondition(Integer type, Object content, Integer first, Integer total) {
         return roomMasterDao.getRoomByCondition(type,content, first,total);
     }
