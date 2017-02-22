@@ -13,6 +13,14 @@ import java.util.Map;
 public class FloorDaoImpl extends GenericDaoImpl<Floor> implements IFloorDao{
 
     @Override
+    public Floor getFloorById(Integer id) {
+        String hql = "from Floor where id = :id";
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("id", id);
+        return queryOneHql(hql, map);
+    }
+
+    @Override
     public Floor getFloorByNo(Integer hotelId, Integer floorNo) {
         String hql = "from Floor where hotel.id = :hotelId and floorNo = :floorNo";
         Map<String, Object> param = new HashMap<String, Object>();

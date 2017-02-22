@@ -10,7 +10,7 @@ layui.use(['layer', 'form', 'laypage'], function () {
     laypage = layui.laypage;
     form = layui.form();
     page("getRoomByHotel.do");
-    form.on('select(type)', function(data){
+    form.on('select(type)', function (data) {
         changeType(data.value);
     });
     changeType(0);
@@ -25,6 +25,13 @@ function showAddRoom() {
         scrollbar: false,
         type: 2,
     });
+}
+
+function search() {
+    var type = $("#type").val();
+    var content = $("#searchContent").val();
+    var condition = {"type": type, "content": content};
+    page("getRoomByCondition.do", undefined, condition);
 }
 
 function refreshTable(obj) {
@@ -115,11 +122,11 @@ function changeType(obj) {
     var type = obj | $("#type").val();
     var html;
     if (type == 0) {
-        html = '<select name="type" lay-verify="required">' +
+        html = '<select name="searchContent" lay-verify="required" id="searchContent">' +
             '<option value=""></option>' +
-            '<option value="0">' + room_hint_checkin + '</option>' +
-            '<option value="1" selected>' + room_hint_free + '</option>' +
-            '<option value="2">' + room_hint_booked + '</option>' +
+            '<option value="0" selected>' + room_hint_free + '</option>' +
+            '<option value="1" >' + room_hint_booked + '</option>' +
+            '<option value="2">' + room_hint_checkin + '</option>' +
             '<option value="3">' + room_hint_clean + '</option>' +
             '</select>';
     } else {

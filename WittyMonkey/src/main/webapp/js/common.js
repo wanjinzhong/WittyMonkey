@@ -63,11 +63,19 @@ function validateNote(inp) {
  * 分页
  * @param curr
  */
-function page(url, curr) {
+function page(url, curr, condition) {
+    if (curr == undefined){
+        curr = 1;
+    }
+    if (condition == undefined){
+        condition = {"curr":curr};
+    } else {
+        condition["curr"] = curr;
+    }
     $.ajax({
         type: "GET",
         url: url,
-        data: {"curr": curr || 1},
+        data: condition,
         dataType: "json",
         success: function (data) {
             var res = eval("(" + data + ")");
@@ -83,11 +91,49 @@ function page(url, curr) {
                 skip: true,
                 jump: function (obj, first) {
                     if (!first) {
-                        page(url,obj.curr);
+                        page(url,obj.curr, condition);
                     }
                     refreshTable(res["data"]);
                 }
             });
         }
     });
+}
+
+
+/**
+ * 验证楼层号
+ * @param inp
+ * @returns {boolean}
+ */
+function validateFloorNo(method, inp) {
+    var no = $(inp).val();
+    var reg = /^-?\d{1,3}$/;
+    if (!reg.test(no)) {
+        layer.tips(floor_validate_no_wrong, inp, {tips: 2});
+        return false;
+    } else {
+        var funResult;
+        $.ajax({
+            type: "GET",
+            url: "validateFloorNo.do",
+            data: {"floorNo": no, "method": method},
+            dataType: "json",
+            async: false,
+            success: function (data) {
+                var result = eval("(" + data + ")");
+                if (result.status == 200){
+                    layer.tips(floor_validate_no_exist, inp, {tips: 2});
+                    funResult = false;
+                } else if (result.status == 400){
+                    layer.tips(floor_validate_no_wrong, inp, {tips: 2});
+                    funResult = false;
+                } else {
+                    funResult = true;
+                }
+            }
+        });
+        return funResult;
+    }
+
 }

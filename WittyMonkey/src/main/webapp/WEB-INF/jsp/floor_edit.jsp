@@ -56,6 +56,9 @@
         text-align: right;
         padding: 5px;
     }
+    .table-header{
+        width: 100px;
+    }
 </style>
 <body>
 <div id="border">
@@ -64,25 +67,29 @@
         <input type="hidden" name="method" value="update"/>
         <table>
             <tr>
-                <td><fmt:message key="floor.manage.floor_no"/></td>
-                <td><input type="text" class="input-text radius" name="floorNo"
+                <td class="table-header"><label class="layui-form-label"><fmt:message key="floor.manage.floor_no"/></label></td>
+                <td><input type="text" class="layui-input" name="floorNo"
                            value="${editFloor.floorNo}"
                            id="floorNo" onblur="validateFloorNo('update',this)"></td>
             </tr>
             <tr>
-                <td><fmt:message key="note"/></td>
-                <td><textarea class="input-text radius" name="note" id="note">${editFloor.note}</textarea></td>
+                <td class="table-header"><label class="layui-form-label"><fmt:message key="note"/></label></td>
+                <td><textarea class="layui-textarea" name="note" id="note">${editFloor.note}</textarea></td>
             </tr>
         </table>
     </form>
     <div id="btnGroup">
-        <input type="button" class="btn btn-danger radius" value="<fmt:message key="btn.close"/>"
+        <input type="button" class="layui-btn layui-btn-radius layui-btn-danger" value="<fmt:message key="btn.close"/>"
                onclick="closeMe()"/>
-        <input type="button" class="btn btn-success radius" value="<fmt:message key="btn.save"/>"
+        <input type="button" class="layui-btn layui-btn-radius" value="<fmt:message key="btn.save"/>"
                onclick="save()"/>
     </div>
 </div>
 <script type="text/javascript">
+    var layer;
+    layui.use('layer', function () {
+        layer = layui.layer;
+    })
     function save() {
         if (validateFloorNo("update",$("#floorNo"))) {
             $.ajax({

@@ -8,6 +8,13 @@ import java.util.List;
 public interface IFloorService {
 
     /**
+     * 根据id查找楼层
+     * @param id
+     * @return
+     */
+    Floor getFloorById(Integer id);
+
+    /**
      * 根据楼层号查找楼层
      * @param hotelId
      * @param floorNo

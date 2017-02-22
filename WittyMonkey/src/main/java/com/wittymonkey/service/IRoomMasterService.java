@@ -14,4 +14,8 @@ public interface IRoomMasterService {
     List<RoomMaster> getRoomByHotel(Integer hotelId, Integer start, Integer total);
 
     Integer getTotalByHotel(Integer hotelId);
+
+    Integer getTotalByCondition(Integer type, Object content);
+
+    List<RoomMaster> getRoomByCondition(Integer type, Object content, Integer first, Integer total);
 }

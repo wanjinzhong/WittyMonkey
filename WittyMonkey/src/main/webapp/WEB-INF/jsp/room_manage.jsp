@@ -52,7 +52,7 @@
                 <div class="searchContent">
 
                 </div>
-                <div class="searchBtn"><i class="layui-btn layui-icon">&#xe615;</i>
+                <div class="searchBtn" onclick="search()"><i class="layui-btn layui-icon">&#xe615;</i>
                 </div>
             </form>
             <div id="content">

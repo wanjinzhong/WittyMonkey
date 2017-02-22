@@ -35,4 +35,14 @@ public class RoomMasterServiceImpl implements IRoomMasterService{
     public Integer getTotalByHotel(Integer hotelId) {
         return roomMasterDao.getTotalByHotel(hotelId);
     }
+
+    @Override
+    public Integer getTotalByCondition(Integer type, Object content) {
+        return roomMasterDao.getTotalByCondition(type,content);
+    }
+
+    @Override
+    public List<RoomMaster> getRoomByCondition(Integer type, Object content, Integer first, Integer total) {
+        return roomMasterDao.getRoomByCondition(type,content, first,total);
+    }
 }

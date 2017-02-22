@@ -21,6 +21,11 @@ public class FloorServiceImpl implements IFloorService{
     private IRoomMasterDao roomMasterDao;
 
     @Override
+    public Floor getFloorById(Integer id) {
+        return floorDao.getFloorById(id);
+    }
+
+    @Override
     public Floor getFloorByNo(Integer hotelId, Integer floorNo) {
         return floorDao.getFloorByNo(hotelId,floorNo);
     }
