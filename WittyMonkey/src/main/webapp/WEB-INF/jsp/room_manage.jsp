@@ -32,7 +32,7 @@
             <div class="green"></div>
             <span>&nbsp;<fmt:message key="room.hint.free"/></span>&nbsp;&nbsp;
             <div class="blue"></div>
-            <span>&nbsp;<fmt:message key="room.hint.booked"/></span>&nbsp;&nbsp;
+            <span>&nbsp;<fmt:message key="room.hint.reserved"/></span>&nbsp;&nbsp;
             <div class="yellow"></div>
             <span>&nbsp;<fmt:message key="room.hint.clean"/></span>&nbsp;&nbsp;
         </div>

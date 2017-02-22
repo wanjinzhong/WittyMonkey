@@ -1,6 +1,6 @@
 .roomBorder {
-    width: 180px;
-    height: 80px;
+    width: 205px;
+    height: 100px;
     border-radius: 10px;
     padding: 10px;
     padding-top: 5px;
@@ -98,7 +98,7 @@
 
 .btn_opt {
     text-align: right;
-    margin-top: 20px;
+    margin-top: 40px;
 }
 .btn_opt li{
     float: right;

@@ -33,6 +33,7 @@ td{
 #btnGroup{
     margin-right: 30px;
 }
+
 .editBtn, .deleteBtn{
     font-size: 20px;
     position: absolute;

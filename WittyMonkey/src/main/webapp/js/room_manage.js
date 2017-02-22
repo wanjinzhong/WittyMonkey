@@ -48,12 +48,12 @@ function refreshTable(obj) {
                     '<span class="name">' + obj[i]["name"] + '</span>' +
                     '<br/>' +
                     '<dl class="btn_opt">' +
-                    '<li class="btn_book">' +
+                    '<li class="btn_reserve" onclick="reserve(' + obj[i]["id"] + ')">' +
                     '<svg class="icon" aria-hidden="true">' +
                     '<use xlink:href="#icon-yuding"></use>' +
-                    '</svg> ' + btn_book +
+                    '</svg> ' + btn_reserve +
                     '</li>' +
-                    '<li class="btn_checkin">' +
+                    '<li class="btn_checkin" onclick="checkin(' + obj[i]["id"] + ')">' +
                     '<svg class="icon" aria-hidden="true">' +
                     '<use xlink:href="#icon-ruzhu"></use>' +
                     '</svg> ' + btn_checkin +
@@ -66,12 +66,12 @@ function refreshTable(obj) {
                     '<span class="name">' + obj[i]["name"] + '</span>' +
                     '<br/>' +
                     '<dl class="btn_opt">' +
-                    '<li class="btn_unbook">' +
+                    '<li class="btn_unsubscribe" onclick="unsubscribe(' + obj[i]["id"] + ')">' +
                     '<svg class="icon" aria-hidden="true">' +
                     '<use xlink:href="#icon-tuiding"></use>' +
-                    '</svg> ' + btn_unbook +
+                    '</svg> ' + btn_unsubscribe +
                     '</li>' +
-                    '<li class="btn_checkin">' +
+                    '<li class="btn_checkin" onclick="checkin(' + obj[i]["id"] + ')">' +
                     '<svg class="icon" aria-hidden="true">' +
                     '<use xlink:href="#icon-ruzhu"></use>' +
                     '</svg> ' + btn_checkin +
@@ -85,12 +85,12 @@ function refreshTable(obj) {
                     '<span class="name">' + obj[i]["name"] + '</span>' +
                     '<br/>' +
                     '<dl class="btn_opt">' +
-                    '<li class="btn_change">' +
+                    '<li class="btn_change" onclick="change(' + obj[i]["id"] + ')">' +
                     '<svg class="icon" aria-hidden="true">' +
                     '<use xlink:href="#icon-huanfang"></use>' +
                     '</svg> ' + btn_change +
                     '</li>' +
-                    '<li class="btn_checkout">' +
+                    '<li class="btn_checkout" onclick="checkout(' + obj[i]["id"] + ')">' +
                     '<svg class="icon" aria-hidden="true">' +
                     '<use xlink:href="#icon-tuifang"></use>' +
                     '</svg> ' + btn_checkout +
@@ -104,7 +104,7 @@ function refreshTable(obj) {
                     '<span class="name">' + obj[i]["name"] + '</span>' +
                     '<br/>' +
                     '<dl class="btn_opt">' +
-                    '<li class="btn_clean">' +
+                    '<li class="btn_clean" onclick="clean(' + obj[i]["id"] + ')">' +
                     '<svg class="icon" aria-hidden="true">' +
                     '<use xlink:href="#icon-qingli"></use>' +
                     '</svg> ' + btn_clean +
@@ -124,7 +124,7 @@ function changeType(obj) {
     if (type == 0) {
         html = '<select name="searchContent" lay-verify="required" id="searchContent">' +
             '<option value="0" selected>' + room_hint_free + '</option>' +
-            '<option value="1" >' + room_hint_booked + '</option>' +
+            '<option value="1" >' + room_hint_reserved + '</option>' +
             '<option value="2">' + room_hint_checkin + '</option>' +
             '<option value="3">' + room_hint_clean + '</option>' +
             '</select>';
@@ -162,4 +162,43 @@ function showRoomDetail(id){
         scrollbar: false,
         type: 2,
     });
+}
+function reserve(id) {
+    layer.open({
+        title: room_reserve_title,
+        content: id
+    });
+    event.cancelBubble = true;
+}
+function unsubscribe(id) {
+    layer.open({
+        title: room_unsubscribe_title,
+        content: id
+    });
+    event.cancelBubble = true;
+}
+function checkin(id) {
+    layer.open({
+        title: room_checkin_title,
+        content: id
+    });
+    event.cancelBubble = true;
+}
+function checkout(id) {
+    layer.open({
+        title: room_checkout_title,
+        content: id
+    });
+    event.cancelBubble = true;
+}
+function change(id) {
+    layer.open({
+        title: room_change_title,
+        content: id
+    });
+    event.cancelBubble = true;
+}
+function clean(id) {
+    layer.confirm("gdf");
+    event.cancelBubble = true;
 }
