@@ -3,15 +3,7 @@ package com.wittymonkey.entity;
 import java.io.Serializable;
 import java.util.Date;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 /**
  * 预定
@@ -21,146 +13,137 @@ import javax.persistence.Table;
 @Entity
 @Table
 public class Reserve implements Serializable{
-	
+
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Integer id;
-	
-	@Column(name="cust_name", length=20)
-	private String custName;
-	
-	@Column(name="cust_idcard_no", length=20)
-	private String custIdcardNo;
-	
-	@Column(name="cust_tel", length=20)
-	private String custTel;
-	
+
+	@ManyToOne(targetEntity = Customer.class, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+	@JoinColumn(name = "customer_id", referencedColumnName = "id")
+	private Customer customer;
+
+
 	@ManyToOne(targetEntity=RoomMaster.class)
 	@JoinColumn(name="room_id", referencedColumnName="id")
 	private RoomMaster room;
-	
+
 	// 预定时间
 	@Column(name="reserve_date")
 	private Date reserveDate;
-	
+
 	// 预计入住时间
 	@Column(name="est_checkin_date")
 	private Date estCheckinDate;
-	
+
+	//预计退房时间
+	@Column(name="est_checkout_date")
+	private Date estCheckoutDate;
+
 	//定金
 	@Column
 	private Double deposit;
-	
+
 	// 状态（待入住/已入住/已取消）
 	@Column
 	private Integer status;
-	
+
 	@Column(name="entry_datetime")
 	private Date entryDatetime;
-	
+
 	@ManyToOne(targetEntity=User.class, fetch=FetchType.EAGER)
 	@JoinColumn(name="entry_id", referencedColumnName="id")
 	private User entryUser;
 
 	@Column(length=1024)
 	private String note;
-	
-	public String getNote() {
-		return note;
-	}
 
-	public void setNote(String note) {
-		this.note = note;
-	}
-	public Integer getId() {
-		return id;
-	}
+    public Integer getId() {
+        return id;
+    }
 
-	public void setId(Integer id) {
-		this.id = id;
-	}
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
-	public String getCustName() {
-		return custName;
-	}
+    public Customer getCustomer() {
+        return customer;
+    }
 
-	public void setCustName(String custName) {
-		this.custName = custName;
-	}
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
+    }
 
-	public String getCustIdcardNo() {
-		return custIdcardNo;
-	}
+    public RoomMaster getRoom() {
+        return room;
+    }
 
-	public void setCustIdcardNo(String custIdcardNo) {
-		this.custIdcardNo = custIdcardNo;
-	}
+    public void setRoom(RoomMaster room) {
+        this.room = room;
+    }
 
-	public String getCustTel() {
-		return custTel;
-	}
+    public Date getReserveDate() {
+        return reserveDate;
+    }
 
-	public void setCustTel(String custTel) {
-		this.custTel = custTel;
-	}
+    public void setReserveDate(Date reserveDate) {
+        this.reserveDate = reserveDate;
+    }
 
-	public RoomMaster getRoom() {
-		return room;
-	}
+    public Date getEstCheckinDate() {
+        return estCheckinDate;
+    }
 
-	public void setRoom(RoomMaster room) {
-		this.room = room;
-	}
+    public void setEstCheckinDate(Date estCheckinDate) {
+        this.estCheckinDate = estCheckinDate;
+    }
 
-	public Date getReserveDate() {
-		return reserveDate;
-	}
+    public Date getEstCheckoutDate() {
+        return estCheckoutDate;
+    }
 
-	public void setReserveDate(Date reserveDate) {
-		this.reserveDate = reserveDate;
-	}
+    public void setEstCheckoutDate(Date estCheckoutDate) {
+        this.estCheckoutDate = estCheckoutDate;
+    }
 
-	public Date getEstCheckinDate() {
-		return estCheckinDate;
-	}
+    public Double getDeposit() {
+        return deposit;
+    }
 
-	public void setEstCheckinDate(Date estCheckinDate) {
-		this.estCheckinDate = estCheckinDate;
-	}
+    public void setDeposit(Double deposit) {
+        this.deposit = deposit;
+    }
 
-	public Double getDeposit() {
-		return deposit;
-	}
+    public Integer getStatus() {
+        return status;
+    }
 
-	public void setDeposit(Double deposit) {
-		this.deposit = deposit;
-	}
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
 
-	public Integer getStatus() {
-		return status;
-	}
+    public Date getEntryDatetime() {
+        return entryDatetime;
+    }
 
-	public void setStatus(Integer status) {
-		this.status = status;
-	}
+    public void setEntryDatetime(Date entryDatetime) {
+        this.entryDatetime = entryDatetime;
+    }
 
-	public Date getEntryDatetime() {
-		return entryDatetime;
-	}
+    public User getEntryUser() {
+        return entryUser;
+    }
 
-	public void setEntryDatetime(Date entryDatetime) {
-		this.entryDatetime = entryDatetime;
-	}
+    public void setEntryUser(User entryUser) {
+        this.entryUser = entryUser;
+    }
 
-	public User getEntryUser() {
-		return entryUser;
-	}
+    public String getNote() {
+        return note;
+    }
 
-	public void setEntryUser(User entryUser) {
-		this.entryUser = entryUser;
-	}
-	
-	
+    public void setNote(String note) {
+        this.note = note;
+    }
 }

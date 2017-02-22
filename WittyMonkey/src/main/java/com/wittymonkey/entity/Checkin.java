@@ -1,18 +1,12 @@
 package com.wittymonkey.entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
+
 /**
  * 入住和退房
  * @author neilw
@@ -27,16 +21,13 @@ public class Checkin implements Serializable{
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Integer id;
-	
-	@Column(name="cust_name", length=20)
-	private String custName;
-	
-	@Column(name="cust_idcard_no", length=20)
-	private String custIdcardNo;
-	
-	@Column(name="cust_tel")
-	private String custTel;
-	
+
+	@ManyToMany(targetEntity = Customer.class)
+	@JoinTable(name="customer_checkin",
+	joinColumns = {@JoinColumn(name ="checkin_id", referencedColumnName = "id")},
+	inverseJoinColumns = {@JoinColumn(name = "customer_id", referencedColumnName = "id")})
+	private List<Customer> customers = new ArrayList<Customer>();
+
 	@ManyToOne(targetEntity=RoomMaster.class)
 	@JoinColumn(name="room_id", referencedColumnName="id")
 	private RoomMaster room;
@@ -53,10 +44,9 @@ public class Checkin implements Serializable{
 	@Column(name="act_checkout_date")
 	private Date actCheckoutDate;
 		
-	// 差价（正数表示补，负数表示退）
-	@Column(name="price_difference")
-	private Double priceDifference;
-	
+	@Column(name="price")
+	private Double price;
+
 	@Column(name="entry_datetime")
 	private Date entryDatetime;
 	
@@ -70,14 +60,9 @@ public class Checkin implements Serializable{
 	
 	@Column(length=1024)
 	private String note;
-	
-	public String getNote() {
-		return note;
-	}
 
-	public void setNote(String note) {
-		this.note = note;
-	}
+	@OneToMany(targetEntity = ChangeRoom.class, mappedBy = "checkin")
+	private List<ChangeRoom> changeRooms = new ArrayList<ChangeRoom>();
 
 	public Integer getId() {
 		return id;
@@ -87,44 +72,12 @@ public class Checkin implements Serializable{
 		this.id = id;
 	}
 
-	public String getCustName() {
-		return custName;
+	public List<Customer> getCustomers() {
+		return customers;
 	}
 
-	public void setCustName(String custName) {
-		this.custName = custName;
-	}
-
-	public String getCustIdcardNo() {
-		return custIdcardNo;
-	}
-
-	public void setCustIdcardNo(String custIdcardNo) {
-		this.custIdcardNo = custIdcardNo;
-	}
-
-	public String getCustTel() {
-		return custTel;
-	}
-
-	public void setCustTel(String custTel) {
-		this.custTel = custTel;
-	}
-
-	public Date getCheckinDate() {
-		return checkinDate;
-	}
-
-	public void setCheckinDate(Date checkinDate) {
-		this.checkinDate = checkinDate;
-	}
-
-	public Reserve getReserve() {
-		return reserve;
-	}
-
-	public void setReserve(Reserve reserve) {
-		this.reserve = reserve;
+	public void setCustomers(List<Customer> customers) {
+		this.customers = customers;
 	}
 
 	public RoomMaster getRoom() {
@@ -135,20 +88,12 @@ public class Checkin implements Serializable{
 		this.room = room;
 	}
 
-	public Date getEntryDatetime() {
-		return entryDatetime;
+	public Date getCheckinDate() {
+		return checkinDate;
 	}
 
-	public void setEntryDatetime(Date entryDatetime) {
-		this.entryDatetime = entryDatetime;
-	}
-
-	public User getEntryUser() {
-		return entryUser;
-	}
-
-	public void setEntryUser(User entryUser) {
-		this.entryUser = entryUser;
+	public void setCheckinDate(Date checkinDate) {
+		this.checkinDate = checkinDate;
 	}
 
 	public Date getEstCheckoutDate() {
@@ -167,13 +112,51 @@ public class Checkin implements Serializable{
 		this.actCheckoutDate = actCheckoutDate;
 	}
 
-	public Double getPriceDifference() {
-		return priceDifference;
+	public Double getPrice() {
+		return price;
 	}
 
-	public void setPriceDifference(Double priceDifference) {
-		this.priceDifference = priceDifference;
+	public void setPrice(Double price) {
+		this.price = price;
 	}
-	
-	
+
+	public Date getEntryDatetime() {
+		return entryDatetime;
+	}
+
+	public void setEntryDatetime(Date entryDatetime) {
+		this.entryDatetime = entryDatetime;
+	}
+
+	public User getEntryUser() {
+		return entryUser;
+	}
+
+	public void setEntryUser(User entryUser) {
+		this.entryUser = entryUser;
+	}
+
+	public Reserve getReserve() {
+		return reserve;
+	}
+
+	public void setReserve(Reserve reserve) {
+		this.reserve = reserve;
+	}
+
+	public String getNote() {
+		return note;
+	}
+
+	public void setNote(String note) {
+		this.note = note;
+	}
+
+	public List<ChangeRoom> getChangeRooms() {
+		return changeRooms;
+	}
+
+	public void setChangeRooms(List<ChangeRoom> changeRooms) {
+		this.changeRooms = changeRooms;
+	}
 }
