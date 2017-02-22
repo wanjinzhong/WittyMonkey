@@ -69,6 +69,17 @@ public class RoomMaster implements Serializable {
     @JoinColumn(name = "entry_id", referencedColumnName = "id")
     private User entryUser;
 
+    @Column(name = "is_deleted", columnDefinition = "bit default b'0'")
+    private Boolean isDelete;
+
+    public Boolean getDelete() {
+        return isDelete;
+    }
+
+    public void setDelete(Boolean delete) {
+        isDelete = delete;
+    }
+
     public Date getEntryDatetime() {
         return entryDatetime;
     }

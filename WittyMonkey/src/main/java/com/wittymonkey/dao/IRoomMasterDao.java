@@ -7,6 +7,7 @@ import com.wittymonkey.entity.RoomMaster;
 
 public interface IRoomMasterDao extends IGenericDao<RoomMaster, Serializable>{
 
+    RoomMaster getRoomById(Integer id);
 
     void moveRoomToFloor(Integer fromFloorNo, Integer toFloorNo);
 

@@ -15,7 +15,7 @@
     <link rel="stylesheet" type="text/css" href="style/common.css"/>
     <script type="text/javascript" src="js/common.js"></script>
     <link rel="stylesheet" type="text/css" href="style/room_add.css"/>
-    <script type="text/javascript" src="js/room_add.js"></script>
+    <script type="text/javascript" src="js/room_validator.js"></script>
     <!-- 根据设置动态加载js语言 -->
     <script type="text/javascript" src="i18n/messages_${loginUser.setting.lang }.js"></script>
     <fmt:setBundle basename="i18n/messages_${loginUser.setting.lang }"/>
@@ -23,11 +23,13 @@
 <body>
 <div class="add-form">
     <form id="room-form" class="layui-form">
+        <!-- java端处理方式 -->
+        <input type="hidden" name="method" value="add"/>
         <table>
             <tr>
                 <td><label class="layui-form-label"><fmt:message key="room.add.number"/></label></td>
                 <td style="width: 300px">
-                    <div class="input"><input type="text" class="layui-input" id="roomNum" name="roomNum" onblur="validateRoomNo(this)"/></div>
+                    <div class="input"><input type="text" class="layui-input" id="roomNum" name="roomNum" onblur="validateRoomNo('add',this)"/></div>
                 </td>
                 <td><label class="layui-form-label"><fmt:message key="room.add.name"/></label></td>
                 <td>
@@ -101,7 +103,7 @@
 </div>
 <div id="btnGroup">
     <input type="button" class="layui-btn layui-btn-danger layui-btn-radius" value="<fmt:message key="btn.close"/>" onclick="closeMe()"/>
-    <input type="button" class="layui-btn layui-btn-radius" value="<fmt:message key="btn.save"/>" onclick="save()"/>
+    <input type="button" class="layui-btn layui-btn-radius" value="<fmt:message key="btn.save"/>" onclick="save('add')"/>
 </div>
 </body>
 </html>

@@ -190,7 +190,7 @@ public class FloorController {
 
     @RequestMapping(value = "getFloor", method = RequestMethod.GET)
     @ResponseBody
-    public String getFloor(HttpServletRequest request){
+    public String getFloor(HttpServletRequest request) {
         JSONArray json = new JSONArray();
         Hotel hotel = ((User) request.getSession().getAttribute("loginUser")).getHotel();
         List<Floor> floors = floorService.getFloorByHotel(hotel.getId(), null, null);
@@ -204,6 +204,7 @@ public class FloorController {
         json.addAll(simpleFloors);
         return json.toJSONString();
     }
+
     @RequestMapping(value = "getFloorByPage", method = RequestMethod.GET)
     @ResponseBody
     public String getFloorByPage(HttpServletRequest request) {
@@ -216,7 +217,7 @@ public class FloorController {
         page.setPageSize(pageSize);
         page.setCurrPage(curr);
         Integer count = floorService.getTotal(hotel.getId());
-        List<Floor> floors = floorService.getFloorByHotel(hotel.getId(), (curr-1) * pageSize, pageSize);
+        List<Floor> floors = floorService.getFloorByHotel(hotel.getId(), (curr - 1) * pageSize, pageSize);
         Collections.sort(floors, new Comparator<Floor>() {
             @Override
             public int compare(Floor o1, Floor o2) {
@@ -275,10 +276,11 @@ public class FloorController {
             if (method.equals(ADD) || method.equals(DELETE) ||
                     (method.equals(UPDATE) && floorNo != editFloorNo)) {
                 return 200;
+            } else {
+                return 201;
             }
         } else {
             return 201;
         }
-        return 500;
     }
 }

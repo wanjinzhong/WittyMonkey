@@ -11,7 +11,7 @@ layui.use(['layer', 'form'], function () {
 /**
  * 验证房间号
  */
-function validateRoomNo(inp) {
+function validateRoomNo(method, inp) {
     var roomNo = $(inp).val();
     var result;
     if (roomNo.length <= 0) {
@@ -23,7 +23,7 @@ function validateRoomNo(inp) {
     } else {
         $.ajax({
             url: "validateRoomNo.do",
-            data: {"roomNo": roomNo},
+            data: {"roomNo": roomNo, 'method': method},
             async: false,
             dataType: "json",
             success: function (data) {
@@ -33,7 +33,7 @@ function validateRoomNo(inp) {
                         layer.tips(room_validate_roomNo_exist, inp, {tips: 2});
                         result = false;
                         break;
-                    case 210:
+                    case 201:
                         result = true;
                         break;
                     case 400:
@@ -157,8 +157,9 @@ function validatePrice(inp) {
     }
 }
 
-function save() {
-    if (!validateRoomNo($("#roomNum"))) {
+
+function save(method) {
+    if (!validateRoomNo(method, $("#roomNum"))) {
         return false;
     } else if (!validateRoomName($("#roomName"))) {
         return false;
@@ -172,10 +173,10 @@ function save() {
         return false;
     } else if (!validateNote($("#note"))) {
         return false;
-    }  else {
+    } else {
         var index = layer.load();
         $.ajax({
-            url: "addRoom.do",
+            url: "saveRoom.do",
             type: "GET",
             data: $("#room-form").serialize(),
             dataType: "json",
@@ -220,18 +221,27 @@ function save() {
                         layer.tips(messageOfValidateLength(message_note, 1024), $("#note"), {tips: 2});
                         return false;
                     case 200:
-                        layer.msg(room_add_success, {
-                            icon: 1,
-                            time: 2000
-                        }, function () {
-                            parent.location.reload();
-                            closeMe();
-                        });
+                        if (method == "add"){
+                            layer.msg(room_add_success, {
+                                icon: 1,
+                                time: 2000
+                            }, function () {
+                                parent.location.reload();
+                                closeMe();
+                            });
+
+                        }
+                        else if (method == "update"){
+                            layer.msg(room_update_success, {
+                                icon: 1,
+                                time: 2000
+                            }, function () {
+                                parent.location.reload();
+                                closeMe();
+                            });
+                        }
                         return true;
                 }
-            },
-            error: function () {
-                alert("error");
             }
         });
     }

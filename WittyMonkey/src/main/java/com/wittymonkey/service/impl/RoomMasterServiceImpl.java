@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.wittymonkey.service.IRoomMasterService;
 
+import java.sql.SQLException;
 import java.util.List;
 
 @Service(value="roomMasterService")
@@ -17,6 +18,11 @@ public class RoomMasterServiceImpl implements IRoomMasterService{
     private IRoomMasterDao roomMasterDao;
 
     @Override
+    public RoomMaster getRoomById(Integer id) {
+        return roomMasterDao.getRoomById(id);
+    }
+
+    @Override
     public RoomMaster getRoomMasterByNo(Hotel hotel, String roomNo) {
         return roomMasterDao.getRoomMasterByNo(hotel.getId(),roomNo);
     }
@@ -24,6 +30,16 @@ public class RoomMasterServiceImpl implements IRoomMasterService{
     @Override
     public void saveRoom(RoomMaster roomMaster) {
         roomMasterDao.save(roomMaster);
+    }
+
+    @Override
+    public void updateRoom(RoomMaster roomMaster) throws SQLException {
+        roomMasterDao.update(roomMaster);
+    }
+
+    @Override
+    public void deleteRoom(RoomMaster roomMaster) throws SQLException {
+        roomMasterDao.delete(roomMaster);
     }
 
     @Override

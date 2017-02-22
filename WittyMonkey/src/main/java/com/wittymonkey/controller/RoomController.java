@@ -2,7 +2,6 @@ package com.wittymonkey.controller;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.wittymonkey.dao.IUserDao;
 import com.wittymonkey.entity.*;
 import com.wittymonkey.service.IFloorService;
 import com.wittymonkey.service.IRoomMasterService;
@@ -11,7 +10,6 @@ import com.wittymonkey.util.ChangeToSimple;
 import com.wittymonkey.vo.Page;
 import com.wittymonkey.vo.SimpleFloor;
 import com.wittymonkey.vo.SimpleRoom;
-import org.omg.CORBA.Request;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
-import java.lang.reflect.Array;
+import java.sql.SQLException;
 import java.util.*;
 
 /**
@@ -34,6 +32,10 @@ public class RoomController {
     public static final Integer TYPE_ROOM_NAME = 3;
     public static final Integer TYPE_PERSON_NUM = 4;
 
+    public static final String ADD = "add";
+    public static final String UPDATE = "update";
+    public static final String DELETE = "delete";
+
     @Autowired
     private IRoomMasterService roomMasterService;
 
@@ -46,7 +48,7 @@ public class RoomController {
     @RequestMapping(value = "toAddRoom", method = RequestMethod.GET)
     public String toAddRoom(HttpServletRequest request) {
         User loginUser = (User) request.getSession().getAttribute("loginUser");
-        List<Floor> floors = loginUser.getHotel().getFloors();
+        List<Floor> floors = floorService.getFloorByHotel(loginUser.getHotel().getId(), null, null);
         Collections.sort(floors, new Comparator<Floor>() {
             @Override
             public int compare(Floor o1, Floor o2) {
@@ -58,6 +60,16 @@ public class RoomController {
         return "room_add";
     }
 
+
+    @RequestMapping(value = "showRoomDetail", method = RequestMethod.GET)
+    public String showRoomDetail(HttpServletRequest request) {
+        Integer id = Integer.parseInt(request.getParameter("roomId"));
+        RoomMaster roomMaster = roomMasterService.getRoomById(id);
+        request.getSession().setAttribute("room", roomMaster);
+
+        return "room_detail";
+    }
+
     @RequestMapping(value = "validateRoomNo", method = RequestMethod.GET)
     @ResponseBody
     public String validateRoomNo(HttpServletRequest request) {
@@ -65,7 +77,8 @@ public class RoomController {
         Hotel hotel = loginUser.getHotel();
         JSONObject json = new JSONObject();
         String roomNo = request.getParameter("roomNo");
-        Integer res = validateRoomNo(hotel, roomNo);
+        String method = request.getParameter("method");
+        Integer res = validateRoomNo(request, method, roomNo);
         json.put("status", res);
         return json.toJSONString();
     }
@@ -136,11 +149,12 @@ public class RoomController {
      * <td>备注过长</td>
      * </tr>
      */
-    @RequestMapping(value = "addRoom", method = RequestMethod.GET)
+    @RequestMapping(value = "saveRoom", method = RequestMethod.GET)
     @ResponseBody
-    public String addRoom(HttpServletRequest request) {
+    public String saveRoom(HttpServletRequest request) {
         User loginUser = (User) request.getSession().getAttribute("loginUser");
         JSONObject json = new JSONObject();
+        String method = request.getParameter("method");
         String roomNo = request.getParameter("roomNum");
         String roomName = request.getParameter("roomName");
         String singleBed = request.getParameter("singleBedNum");
@@ -157,7 +171,7 @@ public class RoomController {
         Integer availableNum;
         Double area;
         Double price;
-        switch (validateRoomNo(loginUser.getHotel(), roomNo)) {
+        switch (validateRoomNo(request, method, roomNo)) {
             case 200:
                 json.put("status", 400);
                 return json.toJSONString();
@@ -235,7 +249,15 @@ public class RoomController {
         }
 
 
-        RoomExt roomExt = new RoomExt();
+        RoomMaster roomMaster;
+        RoomExt roomExt;
+        if (method.equals("add")) {
+            roomMaster = new RoomMaster();
+            roomExt = new RoomExt();
+        } else {
+            roomMaster = roomMasterService.getRoomById(((RoomMaster) request.getSession().getAttribute("room")).getId());
+            roomExt = roomMaster.getRoomExt();
+        }
         List<String> extraInfo = Arrays.asList(extra);
         if (extraInfo.contains("window")) {
             roomExt.setHasWindow(true);
@@ -280,7 +302,6 @@ public class RoomController {
         roomExt.setOtherFacility(other);
         roomExt.setNote(note);
 
-        RoomMaster roomMaster = new RoomMaster();
         roomMaster.setArea(area);
         roomMaster.setAvailableNum(availableNum);
         roomMaster.setSingleBedNum(singleBedNum);
@@ -293,9 +314,79 @@ public class RoomController {
         roomMaster.setEntryDatetime(new Date());
         roomMaster.setEntryUser(userService.getUserById(loginUser.getId()));
         roomMaster.setRoomExt(roomExt);
-        roomMasterService.saveRoom(roomMaster);
+        roomMaster.setDelete(false);
+        if (method.equals(ADD)) {
+            roomMasterService.saveRoom(roomMaster);
+        } else if (method.equals(UPDATE)) {
+            try {
+                roomMasterService.updateRoom(roomMaster);
+            } catch (SQLException e) {
+                e.printStackTrace();
+                json.put("status", 500);
+                return json.toJSONString();
+            }
+        }
         json.put("status", 200);
         return json.toJSONString();
+    }
+
+    /**
+     * 删除房间（伪删除）
+     *
+     * @param request
+     * @return <table border="1" cellspacing="0">
+     * <tr>
+     * <th>代码</th>
+     * <th>说明</th>
+     * </tr>
+     * <tr>
+     * <td>200</td>
+     * <td>删除成功</td>
+     * </tr>
+     * <tr>
+     * <td>400</td>
+     * <td>房间不存在</td>
+     * </tr>
+     * <tr>
+     * <td>410</td>
+     * <td>房间有人入住</td>
+     * </tr>
+     * <tr>
+     * <td>411</td>
+     * <td>房间有人预订</td>
+     * </tr>
+     * <tr>
+     * <td>500</td>
+     * <td>服务器错误</td>
+     * </tr>
+     * </table>
+     */
+    @RequestMapping(value = "deleteRoom", method = RequestMethod.GET)
+    @ResponseBody
+    public String deleteRoom(HttpServletRequest request) {
+        JSONObject json = new JSONObject();
+        Integer id = Integer.parseInt(request.getParameter("id"));
+        RoomMaster roomMaster = roomMasterService.getRoomById(id);
+        if (roomMaster == null) {
+            json.put("status", 400);
+            return json.toJSONString();
+        } else if (roomMaster.getStatus() == 1) {
+            json.put("status", 410);
+            return json.toJSONString();
+        } else if (roomMaster.getStatus() == 2) {
+            json.put("status", 411);
+            return json.toJSONString();
+        } else {
+            roomMaster.setDelete(true);
+            try {
+                roomMasterService.updateRoom(roomMaster);
+            } catch (SQLException e) {
+                json.put("status", 500);
+                return json.toJSONString();
+            }
+            json.put("status", 200);
+            return json.toJSONString();
+        }
     }
 
     @RequestMapping(value = "getRoomByHotel", method = RequestMethod.GET)
@@ -334,7 +425,7 @@ public class RoomController {
         page.setPageSize(pageSize);
         page.setCurrPage(curr);
         Integer count = roomMasterService.getTotalByCondition(type, content);
-        List<RoomMaster> roomMasters = roomMasterService.getRoomByCondition(type,content,(curr - 1) * pageSize, pageSize);
+        List<RoomMaster> roomMasters = roomMasterService.getRoomByCondition(type, content, (curr - 1) * pageSize, pageSize);
         List<SimpleRoom> simpleRooms = ChangeToSimple.roomList(roomMasters);
         json.put("count", count);
         json.put("pageSize", pageSize);
@@ -347,7 +438,7 @@ public class RoomController {
     /**
      * 根据验证房间号是否存在
      *
-     * @param hotel
+     * @param request
      * @param roomNo
      * @return <table border="1" cellspacing="0">
      * <tr>
@@ -370,16 +461,26 @@ public class RoomController {
      * <td>401</td>
      * <td>房间号过长</td>
      * </tr>
+     * <td>500</td>
+     * <td>服务器错误</td>
+     * </tr>
      */
-    public Integer validateRoomNo(Hotel hotel, String roomNo) {
+    public Integer validateRoomNo(HttpServletRequest request, String method, String roomNo) {
+        Hotel hotel = (Hotel) request.getSession().getAttribute("hotel");
+        RoomMaster room = (RoomMaster) request.getSession().getAttribute("room");
         if (roomNo == null || roomNo.length() <= 0) {
             return 400;
         } else if (roomNo.length() > 10) {
             return 401;
         } else {
-            RoomMaster room = roomMasterService.getRoomMasterByNo(hotel, roomNo);
-            if (room != null) {
-                return 200;
+            RoomMaster newRoom = roomMasterService.getRoomMasterByNo(hotel, roomNo);
+            if (newRoom != null) {
+                if (method.equals(ADD) || method.equals(DELETE) ||
+                        (method.equals(UPDATE) && room.getId() != newRoom.getId())) {
+                    return 200;
+                } else {
+                    return 201;
+                }
             } else {
                 return 210;
             }

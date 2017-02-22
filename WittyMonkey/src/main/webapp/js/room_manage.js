@@ -43,7 +43,7 @@ function refreshTable(obj) {
     } else {
         for (var i in obj) {
             if (obj[i].status == 0) {
-                html += '<div class="roomBorder roomBorder2">' +
+                html += '<div class="roomBorder roomBorder2" onclick="showRoomDetail(' + obj[i]["id"] + ')">' +
                     '<span class="number">' + obj[i]["number"] + '</span>' +
                     '<span class="name">' + obj[i]["name"] + '</span>' +
                     '<br/>' +
@@ -61,7 +61,7 @@ function refreshTable(obj) {
                     '</dl>' +
                     '</div>';
             } else if (obj[i].status == 1) {
-                html += '<div class="roomBorder roomBorder3">' +
+                html += '<div class="roomBorder roomBorder3" onclick="showRoomDetail(' + obj[i]["id"] + ')">' +
                     '<span class="number">' + obj[i]["number"] + '</span>' +
                     '<span class="name">' + obj[i]["name"] + '</span>' +
                     '<br/>' +
@@ -80,7 +80,7 @@ function refreshTable(obj) {
                     '</div>';
             }
             else if (obj[i].status == 2) {
-                html += '<div class="roomBorder roomBorder1">' +
+                html += '<div class="roomBorder roomBorder1" onclick="showRoomDetail(' + obj[i]["id"] + ')">' +
                     '<span class="number">' + obj[i]["number"] + '</span>' +
                     '<span class="name">' + obj[i]["name"] + '</span>' +
                     '<br/>' +
@@ -99,7 +99,7 @@ function refreshTable(obj) {
                     '</div>';
             }
             else if (obj[i].status == 3) {
-                html += '<div class="roomBorder roomBorder4">' +
+                html += '<div class="roomBorder roomBorder4" onclick="showRoomDetail(' + obj[i]["id"] + ')">' +
                     '<span class="number">' + obj[i]["number"] + '</span>' +
                     '<span class="name">' + obj[i]["name"] + '</span>' +
                     '<br/>' +
@@ -150,4 +150,16 @@ function changeType(obj) {
     }
     $(".searchContent").html(html);
     form.render("select");
+}
+var room_detail;
+function showRoomDetail(id){
+    room_detail = layer.open({
+        title: room_detail_title,
+        area: ['1000px', '700px'],
+        maxmin: false,
+        shade: 0.4,
+        content: "showRoomDetail.do?roomId=" + id,
+        scrollbar: false,
+        type: 2,
+    });
 }

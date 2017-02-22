@@ -1,0 +1,49 @@
+.input{
+    width: 200px;
+}
+.checkbox{
+    text-align: left;
+}
+.add-form{
+    width: 100%;
+}
+.layui-form{
+    width: 500px;
+    margin:0 auto;
+    padding: 5px;
+}
+table{
+    width: 100%;
+    margin-left: -100px;
+}
+td{
+    padding-top: 10px;
+}
+.layui-form-label{
+    width: 100px;
+}
+.add-form {
+    border: 2px solid #eeeeee;
+    border-radius: 10px;
+    width: 930px;
+    height: 550px;
+    margin-top: 20px;
+    margin-left: 30px;
+}
+#btnGroup{
+    margin-right: 30px;
+}
+.editBtn, .deleteBtn{
+    font-size: 20px;
+    position: absolute;
+    top: 30px;
+    right: 50px;
+
+}
+.deleteBtn{
+    top: 70px;
+    right: 50px;
+}
+.changeableBtn{
+    display: inline-block;
+}

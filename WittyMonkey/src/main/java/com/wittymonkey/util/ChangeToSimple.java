@@ -19,6 +19,11 @@ public class ChangeToSimple {
             SimpleFloor simpleFloor = new SimpleFloor();
             simpleFloor.setId(floor.getId());
             simpleFloor.setFloorNo(floor.getFloorNo());
+            for (int i = 0; i < floor.getRoomMasters().size(); i ++){
+                if (floor.getRoomMasters().get(i).getDelete() == true){
+                    floor.getRoomMasters().remove(i);
+                }
+            }
             simpleFloor.setRoomNum(floor.getRoomMasters().size());
             simpleFloor.setEntryUser(floor.getEntryUser().getRealName());
             simpleFloor.setEntryDatetime(floor.getEntryDatetime());
@@ -32,6 +37,7 @@ public class ChangeToSimple {
         List<SimpleRoom> simpleRooms = new ArrayList<SimpleRoom>();
         for (RoomMaster room : roomMasters){
             SimpleRoom simpleRoom = new SimpleRoom();
+            simpleRoom.setId(room.getId());
             simpleRoom.setFloorNo(room.getFloor().getFloorNo());
             simpleRoom.setArea(room.getArea());
             simpleRoom.setName(room.getName());

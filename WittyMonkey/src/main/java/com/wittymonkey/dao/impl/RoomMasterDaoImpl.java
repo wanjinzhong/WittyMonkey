@@ -14,6 +14,12 @@ import java.util.Map;
 public class RoomMasterDaoImpl extends GenericDaoImpl<RoomMaster> implements IRoomMasterDao {
 
     @Override
+    public RoomMaster getRoomById(Integer id) {
+        String hql = "from RoomMaster where id = ?";
+        return queryOneHql(hql,id);
+    }
+
+    @Override
     public void moveRoomToFloor(Integer fromFloorId, Integer toFloorId) {
         //String hql = "update RoomMaster set floor.id = :toId where floor.id = fromId";
         String sql = "update room_master set floor_id = ?1 where floor_id = ?2";
@@ -33,7 +39,7 @@ public class RoomMasterDaoImpl extends GenericDaoImpl<RoomMaster> implements IRo
 
     @Override
     public RoomMaster getRoomMasterByNo(Integer hotelId, String roomNo) {
-        String hql = "from RoomMaster where floor.hotel.id = :hotelId and number = :roomNo";
+        String hql = "from RoomMaster where floor.hotel.id = :hotelId and number = :roomNo and isDelete = false";
         Map<String, Object> param = new HashMap<String, Object>();
         param.put("hotelId", hotelId);
         param.put("roomNo", roomNo);
@@ -42,7 +48,7 @@ public class RoomMasterDaoImpl extends GenericDaoImpl<RoomMaster> implements IRo
 
     @Override
     public List<RoomMaster> getRoomByHotel(Integer hotelId, Integer first, Integer total) {
-        String hql = "from RoomMaster where floor.hotel.id = :hotelId order by number";
+        String hql = "from RoomMaster where floor.hotel.id = :hotelId and isDelete = false order by number";
         Map<String, Object> param = new HashMap<String, Object>();
         param.put("hotelId", hotelId);
         return queryListHQL(hql, param, first, total);
@@ -50,7 +56,7 @@ public class RoomMasterDaoImpl extends GenericDaoImpl<RoomMaster> implements IRo
 
     @Override
     public Integer getTotalByHotel(Integer hotelId) {
-        String hql = "select count(1) from RoomMaster where floor.hotel.id = :hotelId";
+        String hql = "select count(1) from RoomMaster where floor.hotel.id = :hotelId and isDelete = false";
         Map<String, Object> param = new HashMap<String, Object>();
         param.put("hotelId", hotelId);
         return countHQL(hql, param);
@@ -58,7 +64,7 @@ public class RoomMasterDaoImpl extends GenericDaoImpl<RoomMaster> implements IRo
 
     @Override
     public Integer getTotalByCondition(Integer type, Object content) {
-        String hql = "select count(1) from RoomMaster where ";
+        String hql = "select count(1) from RoomMaster where isDelete = false and ";
         Integer result = 0;
         if (type == RoomController.TYPE_STATUS) {
             hql += "status = ?";
@@ -81,7 +87,7 @@ public class RoomMasterDaoImpl extends GenericDaoImpl<RoomMaster> implements IRo
 
     @Override
     public List<RoomMaster> getRoomByCondition(Integer type, Object content, Integer first, Integer total) {
-        String hql = "from RoomMaster where ";
+        String hql = "from RoomMaster where isDelete = false and ";
         List<RoomMaster> result = null;
         if (type == RoomController.TYPE_STATUS) {
             hql += "status = ?";
