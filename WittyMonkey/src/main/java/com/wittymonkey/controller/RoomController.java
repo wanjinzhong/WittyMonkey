@@ -611,6 +611,43 @@ public class RoomController {
         }
     }
 
+    /**
+     * 清理房间
+     * @param request
+     * @return
+     * <table border="1" cellspacing="0">
+     * <tr>
+     * <th>代码</th>
+     * <th>说明</th>
+     * </tr>
+     * <tr>
+     * <td>200</td>
+     * <td>清理成功</td>
+     * </tr>
+     * <tr>
+     * <td>400</td>
+     * <td>清理失败</td>
+     * </tr>
+     */
+    @RequestMapping(value = "cleanRoom", method = RequestMethod.GET)
+    @ResponseBody
+    public String cleanRoom(HttpServletRequest request){
+        JSONObject json = new JSONObject();
+        String id = request.getParameter("id");
+        Integer roomId;
+        try {
+            roomId = Integer.parseInt(id);
+            RoomMaster room = roomMasterService.getRoomById(roomId);
+            room.setStatus(0);
+            roomMasterService.updateRoom(room);
+            json.put("status", 200);
+        } catch (NumberFormatException e) {
+            json.put("status", 400);
+        } catch (SQLException e) {
+            json.put("status", 400);
+        }
+        return json.toJSONString();
+    }
 
     /**
      * 根据验证房间号是否存在

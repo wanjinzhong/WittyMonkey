@@ -224,6 +224,31 @@ function toChange(id) {
     event.cancelBubble = true;
 }
 function toClean(id) {
-    layer.confirm("gdf");
+    layer.confirm(clean_hint,{icon: 3, title: clean_title}, function (index) {
+        $.ajax({
+            url: "cleanRoom.do?",
+            data: {"id": id},
+            dataType: "json",
+            type: "get",
+            success: function (data) {
+                var res = eval("(" + data + ")");
+                if (res["status"] == 200){
+                    layer.msg(operation_success, {
+                        icon: 6, time: 2000
+                    }, function () {
+                        parent.location.reload();
+                        closeMe();
+                    });
+                }else if(res["status"] == 400){
+                    layer.msg(operation_failure, {
+                        icon: 2, time: 2000
+                    }, function () {
+                        parent.location.reload();
+                        closeMe();
+                    });
+                }
+            }
+        });
+    });
     event.cancelBubble = true;
 }

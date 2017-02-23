@@ -61,7 +61,7 @@ function deleteFloor(floorNo) {
                             break;
                         case 200:
                             layer.msg(floor_manage_delete_success, {
-                                icon: 1,
+                                icon: 6,
                                 time: 2000
                             }, function () {
                                 window.location.reload();
