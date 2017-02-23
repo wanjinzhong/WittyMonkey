@@ -7,8 +7,7 @@ import java.util.regex.Pattern;
 
 import javax.servlet.http.HttpServletRequest;
 
-import com.wittymonkey.util.IDCardValidate;
-import com.wittymonkey.util.MD5Util;
+import com.wittymonkey.util.*;
 import com.wittymonkey.vo.SimplePlace;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -36,8 +35,6 @@ import com.wittymonkey.service.IProvinceService;
 import com.wittymonkey.service.IRoleService;
 import com.wittymonkey.service.ISettingService;
 import com.wittymonkey.service.IUserService;
-import com.wittymonkey.util.SendEmail;
-import com.wittymonkey.util.ValidateCodeServlet;
 
 @Controller
 public class LoginController {
@@ -429,7 +426,7 @@ public class LoginController {
             json.put("status", 410);
         } else if (!password.equals(repassword)) {
             json.put("status", 411);
-        } else if (!validateEmail(email)) {
+        } else if (!Validator.validateEmail(email)) {
             json.put("status", 420);
         } else if (isEmailExist(email.toLowerCase())) {
             json.put("status", 421);
@@ -614,7 +611,7 @@ public class LoginController {
     public String validateEmail(HttpServletRequest request) {
         JSONObject json = new JSONObject();
         String email = request.getParameter("email");
-        if (!validateEmail(email.toLowerCase())) {
+        if (!Validator.validateEmail(email.toLowerCase())) {
             json.put("status", 400);
             return json.toJSONString();
         }
@@ -680,30 +677,7 @@ public class LoginController {
         }
     }
 
-    /**
-     * 验证邮箱格式是否正确
-     *
-     * @param email
-     * @return <table border="1" cellspacing="0">
-     * <tr>
-     * <th>代码</th>
-     * <th>说明</th>
-     * </tr>
-     * <tr>
-     * <td>true</td>
-     * <td>邮箱格式正确</td>
-     * </tr>
-     * <tr>
-     * <td>false</td>
-     * <td>邮箱格式不正确</td>
-     * </tr>
-     * </table>
-     */
-    public boolean validateEmail(String email) {
-        String check = "^([a-z0-9A-Z]+[-|\\.]?)+[a-z0-9A-Z]@([a-z0-9A-Z]+(-[a-z0-9A-Z]+)?\\.)+[a-zA-Z]{2,}$";
-        Pattern regex = Pattern.compile(check);
-        return regex.matcher(email).matches();
-    }
+
 
     /**
      * 验证 邮件验证码

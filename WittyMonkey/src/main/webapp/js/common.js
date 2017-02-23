@@ -137,3 +137,95 @@ function validateFloorNo(method, inp) {
     }
 
 }
+
+/**
+ * 验证身份证号
+ * @param inp
+ */
+function validateIdCard(inp) {
+    var idCard = $(inp).val();
+    var reg = /(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/;
+    if (idCard.length <= 0) {
+        layer.tips(messageOfValidateNull(regist_idCard), inp, {tips: 2});
+        return false;
+    }
+    if (!reg.test(idCard)) {
+        layer.tips(regist_validate_common_idcard_wrong, inp, {tips: 2})
+        return false;
+    }
+    var funResult;
+    $.ajax({
+        url: "validateIdCard.do",
+        type: "GET",
+        data: {"idCard": idCard},
+        dataType: "json",
+        // ajax 同步
+        async: false,
+        success: function (data) {
+            var result = eval("(" + data + ")");
+            if (result.status == 400) {
+                layer.tips(regist_validate_common_idcard_wrong, inp, {tips: 2})
+                funResult = false;
+            } else if (result.status == 200) {
+                funResult = true;
+            }
+        },
+        error: function (data) {
+            layer.msg(error_500, {time: 3000, icon: 5});
+            funResult = false;
+        }
+    });
+    return funResult;
+}
+
+
+/**
+ * 验证真实姓名
+ * @param inp
+ * @returns {boolean}
+ */
+function validateRealName(inp) {
+    var realName = $(inp).val();
+    if (realName.length <= 0) {
+        layer.tips(messageOfValidateNull(regist_real_name), inp, {tips: 2});
+        return false;
+    }
+    if (realName.length > 20) {
+        layer.tips(messageOfValidateLength(regist_real_name, 20), inp, {tips: 2});
+        return false;
+    }
+    return true;
+}
+/**
+ * 验证电话
+ * @param inp
+ * @returns {boolean}
+ */
+function validateTel(inp) {
+    var tele = $(inp).val();
+    if (tele.length <= 0) {
+        layer.tips(messageOfValidateNull(tel), inp, {tips: 2});
+        return false;
+    }
+    if (tele.length > 20) {
+        layer.tips(messageOfValidateLength(tel, 20), inp, {tips: 2});
+        return false;
+    }
+    return true;
+}
+/**
+ * 验证金额
+ */
+function validateMonney(inp){
+    var deposit = $(inp).val();
+    var reg = /^[0-9]+(\.[0-9]+)?$/;
+    if (deposit.length <= 0){
+        layer.tips(messageOfValidateNull(money), inp, {tips: 2});
+        return false;
+    }
+    if (!reg.test(deposit)){
+        layer.tips(money_wrong, inp, {tips:2});
+        return false;
+    }
+    return true;
+}

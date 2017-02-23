@@ -23,7 +23,7 @@ layui.config({
     navbar.set({
         spreadOne: false,
         elem: '#admin-navbar-side',
-        cached: true,
+        cached: false,
         url: 'getMenu.do'
     });
     //渲染navbar

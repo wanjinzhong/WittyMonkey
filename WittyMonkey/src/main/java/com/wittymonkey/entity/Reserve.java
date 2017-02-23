@@ -25,7 +25,7 @@ public class Reserve implements Serializable{
 	private Customer customer;
 
 
-	@ManyToOne(targetEntity=RoomMaster.class)
+	@ManyToOne(targetEntity=RoomMaster.class, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
 	@JoinColumn(name="room_id", referencedColumnName="id")
 	private RoomMaster room;
 

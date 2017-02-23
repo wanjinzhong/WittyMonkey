@@ -32,45 +32,7 @@ function validateLicenseNo(inp) {
     }
     return true;
 }
-/**
- * 验证身份证号
- * @param inp
- */
-function validateIdCard(inp) {
-    var idCard = $(inp).val();
-    var reg = /(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/;
-    if (idCard.length <= 0) {
-        layer.tips(messageOfValidateNull(regist_idCard), inp, {tips: 2});
-        return false;
-    }
-    if (!reg.test(idCard)) {
-        layer.tips(regist_validate_common_idcard_wrong, inp, {tips: 2})
-        return false;
-    }
-    var funResult;
-    $.ajax({
-        url: "validateIdCard.do",
-        type: "GET",
-        data: {"idCard": idCard},
-        dataType: "json",
-        // ajax 同步
-        async: false,
-        success: function (data) {
-            var result = eval("(" + data + ")");
-            if (result.status == 400) {
-                layer.tips(regist_validate_common_idcard_wrong, inp, {tips: 2})
-                funResult = false;
-            } else if (result.status == 200) {
-                funResult = true;
-            }
-        },
-        error: function (data) {
-            layer.msg(error_500, {time: 3000, icon: 5});
-            funResult = false;
-        }
-    });
-    return funResult;
-}
+
 
 /**
  * 验证登陆名
@@ -113,23 +75,6 @@ function validateLoginName(nameInp) {
     return funResult;
 }
 
-/**
- * 验证真实姓名
- * @param inp
- * @returns {boolean}
- */
-function validateRealName(inp) {
-    var realName = $(inp).val();
-    if (realName.length <= 0) {
-        layer.tips(messageOfValidateNull(regist_real_name), inp, {tips: 2});
-        return false;
-    }
-    if (realName.length > 20) {
-        layer.tips(messageOfValidateLength(regist_real_name, 20), inp, {tips: 2});
-        return false;
-    }
-    return true;
-}
 /***
  * 验证密码
  * @param pwd

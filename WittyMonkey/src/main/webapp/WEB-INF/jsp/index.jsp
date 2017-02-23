@@ -1,10 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" import="com.wittymonkey.entity.User"
          pageEncoding="UTF-8" %>
-<%
-    //User loginUser = (User) session.getAttribute("loginUser");
-    //String lang = loginUser.getSetting().getLang();
-    String lang = "zh_CN";
-%>
 <%@ include file="common/taglib.jsp" %>
 <%@ include file="common/js&css.jsp" %>
 <%@ include file="common/iconfont.jsp" %>
@@ -13,11 +8,11 @@
 <head>
     <title><fmt:message key="name"/></title>
 </head>
-<script type="text/javascript" src="i18n/messages_<%=lang%>.js"></script>
+
 <link rel="stylesheet" href="style/index.css"/>
 <script src="js/index.js"></script>
-<%--<fmt:setBundle basename="i18n/messages_${loginUser.setting.lang }"/>--%>
-<fmt:setBundle basename="i18n/messages"/>
+<script type="text/javascript" src="i18n/messages_${loginUser.setting.lang }.js"></script>
+<fmt:setBundle basename="i18n/messages_${loginUser.setting.lang }"/>
 <body>
 <div class="layui-layout layui-layout-admin">
     <div class="layui-header header header-demo">

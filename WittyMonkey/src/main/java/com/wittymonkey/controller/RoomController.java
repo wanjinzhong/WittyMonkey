@@ -3,10 +3,9 @@ package com.wittymonkey.controller;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.wittymonkey.entity.*;
-import com.wittymonkey.service.IFloorService;
-import com.wittymonkey.service.IRoomMasterService;
-import com.wittymonkey.service.IUserService;
+import com.wittymonkey.service.*;
 import com.wittymonkey.util.ChangeToSimple;
+import com.wittymonkey.util.IDCardValidate;
 import com.wittymonkey.vo.Page;
 import com.wittymonkey.vo.SimpleFloor;
 import com.wittymonkey.vo.SimpleRoom;
@@ -18,6 +17,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 /**
@@ -45,6 +46,12 @@ public class RoomController {
     @Autowired
     private IUserService userService;
 
+    @Autowired
+    private ICustomerService customerService;
+
+    @Autowired
+    private IReserveService reserveService;
+
     @RequestMapping(value = "toAddRoom", method = RequestMethod.GET)
     public String toAddRoom(HttpServletRequest request) {
         User loginUser = (User) request.getSession().getAttribute("loginUser");
@@ -68,6 +75,14 @@ public class RoomController {
         request.getSession().setAttribute("room", roomMaster);
 
         return "room_detail";
+    }
+
+    @RequestMapping(value = "toReserve", method = RequestMethod.GET)
+    public String toReserve(HttpServletRequest request) {
+        Integer id = Integer.parseInt(request.getParameter("id"));
+        RoomMaster roomMaster = roomMasterService.getRoomById(id);
+        request.getSession().setAttribute("reserveRoom", roomMaster);
+        return "reserve";
     }
 
     @RequestMapping(value = "validateRoomNo", method = RequestMethod.GET)
@@ -434,6 +449,168 @@ public class RoomController {
         json.put("data", array);
         return json.toJSONString();
     }
+
+    /**
+     * 预定
+     *
+     * @param request
+     * @return <table border="1" cellspacing="0">
+     * <tr>
+     * <th>代码</th>
+     * <th>说明</th>
+     * </tr>
+     * <tr>
+     * <td>200</td>
+     * <td>预定成功</td>
+     * </tr>
+     * <tr>
+     * <td>400</td>
+     * <td>身份证号不正确</td>
+     * </tr>
+     * <tr>
+     * <td>410</td>
+     * <td>没有输入名字</td>
+     * </tr>
+     * <tr>
+     * <td>411</td>
+     * <td>名字过长</td>
+     * </tr>
+     * <tr>
+     * <td>420</td>
+     * <td>没有输入电话</td>
+     * </tr>
+     * <tr>
+     * <td>421</td>
+     * <td>电话过长</td>
+     * </tr>
+     * <tr>
+     * <td>430</td>
+     * <td>没有输入时间</td>
+     * </tr>
+     * <tr>
+     * <td>431</td>
+     * <td>时间不正确</td>
+     * </tr>
+     * <tr>
+     * <td>432</td>
+     * <td>开始大于结束</td>
+     * </tr>
+     * <tr>
+     * <td>440</td>
+     * <td>没有输入定金</td>
+     * </tr>
+     * <tr>
+     * <td>441</td>
+     * <td>定金不正确</td>
+     * </tr>
+     * <tr>
+     * <td>450</td>
+     * <td>备注过长</td>
+     * </tr>
+     */
+    @RequestMapping(value = "reserve", method = RequestMethod.GET)
+    @ResponseBody
+    public String reserve(HttpServletRequest request) {
+        JSONObject jsonObject = new JSONObject();
+        User loginUser = (User) request.getSession().getAttribute("loginUser");
+        Integer roomId = Integer.parseInt(request.getParameter("roomId"));
+        RoomMaster room = roomMasterService.getRoomById(roomId);
+        String cust = request.getParameter("custId");
+        Integer custId = null;
+        if (cust != null && !cust.equals("")) {
+            custId = Integer.parseInt(cust);
+        }
+        String idCard = request.getParameter("idcard");
+        String name = request.getParameter("name");
+        String tel = request.getParameter("tel");
+        String note = request.getParameter("note");
+        String from = request.getParameter("from");
+        String to = request.getParameter("to");
+        String deposit = request.getParameter("deposit");
+        Double money = null;
+        if (deposit == null || deposit.trim().equals("")) {
+            jsonObject.put("status", 440);
+            return jsonObject.toJSONString();
+        } else {
+            try {
+                money = Double.parseDouble(deposit);
+            } catch (NumberFormatException e) {
+                jsonObject.put("status", 441);
+                return jsonObject.toJSONString();
+            }
+        }
+        Date fromDate;
+        Date toDate;
+        if (from == null || from.equals("") || to == null || to.equals("")) {
+            jsonObject.put("status", 430);
+            return jsonObject.toJSONString();
+        }
+        SimpleDateFormat sdf = new SimpleDateFormat("YYYY-MM-dd");
+
+        try {
+            fromDate = sdf.parse(from);
+            toDate = sdf.parse(to);
+        } catch (ParseException e) {
+            jsonObject.put("status", 431);
+            return jsonObject.toJSONString();
+        }
+        if (!IDCardValidate.validate(idCard)) {
+            jsonObject.put("status", 400);
+            return jsonObject.toJSONString();
+        } else if (name == null || name.length() <= 0) {
+            jsonObject.put("status", 410);
+            return jsonObject.toJSONString();
+        } else if (name.length() > 20) {
+            jsonObject.put("status", 411);
+            return jsonObject.toJSONString();
+        } else if (tel == null || tel.length() <= 0) {
+            jsonObject.put("status", 420);
+            return jsonObject.toJSONString();
+        } else if (tel.length() > 20) {
+            jsonObject.put("status", 421);
+            return jsonObject.toJSONString();
+        } else if (toDate.before(fromDate)) {
+            jsonObject.put("status", 432);
+            return jsonObject.toJSONString();
+        } else if (note.length() > 1024) {
+            jsonObject.put("status", 450);
+            return jsonObject.toJSONString();
+        } else {
+            Customer customer;
+            if (custId != null) {
+                customer = customerService.getCustomerById(custId);
+                if (!customer.getName().equals(name)) ;
+                {
+                    customer.setName(name);
+                }
+                if (!customer.getTel().equals(tel)) {
+                    customer.setTel(tel);
+                }
+            } else {
+                customer = new Customer();
+                customer.setName(name);
+                customer.setTel(tel);
+                customer.setIdCard(idCard);
+            }
+            room.setStatus(1);
+            Reserve reserve = new Reserve();
+            reserve.setCustomer(customer);
+            reserve.setDeposit(money);
+            reserve.setEntryDatetime(new Date());
+            reserve.setEntryUser(loginUser);
+            reserve.setEstCheckinDate(fromDate);
+            reserve.setEstCheckoutDate(toDate);
+            reserve.setNote(note);
+            reserve.setReserveDate(new Date());
+            reserve.setStatus(0);
+            reserve.setRoom(room);
+            reserveService.save(reserve);
+            jsonObject.put("status", 200);
+
+            return jsonObject.toJSONString();
+        }
+    }
+
 
     /**
      * 根据验证房间号是否存在
