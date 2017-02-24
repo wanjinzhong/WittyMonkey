@@ -5,8 +5,44 @@ var layer;
 layui.use('layer', function () {
     layer = layui.layer;
 });
-
-function showDatePicker(obj) {
+$(document).ready(function () {
+    $('#dateDisp').dateRangePicker({
+        language:$("#lang").val(),
+        startDate: new Date(),
+        selectForward: true,
+        autoClose: true,
+        showShortcuts: false,
+        singleMonth: true,
+        getValue: function()
+        {
+            if ($('#from_date').val() && $('#to_date').val() )
+                return $('#from_date').val() + ' to ' + $('#to_date').val();
+            else
+                return '';
+        },
+        setValue: function(s,s1,s2)
+        {
+            $("#dateDisp").val(s1 + " " + to + " " + s2);
+            $('#from_date').val(s1);
+            $('#to_date').val(s2);
+        }
+        //, showDateFilter: function(time, date)
+        // {
+        //     return '<div style="padding:0 5px;">' +
+			// 		'<span style="font-weight:bold">'+date+'</span>' +
+			// 		'<div style="opacity:0.3;">$'+Math.round(Math.random()*999)+'</div>' +
+			// 	'</div>';
+        // }
+        //, beforeShowDay: function(t)
+        // {
+        //     var valid = !(t.getDay() == 0 || t.getDay() == 6);  //disable saturday and sunday
+        //     var _class = '';
+        //     var _tooltip = valid ? '' : 'sold out';
+        //     return [valid,_class,_tooltip];
+        // }
+    })
+});
+/*function showDatePicker(obj) {
     var lang = $("#lang").val();
     var id = $(obj).attr('id');
     if (id == "from_date") {
@@ -23,7 +59,7 @@ function showDatePicker(obj) {
             dateFmt:'yyyy-MM-dd HH:mm:ss',
             readOnly: true});
     }
-}
+}*/
 /**
  * 查找用户
  * @param inp

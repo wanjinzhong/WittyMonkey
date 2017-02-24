@@ -2,7 +2,7 @@
     border: 2px solid #eeeeee;
     border-radius: 10px;
     width: 655px;
-    height: 470px;
+    height: 480px;
     margin-top: 20px;
     margin-left: 20px;
 }
@@ -19,9 +19,18 @@ table {
     float: right;
 }
 .datePicker{
-    width: 150px;
+    width: 140px;
     display: inline-block;
 }
 .Wdate{
+    font-size: 13px;
+}
+.month-wrapper{
+    font-size:12px;
+}
+.month1{
+    margin-left: 0px;
+}
+.date-picker-wrapper .month-wrapper table th, .date-picker-wrapper .month-wrapper table td{
     font-size: 13px;
 }

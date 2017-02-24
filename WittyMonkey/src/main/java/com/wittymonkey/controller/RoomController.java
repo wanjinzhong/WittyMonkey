@@ -89,6 +89,14 @@ public class RoomController {
         return "reserve";
     }
 
+    @RequestMapping(value = "toCheckin", method = RequestMethod.GET)
+    public String toCheckin(HttpServletRequest request){
+        Integer id = Integer.parseInt(request.getParameter("id"));
+        RoomMaster roomMaster = roomMasterService.getRoomById(id);
+        request.getSession().setAttribute("checkinRoom", roomMaster);
+        return "checkin";
+    }
+
     @RequestMapping(value = "validateRoomNo", method = RequestMethod.GET)
     @ResponseBody
     public String validateRoomNo(HttpServletRequest request) {
@@ -556,10 +564,9 @@ public class RoomController {
             return jsonObject.toJSONString();
         }
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-
         try {
-            fromDate = sdf.parse(from);
-            toDate = sdf.parse(to);
+            fromDate = sdf.parse(from + " 00:00:00");
+            toDate = sdf.parse(to + " 23:59:59");
         } catch (ParseException e) {
             jsonObject.put("status", 431);
             return jsonObject.toJSONString();

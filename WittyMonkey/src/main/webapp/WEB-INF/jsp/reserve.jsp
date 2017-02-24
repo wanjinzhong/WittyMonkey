@@ -61,26 +61,18 @@
                 <td class="td_title"><label class="layui-form-label"><fmt:message
                         key='room.reserve.estcheckin'/></label></td>
                 <td>
-                    <div class="date">
-                        <div class="datePicker">
-                            <input class="layui-input Wdate" id="from_date" name="from"
-                                   placeholder="<fmt:message key="room.reserve.checkindate"/>"
-                                   onFocus="showDatePicker(this)">
-                        </div>
-                        &nbsp;&nbsp;<fmt:message key="to"/>&nbsp;&nbsp;
-                        <div class="datePicker">
-                            <input class="layui-input Wdate" id="to_date" name="to"
-                                   placeholder="<fmt:message key="room.reserve.checkoutdate"/>"
-                                   onFocus="showDatePicker(this)">
-                        </div>
-                    </div>
+                    <input type="text" class="layui-input" id="dateDisp"
+                           name="dateDisp"/></td>
+                    <input type="hidden" id="from_date" name="from"/>
+                    <input type="hidden" id="to_date" name="to"/>
                 </td>
             </tr>
             <tr>
-            <td class="td_title"><label class="layui-form-label"><fmt:message key='room.reserve.deposit'/></label></td>
-            <td><input id="deposit" name="deposit"
-                       type="number" class="layui-input"
-                       onblur="validateMonney(this)"/></td>
+                <td class="td_title"><label class="layui-form-label"><fmt:message key='room.reserve.deposit'/></label>
+                </td>
+                <td><input id="deposit" name="deposit"
+                           type="number" class="layui-input"
+                           onblur="validateMonney(this)"/></td>
             <tr>
                 <td class="td_title"><label class="layui-form-label"><fmt:message key="note"/></label></td>
                 <td><textarea class="layui-textarea" id="note" name="note" onblur="validateNote(this)"></textarea></td>
