@@ -2,6 +2,7 @@ package com.wittymonkey.controller;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.wittymonkey.dao.ICheckinDao;
 import com.wittymonkey.entity.*;
 import com.wittymonkey.service.*;
 import com.wittymonkey.util.ChangeToSimple;
@@ -51,6 +52,9 @@ public class RoomController {
 
     @Autowired
     private IReserveService reserveService;
+
+    @Autowired
+    private ICheckinDao checkinDao;
 
     @RequestMapping(value = "toAddRoom", method = RequestMethod.GET)
     public String toAddRoom(HttpServletRequest request) {
@@ -509,6 +513,10 @@ public class RoomController {
      * <td>450</td>
      * <td>备注过长</td>
      * </tr>
+     * <tr>
+     * <td>460</td>
+     * <td>时间冲突</td>
+     * </tr>
      */
     @RequestMapping(value = "reserve", method = RequestMethod.GET)
     @ResponseBody
@@ -577,6 +585,9 @@ public class RoomController {
         } else if (note.length() > 1024) {
             jsonObject.put("status", 450);
             return jsonObject.toJSONString();
+        } else if (!isTimeOK(roomId, fromDate, toDate)) {
+            jsonObject.put("status", 460);
+            return jsonObject.toJSONString();
         } else {
             Customer customer;
             if (custId != null) {
@@ -594,7 +605,6 @@ public class RoomController {
                 customer.setTel(tel);
                 customer.setIdCard(idCard);
             }
-            room.setStatus(RoomMaster.RESERVED);
             Reserve reserve = new Reserve();
             reserve.setCustomer(customer);
             reserve.setDeposit(money);
@@ -615,9 +625,9 @@ public class RoomController {
 
     /**
      * 清理房间
+     *
      * @param request
-     * @return
-     * <table border="1" cellspacing="0">
+     * @return <table border="1" cellspacing="0">
      * <tr>
      * <th>代码</th>
      * <th>说明</th>
@@ -633,7 +643,7 @@ public class RoomController {
      */
     @RequestMapping(value = "cleanRoom", method = RequestMethod.GET)
     @ResponseBody
-    public String cleanRoom(HttpServletRequest request){
+    public String cleanRoom(HttpServletRequest request) {
         JSONObject json = new JSONObject();
         String id = request.getParameter("id");
         Integer roomId;
@@ -705,26 +715,71 @@ public class RoomController {
 
     /**
      * 修改当天的房间状态（主要是判断预定过的房间是不是已经进入已预定状态）
+     *
      * @param rooms
      */
-    public void changeStatus(List<SimpleRoom> rooms){
+    public void changeStatus(List<SimpleRoom> rooms) {
         List<Reserve> reserves;
         Date now = new Date();
-        for(int i = 0; i < rooms.size(); i ++){
-            if (rooms.get(i).getStatus() != RoomMaster.RESERVED){
+        for (int i = 0; i < rooms.size(); i++) {
+            // 在入住和待清理状态不用操作其今日状态
+            if (rooms.get(i).getStatus() == RoomMaster.CHECKED_IN || rooms.get(i).getStatus() == RoomMaster.CLEAN) {
                 continue;
             }
             reserves = reserveService.getReserveByRoomId(rooms.get(i).getId(), Reserve.RESERVED);
             Boolean isReservedToday = false;
-            for (int j = 0; j < reserves.size(); j ++){
-                if (now.after(reserves.get(j).getEstCheckinDate()) && now.before(reserves.get(j).getEstCheckoutDate())){
+            for (int j = 0; j < reserves.size(); j++) {
+                if (now.after(reserves.get(j).getEstCheckinDate()) && now.before(reserves.get(j).getEstCheckoutDate())) {
                     isReservedToday = true;
                     break;
                 }
             }
-            if (!isReservedToday){
+            if (!isReservedToday) {
                 rooms.get(i).setStatus(RoomMaster.FREE);
+            } else {
+                rooms.get(i).setStatus(RoomMaster.RESERVED);
             }
         }
+    }
+
+    /**
+     * 判断预定或入住时间是否冲突
+     *
+     * @param roomId
+     * @param start
+     * @param end
+     * @return
+     */
+    public Boolean isTimeOK(Integer roomId, Date start, Date end) {
+        // 查询预定表，判断时间是否冲突
+        List<Reserve> reserves = reserveService.getReserveByRoomId(roomId, Reserve.RESERVED);
+        for (int i = 0; i < reserves.size(); i++) {
+            Reserve reserve = reserves.get(i);
+            /**
+             * 以下为时间冲突的判断逻辑：
+             * 已预定时间：         \________________\
+             * 要预定时间：  \________\ \_______\ \______\
+             */
+            if (!((start.before(reserve.getEstCheckinDate()) && end.before(reserve.getEstCheckinDate()))
+                    || start.after(reserve.getEstCheckoutDate()) && end.after(reserve.getEstCheckoutDate()))) {
+                return false;
+            }
+        }
+        // 查询入住表，判断时间是否冲突
+        Checkin checkin = checkinDao.getCheckinByRoom(roomId);
+        /**
+         * 以下为时间冲突的判断逻辑：
+         * 已预定时间：  \________________________\
+         * 要预定时间：  \________\ \_______\ \______\
+         * 以下为时间不冲突的判断逻辑：
+         * 已预定时间：  \________\
+         * 要预定时间：              \________\
+         */
+        if (checkin != null) {
+            if (start.before(checkin.getEstCheckoutDate())) {
+                return false;
+            }
+        }
+        return true;
     }
 }

@@ -103,6 +103,12 @@ function reserve() {
                     case 450:
                         layer.tips(messageOfValidateLength(message_note, 1024), $("#note"), {tips: 2});
                         return false;
+                    case 460:
+                        layer.msg(time_conflict, {
+                            icon: 2,
+                            time: 2000
+                        });
+                        return false;
                     case 200:
                         layer.msg(room_reserve_success, {
                             icon: 1,

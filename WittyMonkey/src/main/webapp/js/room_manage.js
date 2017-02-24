@@ -178,7 +178,7 @@ function toReserve(id) {
 function toUnsubscribe(id) {
     layer.open({
         title: room_unsubscribe_title,
-        content: "toUnsubscribe.do?id" + id,
+        content: "toUnsubscribe.do?id=" + id,
         area: ['1000px', '700px'],
         maxmin: false,
         shade: 0.4,
@@ -190,7 +190,7 @@ function toUnsubscribe(id) {
 function toCheckin(id) {
     layer.open({
         title: room_checkin_title,
-        content: "toCheckin.do?id" + id,
+        content: "toCheckin.do?id=" + id,
         area: ['1000px', '700px'],
         maxmin: false,
         shade: 0.4,

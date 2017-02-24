@@ -108,3 +108,4 @@ var clean_title = "房间清理";
 var clean_hint = "这个房间已清理完成了吗？";
 var operation_success = "操作成功";
 var operation_failure = "操作失败";
+var time_conflict = "时间冲突";

@@ -108,3 +108,4 @@ var clean_title = "Room Clean";
 var clean_hint = "Has the room been cleaned?";
 var operation_success = "Operation Successful";
 var operation_failure = "Operation Failure";
+var time_conflict = "Time conflict";
