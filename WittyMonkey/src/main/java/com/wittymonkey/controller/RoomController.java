@@ -418,6 +418,7 @@ public class RoomController {
         Integer count = roomMasterService.getTotalByHotel(hotel.getId());
         List<RoomMaster> roomMasters = roomMasterService.getRoomByHotel(hotel.getId(), (curr - 1) * pageSize, pageSize);
         List<SimpleRoom> simpleRooms = ChangeToSimple.roomList(roomMasters);
+        changeStatus(simpleRooms);
         json.put("count", count);
         json.put("pageSize", pageSize);
         JSONArray array = new JSONArray();
@@ -440,8 +441,9 @@ public class RoomController {
         page.setPageSize(pageSize);
         page.setCurrPage(curr);
         Integer count = roomMasterService.getTotalByCondition(type, content);
-        List<RoomMaster> roomMasters = roomMasterService.getRoomByCondition(type, content, (curr - 1) * pageSize, pageSize);
+        List<RoomMaster> roomMasters = roomMasterService.getRoomByCondition(hotel.getId(), type, content, (curr - 1) * pageSize, pageSize);
         List<SimpleRoom> simpleRooms = ChangeToSimple.roomList(roomMasters);
+        changeStatus(simpleRooms);
         json.put("count", count);
         json.put("pageSize", pageSize);
         JSONArray array = new JSONArray();
@@ -545,7 +547,7 @@ public class RoomController {
             jsonObject.put("status", 430);
             return jsonObject.toJSONString();
         }
-        SimpleDateFormat sdf = new SimpleDateFormat("YYYY-MM-dd");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
         try {
             fromDate = sdf.parse(from);
@@ -592,7 +594,7 @@ public class RoomController {
                 customer.setTel(tel);
                 customer.setIdCard(idCard);
             }
-            room.setStatus(1);
+            room.setStatus(RoomMaster.RESERVED);
             Reserve reserve = new Reserve();
             reserve.setCustomer(customer);
             reserve.setDeposit(money);
@@ -697,6 +699,31 @@ public class RoomController {
                 }
             } else {
                 return 210;
+            }
+        }
+    }
+
+    /**
+     * 修改当天的房间状态（主要是判断预定过的房间是不是已经进入已预定状态）
+     * @param rooms
+     */
+    public void changeStatus(List<SimpleRoom> rooms){
+        List<Reserve> reserves;
+        Date now = new Date();
+        for(int i = 0; i < rooms.size(); i ++){
+            if (rooms.get(i).getStatus() != RoomMaster.RESERVED){
+                continue;
+            }
+            reserves = reserveService.getReserveByRoomId(rooms.get(i).getId(), Reserve.RESERVED);
+            Boolean isReservedToday = false;
+            for (int j = 0; j < reserves.size(); j ++){
+                if (now.after(reserves.get(j).getEstCheckinDate()) && now.before(reserves.get(j).getEstCheckoutDate())){
+                    isReservedToday = true;
+                    break;
+                }
+            }
+            if (!isReservedToday){
+                rooms.get(i).setStatus(RoomMaster.FREE);
             }
         }
     }

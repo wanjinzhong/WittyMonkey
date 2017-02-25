@@ -11,8 +11,8 @@ import com.wittymonkey.service.IRoomMasterService;
 import java.sql.SQLException;
 import java.util.List;
 
-@Service(value="roomMasterService")
-public class RoomMasterServiceImpl implements IRoomMasterService{
+@Service(value = "roomMasterService")
+public class RoomMasterServiceImpl implements IRoomMasterService {
 
     @Autowired
     private IRoomMasterDao roomMasterDao;
@@ -24,7 +24,7 @@ public class RoomMasterServiceImpl implements IRoomMasterService{
 
     @Override
     public RoomMaster getRoomMasterByNo(Hotel hotel, String roomNo) {
-        return roomMasterDao.getRoomMasterByNo(hotel.getId(),roomNo);
+        return roomMasterDao.getRoomMasterByNo(hotel.getId(), roomNo);
     }
 
     @Override
@@ -44,7 +44,7 @@ public class RoomMasterServiceImpl implements IRoomMasterService{
 
     @Override
     public List<RoomMaster> getRoomByHotel(Integer hotelId, Integer start, Integer total) {
-        return roomMasterDao.getRoomByHotel(hotelId,start,total);
+        return roomMasterDao.getRoomByHotel(hotelId, start, total);
     }
 
     @Override
@@ -54,16 +54,16 @@ public class RoomMasterServiceImpl implements IRoomMasterService{
 
     @Override
     public Integer getTotalByCondition(Integer type, Object content) {
-        return roomMasterDao.getTotalByCondition(type,content);
+        return roomMasterDao.getTotalByCondition(type, content);
     }
 
     @Override
-    public List<RoomMaster> getRoomByCondition(Integer type, Object content) {
-        return roomMasterDao.getRoomByCondition(type,content, null, null);
+    public List<RoomMaster> getRoomByCondition(Integer hotelId, Integer type, Object content) {
+        return roomMasterDao.getRoomByCondition(hotelId, type, content, null, null);
     }
 
     @Override
-    public List<RoomMaster> getRoomByCondition(Integer type, Object content, Integer first, Integer total) {
-        return roomMasterDao.getRoomByCondition(type,content, first,total);
+    public List<RoomMaster> getRoomByCondition(Integer hotelId, Integer type, Object content, Integer first, Integer total) {
+        return roomMasterDao.getRoomByCondition(hotelId, type, content, first, total);
     }
 }

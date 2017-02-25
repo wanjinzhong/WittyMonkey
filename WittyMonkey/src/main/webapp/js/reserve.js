@@ -10,9 +10,18 @@ function showDatePicker(obj) {
     var lang = $("#lang").val();
     var id = $(obj).attr('id');
     if (id == "from_date") {
-        WdatePicker({lang: lang, minDate: '%y-%M-%d', readOnly: true});
+        WdatePicker({
+            lang: lang,
+            minDate: '%y-%M-%d',
+            dateFmt:'yyyy-MM-dd HH:mm:ss',
+            readOnly: true
+        });
     } else if (id == "to_date") {
-        WdatePicker({lang: lang, minDate: '%y-%M-{%d+1}', readOnly: true});
+        WdatePicker({
+            lang: lang,
+            minDate: '%y-%M-{%d+1}',
+            dateFmt:'yyyy-MM-dd HH:mm:ss',
+            readOnly: true});
     }
 }
 /**
@@ -74,7 +83,7 @@ function reserve() {
                         layer.tips(messageOfValidateNull(tel), $("#tel"), {tips: 2});
                         return false;
                     case 421:
-                        layer.tips(messageOfValidateLength(tel,20), $("#tel"), {tips: 2});
+                        layer.tips(messageOfValidateLength(tel, 20), $("#tel"), {tips: 2});
                         return false;
                     case 430:
                         layer.tips(messageOfValidateNull(room_reserve_date), $(".date"), {tips: 2});

@@ -18,6 +18,14 @@ public class RoomMaster implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    // 空闲
+    public static final Integer FREE = 0;
+    // 已预定
+    public static final Integer RESERVED = 1;
+    // 已入住
+    public static final Integer CHECKED_IN = 2;
+    // 待打扫
+    public static final Integer CLEAN = 3;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;

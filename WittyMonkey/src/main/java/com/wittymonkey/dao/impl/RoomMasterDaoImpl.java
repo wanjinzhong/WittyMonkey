@@ -16,7 +16,7 @@ public class RoomMasterDaoImpl extends GenericDaoImpl<RoomMaster> implements IRo
     @Override
     public RoomMaster getRoomById(Integer id) {
         String hql = "from RoomMaster where id = ?";
-        return queryOneHql(hql,id);
+        return queryOneHql(hql, id);
     }
 
     @Override
@@ -86,25 +86,27 @@ public class RoomMasterDaoImpl extends GenericDaoImpl<RoomMaster> implements IRo
     }
 
     @Override
-    public List<RoomMaster> getRoomByCondition(Integer type, Object content, Integer first, Integer total) {
-        String hql = "from RoomMaster where isDelete = false and ";
+    public List<RoomMaster> getRoomByCondition(Integer hotelId, Integer type, Object content, Integer first, Integer total) {
+        String hql = "from RoomMaster where isDelete = false and floor.hotel.id = :hotelId and ";
         List<RoomMaster> result = null;
+        Map<String, Object> param = new HashMap<String, Object>();
+        param.put("hotelId", hotelId);
         if (type == RoomController.TYPE_STATUS) {
-            hql += "status = ?";
-            result = queryListHQL(hql, Integer.parseInt(String.valueOf(content)), first, total);
+            hql += "status = :status";
+            param.put("status", Integer.parseInt(String.valueOf(content)));
         } else if (type == RoomController.TYPE_FLOOR_ID) {
-            hql += "floor.id = ?";
-            result = queryListHQL(hql, Integer.parseInt(String.valueOf(content)), first, total);
+            hql += "floor.id = :floorId";
+            param.put("floorId",  Integer.parseInt(String.valueOf(content)));
         } else if (type == RoomController.TYPE_ROOM_NO) {
-            hql += "number = ?";
-            result = queryListHQL(hql, String.valueOf(content), first, total);
+            hql += "number = :number";
+            param.put("number", String.valueOf(content));
         } else if (type == RoomController.TYPE_ROOM_NAME) {
-            hql += "name = ?";
-            result = queryListHQL(hql, String.valueOf(content), first, total);
+            hql += "name = :name";
+            param.put("name", String.valueOf(content));
         } else if (type == RoomController.TYPE_PERSON_NUM) {
-            hql += "availableNum >= ?";
-            result = queryListHQL(hql, Integer.parseInt(String.valueOf(content)), first, total);
+            hql += "availableNum >= :num";
+            param.put("num",  Integer.parseInt(String.valueOf(content)));
         }
-        return result;
+        return queryListHQL(hql, param, first, total);
     }
 }

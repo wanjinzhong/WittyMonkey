@@ -7,6 +7,8 @@ import org.springframework.stereotype.Service;
 
 import com.wittymonkey.service.IReserveService;
 
+import java.util.List;
+
 @Service(value="reserveService")
 public class ReserveServiceImpl implements IReserveService{
 
@@ -16,5 +18,10 @@ public class ReserveServiceImpl implements IReserveService{
     @Override
     public void save(Reserve reserve) {
         reserveDao.save(reserve);
+    }
+
+    @Override
+    public List<Reserve> getReserveByRoomId(Integer roomId, Integer status) {
+        return reserveDao.getReserveByRoomId(roomId, status);
     }
 }

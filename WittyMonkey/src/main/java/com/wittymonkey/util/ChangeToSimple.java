@@ -1,9 +1,13 @@
 package com.wittymonkey.util;
 
 import com.wittymonkey.entity.Floor;
+import com.wittymonkey.entity.Reserve;
 import com.wittymonkey.entity.RoomMaster;
+import com.wittymonkey.service.IReserveService;
+import com.wittymonkey.service.IRoomMasterService;
 import com.wittymonkey.vo.SimpleFloor;
 import com.wittymonkey.vo.SimpleRoom;
+import org.springframework.beans.factory.annotation.Autowired;
 import sun.java2d.pipe.SpanShapeRenderer;
 
 import java.util.ArrayList;
@@ -13,6 +17,7 @@ import java.util.List;
  * Created by neilw on 2017/2/16.
  */
 public class ChangeToSimple {
+
     public static List<SimpleFloor> floorList(List<Floor> floors){
         List<SimpleFloor> simpleFloors = new ArrayList<SimpleFloor>();
         for (Floor floor : floors) {

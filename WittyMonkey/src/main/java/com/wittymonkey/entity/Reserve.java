@@ -16,6 +16,13 @@ public class Reserve implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 
+	// 已预定，待入住
+	public static final Integer RESERVED = 0;
+	// 已入住
+    public static final Integer CHECKEDIN = 1;
+	// 已退定
+    public static final Integer UNSUBSCRIBE = 2;
+
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Integer id;
@@ -45,7 +52,7 @@ public class Reserve implements Serializable{
 	@Column
 	private Double deposit;
 
-	// 状态（待入住/已入住/已取消）
+	// 状态（0 - 待入住/1 - 已入住/2 - 已取消）
 	@Column
 	private Integer status;
 
