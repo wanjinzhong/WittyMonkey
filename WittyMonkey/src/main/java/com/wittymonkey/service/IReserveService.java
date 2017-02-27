@@ -7,6 +7,8 @@ import java.util.List;
 
 public interface IReserveService {
 
+    Reserve getReserveById(Integer reserveId);
+
     void save(Reserve reserve);
 
     List<Reserve> getReserveByRoomId(Integer roomId, Integer status);

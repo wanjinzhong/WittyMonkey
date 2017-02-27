@@ -17,6 +17,11 @@ public class ReserveServiceImpl implements IReserveService{
     private IReserveDao reserveDao;
 
     @Override
+    public Reserve getReserveById(Integer reserveId) {
+        return reserveDao.getReserveById(reserveId);
+    }
+
+    @Override
     public void save(Reserve reserve) {
         reserveDao.save(reserve);
     }

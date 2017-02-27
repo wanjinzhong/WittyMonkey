@@ -14,6 +14,12 @@ import java.util.Map;
 public class  ReserveDaoImpl extends GenericDaoImpl<Reserve> implements IReserveDao{
 
     @Override
+    public Reserve getReserveById(Integer reserveId) {
+        String hql = "from Reserve where id = ?";
+        return queryOneHql(hql, reserveId);
+    }
+
+    @Override
     public List<Reserve> getReserveByRoomId(Integer roomId, Integer status) {
         String hql = "from Reserve where room.id = :roomId and status = :status";
         Map<String, Object> param = new HashMap<String, Object>();

@@ -28,7 +28,7 @@ public class Checkin implements Serializable{
 	inverseJoinColumns = {@JoinColumn(name = "customer_id", referencedColumnName = "id")})
 	private List<Customer> customers = new ArrayList<Customer>();
 
-	@ManyToOne(targetEntity=RoomMaster.class)
+	@ManyToOne(targetEntity=RoomMaster.class, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
 	@JoinColumn(name="room_id", referencedColumnName="id")
 	private RoomMaster room;
 

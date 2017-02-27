@@ -111,3 +111,7 @@ var operation_success = "操作成功";
 var operation_failure = "操作失败";
 var time_conflict = "时间冲突";
 var to = "到";
+var not_match_name = "没有填写入住人姓名";
+var no_customer = "没有填写入住人";
+var foregift_negative = "押金不能为负数";
+var foregift_wrong = "押金不正确";

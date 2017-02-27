@@ -90,15 +90,22 @@ public class RoomController {
     }
 
     @RequestMapping(value = "toCheckin", method = RequestMethod.GET)
-    public String toCheckin(HttpServletRequest request){
+    public String toCheckin(HttpServletRequest request) {
         Integer id = Integer.parseInt(request.getParameter("id"));
         RoomMaster roomMaster = roomMasterService.getRoomById(id);
         request.getSession().setAttribute("checkinRoom", roomMaster);
         request.getSession().removeAttribute("reserve");
+        request.getSession().removeAttribute("fromDate");
+        request.getSession().removeAttribute("toDate");
         // 根据今天获取是否有预定
         Reserve reserve = reserveService.getReserveByDate(roomMaster.getId(), new Date());
-        if (reserve != null){
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        if (reserve != null) {
+            String fromDate = sdf.format(reserve.getEstCheckinDate());
+            String toDate = sdf.format(reserve.getEstCheckoutDate());
             request.getSession().setAttribute("reserve", reserve);
+            request.getSession().setAttribute("fromDate", fromDate);
+            request.getSession().setAttribute("toDate", toDate);
         }
         return "checkin";
     }
@@ -634,6 +641,96 @@ public class RoomController {
 
             return jsonObject.toJSONString();
         }
+    }
+
+    /**
+     * 入住
+     *
+     * @param request
+     * @return <table border="1" cellspacing="0">
+     * <tr>
+     * <th>代码</th>
+     * <th>说明</th>
+     * </tr>
+     * <tr>
+     * <td>200</td>
+     * <td>入住成功</td>
+     * </tr>
+     * <tr>
+     * <td>400</td>
+     * <td>身份证号没有填写姓名</td>
+     * </tr>
+     * <tr>
+     * <td>410</td>
+     * <td>填写入住人</td>
+     * </tr>
+     * <tr>
+     * <td>420</td>
+     * <td>押金不正确</td>
+     * </tr>
+     * <tr>
+     * <td>421</td>
+     * <td>押金为负数</td>
+     * </tr>
+     */
+    @RequestMapping(value = "checkin", method = RequestMethod.POST)
+    @ResponseBody
+    public String checkin(HttpServletRequest request) {
+        JSONObject json = new JSONObject();
+        String[] idcards = request.getParameterValues("idcard");
+        String[] name = request.getParameterValues("name");
+        Integer roomId = Integer.parseInt(request.getParameter("roomId"));
+        String note = request.getParameter("note");
+        try {
+            Double foregift = Double.parseDouble(request.getParameter("foregift"));
+            if (foregift < 0){
+                json.put("status", 421);
+                return json.toJSONString();
+            }
+        } catch (NumberFormatException e) {
+            json.put("status", 420);
+            return json.toJSONString();
+        }
+        if (note.length() > 1024){
+            json.put("status", 430);
+            return json.toJSONString();
+        }
+        String reserveId = request.getParameter("reserveId");
+        Reserve reserve= null;
+        if (reserveId != null && !reserveId.equals("")) {
+            reserve = reserveService.getReserveById(Integer.parseInt(reserveId));
+        }
+        List<Customer> customers = new ArrayList<Customer>();
+        for (int i = 0; i < idcards.length; i++) {
+            if (idcards[i] == null || idcards[i].trim().equals("")) {
+                continue;
+            }
+            if (name[i] == null || name[i].trim().equals("")) {
+                json.put("status", 400);
+                return json.toJSONString();
+            }
+            Customer customer = customerService.getCustomerByIdCard(idcards[i]);
+            if (customer == null) {
+                customer = new Customer();
+                customer.setIdCard(idcards[i]);
+            }
+            if (!customer.getName().equals(name[i])) {
+                customer.setName(name[i]);
+            }
+            customers.add(customer);
+        }
+
+        if (customers.size() <= 0) {
+            json.put("status", 410);
+            return json.toJSONString();
+        }
+        RoomMaster roomMaster = roomMasterService.getRoomById(roomId);
+        roomMaster.setStatus(RoomMaster.CHECKED_IN);
+        Checkin checkin = new Checkin();
+        checkin.setCustomers(customers);
+        checkin.setRoom(roomMaster);
+        checkin.setCheckinDate(new Date());
+        return json.toJSONString();
     }
 
     /**

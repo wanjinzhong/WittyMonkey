@@ -8,6 +8,7 @@ import com.wittymonkey.entity.Reserve;
 
 public interface IReserveDao extends IGenericDao<Reserve, Serializable>{
 
+    Reserve getReserveById(Integer reserveId);
 
     /**
      * 根据房间id获取指定状态下的预定信息

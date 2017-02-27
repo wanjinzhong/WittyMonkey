@@ -14,19 +14,28 @@
 }
 #checkin-border{
     width: 900px;
-    height: 500px;
+    height: 600px;
     margin-left: 20px;
     margin-top: 20px;
     border: 2px solid #eeeeee;
     border-radius: 10px;
 }
-.customers{
-    margin-left: 40px;
-}
 
-table {
-    margin-top: 20px;
+.layui-table{
+    margin: 0px;
 }
 td{
     padding: 5px;
+}
+.btn-add-customer{
+    cursor: pointer;
+    transition: color 0.5s;
+}
+.btn-add-customer:hover{
+    color: grey;
+}
+.table-div{
+    height: 121px;
+    overflow: auto;
+    border-bottom: solid #ebebeb 1px;
 }

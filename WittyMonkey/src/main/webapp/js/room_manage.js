@@ -226,7 +226,7 @@ function toCheckin(id) {
     layer.open({
         title: room_checkin_title,
         content: "toCheckin.do?id=" + id,
-        area: ['950px', '700px'],
+        area: ['950px', '750px'],
         maxmin: false,
         shade: 0.4,
         scrollbar: false,

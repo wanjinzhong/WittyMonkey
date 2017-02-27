@@ -26,40 +26,9 @@ $(document).ready(function () {
             $('#from_date').val(s1);
             $('#to_date').val(s2);
         }
-        //, showDateFilter: function(time, date)
-        // {
-        //     return '<div style="padding:0 5px;">' +
-			// 		'<span style="font-weight:bold">'+date+'</span>' +
-			// 		'<div style="opacity:0.3;">$'+Math.round(Math.random()*999)+'</div>' +
-			// 	'</div>';
-        // }
-        //, beforeShowDay: function(t)
-        // {
-        //     var valid = !(t.getDay() == 0 || t.getDay() == 6);  //disable saturday and sunday
-        //     var _class = '';
-        //     var _tooltip = valid ? '' : 'sold out';
-        //     return [valid,_class,_tooltip];
-        // }
-    })
+    });
 });
-/*function showDatePicker(obj) {
-    var lang = $("#lang").val();
-    var id = $(obj).attr('id');
-    if (id == "from_date") {
-        WdatePicker({
-            lang: lang,
-            minDate: '%y-%M-%d',
-            dateFmt:'yyyy-MM-dd HH:mm:ss',
-            readOnly: true
-        });
-    } else if (id == "to_date") {
-        WdatePicker({
-            lang: lang,
-            minDate: '%y-%M-{%d+1}',
-            dateFmt:'yyyy-MM-dd HH:mm:ss',
-            readOnly: true});
-    }
-}*/
+
 /**
  * 查找用户
  * @param inp

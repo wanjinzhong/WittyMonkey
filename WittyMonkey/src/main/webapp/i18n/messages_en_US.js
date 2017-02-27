@@ -111,3 +111,7 @@ var operation_success = "Operation Successful";
 var operation_failure = "Operation Failure";
 var time_conflict = "Time conflict";
 var to = "TO";
+var not_match_name = "No name to fill in";
+var no_customer = "No customer";
+var foregift_negative = "Foregift can not be negative";
+var foregift_wrong = "Wrong Foregift";
