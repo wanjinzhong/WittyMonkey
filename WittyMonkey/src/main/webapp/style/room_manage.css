@@ -107,6 +107,9 @@
     transition: color 0.5s;
     margin-left: 10px;
 }
+.showReserve{
+    margin-top: 10px;
+}
 .btn_opt li:hover{
     cursor: pointer;
     color: #fff;

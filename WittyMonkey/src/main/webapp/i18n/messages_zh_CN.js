@@ -69,6 +69,7 @@ var room_validate_area="面积不正确";
 var room_validate_price="价格不正确";
 var room_validate_floor_not_exist="楼层不存在";
 var room_add_success="房间添加成功";
+var btn_show_reserve="查看预定";
 var btn_reserve="预定";
 var btn_unsubscribe="退订"
 var btn_checkin="入住";

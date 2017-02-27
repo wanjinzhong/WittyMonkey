@@ -1,20 +1,18 @@
 package com.wittymonkey.dao.impl;
 
+import com.wittymonkey.dao.IGenericDao;
+import org.hibernate.Query;
+import org.hibernate.SQLQuery;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+
 import java.io.Serializable;
-import java.sql.Date;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-
-import org.hibernate.*;
-import org.hibernate.transform.Transformers;
-import org.springframework.beans.factory.annotation.Autowired;
-
-import com.wittymonkey.dao.IGenericDao;
-import com.wittymonkey.util.Reflections;
 
 public class GenericDaoImpl<T> implements IGenericDao<T, Serializable> {
 

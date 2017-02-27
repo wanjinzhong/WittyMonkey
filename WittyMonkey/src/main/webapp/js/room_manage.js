@@ -47,6 +47,11 @@ function refreshTable(obj) {
                     '<span class="number">' + obj[i]["number"] + '</span>' +
                     '<span class="name">' + obj[i]["name"] + '</span>' +
                     '<br/>' +
+                    '<dl class="btn_opt showReserve"><li onclick="showReserve(' + obj[i]["id"] + ')">' +
+                    '<svg class="icon" aria-hidden="true">' +
+                    '<use xlink:href="#icon-chakan-copy"></use>' +
+                    '</svg> ' + btn_show_reserve +
+                    '</li></dl>' +
                     '<dl class="btn_opt">' +
                     '<li class="btn_reserve" onclick="toReserve(' + obj[i]["id"] + ')">' +
                     '<svg class="icon" aria-hidden="true">' +
@@ -65,7 +70,17 @@ function refreshTable(obj) {
                     '<span class="number">' + obj[i]["number"] + '</span>' +
                     '<span class="name">' + obj[i]["name"] + '</span>' +
                     '<br/>' +
+                    '<dl class="btn_opt showReserve"><li onclick="showReserve(' + obj[i]["id"] + ')">' +
+                    '<svg class="icon" aria-hidden="true">' +
+                    '<use xlink:href="#icon-chakan-copy"></use>' +
+                    '</svg> ' + btn_show_reserve +
+                    '</li></dl>' +
                     '<dl class="btn_opt">' +
+                    '<li class="btn_reserve" onclick="toReserve(' + obj[i]["id"] + ')">' +
+                    '<svg class="icon" aria-hidden="true">' +
+                    '<use xlink:href="#icon-yuding"></use>' +
+                    '</svg> ' + btn_reserve +
+                    '</li>' +
                     '<li class="btn_unsubscribe" onclick="toUnsubscribe(' + obj[i]["id"] + ')">' +
                     '<svg class="icon" aria-hidden="true">' +
                     '<use xlink:href="#icon-tuiding"></use>' +
@@ -84,7 +99,17 @@ function refreshTable(obj) {
                     '<span class="number">' + obj[i]["number"] + '</span>' +
                     '<span class="name">' + obj[i]["name"] + '</span>' +
                     '<br/>' +
+                    '<dl class="btn_opt showReserve"><li onclick="showReserve(' + obj[i]["id"] + ')">' +
+                    '<svg class="icon" aria-hidden="true">' +
+                    '<use xlink:href="#icon-chakan-copy"></use>' +
+                    '</svg> ' + btn_show_reserve +
+                    '</li></dl>' +
                     '<dl class="btn_opt">' +
+                    '<li class="btn_reserve" onclick="toReserve(' + obj[i]["id"] + ')">' +
+                    '<svg class="icon" aria-hidden="true">' +
+                    '<use xlink:href="#icon-yuding"></use>' +
+                    '</svg> ' + btn_reserve +
+                    '</li>' +
                     '<li class="btn_change" onclick="toChange(' + obj[i]["id"] + ')">' +
                     '<svg class="icon" aria-hidden="true">' +
                     '<use xlink:href="#icon-huanfang"></use>' +
@@ -103,7 +128,17 @@ function refreshTable(obj) {
                     '<span class="number">' + obj[i]["number"] + '</span>' +
                     '<span class="name">' + obj[i]["name"] + '</span>' +
                     '<br/>' +
+                    '<dl class="btn_opt showReserve"><li onclick="showReserve(' + obj[i]["id"] + ')">' +
+                    '<svg class="icon" aria-hidden="true">' +
+                    '<use xlink:href="#icon-chakan-copy"></use>' +
+                    '</svg> ' + btn_show_reserve +
+                    '</li></dl>' +
                     '<dl class="btn_opt">' +
+                    '<li class="btn_reserve" onclick="toReserve(' + obj[i]["id"] + ')">' +
+                    '<svg class="icon" aria-hidden="true">' +
+                    '<use xlink:href="#icon-yuding"></use>' +
+                    '</svg> ' + btn_reserve +
+                    '</li>' +
                     '<li class="btn_clean" onclick="toClean(' + obj[i]["id"] + ')">' +
                     '<svg class="icon" aria-hidden="true">' +
                     '<use xlink:href="#icon-qingli"></use>' +
@@ -191,7 +226,7 @@ function toCheckin(id) {
     layer.open({
         title: room_checkin_title,
         content: "toCheckin.do?id=" + id,
-        area: ['1000px', '700px'],
+        area: ['950px', '700px'],
         maxmin: false,
         shade: 0.4,
         scrollbar: false,
@@ -250,5 +285,8 @@ function toClean(id) {
             }
         });
     });
+    event.cancelBubble = true;
+}
+function showReserve() {
     event.cancelBubble = true;
 }

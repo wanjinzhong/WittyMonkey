@@ -94,6 +94,12 @@ public class RoomController {
         Integer id = Integer.parseInt(request.getParameter("id"));
         RoomMaster roomMaster = roomMasterService.getRoomById(id);
         request.getSession().setAttribute("checkinRoom", roomMaster);
+        request.getSession().removeAttribute("reserve");
+        // 根据今天获取是否有预定
+        Reserve reserve = reserveService.getReserveByDate(roomMaster.getId(), new Date());
+        if (reserve != null){
+            request.getSession().setAttribute("reserve", reserve);
+        }
         return "checkin";
     }
 
@@ -789,4 +795,5 @@ public class RoomController {
         }
         return true;
     }
+
 }

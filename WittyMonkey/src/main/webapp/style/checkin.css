@@ -1,0 +1,32 @@
+.table-input {
+    width: 100%;
+    border: solid transparent 1px;
+    border-radius: 3px;
+    background-color:transparent;
+    text-align: center;
+    transition: border 0.5s;
+}
+
+.table-input-focus, .table-input:hover{
+    padding: 0px;
+    border: solid grey 1px;
+    background-color:transparent;
+}
+#checkin-border{
+    width: 900px;
+    height: 500px;
+    margin-left: 20px;
+    margin-top: 20px;
+    border: 2px solid #eeeeee;
+    border-radius: 10px;
+}
+.customers{
+    margin-left: 40px;
+}
+
+table {
+    margin-top: 20px;
+}
+td{
+    padding: 5px;
+}

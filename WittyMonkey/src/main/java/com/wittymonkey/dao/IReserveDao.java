@@ -1,6 +1,7 @@
 package com.wittymonkey.dao;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 import com.wittymonkey.entity.Reserve;
@@ -14,4 +15,6 @@ public interface IReserveDao extends IGenericDao<Reserve, Serializable>{
      * @return
      */
     List<Reserve> getReserveByRoomId(Integer roomId, Integer status);
+
+    Reserve getReserveByDate(Integer roomId, Date date);
 }
