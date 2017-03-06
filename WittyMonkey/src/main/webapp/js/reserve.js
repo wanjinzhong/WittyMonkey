@@ -22,7 +22,7 @@ $(document).ready(function () {
         },
         setValue: function(s,s1,s2)
         {
-            $("#dateDisp").val(s1 + " " + to + " " + s2);
+            $("#dateDisp").val(s1 + checkin_date_checkin + " " + s2 + checkin_date_checkout);
             $('#from_date').val(s1);
             $('#to_date').val(s2);
         }

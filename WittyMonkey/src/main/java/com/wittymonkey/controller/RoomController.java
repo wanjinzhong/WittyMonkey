@@ -54,7 +54,7 @@ public class RoomController {
     private IReserveService reserveService;
 
     @Autowired
-    private ICheckinDao checkinDao;
+    private ICheckinService checkinService;
 
     @RequestMapping(value = "toAddRoom", method = RequestMethod.GET)
     public String toAddRoom(HttpServletRequest request) {
@@ -579,7 +579,7 @@ public class RoomController {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         try {
             fromDate = sdf.parse(from + " 00:00:00");
-            toDate = sdf.parse(to + " 23:59:59");
+            toDate = sdf.parse(to + " 12:00:00");
         } catch (ParseException e) {
             jsonObject.put("status", 431);
             return jsonObject.toJSONString();
@@ -697,8 +697,26 @@ public class RoomController {
         }
         String reserveId = request.getParameter("reserveId");
         Reserve reserve= null;
+
+        Checkin checkin = new Checkin();
+        // 已预定的情况
         if (reserveId != null && !reserveId.equals("")) {
             reserve = reserveService.getReserveById(Integer.parseInt(reserveId));
+            checkin.setEstCheckoutDate(reserve.getEstCheckoutDate());
+            checkin.setReserve(reserve);
+        }
+        // 未预定的情况
+        else{
+            String to = request.getParameter("to");
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            Date toDate = null;
+            try {
+                toDate = sdf.parse(to + " 12:00:00");
+            } catch (ParseException e) {
+                json.put("status", 440);
+                return json.toJSONString();
+            }
+            reserve.setEstCheckoutDate(toDate);
         }
         List<Customer> customers = new ArrayList<Customer>();
         for (int i = 0; i < idcards.length; i++) {
@@ -726,10 +744,16 @@ public class RoomController {
         }
         RoomMaster roomMaster = roomMasterService.getRoomById(roomId);
         roomMaster.setStatus(RoomMaster.CHECKED_IN);
-        Checkin checkin = new Checkin();
         checkin.setCustomers(customers);
         checkin.setRoom(roomMaster);
+        checkin.setPrice(roomMaster.getPrice());
         checkin.setCheckinDate(new Date());
+        checkin.setPrice(roomMaster.getPrice());
+        checkin.setEntryDatetime(new Date());
+        checkin.setEntryUser(userService.getUserById(((User)request.getSession().getAttribute("loginUser")).getId()));
+        checkin.setNote(note);
+        checkinService.checkin(checkin);
+        json.put("status", 200);
         return json.toJSONString();
     }
 
@@ -876,7 +900,7 @@ public class RoomController {
             }
         }
         // 查询入住表，判断时间是否冲突
-        Checkin checkin = checkinDao.getCheckinByRoom(roomId);
+        Checkin checkin = checkinService.getCheckinByRoom(roomId);
         /**
          * 以下为时间冲突的判断逻辑：
          * 已预定时间：  \________________________\

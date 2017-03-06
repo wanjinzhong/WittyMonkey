@@ -115,3 +115,6 @@ var not_match_name = "没有填写入住人姓名";
 var no_customer = "没有填写入住人";
 var foregift_negative = "押金不能为负数";
 var foregift_wrong = "押金不正确";
+var checkin_date_checkin="入住";
+var checkin_date_checkout="离店";
+var checkin_success = "入住成功";

@@ -115,3 +115,6 @@ var not_match_name = "No name to fill in";
 var no_customer = "No customer";
 var foregift_negative = "Foregift can not be negative";
 var foregift_wrong = "Wrong Foregift";
+var checkin_date_checkin="Checkin";
+var checkin_date_checkout="Checkout";
+var checkin_success = "Checkin Successfully";

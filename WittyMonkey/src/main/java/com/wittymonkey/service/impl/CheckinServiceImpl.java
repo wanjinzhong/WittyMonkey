@@ -17,4 +17,9 @@ public class CheckinServiceImpl implements ICheckinService{
     public Checkin getCheckinByRoom(Integer roomId) {
         return checkinDao.getCheckinByRoom(roomId);
     }
+
+    @Override
+    public void checkin(Checkin checkin) {
+        checkinDao.save(checkin);
+    }
 }

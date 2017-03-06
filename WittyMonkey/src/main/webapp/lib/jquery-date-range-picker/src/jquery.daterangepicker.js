@@ -737,6 +737,9 @@
 
 		function IsOwnDatePickerClicked(evt, selfObj)
 		{
+			if (selfObj == undefined){
+				return false;
+			}
 			return ( selfObj.contains(evt.target) || evt.target == selfObj  || (selfObj.childNodes != undefined && $.inArray(evt.target, selfObj.childNodes)>=0));
 		}
 
@@ -1054,6 +1057,8 @@
 			if (!opt.inline)
 			{
 				var offset = $(self).offset();
+				if (offset == undefined)
+					return;
 				if ($(opt.container).css('position') == 'relative')
 				{
 					var containerOffset = $(opt.container).offset();

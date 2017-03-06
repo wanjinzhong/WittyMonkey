@@ -234,6 +234,7 @@ function validateMonney(inp){
  *计算天数差的函数，通用
  */
 function dateDiff(from,  to){    //sDate1和sDate2是2006-12-18格式
+    // if (from typeof Date)
     var fromDate = new Date(from.replace(/-/g,"/"));
     var toDate = new Date(to.replace(/-/g,"/"));
     return  parseInt(Math.abs(toDate  -  fromDate)  /  1000  /  60  /  60  /24)    //把相差的毫秒数转换为天数;

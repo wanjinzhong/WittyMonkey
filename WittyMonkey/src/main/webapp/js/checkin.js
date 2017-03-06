@@ -5,6 +5,24 @@ var layer;
 layui.use('layer', function () {
     layer = layui.layer;
 });
+/**
+ * 计算价格
+ */
+function calcPrice() {
+    if ($("reserveId").val() != "") {
+        var from = $("#from").val();
+        var to = $("#to").val();
+        // 入住天数
+        var days = dateDiff(from, to);
+        var price = $("#roomPriceReserve").val();
+        var deposit = $("#deposit").val();
+        var foregift = $("#foregiftReserve").val();
+        $("#chargeReserve").val(days * price);
+        $("#payReserve").val(days * price - Number(deposit) + Number(foregift));
+    } else {
+        var from = new date
+    }
+}
 $(document).ready(function () {
     $(".btn-add-customer").click(function () {
         var tr = document.createElement("tr");
@@ -46,13 +64,7 @@ $(document).ready(function () {
     });
 
     // 自动计算预定价格
-    if ($("reserveId").val() != ""){
-        var from = $("#from").val();
-        var to = $("#to").val();
-
-        alert(dateDiff(from, to));
-
-    }
+    calcPrice();
 });
 
 /**
@@ -95,6 +107,8 @@ function checkin() {
                 case 420: layer.tips(foregift_wrong,$(".foregift"), {tips: 2});break;
                 case 421: layer.tips(foregift_negative,$(".foregift"), {tips: 2});break;
                 case 430: layer.tips(messageOfValidateLength(message_note, 1024), $("#note"), {tips: 2});break;
+                case 440: layer.tips(date_wrong,$("#to_date"), {tips: 2});break;
+                case 200: layer.msg(checkin_success,{icon:6, time: 2000});break;
             }
         }
     });

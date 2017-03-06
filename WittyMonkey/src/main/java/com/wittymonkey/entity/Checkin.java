@@ -22,7 +22,7 @@ public class Checkin implements Serializable{
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Integer id;
 
-	@ManyToMany(targetEntity = Customer.class)
+	@ManyToMany(targetEntity = Customer.class, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
 	@JoinTable(name="customer_checkin",
 	joinColumns = {@JoinColumn(name ="checkin_id", referencedColumnName = "id")},
 	inverseJoinColumns = {@JoinColumn(name = "customer_id", referencedColumnName = "id")})

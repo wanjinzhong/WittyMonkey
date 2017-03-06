@@ -5,4 +5,6 @@ import com.wittymonkey.entity.Checkin;
 public interface ICheckinService {
 
     Checkin getCheckinByRoom(Integer roomId);
+
+    void checkin(Checkin checkin);
 }

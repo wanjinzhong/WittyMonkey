@@ -97,10 +97,14 @@
                         <lable class="layui-form-label"><fmt:message key='room.reserve.estcheckin'/></lable>
                     </td>
                     <td>
-                        <input type="hidden" value="${fromDate}" id="from"/>
-                        <input type="hidden" value="${toDate}" id="to"/>
+                        <input type="hidden" value="${fromDate}" id="from" name="from"/>
+                        <input type="hidden" value="${toDate}" id="to" name="to"/>
                         <input disabled type="text" class="layui-input"
-                               value="${fromDate} <fmt:message key="to"/> ${toDate}"/>
+                               value="${fromDate}<fmt:message key="checkin.date.checkin"/> ${toDate}<fmt:message key="checkin.date.checkout"/>"/>
+                    </td>
+                    <td class="td_title"><label class="layui-form-label"><fmt:message key="checkin.room.price"/></label></td>
+                    <td>
+                        <input type="number" id="roomPriceReserve" class="layui-input" value="${reserve.room.price}" disabled/>
                     </td>
                 </tr>
                 <tr>
@@ -120,16 +124,15 @@
                     <td class="td_title">
                         <label class="layui-form-label"><fmt:message key="checkin.room.foregift"/></label>
                     </td>
-                    <td><input type="number" class="layui-input foregift" name="foregift" value="0"></td>
+                    <td><input type="number" id="foregiftReserve" class="layui-input foregift" name="foregift" value="0" onblur="calcPrice()"></td>
                 </tr>
                 <tr>
                     <td class="td_title"><label class="layui-form-label"><fmt:message
                             key="checkin.room.charge"/></label></td>
-                    <td><input type="number" class="layui-input" value="${reserve.room.price}" disabled/></td>
+                    <td><input type="number" id="chargeReserve" class="layui-input" value="${reserve.room.price}" disabled/></td>
                     <td class="td_title"><label class="layui-form-label"><fmt:message
                             key="checkin.room.account_pay"/></label></td>
-                    <td><input class="layui-input" type="number" value="${reserve.room.price - reserve.deposit}"
-                               disabled/></td>
+                    <td><input class="layui-input" type="number" id="payReserve" disabled/></td>
                 </tr>
             </c:if>
             <c:if test="${reserve eq null}">
@@ -139,21 +142,24 @@
                     <td>
                         <input class="layui-input" type="text" id="to_date" name="toDate"/>
                     </td>
+                    <td class="td_title"><label class="layui-form-label"><fmt:message key="checkin.room.price"/></label></td>
+                    <td>
+                        <input type="number" id="roomPrice" class="layui-input" value="${reserve.room.price}" disabled/>
+                    </td>
                 </tr>
                 <tr>
                     <td class="td_title">
                         <label class="layui-form-label"><fmt:message key="checkin.room.foregift"/></label>
                     </td>
-                    <td><input type="number" class="layui-input foregift" name="foregift" value="0"></td>
+                    <td><input type="number" id="foregift" class="layui-input foregift" name="foregift" value="0"></td>
                     <td class="td_title"><label class="layui-form-label"><fmt:message
                             key="checkin.room.charge"/></label></td>
-                    <td><input type="number" class="layui-input" value="${checkinRoom.price}" disabled/></td>
+                    <td><input type="number" id="charge" class="layui-input" disabled/></td>
                 </tr>
                 <tr>
                     <td class="td_title"><label class="layui-form-label"><fmt:message
                             key="checkin.room.account_pay"/></label></td>
-                    <td colspan="3"><input class="layui-input" type="number"
-                                           value="${checkinRoom.price}" disabled/></td>
+                    <td colspan="3"><input class="layui-input" type="number" id="pay" disabled/></td>
                 </tr>
             </c:if>
             <tr>
