@@ -118,3 +118,6 @@ var foregift_wrong = "Wrong Foregift";
 var checkin_date_checkin="Checkin";
 var checkin_date_checkout="Checkout";
 var checkin_success = "Checkin Successfully";
+var checkin_not_exist = "This checkin is not exist";
+var checkout_checkin_already_checkout = "Already Checkouted";
+var checkout_success = "Checkout Successfully";

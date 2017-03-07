@@ -6,5 +6,8 @@ import com.wittymonkey.entity.Checkin;
 
 public interface ICheckinDao extends IGenericDao<Checkin, Serializable>{
 
-    Checkin getCheckinByRoom(Integer roomId);
+
+    Checkin getCheckinByRoomUncomplete(Integer roomId);
+
+    Checkin getCheckinById(Integer id);
 }

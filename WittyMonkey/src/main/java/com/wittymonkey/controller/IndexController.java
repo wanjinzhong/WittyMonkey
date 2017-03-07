@@ -1,12 +1,8 @@
 package com.wittymonkey.controller;
 
-import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.wittymonkey.dao.IHotelDao;
 import com.wittymonkey.dao.IUserDao;
-import com.wittymonkey.entity.Floor;
-import com.wittymonkey.entity.Hotel;
 import com.wittymonkey.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,8 +12,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.Properties;
 
 /**
@@ -53,30 +47,6 @@ public class IndexController {
             roomMenu.put("spread", false);
             roomMenu.put("href", "toRoomManage.do");
             jsonArray.add(roomMenu);
-
-            // 添加入住菜单
-            JSONObject checkinMenu = new JSONObject();
-            checkinMenu.put("title", props.getProperty("index.menu.checkin"));
-            checkinMenu.put("icon", "#icon-icon_bagCheck");
-            checkinMenu.put("spread", false);
-            JSONArray checkinChildren = new JSONArray();
-            // 添加入住子菜单
-            JSONObject checkinChild = new JSONObject();
-            checkinChild.put("title", props.getProperty("index.menu.checkin.checkin"));
-            checkinChild.put("href", "toCheckIn.do");
-            checkinChildren.add(checkinChild);
-            //添加换房子菜单
-            JSONObject change = new JSONObject();
-            change.put("title", props.getProperty("index.menu.checkin.change_room"));
-            change.put("href", "toChangeRoom.do");
-            checkinChildren.add(change);
-            //添加退房子菜单
-            JSONObject checkout = new JSONObject();
-            checkout.put("title", props.getProperty("index.menu.checkin.checkout"));
-            checkout.put("href", "toCheckOut.do");
-            checkinChildren.add(checkout);
-            checkinMenu.put("children", checkinChildren);
-            jsonArray.add(checkinMenu);
 
             //物料菜单
             JSONObject materielMenu = new JSONObject();
@@ -260,7 +230,7 @@ public class IndexController {
 
     @RequestMapping(value = "toCheckOut", method = RequestMethod.GET)
     public String toCheckOut(HttpServletRequest request) {
-        return "check_out";
+        return "checkout";
     }
 
     @RequestMapping(value = "toMaterielManage", method = RequestMethod.GET)

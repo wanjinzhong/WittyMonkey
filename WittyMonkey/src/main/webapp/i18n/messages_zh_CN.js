@@ -118,3 +118,6 @@ var foregift_wrong = "押金不正确";
 var checkin_date_checkin="入住";
 var checkin_date_checkout="离店";
 var checkin_success = "入住成功";
+var checkout_checkin_not_exist = "该入住信息不存在";
+var checkout_checkin_already_checkout = "已经退房完成";
+var checkout_success = "退房成功";

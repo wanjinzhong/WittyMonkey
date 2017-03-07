@@ -237,8 +237,8 @@ function toCheckin(id) {
 function toCheckout(id) {
     layer.open({
         title: room_checkout_title,
-        content: "toCheckout.do" + id,
-        area: ['1000px', '700px'],
+        content: "toCheckout.do?id=" + id,
+        area: ['950px', '600px'],
         maxmin: false,
         shade: 0.4,
         scrollbar: false,

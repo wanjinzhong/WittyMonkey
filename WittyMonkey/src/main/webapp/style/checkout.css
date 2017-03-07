@@ -1,0 +1,26 @@
+#checkout-border{
+    width: 900px;
+    height: 450px;
+    margin-left: 20px;
+    margin-top: 20px;
+    border: 2px solid #eeeeee;
+    border-radius: 10px;
+}
+
+.layui-table{
+    margin: 0px;
+}
+td{
+    padding: 5px;
+}
+.btn-add-customer{
+    cursor: pointer;
+    transition: color 0.5s;
+}
+.btn-add-customer:hover{
+    color: grey;
+}
+.table-div{
+    height: 121px;
+    overflow: auto;
+}

@@ -39,6 +39,8 @@ public class RoomController {
     public static final String UPDATE = "update";
     public static final String DELETE = "delete";
 
+    private SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+
     @Autowired
     private IRoomMasterService roomMasterService;
 
@@ -100,7 +102,6 @@ public class RoomController {
         request.getSession().removeAttribute("toDate");
         // 根据今天获取是否有预定
         Reserve reserve = reserveService.getReserveByDate(roomMaster.getId(), new Date());
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         if (reserve != null) {
             String fromDate = sdf.format(reserve.getEstCheckinDate());
             String toDate = sdf.format(reserve.getEstCheckoutDate());
@@ -111,6 +112,89 @@ public class RoomController {
         return "checkin";
     }
 
+    @RequestMapping(value = "toCheckout", method = RequestMethod.GET)
+    public String toCheckout(HttpServletRequest request){
+        String id = request.getParameter("id");
+        Integer roomId = null;
+        try{
+            roomId = Integer.parseInt(id);
+        } catch (NumberFormatException e){
+            e.printStackTrace();
+        }
+        Checkin checkin = checkinService.getCheckinByRoomUncomplete(roomId);
+        request.getSession().setAttribute("checkin", checkin);
+        request.getSession().setAttribute("checkinDate", sdf.format(checkin.getCheckinDate()));
+        request.getSession().setAttribute("estCheckoutDate", sdf.format(checkin.getEstCheckoutDate()));
+        return "checkout";
+    }
+
+    /**
+     * 退房
+     *
+     * @param request
+     * @return <table border="1" cellspacing="0">
+     * <tr>
+     * <th>代码</th>
+     * <th>说明</th>
+     * </tr>
+     * <tr>
+     * <td>200</td>
+     * <td>退房成功</td>
+     * </tr>
+     * <tr>
+     * <td>400</td>
+     * <td>入住号不存在</td>
+     * </tr>
+     * <tr>
+     * <td>410</td>
+     * <td>房间已退</td>
+     * </tr>
+     * <tr>
+     * <td>500</td>
+     * <td>服务器错误</td>
+     * </tr>
+     */
+    @RequestMapping(value = "checkout", method = RequestMethod.GET)
+    @ResponseBody
+    public String checkout(HttpServletRequest request){
+        JSONObject json = new JSONObject();
+        Integer checkinId = null;
+        try {
+            checkinId = Integer.parseInt(request.getParameter("id"));
+        } catch (NumberFormatException e) {
+            json.put("status", 400);
+            return json.toJSONString();
+        }
+        Checkin checkin = checkinService.getCheckinById(checkinId);
+        if (checkin == null){
+            json.put("status", 400);
+            return json.toJSONString();
+        }
+        if (checkin.getActCheckoutDate() != null){
+            json.put("status", 410);
+            return json.toJSONString();
+        }
+        User operator = getLoginUserPersistence(request);
+        checkin.setActCheckoutDate(new Date());
+        checkin.setEntryUser(operator);
+        checkin.setEntryDatetime(new Date());
+        checkin.getRoom().setStatus(RoomMaster.CLEAN);
+        checkin.getRoom().setEntryUser(operator);
+        checkin.getRoom().setEntryDatetime(new Date());
+        try {
+            checkinService.update(checkin);
+            json.put("status",200);
+            return json.toJSONString();
+        } catch (SQLException e) {
+            json.put("status", 500);
+            return json.toJSONString();
+        }
+    }
+
+    public User getLoginUserPersistence(HttpServletRequest request){
+        User user = (User) request.getSession().getAttribute("loginUser");
+        return userService.getUserById(user.getId());
+    }
     @RequestMapping(value = "validateRoomNo", method = RequestMethod.GET)
     @ResponseBody
     public String validateRoomNo(HttpServletRequest request) {
@@ -705,6 +789,7 @@ public class RoomController {
         // 已预定的情况
         if (reserveId != null && !reserveId.equals("")) {
             reserve = reserveService.getReserveById(Integer.parseInt(reserveId));
+            reserve.setStatus(Reserve.CHECKEDIN);
             checkin.setEstCheckoutDate(reserve.getEstCheckoutDate());
             checkin.setReserve(reserve);
         }
@@ -904,7 +989,7 @@ public class RoomController {
             }
         }
         // 查询入住表，判断时间是否冲突
-        Checkin checkin = checkinService.getCheckinByRoom(roomId);
+        Checkin checkin = checkinService.getCheckinByRoomUncomplete(roomId);
         /**
          * 以下为时间冲突的判断逻辑：
          * 已预定时间：  \________________________\

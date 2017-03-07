@@ -9,8 +9,14 @@ import com.wittymonkey.entity.Checkin;
 public class CheckinDaoImpl extends GenericDaoImpl<Checkin> implements ICheckinDao{
 
     @Override
-    public Checkin getCheckinByRoom(Integer roomId) {
+    public Checkin getCheckinByRoomUncomplete(Integer roomId) {
         String hql = "from Checkin where room.id = ? and actCheckoutDate = null";
         return queryOneHql(hql,roomId);
+    }
+
+    @Override
+    public Checkin getCheckinById(Integer id) {
+        String hql = "from Checkin where id = ?";
+        return queryOneHql(hql, id);
     }
 }
