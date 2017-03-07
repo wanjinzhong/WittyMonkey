@@ -33,7 +33,7 @@ function validateRoomNo(method, inp) {
                         layer.tips(room_validate_roomNo_exist, inp, {tips: 2});
                         result = false;
                         break;
-                    case 201:
+                    case 210:
                         result = true;
                         break;
                     case 400:

@@ -20,7 +20,7 @@ import javax.persistence.Table;
  *
  */
 @Entity
-@Table
+@Table(name = "notify")
 public class Notify implements Serializable{
 
 	private static final long serialVersionUID = 1L;

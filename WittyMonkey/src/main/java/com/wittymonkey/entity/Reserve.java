@@ -11,7 +11,7 @@ import javax.persistence.*;
  *
  */
 @Entity
-@Table
+@Table(name = "reserve")
 public class Reserve implements Serializable{
 
 	private static final long serialVersionUID = 1L;

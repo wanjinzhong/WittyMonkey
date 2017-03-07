@@ -928,7 +928,7 @@ public class RoomController {
                         (method.equals(UPDATE) && room.getId() != newRoom.getId())) {
                     return 200;
                 } else {
-                    return 201;
+                    return 210;
                 }
             } else {
                 return 210;

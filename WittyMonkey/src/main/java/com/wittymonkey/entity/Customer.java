@@ -7,7 +7,7 @@ import java.io.Serializable;
  * Created by Neil on 2017/2/22.
  */
 @Entity
-@Table
+@Table(name = "customer")
 public class Customer implements Serializable {
 
     @Id

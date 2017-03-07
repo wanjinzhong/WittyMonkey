@@ -17,7 +17,7 @@ import javax.persistence.Table;
  * @author neilw
  *
  */
-@Table
+@Table(name = "area")
 @Entity
 public class Area implements Serializable {
 

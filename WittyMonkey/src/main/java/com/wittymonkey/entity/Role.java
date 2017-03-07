@@ -26,7 +26,7 @@ import javax.persistence.Table;
  *
  */
 @Entity
-@Table
+@Table(name = "role")
 public class Role implements Serializable{
 	private static final long serialVersionUID = 1L;
 

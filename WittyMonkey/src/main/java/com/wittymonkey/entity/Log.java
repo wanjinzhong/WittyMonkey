@@ -18,7 +18,7 @@ import javax.persistence.Table;
  *
  */
 @Entity
-@Table
+@Table(name = "log")
 public class Log implements Serializable{
 
 	private static final long serialVersionUID = 1L;
