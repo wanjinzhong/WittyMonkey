@@ -8,7 +8,7 @@ import java.io.Serializable;
  */
 @Entity
 @Table
-public class Customer implements Serializable{
+public class Customer implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -53,5 +53,18 @@ public class Customer implements Serializable{
 
     public void setTel(String tel) {
         this.tel = tel;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null || !(obj instanceof Customer)) {
+            return false;
+        }
+        Customer customer = (Customer) obj;
+        if (customer.getId() == id || customer.getIdCard() == idCard) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }

@@ -10,6 +10,7 @@ import com.wittymonkey.util.IDCardValidate;
 import com.wittymonkey.vo.Page;
 import com.wittymonkey.vo.SimpleFloor;
 import com.wittymonkey.vo.SimpleRoom;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -612,11 +613,12 @@ public class RoomController {
             Customer customer;
             if (custId != null) {
                 customer = customerService.getCustomerById(custId);
-                if (!customer.getName().equals(name)) ;
-                {
+                if (!StringUtils.isNotBlank(customer.getName())
+                        ||(StringUtils.isNotBlank(customer.getName()) && !customer.getName().equals(name))){
                     customer.setName(name);
                 }
-                if (!customer.getTel().equals(tel)) {
+                if (!StringUtils.isNotBlank(customer.getTel())
+                        ||(StringUtils.isNotBlank(customer.getTel())&&!customer.getTel().equals(tel))) {
                     customer.setTel(tel);
                 }
             } else {
@@ -681,8 +683,9 @@ public class RoomController {
         String[] name = request.getParameterValues("name");
         Integer roomId = Integer.parseInt(request.getParameter("roomId"));
         String note = request.getParameter("note");
+        Double foregift = 0.0;
         try {
-            Double foregift = Double.parseDouble(request.getParameter("foregift"));
+            foregift = Double.parseDouble(request.getParameter("foregift"));
             if (foregift < 0){
                 json.put("status", 421);
                 return json.toJSONString();
@@ -718,7 +721,7 @@ public class RoomController {
             }
             reserve.setEstCheckoutDate(toDate);
         }
-        List<Customer> customers = new ArrayList<Customer>();
+        Set<Customer> customers = new HashSet<Customer>();
         for (int i = 0; i < idcards.length; i++) {
             if (idcards[i] == null || idcards[i].trim().equals("")) {
                 continue;
@@ -732,7 +735,8 @@ public class RoomController {
                 customer = new Customer();
                 customer.setIdCard(idcards[i]);
             }
-            if (!customer.getName().equals(name[i])) {
+            if (!StringUtils.isNotBlank(customer.getName())
+                    ||(StringUtils.isNotBlank(customer.getName())&&!customer.getName().equals(name[i]))) {
                 customer.setName(name[i]);
             }
             customers.add(customer);
@@ -747,8 +751,8 @@ public class RoomController {
         checkin.setCustomers(customers);
         checkin.setRoom(roomMaster);
         checkin.setPrice(roomMaster.getPrice());
+        checkin.setForegift(foregift);
         checkin.setCheckinDate(new Date());
-        checkin.setPrice(roomMaster.getPrice());
         checkin.setEntryDatetime(new Date());
         checkin.setEntryUser(userService.getUserById(((User)request.getSession().getAttribute("loginUser")).getId()));
         checkin.setNote(note);

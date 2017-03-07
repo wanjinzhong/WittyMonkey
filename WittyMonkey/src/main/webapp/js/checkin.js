@@ -108,7 +108,10 @@ function checkin() {
                 case 421: layer.tips(foregift_negative,$(".foregift"), {tips: 2});break;
                 case 430: layer.tips(messageOfValidateLength(message_note, 1024), $("#note"), {tips: 2});break;
                 case 440: layer.tips(date_wrong,$("#to_date"), {tips: 2});break;
-                case 200: layer.msg(checkin_success,{icon:6, time: 2000});break;
+                case 200: layer.msg(checkin_success,{icon:6, time: 2000}, function () {
+                    parent.location.reload();
+                    closeMe();
+                });break;
             }
         }
     });

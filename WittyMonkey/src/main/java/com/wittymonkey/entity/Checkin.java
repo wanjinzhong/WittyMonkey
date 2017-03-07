@@ -1,9 +1,7 @@
 package com.wittymonkey.entity;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 import javax.persistence.*;
 
@@ -26,7 +24,7 @@ public class Checkin implements Serializable{
 	@JoinTable(name="customer_checkin",
 	joinColumns = {@JoinColumn(name ="checkin_id", referencedColumnName = "id")},
 	inverseJoinColumns = {@JoinColumn(name = "customer_id", referencedColumnName = "id")})
-	private List<Customer> customers = new ArrayList<Customer>();
+	private Set<Customer> customers = new HashSet<Customer>();
 
 	@ManyToOne(targetEntity=RoomMaster.class, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
 	@JoinColumn(name="room_id", referencedColumnName="id")
@@ -46,6 +44,10 @@ public class Checkin implements Serializable{
 		
 	@Column(name="price")
 	private Double price;
+
+	// 押金
+	@Column(name="foregift")
+	private Double foregift;
 
 	@Column(name="entry_datetime")
 	private Date entryDatetime;
@@ -72,11 +74,11 @@ public class Checkin implements Serializable{
 		this.id = id;
 	}
 
-	public List<Customer> getCustomers() {
+	public Set<Customer> getCustomers() {
 		return customers;
 	}
 
-	public void setCustomers(List<Customer> customers) {
+	public void setCustomers(Set<Customer> customers) {
 		this.customers = customers;
 	}
 
@@ -102,14 +104,6 @@ public class Checkin implements Serializable{
 
 	public void setEstCheckoutDate(Date estCheckoutDate) {
 		this.estCheckoutDate = estCheckoutDate;
-	}
-
-	public Date getActCheckoutDate() {
-		return actCheckoutDate;
-	}
-
-	public void setActCheckoutDate(Date actCheckoutDate) {
-		this.actCheckoutDate = actCheckoutDate;
 	}
 
 	public Double getPrice() {
@@ -150,6 +144,22 @@ public class Checkin implements Serializable{
 
 	public void setNote(String note) {
 		this.note = note;
+	}
+
+	public Date getActCheckoutDate() {
+		return actCheckoutDate;
+	}
+
+	public void setActCheckoutDate(Date actCheckoutDate) {
+		this.actCheckoutDate = actCheckoutDate;
+	}
+
+	public Double getForegift() {
+		return foregift;
+	}
+
+	public void setForegift(Double foregift) {
+		this.foregift = foregift;
 	}
 
 	public List<ChangeRoom> getChangeRooms() {
