@@ -6,10 +6,12 @@ import com.wittymonkey.entity.RoomMaster;
 import com.wittymonkey.service.IReserveService;
 import com.wittymonkey.service.IRoomMasterService;
 import com.wittymonkey.vo.SimpleFloor;
+import com.wittymonkey.vo.SimpleReserve;
 import com.wittymonkey.vo.SimpleRoom;
 import org.springframework.beans.factory.annotation.Autowired;
 import sun.java2d.pipe.SpanShapeRenderer;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -58,5 +60,24 @@ public class ChangeToSimple {
             simpleRooms.add(simpleRoom);
         }
         return simpleRooms;
+    }
+
+    public static List<SimpleReserve> reserveList(List<Reserve> reserves){
+        List<SimpleReserve> simpleReserves = new ArrayList<SimpleReserve>();
+        for (Reserve reserve : reserves){
+            SimpleReserve simpleReserve = new SimpleReserve();
+            simpleReserve.setId(reserve.getId());
+            simpleReserve.setCustomer(reserve.getCustomer());
+            simpleReserve.setReserveDate(reserve.getReserveDate());
+            simpleReserve.setEstCheckinDate(reserve.getEstCheckinDate());
+            simpleReserve.setEstCheckoutDate(reserve.getEstCheckoutDate());
+            simpleReserve.setDeposit(reserve.getDeposit());
+            simpleReserve.setStatus(reserve.getStatus());
+            simpleReserve.setEntryDatetime(reserve.getEntryDatetime());
+            simpleReserve.setEntryUser(reserve.getEntryUser().getRealName());
+            simpleReserve.setNote(reserve.getNote());
+            simpleReserves.add(simpleReserve);
+        }
+        return simpleReserves;
     }
 }

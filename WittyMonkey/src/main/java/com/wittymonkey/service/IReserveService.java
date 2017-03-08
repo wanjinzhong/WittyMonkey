@@ -11,7 +11,7 @@ public interface IReserveService {
 
     void save(Reserve reserve);
 
-    List<Reserve> getReserveByRoomId(Integer roomId, Integer status);
+    List<Reserve> getReserveByRoomId(Integer roomId, Integer status, Integer start, Integer pageSize);
 
     /**
      * 根据时间获取该时间点所处的预定情况
@@ -20,4 +20,6 @@ public interface IReserveService {
      * @return
      */
     Reserve getReserveByDate(Integer roomId, Date date);
+
+    Integer getTotalByRoomIdReserved(Integer roomId, Integer status);
 }

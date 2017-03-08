@@ -28,7 +28,7 @@
     </nav>
     <div id="main">
             <i class="newBtn layui-icon layui-btn layui-btn-radius layui-btn-normal" onclick="showAddFloor()">&#xe61f; <fmt:message key="floor.btn.add"/></i>
-            <table class="layui-table">
+            <table class="layui-table" lay-skin="line">
             <thead>
             <tr>
                 <th width="100px"><fmt:message key="floor.manage.floor_no"/></th>

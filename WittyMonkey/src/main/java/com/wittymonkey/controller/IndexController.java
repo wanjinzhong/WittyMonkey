@@ -218,11 +218,6 @@ public class IndexController {
         return "room_manage";
     }
 
-    @RequestMapping(value = "toCheckIn", method = RequestMethod.GET)
-    public String toCheckIn(HttpServletRequest request) {
-        return "check_in";
-    }
-
     @RequestMapping(value = "toChangeRoom", method = RequestMethod.GET)
     public String toChangeRoom(HttpServletRequest request) {
         return "change_room";

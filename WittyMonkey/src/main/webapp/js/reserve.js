@@ -94,10 +94,10 @@ function reserve() {
                         layer.tips(messageOfValidateNull(room_reserve_date), $(".date"), {tips: 2});
                         return false;
                     case 431:
-                        layer.tips(date_wrong, $(".date"), {tips: 2});
+                        layer.msg(date_wrong, {icon: 2, time: 2000});
                         return false;
                     case 432:
-                        layer.tips(date_range, $(".date"), {tips: 2});
+                        layer.msg(date_range, {icon: 2, time: 2000});
                         return false;
                     case 440:
                         layer.tips(messageOfValidateNull(deposit), $("#deposit"), {tips: 2});
@@ -127,4 +127,14 @@ function reserve() {
             }
         });
     }
+}
+function showReserve(id) {
+    parent.layer.open({
+        title: room_change_title,
+        content: "toShowReserve.do?id=" + id,
+        area: ['1000px', '700px'],
+        maxmin: false,
+        scrollbar: false,
+        type: 2,
+    });
 }

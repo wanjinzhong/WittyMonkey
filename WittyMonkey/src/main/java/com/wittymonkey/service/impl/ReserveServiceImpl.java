@@ -27,12 +27,17 @@ public class ReserveServiceImpl implements IReserveService{
     }
 
     @Override
-    public List<Reserve> getReserveByRoomId(Integer roomId, Integer status) {
-        return reserveDao.getReserveByRoomId(roomId, status);
+    public List<Reserve> getReserveByRoomId(Integer roomId, Integer status, Integer start, Integer pageSize) {
+        return reserveDao.getReserveByRoomId(roomId, status, start, pageSize);
     }
 
     @Override
     public Reserve getReserveByDate(Integer roomId, Date date) {
         return reserveDao.getReserveByDate(roomId, date);
+    }
+
+    @Override
+    public Integer getTotalByRoomIdReserved(Integer roomId, Integer status) {
+        return reserveDao.getTotalByRoomIdReserved(roomId, status);
     }
 }

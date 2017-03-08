@@ -66,6 +66,9 @@
                     <input type="hidden" id="from_date" name="from"/>
                     <input type="hidden" id="to_date" name="to"/>
                 </td>
+                <td><svg class="icon eye" aria-hidden="true" onclick="showReserve(${reserveRoom.id})">
+                    <use xlink:href="#icon-chakan-copy"></use>
+                    </svg></td>
             </tr>
             <tr>
                 <td class="td_title"><label class="layui-form-label"><fmt:message key='room.reserve.deposit'/></label>

@@ -213,9 +213,6 @@ public class FloorController {
         User loginUser = (User) request.getSession().getAttribute("loginUser");
         Integer pageSize = loginUser.getSetting().getPageSize();
         Hotel hotel = (Hotel) request.getSession().getAttribute("hotel");
-        Page page = new Page();
-        page.setPageSize(pageSize);
-        page.setCurrPage(curr);
         Integer count = floorService.getTotal(hotel.getId());
         List<Floor> floors = floorService.getFloorByHotel(hotel.getId(), (curr - 1) * pageSize, pageSize);
         Collections.sort(floors, new Comparator<Floor>() {

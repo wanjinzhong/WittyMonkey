@@ -9,6 +9,7 @@ import com.wittymonkey.util.ChangeToSimple;
 import com.wittymonkey.util.IDCardValidate;
 import com.wittymonkey.vo.Page;
 import com.wittymonkey.vo.SimpleFloor;
+import com.wittymonkey.vo.SimpleReserve;
 import com.wittymonkey.vo.SimpleRoom;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,8 @@ import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
+
+import static org.springframework.web.bind.annotation.RequestMethod.GET;
 
 /**
  * Created by neilw on 2017/2/20.
@@ -59,7 +62,7 @@ public class RoomController {
     @Autowired
     private ICheckinService checkinService;
 
-    @RequestMapping(value = "toAddRoom", method = RequestMethod.GET)
+    @RequestMapping(value = "toAddRoom", method = GET)
     public String toAddRoom(HttpServletRequest request) {
         User loginUser = (User) request.getSession().getAttribute("loginUser");
         List<Floor> floors = floorService.getFloorByHotel(loginUser.getHotel().getId(), null, null);
@@ -75,7 +78,7 @@ public class RoomController {
     }
 
 
-    @RequestMapping(value = "showRoomDetail", method = RequestMethod.GET)
+    @RequestMapping(value = "showRoomDetail", method = GET)
     public String showRoomDetail(HttpServletRequest request) {
         Integer id = Integer.parseInt(request.getParameter("roomId"));
         RoomMaster roomMaster = roomMasterService.getRoomById(id);
@@ -84,7 +87,7 @@ public class RoomController {
         return "room_detail";
     }
 
-    @RequestMapping(value = "toReserve", method = RequestMethod.GET)
+    @RequestMapping(value = "toReserve", method = GET)
     public String toReserve(HttpServletRequest request) {
         Integer id = Integer.parseInt(request.getParameter("id"));
         RoomMaster roomMaster = roomMasterService.getRoomById(id);
@@ -92,7 +95,7 @@ public class RoomController {
         return "reserve";
     }
 
-    @RequestMapping(value = "toCheckin", method = RequestMethod.GET)
+    @RequestMapping(value = "toCheckin", method = GET)
     public String toCheckin(HttpServletRequest request) {
         Integer id = Integer.parseInt(request.getParameter("id"));
         RoomMaster roomMaster = roomMasterService.getRoomById(id);
@@ -112,7 +115,7 @@ public class RoomController {
         return "checkin";
     }
 
-    @RequestMapping(value = "toCheckout", method = RequestMethod.GET)
+    @RequestMapping(value = "toCheckout", method = GET)
     public String toCheckout(HttpServletRequest request){
         String id = request.getParameter("id");
         Integer roomId = null;
@@ -126,6 +129,14 @@ public class RoomController {
         request.getSession().setAttribute("checkinDate", sdf.format(checkin.getCheckinDate()));
         request.getSession().setAttribute("estCheckoutDate", sdf.format(checkin.getEstCheckoutDate()));
         return "checkout";
+    }
+
+    @RequestMapping(value = "toShowReserve", method = GET)
+    public String toShowReserve(HttpServletRequest request){
+        Integer roomId = Integer.parseInt(request.getParameter("id"));
+        RoomMaster roomMaster = roomMasterService.getRoomById(roomId);
+        request.getSession().setAttribute("room", roomMaster);
+        return "show_reserve";
     }
 
     /**
@@ -154,7 +165,7 @@ public class RoomController {
      * <td>服务器错误</td>
      * </tr>
      */
-    @RequestMapping(value = "checkout", method = RequestMethod.GET)
+    @RequestMapping(value = "checkout", method = GET)
     @ResponseBody
     public String checkout(HttpServletRequest request){
         JSONObject json = new JSONObject();
@@ -195,7 +206,7 @@ public class RoomController {
         User user = (User) request.getSession().getAttribute("loginUser");
         return userService.getUserById(user.getId());
     }
-    @RequestMapping(value = "validateRoomNo", method = RequestMethod.GET)
+    @RequestMapping(value = "validateRoomNo", method = GET)
     @ResponseBody
     public String validateRoomNo(HttpServletRequest request) {
         User loginUser = (User) request.getSession().getAttribute("loginUser");
@@ -205,6 +216,26 @@ public class RoomController {
         String method = request.getParameter("method");
         Integer res = validateRoomNo(request, method, roomNo);
         json.put("status", res);
+        return json.toJSONString();
+    }
+
+
+    @RequestMapping(value = "getReserveByPage", method = GET)
+    @ResponseBody
+    public String getReserveByPage(HttpServletRequest request){
+        JSONObject json = new JSONObject();
+        Integer curr = Integer.parseInt(request.getParameter("curr"));
+        Integer roomId = Integer.parseInt(request.getParameter("roomId"));
+        User loginUser = (User) request.getSession().getAttribute("loginUser");
+        Integer pageSize = loginUser.getSetting().getPageSize();
+        Integer count = reserveService.getTotalByRoomIdReserved(roomId, Reserve.RESERVED);
+        List<Reserve> reserves = reserveService.getReserveByRoomId(roomId, Reserve.RESERVED, (curr-1)*pageSize, pageSize);
+        List<SimpleReserve> simpleReserves = ChangeToSimple.reserveList(reserves);
+        json.put("count", count);
+        json.put("pageSize", pageSize);
+        JSONArray array = new JSONArray();
+        array.addAll(simpleReserves);
+        json.put("data", array);
         return json.toJSONString();
     }
 
@@ -274,7 +305,7 @@ public class RoomController {
      * <td>备注过长</td>
      * </tr>
      */
-    @RequestMapping(value = "saveRoom", method = RequestMethod.GET)
+    @RequestMapping(value = "saveRoom", method = GET)
     @ResponseBody
     public String saveRoom(HttpServletRequest request) {
         User loginUser = (User) request.getSession().getAttribute("loginUser");
@@ -486,7 +517,7 @@ public class RoomController {
      * </tr>
      * </table>
      */
-    @RequestMapping(value = "deleteRoom", method = RequestMethod.GET)
+    @RequestMapping(value = "deleteRoom", method = GET)
     @ResponseBody
     public String deleteRoom(HttpServletRequest request) {
         JSONObject json = new JSONObject();
@@ -514,7 +545,7 @@ public class RoomController {
         }
     }
 
-    @RequestMapping(value = "getRoomByHotel", method = RequestMethod.GET)
+    @RequestMapping(value = "getRoomByHotel", method = GET)
     @ResponseBody
     public String getRoomByHotel(HttpServletRequest request) {
         JSONObject json = new JSONObject();
@@ -537,7 +568,7 @@ public class RoomController {
         return json.toJSONString();
     }
 
-    @RequestMapping(value = "getRoomByCondition", method = RequestMethod.GET)
+    @RequestMapping(value = "getRoomByCondition", method = GET)
     @ResponseBody
     public String getRoomByCondition(HttpServletRequest request) {
         JSONObject json = new JSONObject();
@@ -621,7 +652,7 @@ public class RoomController {
      * <td>时间冲突</td>
      * </tr>
      */
-    @RequestMapping(value = "reserve", method = RequestMethod.GET)
+    @RequestMapping(value = "reserve", method = GET)
     @ResponseBody
     public String reserve(HttpServletRequest request) {
         JSONObject jsonObject = new JSONObject();
@@ -660,8 +691,8 @@ public class RoomController {
         }
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         try {
-            fromDate = sdf.parse(from + " 00:00:00");
-            toDate = sdf.parse(to + " 12:00:00");
+            fromDate = sdf.parse(from + " 12:00:00");
+            toDate = sdf.parse(to + " 11:59:59");
         } catch (ParseException e) {
             jsonObject.put("status", 431);
             return jsonObject.toJSONString();
@@ -861,7 +892,7 @@ public class RoomController {
      * <td>清理失败</td>
      * </tr>
      */
-    @RequestMapping(value = "cleanRoom", method = RequestMethod.GET)
+    @RequestMapping(value = "cleanRoom", method = GET)
     @ResponseBody
     public String cleanRoom(HttpServletRequest request) {
         JSONObject json = new JSONObject();
@@ -946,7 +977,7 @@ public class RoomController {
             if (rooms.get(i).getStatus() == RoomMaster.CHECKED_IN || rooms.get(i).getStatus() == RoomMaster.CLEAN) {
                 continue;
             }
-            reserves = reserveService.getReserveByRoomId(rooms.get(i).getId(), Reserve.RESERVED);
+            reserves = reserveService.getReserveByRoomId(rooms.get(i).getId(), Reserve.RESERVED, null, null);
             Boolean isReservedToday = false;
             for (int j = 0; j < reserves.size(); j++) {
                 if (now.after(reserves.get(j).getEstCheckinDate()) && now.before(reserves.get(j).getEstCheckoutDate())) {
@@ -972,7 +1003,7 @@ public class RoomController {
      */
     public Boolean isTimeOK(Integer roomId, Date start, Date end) {
         // 查询预定表，判断时间是否冲突
-        List<Reserve> reserves = reserveService.getReserveByRoomId(roomId, Reserve.RESERVED);
+        List<Reserve> reserves = reserveService.getReserveByRoomId(roomId, Reserve.RESERVED, null, null);
         for (int i = 0; i < reserves.size(); i++) {
             Reserve reserve = reserves.get(i);
             /**

@@ -282,6 +282,15 @@ function toClean(id) {
     });
     event.cancelBubble = true;
 }
-function showReserve() {
+function showReserve(id) {
+    layer.open({
+        title: show_reserve_title,
+        content: "toShowReserve.do?id=" + id,
+        area: ['1000px', '700px'],
+        maxmin: false,
+        shade: 0.4,
+        scrollbar: false,
+        type: 2,
+    });
     event.cancelBubble = true;
 }
