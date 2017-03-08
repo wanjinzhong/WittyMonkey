@@ -63,7 +63,7 @@ function reserve() {
         return false;
     } else if ($("#from_date").val() == "" || $("#to_date").val() == "") {
         layer.tips(messageOfValidateNull(reserve), $(".date"), {tips: 2});
-    } else if (!validateMonney($("#deposit"))) {
+    } else if (!validateMoney($("#deposit"))) {
         return false;
     } else {
         // 预定 ajax
@@ -128,12 +128,13 @@ function reserve() {
         });
     }
 }
-function showReserve(id) {
+function showReserve(id, no, name) {
     parent.layer.open({
-        title: room_change_title,
+        title: show_reserve_title + " - " + no + " " + name,
         content: "toShowReserve.do?id=" + id,
-        area: ['1000px', '700px'],
+        area: ['1100px', '700px'],
         maxmin: false,
+        shade: 0.4,
         scrollbar: false,
         type: 2,
     });

@@ -56,6 +56,10 @@ public class Reserve implements Serializable{
 	@Column
 	private Integer status;
 
+	// 退还定金
+	@Column
+    private Double refund;
+
 	@Column(name="entry_datetime")
 	private Date entryDatetime;
 
@@ -152,5 +156,13 @@ public class Reserve implements Serializable{
 
     public void setNote(String note) {
         this.note = note;
+    }
+
+    public Double getRefund() {
+        return refund;
+    }
+
+    public void setRefund(Double refund) {
+        this.refund = refund;
     }
 }

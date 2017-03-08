@@ -47,7 +47,7 @@ function refreshTable(obj) {
                     '<span class="number">' + obj[i]["number"] + '</span>' +
                     '<span class="name">' + obj[i]["name"] + '</span>' +
                     '<br/>' +
-                    '<dl class="btn_opt showReserve"><li onclick="showReserve(' + obj[i]["id"] + ')">' +
+                    '<dl class="btn_opt showReserve"><li onclick="showReserve(' + obj[i]["id"] + ',\'' + obj[i]["number"] + '\',\'' + obj[i]["name"] + '\')">' +
                     '<svg class="icon" aria-hidden="true">' +
                     '<use xlink:href="#icon-chakan-copy"></use>' +
                     '</svg> ' + btn_show_reserve +
@@ -70,7 +70,7 @@ function refreshTable(obj) {
                     '<span class="number">' + obj[i]["number"] + '</span>' +
                     '<span class="name">' + obj[i]["name"] + '</span>' +
                     '<br/>' +
-                    '<dl class="btn_opt showReserve"><li onclick="showReserve(' + obj[i]["id"] + ')">' +
+                    '<dl class="btn_opt showReserve"><li onclick="showReserve(' + obj[i]["id"] + ',\'' + obj[i]["number"] + '\',\'' + obj[i]["name"] + '\')">' +
                     '<svg class="icon" aria-hidden="true">' +
                     '<use xlink:href="#icon-chakan-copy"></use>' +
                     '</svg> ' + btn_show_reserve +
@@ -94,7 +94,7 @@ function refreshTable(obj) {
                     '<span class="number">' + obj[i]["number"] + '</span>' +
                     '<span class="name">' + obj[i]["name"] + '</span>' +
                     '<br/>' +
-                    '<dl class="btn_opt showReserve"><li onclick="showReserve(' + obj[i]["id"] + ')">' +
+                    '<dl class="btn_opt showReserve"><li onclick="showReserve(' + obj[i]["id"] + ',\'' + obj[i]["number"] + '\',\'' + obj[i]["name"] + '\')">' +
                     '<svg class="icon" aria-hidden="true">' +
                     '<use xlink:href="#icon-chakan-copy"></use>' +
                     '</svg> ' + btn_show_reserve +
@@ -123,7 +123,7 @@ function refreshTable(obj) {
                     '<span class="number">' + obj[i]["number"] + '</span>' +
                     '<span class="name">' + obj[i]["name"] + '</span>' +
                     '<br/>' +
-                    '<dl class="btn_opt showReserve"><li onclick="showReserve(' + obj[i]["id"] + ')">' +
+                    '<dl class="btn_opt showReserve"><li onclick="showReserve(' + obj[i]["id"] + ',\'' + obj[i]["number"] + '\',\'' + obj[i]["name"] + '\')">' +
                     '<svg class="icon" aria-hidden="true">' +
                     '<use xlink:href="#icon-chakan-copy"></use>' +
                     '</svg> ' + btn_show_reserve +
@@ -282,11 +282,11 @@ function toClean(id) {
     });
     event.cancelBubble = true;
 }
-function showReserve(id) {
+function showReserve(id, no, name) {
     layer.open({
-        title: show_reserve_title,
+        title: show_reserve_title + " - " + no + " " + name,
         content: "toShowReserve.do?id=" + id,
-        area: ['1000px', '700px'],
+        area: ['1100px', '700px'],
         maxmin: false,
         shade: 0.4,
         scrollbar: false,

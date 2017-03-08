@@ -2,6 +2,7 @@ package com.wittymonkey.service;
 
 import com.wittymonkey.entity.Reserve;
 
+import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
 
@@ -22,4 +23,6 @@ public interface IReserveService {
     Reserve getReserveByDate(Integer roomId, Date date);
 
     Integer getTotalByRoomIdReserved(Integer roomId, Integer status);
+
+    void update (Reserve reserve) throws SQLException;
 }

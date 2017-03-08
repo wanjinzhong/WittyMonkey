@@ -66,7 +66,7 @@
                     <input type="hidden" id="from_date" name="from"/>
                     <input type="hidden" id="to_date" name="to"/>
                 </td>
-                <td><svg class="icon eye" aria-hidden="true" onclick="showReserve(${reserveRoom.id})">
+                <td><svg class="icon eye" aria-hidden="true" onclick="showReserve(${reserveRoom.id}, '${reserveRoom.number}', '${reserveRoom.name}')">
                     <use xlink:href="#icon-chakan-copy"></use>
                     </svg></td>
             </tr>
@@ -75,7 +75,7 @@
                 </td>
                 <td><input id="deposit" name="deposit"
                            type="number" class="layui-input"
-                           onblur="validateMonney(this)"/></td>
+                           onblur="validateMoney(this)"/></td>
             <tr>
                 <td class="td_title"><label class="layui-form-label"><fmt:message key="note"/></label></td>
                 <td><textarea class="layui-textarea" id="note" name="note" onblur="validateNote(this)"></textarea></td>

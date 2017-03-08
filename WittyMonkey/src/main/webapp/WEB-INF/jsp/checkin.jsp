@@ -120,7 +120,7 @@
                     </td>
                     <td><input id="deposit" name="deposit"
                                type="number" class="layui-input"
-                               onblur="validateMonney(this)" value="${reserve.deposit}" disabled/></td>
+                               onblur="validateMoney(this)" value="${reserve.deposit}" disabled/></td>
                     <td class="td_title">
                         <label class="layui-form-label"><fmt:message key="checkin.room.foregift"/></label>
                     </td>

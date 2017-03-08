@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.wittymonkey.service.IReserveService;
 
+import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
 
@@ -39,5 +40,10 @@ public class ReserveServiceImpl implements IReserveService{
     @Override
     public Integer getTotalByRoomIdReserved(Integer roomId, Integer status) {
         return reserveDao.getTotalByRoomIdReserved(roomId, status);
+    }
+
+    @Override
+    public void update(Reserve reserve) throws SQLException {
+        reserveDao.update(reserve);
     }
 }

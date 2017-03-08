@@ -216,7 +216,7 @@ function validateTel(inp) {
 /**
  * 验证金额
  */
-function validateMonney(inp){
+function validateMoney(inp){
     var deposit = $(inp).val();
     var reg = /^[0-9]+(\.[0-9]+)?$/;
     if (deposit.length <= 0){
@@ -225,6 +225,17 @@ function validateMonney(inp){
     }
     if (!reg.test(deposit)){
         layer.tips(money_wrong, inp, {tips:2});
+        return false;
+    }
+    return true;
+}
+
+function validateMoneyValue(money) {
+    var reg = /^[0-9]+(\.[0-9]+)?$/;
+    if (money.length <= 0){
+        return false;
+    }
+    if (!reg.test(money)){
         return false;
     }
     return true;

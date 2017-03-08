@@ -25,22 +25,14 @@
 <body>
 <div class="container">
     <input type="hidden" disabled value="${room.id}" id="roomId"/>
-    <table class="room-info">
-        <tr>
-            <td class="td_title"><label class="layui-form-label"><fmt:message key="show_reserve.room_no"/></label></td>
-            <td><input class="layui-input" disabled value="${room.number}"/></td>
-            <td class="td_title"><label class="layui-form-label"><fmt:message key="show_reserve.room_name"/></label></td>
-            <td><input class="layui-input" disabled value="${room.name}"/></td>
-        </tr>
-    </table>
     <table class="layui-table" lay-skin="line">
         <thead>
         <th width="100px"><fmt:message key="show_reserve.reserver"/></th>
-        <th width="200px"><fmt:message key="show_reserve.idcard"/></th>
-        <th width="100px"><fmt:message key="show_reserve.tel"/></th>
+        <th width="120px"><fmt:message key="show_reserve.tel"/></th>
         <th width="100px"><fmt:message key="show_reserve.reserve_date"/></th>
         <th width="100px"><fmt:message key="show_reserve.est_checkin_date"/></th>
         <th width="100px"><fmt:message key="show_reserve.est_checkout_date"/></th>
+        <th width="50px"><fmt:message key="room.reserve.deposit"/></th>
         <th width="100px"><fmt:message key="operation"/></th>
         </thead>
         <tbody id="dataTabel"></tbody>

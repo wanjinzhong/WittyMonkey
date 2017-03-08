@@ -2,7 +2,6 @@ package com.wittymonkey.controller;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.wittymonkey.dao.ICheckinDao;
 import com.wittymonkey.entity.*;
 import com.wittymonkey.service.*;
 import com.wittymonkey.util.ChangeToSimple;
@@ -757,6 +756,94 @@ public class RoomController {
         }
     }
 
+    /**
+     * 退定
+     * @param request
+     * @return
+     * <table border="1" cellspacing="0">
+     * <tr>
+     * <th>代码</th>
+     * <th>说明</th>
+     * </tr>
+     * <tr>
+     * <td>200</td>
+     * <td>退定成功</td>
+     * </tr>
+     * <tr>
+     * <td>400</td>
+     * <td>预定不存在</td>
+     * </tr>
+     * <tr>
+     * <td>410</td>
+     * <td>退定金不正确</td>
+     * </tr>
+     * <tr>
+     * <td>420</td>
+     * <td>已入住</td>
+     * </tr>
+     * <tr>
+     * <td>421</td>
+     * <td>已退定</td>
+     * </tr>
+     * <tr>
+     * <td>430</td>
+     * <td>退定金额超限</td>
+     * </tr>
+     * <tr>
+     * <td>500</td>
+     * <td>服务器错误</td>
+     * </tr>
+     */
+    @RequestMapping(value = "unsubscribe", method = GET)
+    @ResponseBody
+    public String unsubscribe(HttpServletRequest request){
+        JSONObject json = new JSONObject();
+        User user = (User) request.getSession().getAttribute("loginUser");
+        Integer id = null;
+        Double refund = null;
+        try{
+            id = Integer.parseInt(request.getParameter("id"));
+        } catch (NumberFormatException e){
+            json.put("status", 400);
+            return json.toJSONString();
+        }
+        try{
+            refund = Double.parseDouble(request.getParameter("refund"));
+        } catch (NumberFormatException e){
+            json.put("status", 410);
+            return json.toJSONString();
+        }
+        Reserve reserve = reserveService.getReserveById(id);
+        if (reserve == null){
+            json.put("status", 400);
+            return json.toJSONString();
+        } else if (reserve.getStatus() == Reserve.CHECKEDIN){
+            json.put("status", 420);
+            return json.toJSONString();
+        } else if (reserve.getStatus() == Reserve.UNSUBSCRIBE){
+            json.put("status", 421);
+            return json.toJSONString();
+        } else if (reserve.getStatus() == Reserve.RESERVED){
+            if (reserve.getDeposit() < refund){
+                json.put("status", 430);
+                return json.toJSONString();
+            } else {
+                reserve.setStatus(Reserve.UNSUBSCRIBE);
+                reserve.setRefund(refund);
+                reserve.setEntryDatetime(new Date());
+                reserve.setEntryUser(userService.getUserById(user.getId()));
+                try {
+                    reserveService.update(reserve);
+                    json.put("status", 200);
+                    return json.toJSONString();
+                } catch (SQLException e){
+                    json.put("status", 500);
+                    return json.toJSONString();
+                }
+            }
+        }
+        return json.toJSONString();
+    }
     /**
      * 入住
      *
