@@ -18,4 +18,6 @@ public interface IReserveDao extends IGenericDao<Reserve, Serializable>{
     List<Reserve> getReserveByRoomId(Integer roomId, Integer status);
 
     Reserve getReserveByDate(Integer roomId, Date date);
+
+    List<Reserve> getAllReservesByDate(Date date);
 }

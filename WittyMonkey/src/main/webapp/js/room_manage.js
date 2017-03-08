@@ -81,11 +81,6 @@ function refreshTable(obj) {
                     '<use xlink:href="#icon-yuding"></use>' +
                     '</svg> ' + btn_reserve +
                     '</li>' +
-                    '<li class="btn_unsubscribe" onclick="toUnsubscribe(' + obj[i]["id"] + ')">' +
-                    '<svg class="icon" aria-hidden="true">' +
-                    '<use xlink:href="#icon-tuiding"></use>' +
-                    '</svg> ' + btn_unsubscribe +
-                    '</li>' +
                     '<li class="btn_checkin" onclick="toCheckin(' + obj[i]["id"] + ')">' +
                     '<svg class="icon" aria-hidden="true">' +
                     '<use xlink:href="#icon-ruzhu"></use>' +

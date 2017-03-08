@@ -37,4 +37,15 @@ public class  ReserveDaoImpl extends GenericDaoImpl<Reserve> implements IReserve
         param.put("d2", date);
         return queryOneHql(hql, param);
     }
+
+    @Override
+    public List<Reserve> getAllReservesByDate(Date date) {
+        String hql = "from Reserve where estCheckinDate <= :d1 and estCheckoutDate >= :d2";
+        Map<String, Object> param = new HashMap<String, Object>();
+        param.put("d1", date);
+        param.put("d2", date);
+        return queryListHQL(hql, param);
+    }
+
+
 }

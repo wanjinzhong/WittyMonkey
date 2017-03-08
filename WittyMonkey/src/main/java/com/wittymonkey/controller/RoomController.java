@@ -547,9 +547,6 @@ public class RoomController {
         User loginUser = (User) request.getSession().getAttribute("loginUser");
         Integer pageSize = loginUser.getSetting().getPageSize();
         Hotel hotel = (Hotel) request.getSession().getAttribute("hotel");
-        Page page = new Page();
-        page.setPageSize(pageSize);
-        page.setCurrPage(curr);
         Integer count = roomMasterService.getTotalByCondition(type, content);
         List<RoomMaster> roomMasters = roomMasterService.getRoomByCondition(hotel.getId(), type, content, (curr - 1) * pageSize, pageSize);
         List<SimpleRoom> simpleRooms = ChangeToSimple.roomList(roomMasters);

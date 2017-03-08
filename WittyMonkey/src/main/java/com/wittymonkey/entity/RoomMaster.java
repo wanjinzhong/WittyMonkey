@@ -1,11 +1,8 @@
 package com.wittymonkey.entity;
 
-import com.alibaba.fastjson.annotation.JSONField;
-
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
-
-import javax.persistence.*;
 
 /**
  * 房间基本信息
@@ -198,5 +195,21 @@ public class RoomMaster implements Serializable {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == this){
+            return true;
+        }
+        if (!(obj instanceof RoomMaster)){
+            return false;
+        }
+        RoomMaster room = (RoomMaster) obj;
+        if (((RoomMaster) obj).id == id){
+            return true;
+        } else {
+            return false;
+        }
     }
 }
