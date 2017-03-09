@@ -6,7 +6,6 @@ import com.wittymonkey.entity.*;
 import com.wittymonkey.service.*;
 import com.wittymonkey.util.ChangeToSimple;
 import com.wittymonkey.util.IDCardValidate;
-import com.wittymonkey.vo.Page;
 import com.wittymonkey.vo.SimpleFloor;
 import com.wittymonkey.vo.SimpleReserve;
 import com.wittymonkey.vo.SimpleRoom;
@@ -60,6 +59,7 @@ public class RoomController {
 
     @Autowired
     private ICheckinService checkinService;
+    private JSONArray array;
 
     @RequestMapping(value = "toAddRoom", method = GET)
     public String toAddRoom(HttpServletRequest request) {
@@ -103,7 +103,7 @@ public class RoomController {
         request.getSession().removeAttribute("fromDate");
         request.getSession().removeAttribute("toDate");
         // 根据今天获取是否有预定
-        Reserve reserve = reserveService.getReserveByDate(roomMaster.getId(), new Date());
+        Reserve reserve = reserveService.getReserveByDate(roomMaster.getId(), Reserve.RESERVED, new Date());
         if (reserve != null) {
             String fromDate = sdf.format(reserve.getEstCheckinDate());
             String toDate = sdf.format(reserve.getEstCheckoutDate());
@@ -552,9 +552,6 @@ public class RoomController {
         User loginUser = (User) request.getSession().getAttribute("loginUser");
         Integer pageSize = loginUser.getSetting().getPageSize();
         Hotel hotel = (Hotel) request.getSession().getAttribute("hotel");
-        Page page = new Page();
-        page.setPageSize(pageSize);
-        page.setCurrPage(curr);
         Integer count = roomMasterService.getTotalByHotel(hotel.getId());
         List<RoomMaster> roomMasters = roomMasterService.getRoomByHotel(hotel.getId(), (curr - 1) * pageSize, pageSize);
         List<SimpleRoom> simpleRooms = ChangeToSimple.roomList(roomMasters);
@@ -910,7 +907,7 @@ public class RoomController {
         }
         // 未预定的情况
         else{
-            String to = request.getParameter("to");
+            String to = request.getParameter("toDate");
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             Date toDate = null;
             try {
@@ -919,7 +916,7 @@ public class RoomController {
                 json.put("status", 440);
                 return json.toJSONString();
             }
-            reserve.setEstCheckoutDate(toDate);
+            checkin.setEstCheckoutDate(toDate);
         }
         Set<Customer> customers = new HashSet<Customer>();
         for (int i = 0; i < idcards.length; i++) {

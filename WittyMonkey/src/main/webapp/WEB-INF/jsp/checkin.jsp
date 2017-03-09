@@ -59,7 +59,7 @@
                                                              class="table-input idcard-input" name="idcard"/></td>
                                     <td width="150px"><input type="text" value="${reserve.customer.name}"
                                                              class="table-input name-input" name="name"/></td>
-                                    <td></td>
+                                    <td class="operation"><i class="deleteBtn layui-icon layui-btn layui-btn-primary layui-btn-small" onclick="removePerson(this)">&#xe640;<fmt:message key="delete"/></i></td>
                                 </tr>
                             </c:if>
                             <c:if test="${reserve eq null}">
@@ -69,7 +69,7 @@
                                                              name="idcard"/></td>
                                     <td width="150px"><input type="text" class="table-input name-input" name="name"/>
                                     </td>
-                                    <td></td>
+                                    <td class="operation"></td>
                                 </tr>
                             </c:if>
                             <tr>
@@ -77,14 +77,14 @@
                                                          onblur="if(validateIdCard(this)) findCustomer(this)"
                                                          name="idcard"/></td>
                                 <td width="150px"><input type="text" class="table-input name-input" name="name"/></td>
-                                <td></td>
+                                <td class="operation"></td>
                             </tr>
                             <tr>
                                 <td width="200px"><input type="text" class="table-input idcard-input"
                                                          onblur="if(validateIdCard(this)) findCustomer(this)"
                                                          name="idcard"/></td>
                                 <td width="150px"><input type="text" class="table-input name-input" name="name"/></td>
-                                <td></td>
+                                <td class="operation"></td>
                             </tr>
                             </tbody>
                         </table>
@@ -124,7 +124,7 @@
                     <td class="td_title">
                         <label class="layui-form-label"><fmt:message key="checkin.room.foregift"/></label>
                     </td>
-                    <td><input type="number" id="foregiftReserve" class="layui-input foregift" name="foregift" value="0" onblur="calcPrice()"></td>
+                    <td><input type="number" id="foregiftReserve" class="layui-input foregift" name="foregift" value="0" onchange="calcPrice()"></td>
                 </tr>
                 <tr>
                     <td class="td_title"><label class="layui-form-label"><fmt:message
@@ -144,14 +144,14 @@
                     </td>
                     <td class="td_title"><label class="layui-form-label"><fmt:message key="checkin.room.price"/></label></td>
                     <td>
-                        <input type="number" id="roomPrice" class="layui-input" value="${reserve.room.price}" disabled/>
+                        <input type="number" id="roomPrice" class="layui-input" value="${checkinRoom.price}" disabled/>
                     </td>
                 </tr>
                 <tr>
                     <td class="td_title">
                         <label class="layui-form-label"><fmt:message key="checkin.room.foregift"/></label>
                     </td>
-                    <td><input type="number" id="foregift" class="layui-input foregift" name="foregift" value="0"></td>
+                    <td><input type="number" id="foregift" class="layui-input foregift" name="foregift" value="0" onblur="calcPrice()"></td>
                     <td class="td_title"><label class="layui-form-label"><fmt:message
                             key="checkin.room.charge"/></label></td>
                     <td><input type="number" id="charge" class="layui-input" disabled/></td>

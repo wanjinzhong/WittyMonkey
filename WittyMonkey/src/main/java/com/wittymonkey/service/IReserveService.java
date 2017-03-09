@@ -20,7 +20,7 @@ public interface IReserveService {
      * @param date
      * @return
      */
-    Reserve getReserveByDate(Integer roomId, Date date);
+    Reserve getReserveByDate(Integer roomId, Integer status, Date date);
 
     Integer getTotalByRoomIdReserved(Integer roomId, Integer status);
 

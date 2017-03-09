@@ -33,8 +33,8 @@ public class ReserveServiceImpl implements IReserveService{
     }
 
     @Override
-    public Reserve getReserveByDate(Integer roomId, Date date) {
-        return reserveDao.getReserveByDate(roomId, date);
+    public Reserve getReserveByDate(Integer roomId, Integer status, Date date) {
+        return reserveDao.getReserveByDate(roomId, status, date);
     }
 
     @Override

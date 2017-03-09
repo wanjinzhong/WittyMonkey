@@ -1,17 +1,13 @@
 package com.wittymonkey.controller;
 
-import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.wittymonkey.entity.Floor;
 import com.wittymonkey.entity.Hotel;
 import com.wittymonkey.entity.User;
 import com.wittymonkey.service.IFloorService;
 import com.wittymonkey.util.ChangeToSimple;
-import com.wittymonkey.vo.Page;
 import com.wittymonkey.vo.SimpleFloor;
-import org.omg.CORBA.Request;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,7 +16,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import java.sql.SQLException;
-import java.util.*;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Date;
+import java.util.List;
 
 /**
  * Created by neilw on 2017/2/15.

@@ -9,7 +9,7 @@ layui.use('layer', function () {
  * 计算价格
  */
 function calcPrice() {
-    if ($("reserveId").val() != "") {
+    if ($("reserveId").val() != undefined && $("reserveId").val() != "") {
         var from = $("#from").val();
         var to = $("#to").val();
         // 入住天数
@@ -20,7 +20,13 @@ function calcPrice() {
         $("#chargeReserve").val(days * price);
         $("#payReserve").val(days * price - Number(deposit) + Number(foregift));
     } else {
-        var from = new date
+        var from = new Date();
+        var to = $("#to_date").val();
+        var days = dateDiff(from, to);
+        var price = $("#roomPrice").val();
+        var foregift = $("#foregift").val();
+        $("#charge").val(days * price);
+        $("#pay").val(days * price + Number(foregift));
     }
 }
 $(document).ready(function () {
@@ -42,6 +48,7 @@ $(document).ready(function () {
         $(input2).attr("class", "table-input name-input");
         $(input2).attr("name", "name");
         var td3 = document.createElement("td");
+        $(td3).addClass("operation");
         td1.appendChild(input1);
         td2.appendChild(input2);
         tr.appendChild(td1);
@@ -60,7 +67,11 @@ $(document).ready(function () {
         singleMonth: true,
         autoClose: true,
         singleDate : true,
-        showShortcuts: false
+        showShortcuts: false,
+        setValue: function (s) {
+            $("#to_date").val(s);
+            calcPrice();
+        }
     });
 
     // 自动计算预定价格
@@ -72,6 +83,7 @@ $(document).ready(function () {
  * @param inp
  */
 function findCustomer(inp) {
+    $(inp).parent().parent().find(".operation").html("<i class='deleteBtn layui-icon layui-btn layui-btn-primary layui-btn-small' onclick='removePerson(this)'>&#xe640;" + btn_delete + "</i>");
     var idCard = $(inp).val();
     $.ajax({
         url: "findCustomer.do",
@@ -115,4 +127,13 @@ function checkin() {
             }
         }
     });
+}
+/**
+ * 移除入住人
+ * @param obj
+ */
+function removePerson(obj){
+    $(obj).parent().parent().find(".idcard-input").val("");
+    $(obj).parent().parent().find(".name-input").val("");
+    $(obj).parent().parent().find(".operation").html("");
 }

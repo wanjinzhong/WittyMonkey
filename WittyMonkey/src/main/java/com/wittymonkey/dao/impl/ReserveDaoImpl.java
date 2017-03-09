@@ -5,6 +5,7 @@ import org.springframework.stereotype.Repository;
 import com.wittymonkey.dao.IReserveDao;
 import com.wittymonkey.entity.Reserve;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -29,12 +30,14 @@ public class  ReserveDaoImpl extends GenericDaoImpl<Reserve> implements IReserve
     }
 
     @Override
-    public Reserve getReserveByDate(Integer roomId, Date date) {
-        String hql = "from Reserve where room.id = :roomId and estCheckinDate <= :d1 and estCheckoutDate > :d2 ";
+    public Reserve getReserveByDate(Integer roomId, Integer status, Date date) {
+        String hql = "from Reserve where room.id = :roomId and status = :status and estCheckinDate <= :d1 and estCheckoutDate > :d2 ";
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Map<String, Object> param = new HashMap<String, Object>();
         param.put("roomId", roomId);
-        param.put("d1", date);
-        param.put("d2", date);
+        param.put("status", status);
+        param.put("d1", simpleDateFormat.format(date));
+        param.put("d2", simpleDateFormat.format(date));
         return queryOneHql(hql, param);
     }
 
