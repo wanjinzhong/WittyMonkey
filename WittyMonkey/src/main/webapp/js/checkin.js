@@ -9,7 +9,7 @@ layui.use('layer', function () {
  * 计算价格
  */
 function calcPrice() {
-    if ($("reserveId").val() != undefined && $("reserveId").val() != "") {
+    if ($("#reserveId").val() != undefined && $("#reserveId").val() != "") {
         var from = $("#from").val();
         var to = $("#to").val();
         // 入住天数

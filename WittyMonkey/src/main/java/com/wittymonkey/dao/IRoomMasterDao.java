@@ -1,6 +1,7 @@
 package com.wittymonkey.dao;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 import com.wittymonkey.entity.RoomMaster;
@@ -26,5 +27,7 @@ public interface IRoomMasterDao extends IGenericDao<RoomMaster, Serializable>{
     Integer getTotalByCondition(Integer type, Object content);
 
     List<RoomMaster> getRoomByCondition(Integer hotelId,Integer type, Object content, Integer first, Integer total);
+
+    List<RoomMaster> getFreeAndReservedByDate(Integer hotel, Integer status, Date from, Date to);
 
 }

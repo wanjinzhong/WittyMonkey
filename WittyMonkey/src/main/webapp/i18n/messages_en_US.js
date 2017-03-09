@@ -130,3 +130,4 @@ var unsubscribe_success = "Unsubscribe Success";
 var reserve_not_exist = "Reserve is not exist";
 var unsubscribe_checkedin = "Already checkin";
 var unsubscribe_unsubscribe = "Already unsubscribe";
+var choose_room_title = "Choose Room";

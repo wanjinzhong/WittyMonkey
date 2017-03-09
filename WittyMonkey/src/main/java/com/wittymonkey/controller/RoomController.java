@@ -2,9 +2,11 @@ package com.wittymonkey.controller;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.sun.xml.internal.ws.resources.HttpserverMessages;
 import com.wittymonkey.entity.*;
 import com.wittymonkey.service.*;
 import com.wittymonkey.util.ChangeToSimple;
+import com.wittymonkey.util.DateUtil;
 import com.wittymonkey.util.IDCardValidate;
 import com.wittymonkey.vo.SimpleFloor;
 import com.wittymonkey.vo.SimpleReserve;
@@ -94,6 +96,15 @@ public class RoomController {
         return "reserve";
     }
 
+    @RequestMapping(value = "toChooseRoom", method = GET)
+    public String toChooseRoom(HttpServletRequest request){
+        Integer id = Integer.parseInt(request.getParameter("id"));
+        Checkin checkin = checkinService.getCheckinById(id);
+
+        // todo
+        return "choose_room";
+    }
+
     @RequestMapping(value = "toCheckin", method = GET)
     public String toCheckin(HttpServletRequest request) {
         Integer id = Integer.parseInt(request.getParameter("id"));
@@ -112,6 +123,17 @@ public class RoomController {
             request.getSession().setAttribute("toDate", toDate);
         }
         return "checkin";
+    }
+
+    @RequestMapping(value = "toChange", method = GET)
+    public String toChange(HttpServletRequest request){
+        Integer roomId = Integer.parseInt(request.getParameter("id"));
+        Checkin checkin = checkinService.getCheckinByRoomUncomplete(roomId);
+        request.getSession().setAttribute("checkin", checkin);
+        request.getSession().setAttribute("now",sdf.format(new Date()));
+        request.getSession().setAttribute("to",sdf.format(checkin.getEstCheckoutDate()));
+        request.getSession().setAttribute("total", DateUtil.dateDiffDays(new Date(), checkin.getEstCheckoutDate()));;
+        return "change_room";
     }
 
     @RequestMapping(value = "toCheckout", method = GET)

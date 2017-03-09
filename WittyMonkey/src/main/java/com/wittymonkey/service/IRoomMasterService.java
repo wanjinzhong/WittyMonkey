@@ -4,6 +4,7 @@ import com.wittymonkey.entity.Hotel;
 import com.wittymonkey.entity.RoomMaster;
 
 import java.sql.SQLException;
+import java.util.Date;
 import java.util.List;
 
 public interface IRoomMasterService {
@@ -27,4 +28,8 @@ public interface IRoomMasterService {
     List<RoomMaster> getRoomByCondition(Integer hotelId, Integer type, Object content, Integer first, Integer total);
 
     List<RoomMaster> getRoomByCondition(Integer hotelId, Integer type, Object content);
+
+    List<RoomMaster> getFreeByDate(Integer hotel, Integer status, Date from, Date to, Integer first, Integer total);
+
+    Integer getTotalFreeByDate(Integer hotel, Integer status, Date from, Date to);
 }

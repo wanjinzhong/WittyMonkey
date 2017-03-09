@@ -68,6 +68,39 @@ public class RoomMasterServiceImpl implements IRoomMasterService {
     }
 
     @Override
+    public List<RoomMaster> getFreeByDate(Integer hotel, Integer status, Date from, Date to, Integer first, Integer total) {
+        return getAllFreeByDate(hotel, status, from, to).subList(first, first + total);
+    }
+
+    @Override
+    public Integer getTotalFreeByDate(Integer hotel, Integer status, Date from, Date to) {
+        return getAllFreeByDate(hotel, status, from, to).size();
+    }
+
+    List<RoomMaster> getAllFreeByDate(Integer hotel, Integer status, Date from, Date to) {
+        // 获取所有空闲和已预定的房间
+        List<RoomMaster> rooms = roomMasterDao.getFreeAndReservedByDate(hotel, status, from, to);
+        for (RoomMaster room : rooms){
+            List<Reserve> reserves = reserveDao.getReserveByRoomId(room.getId(), Reserve.RESERVED, null, null);
+            for (int i = 0; i < reserves.size(); i++) {
+                Reserve reserve = reserves.get(i);
+                /**
+                 * 以下为时间冲突的判断逻辑：
+                 * 已预定时间：         \________________\
+                 * 要预定时间：  \________\ \_______\ \______\
+                 */
+                if (!((from.before(reserve.getEstCheckinDate()) && to.before(reserve.getEstCheckinDate()))
+                        || from.after(reserve.getEstCheckoutDate()) && to.after(reserve.getEstCheckoutDate()))) {
+                    // todo
+                    rooms.remove(room);
+                    break;
+                }
+            }
+        }
+        return rooms;
+    }
+
+    @Override
     public List<RoomMaster> getRoomByCondition(Integer hotelId, Integer type, Object content, Integer first, Integer total) {
         if (type == RoomController.TYPE_STATUS && Integer.parseInt(content.toString()) == RoomMaster.RESERVED) {
             List<Reserve> reserves = reserveDao.getAllReservesByDate(new Date());

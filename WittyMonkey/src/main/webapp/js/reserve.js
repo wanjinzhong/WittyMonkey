@@ -136,6 +136,6 @@ function showReserve(id, no, name) {
         maxmin: false,
         shade: 0.4,
         scrollbar: false,
-        type: 2,
+        type: 2
     });
 }

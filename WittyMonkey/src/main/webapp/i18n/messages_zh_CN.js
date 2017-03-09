@@ -129,3 +129,4 @@ var wrong_refund = "退还金错误";
 var unsubscribe_success = "退定成功";
 var unsubscribe_checkedin = "已经入住";
 var unsubscribe_unsubscribe = "已经退定";
+var choose_room_title = "选择房间";

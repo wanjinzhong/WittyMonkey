@@ -6,12 +6,16 @@ import org.springframework.stereotype.Repository;
 import com.wittymonkey.dao.IRoomMasterDao;
 import com.wittymonkey.entity.RoomMaster;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 @Repository(value = "roomMasterDao")
 public class RoomMasterDaoImpl extends GenericDaoImpl<RoomMaster> implements IRoomMasterDao {
+
+    private SimpleDateFormat sdf = new SimpleDateFormat("YYYY-MM-dd HH:mm:ss");
 
     @Override
     public RoomMaster getRoomById(Integer id) {
@@ -108,5 +112,14 @@ public class RoomMasterDaoImpl extends GenericDaoImpl<RoomMaster> implements IRo
             param.put("num",  Integer.parseInt(String.valueOf(content)));
         }
         return queryListHQL(hql, param, first, total);
+    }
+
+    @Override
+    public List<RoomMaster> getFreeAndReservedByDate(Integer hotel, Integer status, Date from, Date to) {
+        String hql = "from RoomMaster where floor.hotel.id = :hotelId amd status = :status and isDelete = false";
+        Map<String,Object> map = new HashMap<String, Object>();
+        map.put("hotelId", hotel);
+        map.put("status", status);
+        return queryListHQL(hql, map);
     }
 }
