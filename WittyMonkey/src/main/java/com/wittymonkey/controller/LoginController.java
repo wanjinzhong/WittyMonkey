@@ -7,6 +7,7 @@ import java.util.regex.Pattern;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.alibaba.fastjson.JSONArray;
 import com.wittymonkey.util.*;
 import com.wittymonkey.vo.SimplePlace;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -257,12 +258,30 @@ public class LoginController {
         return json.toJSONString();
     }
 
+    @RequestMapping(value = "getIndexInfo", method = RequestMethod.GET)
+    @ResponseBody
+    public String getUserInfo(HttpServletRequest request){
+        JSONObject jsonObject = new JSONObject();
+        User user = (User) request.getSession().getAttribute("loginUser");
+        Hotel hotel = (Hotel) request.getSession().getAttribute("hotel");
+        jsonObject.put("realName", user.getRealName());
+        List<Role> roles = user.getRoles();
+        List<String> rolesName = new ArrayList<String>();
+        for(Role role : roles){
+            rolesName.add(role.getName());
+        }
+        JSONArray jsonArray = new JSONArray();
+        jsonArray.addAll(rolesName);
+        jsonObject.put("roles", rolesName);
+        jsonObject.put("hotelName",hotel.getName());
+        return jsonObject.toJSONString();
+    }
     @RequestMapping(value = "index", method = RequestMethod.GET)
     public String index(HttpServletRequest request) {
         // 测试数据
-        User user = userService.getUserByLoginName("lyf");
+       /* User user = userService.getUserByLoginName("lyf");
         request.getSession().setAttribute("loginUser",user);
-        request.getSession().setAttribute("hotel",user.getHotel());
+        request.getSession().setAttribute("hotel",user.getHotel());*/
         return "index";
     }
 

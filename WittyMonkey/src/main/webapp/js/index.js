@@ -2,6 +2,7 @@
 layui.config({
     base: 'js/'
 }).use(['element', 'layer', 'navbar', 'tab'], function () {
+
     var element = layui.element(),
         $ = layui.jquery,
         layer = layui.layer,
@@ -34,6 +35,9 @@ layui.config({
     });
 
 });
+$(document).ready(function () {
+    getIndexInfo();
+});
 function sideBtnClick() {
     var sideWidth = $('#admin-side').width();
     if (sideWidth === 200) {
@@ -57,4 +61,26 @@ function sideBtnClick() {
             width: '200px'
         });
     }
+}
+
+function getIndexInfo() {
+    $.ajax({
+        url: "getIndexInfo.do",
+        dataType: "json",
+        type: "get",
+        success: function (data) {
+            var res = eval("(" + data + ")");
+            $("#realName").html(res["realName"]);
+            $(".hotel-name").html(res["hotelName"])
+            var roles = "";
+            for (var i in res["roles"]){
+                if (roles == ""){
+                    roles += res["roles"][i];
+                } else{
+                    roles += "/" + res["roles"][i];
+                }
+            }
+            $("#roles").html(roles);
+        }
+    });
 }

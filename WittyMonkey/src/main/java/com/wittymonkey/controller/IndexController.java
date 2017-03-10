@@ -212,9 +212,9 @@ public class IndexController {
 
     @RequestMapping(value = "toRoomManage", method = RequestMethod.GET)
     public String toRoomManage(HttpServletRequest request) {
-        User user = userDao.getUserByLoginName("lyf");
+        /*User user = userDao.getUserByLoginName("lyf");
         request.getSession().setAttribute("loginUser", user);
-        request.getSession().setAttribute("hotel", user.getHotel());
+        request.getSession().setAttribute("hotel", user.getHotel());*/
         return "room_manage";
     }
 
