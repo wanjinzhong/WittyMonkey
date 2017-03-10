@@ -25,23 +25,24 @@
 <fmt:setBundle basename="i18n/messages_${loginUser.setting.lang }"/>
 <body>
 <div class="container">
+    <input type="hidden" id="id"/>
     <table>
         <tr>
             <td class="td_title"><label class="layui-form-label"><fmt:message key="change.room"/></label></td>
-            <td><input class="layui-input" type="text" disabled value="${checkin.room.number}-${checkin.room.name}"/>
+            <td><input class="layui-input" type="text" disabled id="toRoom" value="${checkin.room.number}-${checkin.room.name}"/>
             </td>
             <td rowspan="2" class="to">
                 <svg class="icon">
                     <use xlink:href="#icon-arrow-right-copy"/>
                 </svg>
             </td>
-            <td><input class="layui-input" type="text" disabled/></td>
-            <td><i class="showRoom layui-icon">&#xe62d;</i></td>
+            <td><input class="layui-input" type="text" disabled id="toNumber"/></td>
+            <td><i class="showRoom layui-icon" onclick="showRoom()">&#xe62d;</i></td>
         </tr>
         <tr>
             <td class="td_title"><label class="layui-form-label"><fmt:message key="change.price"/></label></td>
             <td><input class="layui-input" type="text" disabled value="${checkin.price}"/></td>
-            <td><input class="layui-input" type="text" disabled/></td>
+            <td><input class="layui-input" type="text" disabled id="toPrice"/></td>
         </tr>
         <tr>
             <td class="td_title"><label class="layui-form-label"><fmt:message key="change.date"/></label></td>

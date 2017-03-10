@@ -98,11 +98,30 @@ public class RoomController {
 
     @RequestMapping(value = "toChooseRoom", method = GET)
     public String toChooseRoom(HttpServletRequest request){
-        Integer id = Integer.parseInt(request.getParameter("id"));
-        Checkin checkin = checkinService.getCheckinById(id);
-
-        // todo
+        Integer checkinId = Integer.parseInt(request.getParameter("id"));
+        request.getSession().setAttribute("checkinId", checkinId);
         return "choose_room";
+    }
+
+    @RequestMapping(value = "getFreeRoomByDateRange", method = GET)
+    @ResponseBody
+    public String getFreeRoomByDateRange(HttpServletRequest request){
+        JSONObject json = new JSONObject();
+        Integer checkinId = Integer.parseInt(request.getParameter("id"));
+        Integer curr = Integer.parseInt(request.getParameter("curr"));
+        User loginUser = (User) request.getSession().getAttribute("loginUser");
+        Integer pageSize = loginUser.getSetting().getPageSize();
+        Hotel hotel = (Hotel) request.getSession().getAttribute("hotel");
+        Checkin checkin = checkinService.getCheckinById(checkinId);
+        Integer count = roomMasterService.getTotalFreeByDate(hotel.getId(),RoomMaster.FREE, new Date(), checkin.getEstCheckoutDate());
+        List<RoomMaster> rooms = roomMasterService.getFreeByDate(hotel.getId(),RoomMaster.FREE,new Date(), checkin.getEstCheckoutDate(),(curr-1)*pageSize, pageSize);
+        request.getSession().setAttribute("rooms", rooms);
+        json.put("count", count);
+        json.put("pageSize", pageSize);
+        JSONArray array = new JSONArray();
+        array.addAll(ChangeToSimple.roomList(rooms));
+        json.put("data", array);
+        return json.toJSONString();
     }
 
     @RequestMapping(value = "toCheckin", method = GET)

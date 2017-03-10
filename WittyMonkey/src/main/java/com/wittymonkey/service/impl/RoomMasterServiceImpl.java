@@ -69,7 +69,12 @@ public class RoomMasterServiceImpl implements IRoomMasterService {
 
     @Override
     public List<RoomMaster> getFreeByDate(Integer hotel, Integer status, Date from, Date to, Integer first, Integer total) {
-        return getAllFreeByDate(hotel, status, from, to).subList(first, first + total);
+        if (first == null || total == null){
+            return getAllFreeByDate(hotel, status, from, to);
+        } else {
+            List<RoomMaster> rooms = getAllFreeByDate(hotel, status, from, to);
+            return rooms.subList(first, (first + total) > rooms.size()?rooms.size():first + total);
+        }
     }
 
     @Override
@@ -77,10 +82,14 @@ public class RoomMasterServiceImpl implements IRoomMasterService {
         return getAllFreeByDate(hotel, status, from, to).size();
     }
 
-    List<RoomMaster> getAllFreeByDate(Integer hotel, Integer status, Date from, Date to) {
+
+    private List<RoomMaster> getAllFreeByDate(Integer hotel, Integer status, Date from, Date to) {
         // 获取所有空闲和已预定的房间
         List<RoomMaster> rooms = roomMasterDao.getFreeAndReservedByDate(hotel, status, from, to);
-        for (RoomMaster room : rooms){
+        Iterator<RoomMaster> iterator = rooms.iterator();
+        // 移除其中已预定的房间
+        while (iterator.hasNext()){
+            RoomMaster room = iterator.next();
             List<Reserve> reserves = reserveDao.getReserveByRoomId(room.getId(), Reserve.RESERVED, null, null);
             for (int i = 0; i < reserves.size(); i++) {
                 Reserve reserve = reserves.get(i);
@@ -91,8 +100,7 @@ public class RoomMasterServiceImpl implements IRoomMasterService {
                  */
                 if (!((from.before(reserve.getEstCheckinDate()) && to.before(reserve.getEstCheckinDate()))
                         || from.after(reserve.getEstCheckoutDate()) && to.after(reserve.getEstCheckoutDate()))) {
-                    // todo
-                    rooms.remove(room);
+                    iterator.remove();
                     break;
                 }
             }

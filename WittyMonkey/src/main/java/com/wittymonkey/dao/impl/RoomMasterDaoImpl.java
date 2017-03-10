@@ -116,7 +116,7 @@ public class RoomMasterDaoImpl extends GenericDaoImpl<RoomMaster> implements IRo
 
     @Override
     public List<RoomMaster> getFreeAndReservedByDate(Integer hotel, Integer status, Date from, Date to) {
-        String hql = "from RoomMaster where floor.hotel.id = :hotelId amd status = :status and isDelete = false";
+        String hql = "from RoomMaster where floor.hotel.id = :hotelId and status = :status and isDelete = false order by number";
         Map<String,Object> map = new HashMap<String, Object>();
         map.put("hotelId", hotel);
         map.put("status", status);
