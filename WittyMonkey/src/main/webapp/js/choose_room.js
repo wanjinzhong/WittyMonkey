@@ -2,8 +2,10 @@
  * Created by neil on 17-3-9.
  */
 var laypage;
-layui.use('laypage', function () {
+var layer;
+layui.use(['laypage', 'layer'], function () {
     laypage = layui.laypage;
+    layer = layui.layer;
     var checkinId = $("#checkinId").val();
     var condition = {"id": checkinId};
     page("getFreeRoomByDateRange.do", 1, condition);
@@ -32,12 +34,12 @@ function refreshTable(obj) {
     $("#dataTabel").html(html);
 }
 function choose(obj) {
-    var id = $(obj).parent().parent().find("#id").val();
-    var number = $(obj).parent().parent().find("#number").html();
-    var name = $(obj).parent().parent().find("#name").html();
-    var price = $(obj).parent().parent().find("#price").html();
-    parent.$("#id").val(id);
-    parent.$("#toRoom").val(number + "-" + name);
-    parent.$("#toPrice").val(price);
+    var roomId = $(obj).parent().parent().find("#id").val();
+    // var checkinId = $("#checkinId").val();
+    parent.$("#toId").val($(obj).parent().parent().find("#id").val());
+    parent.$("#toNumber").val($(obj).parent().parent().find("#number").html());
+    parent.$("#toName").val($(obj).parent().parent().find("#name").html());
+    parent.$("#toPrice").val($(obj).parent().parent().find("#price").html());
+    parent.calcDiff();
     closeMe();
 }

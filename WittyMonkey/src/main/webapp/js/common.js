@@ -100,6 +100,14 @@ function page(url, curr, condition) {
     });
 }
 
+function validateLength(inp, name, length) {
+    var content = $(inp).val();
+    if (content.length > content){
+        layer.tips(messageOfValidateLength(name, length), {tips: 2});
+        return false;
+    }
+    return true;
+}
 
 /**
  * 验证楼层号

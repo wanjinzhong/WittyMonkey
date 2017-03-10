@@ -63,7 +63,7 @@ public class Checkin implements Serializable{
 	@Column(length=1024)
 	private String note;
 
-	@OneToMany(targetEntity = ChangeRoom.class, mappedBy = "checkin")
+	@OneToMany(targetEntity = ChangeRoom.class, mappedBy = "checkin", cascade = {CascadeType.MERGE, CascadeType.PERSIST})
 	private List<ChangeRoom> changeRooms = new ArrayList<ChangeRoom>();
 
 	public Integer getId() {

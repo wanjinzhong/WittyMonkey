@@ -40,6 +40,9 @@
         </tbody>
     </table>
     <div id="page"/>
+    <div id="btnGroup">
+        <input type="button" class="layui-btn layui-btn-danger layui-btn-radius" value="<fmt:message key="btn.close"/>" onclick="closeMe()"/>
+    </div>
 </div>
 </body>
 </html>

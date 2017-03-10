@@ -3,15 +3,8 @@ package com.wittymonkey.entity;
 import java.io.Serializable;
 import java.util.Date;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
+
 /**
  * 换房
  * @author neilw
@@ -31,11 +24,11 @@ public class ChangeRoom implements Serializable{
 	@JoinColumn(name="checkin_id", referencedColumnName="id")
 	private Checkin checkin;
 	
-	@ManyToOne(targetEntity=RoomMaster.class)
+	@ManyToOne(targetEntity=RoomMaster.class, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
 	@JoinColumn(name="from_room_id", referencedColumnName="id")
 	private RoomMaster fromRoom;
 	
-	@ManyToOne(targetEntity=RoomMaster.class)
+	@ManyToOne(targetEntity=RoomMaster.class, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
 	@JoinColumn(name="to_room_id", referencedColumnName="id")
 	private RoomMaster toRoom;
 	

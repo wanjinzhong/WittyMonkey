@@ -26,43 +26,56 @@
 <body>
 <div class="container">
     <input type="hidden" id="id"/>
+    <input type="hidden" id="checkin_id" value="${checkin.id}"/>
+    <input type="hidden" id="toId"/>
+    <div class="content">
     <table>
         <tr>
-            <td class="td_title"><label class="layui-form-label"><fmt:message key="change.room"/></label></td>
-            <td><input class="layui-input" type="text" disabled id="toRoom" value="${checkin.room.number}-${checkin.room.name}"/>
+            <td class="td_title"><label class="layui-form-label"><fmt:message key="room.add.number"/></label></td>
+            <td><input class="layui-input" type="text" disabled value="${checkin.room.number}" id="fromNumber"/>
             </td>
-            <td rowspan="2" class="to">
+            <td rowspan="3" class="to">
                 <svg class="icon">
                     <use xlink:href="#icon-arrow-right-copy"/>
                 </svg>
             </td>
-            <td><input class="layui-input" type="text" disabled id="toNumber"/></td>
+            <td><input class="layui-input" type="text" disabled  id="toNumber"}/></td>
             <td><i class="showRoom layui-icon" onclick="showRoom()">&#xe62d;</i></td>
         </tr>
         <tr>
+            <td class="td_title"><label class="layui-form-label"><fmt:message key="room.add.name"/></label></td>
+            <td><input class="layui-input" type="text" disabled value="${checkin.room.price}" id="fromName"/></td>
+            <td><input class="layui-input" type="text" disabled id="toName"/></td>
+        </tr>
+        <tr>
             <td class="td_title"><label class="layui-form-label"><fmt:message key="change.price"/></label></td>
-            <td><input class="layui-input" type="text" disabled value="${checkin.price}"/></td>
+            <td><input class="layui-input" type="text" disabled value="${checkin.price}" id="fromPrice"/></td>
             <td><input class="layui-input" type="text" disabled id="toPrice"/></td>
         </tr>
         <tr>
             <td class="td_title"><label class="layui-form-label"><fmt:message key="change.date"/></label></td>
             <td colspan="3">
-                <input type="hidden" id="checkin_id" value="${checkin.id}"/>
+                <input id="total" type="hidden" value="${total}"/>
                 <input class="layui-input" type="text" disabled
                                    value="${now} - ${to}  <fmt:message key="change.total"/> ${total} <fmt:message key="change.day"/>">
             </td>
         </tr>
         <tr>
             <td class="td_title"><label class="layui-form-label"><fmt:message key="change.diff"/></label></td>
-            <td colspan="3"><input class="layui-input" disabled
-                                   value="<c:if test='${diff <= 0}'><fmt:message key='change.price.refund'/>${-diff}</c:if><c:if test='${diff > 0}'><fmt:message key='change.price.pay'/>${diff}</c:if>">
+            <td colspan="3"><input class="layui-input" disabled id="diff"/>
             </td>
         </tr>
         <tr>
             <td class="td_title"><label class="layui-form-label"><fmt:message key="change.reason"/></label></td>
-            <td colspan="3"><textarea class="layui-textarea"></textarea></td>
+            <td colspan="3"><textarea class="layui-textarea" onblur="validateLength(this,<fmt:message key="change.reason"/>,1024)" id="reason"></textarea></td>
         </tr>
     </table>
+
+    </div>
+    <div id="btnGroup">
+        <input type="button" class="layui-btn layui-btn-danger layui-btn-radius" value="<fmt:message key="btn.close"/>" onclick="closeMe()"/>
+        <input type="button" class="layui-btn layui-btn-radius" value="<fmt:message key="btn.change"/>" onclick="change()"/>
+    </div>
 </div>
 </body>
 </html>
