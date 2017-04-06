@@ -1,12 +1,12 @@
 /**
- * Created by Neil on 2017/2/20.
+ * Created by neilw on 2017/3/25.
  */
 var layer;
 var laypage;
 layui.use(['layer', 'laypage'],function () {
     layer = layui.layer;
     laypage = layui.laypage;
-    page("getFloorByPage.do");
+    page("getMaterialTypeByPage.do");
 });
 
 function refreshTable(obj) {
@@ -18,33 +18,33 @@ function refreshTable(obj) {
     } else {
         for (var i in obj) {
             html += "<tr class='text-c'>" +
-                "<td>" + obj[i].floorNo + "</td>" +
-                "<td>" + obj[i].roomNum + "</td>" +
+                "<td>" + obj[i].name + "</td>" +
+                "<td>" + obj[i].materielNum + "</td>" +
                 "<td>" + obj[i].note + "</td>" +
                 "<td>" + obj[i].entryUser + "</td>" +
                 "<td>" + formatDate(obj[i].entryDatetime) + "</td>" +
                 "<td>" +
-                "<i class='editBtn layui-icon layui-btn layui-btn-primary layui-btn-small' onclick='editFloor(" + obj[i].floorNo + ")'>&#xe642; " + btn_edit + "</i>" +
-                "<i class='deleteBtn layui-icon layui-btn layui-btn-primary layui-btn-small' onclick='deleteFloor(" + obj[i].floorNo + ")'>&#xe640; " + btn_delete + "</i>" +
+                "<i class='editBtn layui-icon layui-btn layui-btn-primary layui-btn-small' onclick='editMaterielType(" + obj[i].id + ")'>&#xe642; " + btn_edit + "</i>" +
+                "<i class='deleteBtn layui-icon layui-btn layui-btn-primary layui-btn-small' onclick='deleteMaterielType(" + obj[i].id + ")'>&#xe640; " + btn_delete + "</i>" +
                 "</td>" +
                 "</tr>";
         }
     }
     $("#dataTabel").html(html);
 }
-function deleteFloor(floorNo) {
-    layer.confirm(floor_manage_delete_hint, {icon: 7, title: floor_manage_delete_title},
+function deleteMaterielType(typeId) {
+    layer.confirm(materiel_type_delete_hint, {icon: 7, title: materiel_type_delete_title},
         function (index) {
             $.ajax({
-                url: "deleteFloor.do",
-                data: {"floorNo": floorNo},
+                url: "deleteMaterielType.do",
+                data: {"typeId": typeId},
                 dataType: "json",
                 type: "GET",
                 success: function (data) {
                     var result = eval("(" + data + ")");
                     switch (result.status) {
                         case 400:
-                            layer.msg(floor_manage_delete_not_exist, {
+                            layer.msg(materiel_type_not_exist, {
                                 icon: 2, time: 2000
                             }, function () {
                                 parent.location.reload();
@@ -60,7 +60,7 @@ function deleteFloor(floorNo) {
                             });
                             break;
                         case 200:
-                            layer.msg(floor_manage_delete_success, {
+                            layer.msg(materiel_type_delete_success, {
                                 icon: 6,
                                 time: 2000
                             }, function () {
@@ -74,23 +74,23 @@ function deleteFloor(floorNo) {
             layer.close(index);
         });
 }
-function editFloor(obj) {
+function editMaterielType(typeId) {
     layer.open({
         type: 2,
         area: ['400px', '280px'],
         maxmin: false,
         shade: 0.4,
-        title: floor_manage_edit_title,
-        content: "toEditFloor.do?floorNo=" + obj
+        title: materiel_type_edit_title,
+        content: "toEditMaterielType.do?typeId=" + typeId
     });
 }
-function showAddFloor() {
+function showAddMaterielType() {
     layer.open({
         type: 2,
         area: ['400px', '280px'],
         maxmin: false,
         shade: 0.4,
-        title: floor_manage_add_title,
-        content: "toAddFloor.do"
+        title: materiel_type_add_title,
+        content: "toAddMaterielType.do"
     });
 }

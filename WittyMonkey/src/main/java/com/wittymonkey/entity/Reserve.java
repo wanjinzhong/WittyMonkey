@@ -60,7 +60,11 @@ public class Reserve implements Serializable{
 	@Column
     private Double refund;
 
-	@Column(name="entry_datetime")
+	// 车牌号
+	@Column(length = 100, name="plate_no")
+    private String plateNo;
+
+    @Column(name="entry_datetime")
 	private Date entryDatetime;
 
 	@ManyToOne(targetEntity=User.class, fetch=FetchType.EAGER)
@@ -164,5 +168,13 @@ public class Reserve implements Serializable{
 
     public void setRefund(Double refund) {
         this.refund = refund;
+    }
+
+    public String getPlateNo() {
+        return plateNo;
+    }
+
+    public void setPlateNo(String plateNo) {
+        this.plateNo = plateNo;
     }
 }

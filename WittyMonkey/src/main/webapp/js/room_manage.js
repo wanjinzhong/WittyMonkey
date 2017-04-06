@@ -18,7 +18,7 @@ layui.use(['layer', 'form', 'laypage'], function () {
 function showAddRoom() {
     layer.open({
         title: room_add_title,
-        area: ['1000px', '700px'],
+        area: ['800px', '530px'],
         maxmin: false,
         shade: 0.4,
         content: "toAddRoom.do",

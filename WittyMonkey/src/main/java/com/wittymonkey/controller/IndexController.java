@@ -54,11 +54,6 @@ public class IndexController {
             materielMenu.put("icon", "#icon-daoluputonghuowuyunshu");
             materielMenu.put("spread", false);
             JSONArray materielChildren = new JSONArray();
-            //添加物料管理子菜单
-            JSONObject materiel = new JSONObject();
-            materiel.put("title", props.getProperty("index.menu.materiel"));
-            materiel.put("href", "toMaterielManage.do");
-            materielChildren.add(materiel);
             //添加物料类型子菜单
             JSONObject materielType = new JSONObject();
             materielType.put("title", props.getProperty("index.menu.materiel.type"));
@@ -66,6 +61,11 @@ public class IndexController {
             materielChildren.add(materielType);
             materielMenu.put("children", materielChildren);
             jsonArray.add(materielMenu);
+            //添加物料管理子菜单
+            JSONObject materiel = new JSONObject();
+            materiel.put("title", props.getProperty("index.menu.materiel"));
+            materiel.put("href", "toMaterielManage.do");
+            materielChildren.add(materiel);
 
             //库存菜单
             JSONObject inventoryMenu = new JSONObject();

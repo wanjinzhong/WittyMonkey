@@ -35,7 +35,7 @@ public class RoomController {
     public static final Integer TYPE_STATUS = 0;
     public static final Integer TYPE_FLOOR_ID = 1;
     public static final Integer TYPE_ROOM_NO = 2;
-    public static final Integer TYPE_ROOM_NAME = 3;
+    public static final Integer TYPE_ROOM_NAME = 3 ;
     public static final Integer TYPE_PERSON_NUM = 4;
 
     public static final String ADD = "add";

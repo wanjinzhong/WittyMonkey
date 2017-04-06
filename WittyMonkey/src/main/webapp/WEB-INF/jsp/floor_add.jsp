@@ -22,7 +22,6 @@
 <script type="text/javascript" src="i18n/messages_${loginUser.setting.lang }.js"></script>
 <fmt:setBundle basename="i18n/messages_${loginUser.setting.lang }"/>
 <body>
-<div id="border">
     <form id="add_form">
         <!-- java端处理方式 -->
         <input type="hidden" name="method" value="add"/>
@@ -45,6 +44,5 @@
         <input type="button" class="layui-btn layui-btn-radius" value="<fmt:message key="btn.save"/>"
                onclick="save()"/>
     </div>
-</div>
 </body>
 </html>

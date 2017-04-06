@@ -12,7 +12,7 @@ function closeMe() {
 /**
  * 刷新页面
  */
-function reload(){
+function reload() {
     window.location.reload();
 }
 /**
@@ -21,27 +21,27 @@ function reload(){
 function formatDate(obj) {
     var time = new Date(obj);
     var year = time.getFullYear();
-    var month = time.getMonth()+1;
+    var month = time.getMonth() + 1;
     var date = time.getDate();
     var hour = time.getHours();
     var minutes = time.getMinutes();
     var second = time.getSeconds();
 
     //月，日，时，分，秒 小于10时，补0
-    if(month<10){
+    if (month < 10) {
         month = "0" + month;
     }
-    if(date<10){
+    if (date < 10) {
         date = "0" + date;
     }
-    if(hour <10){
+    if (hour < 10) {
         hour = "0" + hour;
     }
-    if(minutes <10){
+    if (minutes < 10) {
         minutes = "0" + minutes;
     }
-    if(second <10){
-        second = "0" + second ;
+    if (second < 10) {
+        second = "0" + second;
     }
     return year + "-" + month + "-" + date + " " + hour + ":" + minutes + ":" + second;
 }
@@ -52,8 +52,8 @@ function formatDate(obj) {
  */
 function validateNote(inp) {
     var note = $(inp).val();
-    if (note.length > 1024){
-        layer.tips(messageOfValidateLength(message_note, 1024), inp , {tips: 2});
+    if (note.length > 1024) {
+        layer.tips(messageOfValidateLength(message_note, 1024), inp, {tips: 2});
         return false;
     } else {
         return true;
@@ -64,11 +64,11 @@ function validateNote(inp) {
  * @param curr
  */
 function page(url, curr, condition) {
-    if (curr == undefined){
+    if (curr == undefined) {
         curr = 1;
     }
-    if (condition == undefined){
-        condition = {"curr":curr};
+    if (condition == undefined) {
+        condition = {"curr": curr};
     } else {
         condition["curr"] = curr;
     }
@@ -91,7 +91,7 @@ function page(url, curr, condition) {
                 skip: true,
                 jump: function (obj, first) {
                     if (!first) {
-                        page(url,obj.curr, condition);
+                        page(url, obj.curr, condition);
                     }
                     refreshTable(res["data"]);
                 }
@@ -122,10 +122,10 @@ function validateFloorNo(method, inp) {
             async: false,
             success: function (data) {
                 var result = eval("(" + data + ")");
-                if (result.status == 200){
+                if (result.status == 200) {
                     layer.tips(floor_validate_no_exist, inp, {tips: 2});
                     funResult = false;
-                } else if (result.status == 400){
+                } else if (result.status == 400) {
                     layer.tips(floor_validate_no_wrong, inp, {tips: 2});
                     funResult = false;
                 } else {
@@ -136,6 +136,40 @@ function validateFloorNo(method, inp) {
         return funResult;
     }
 
+}
+
+/**
+ * 验证物料类型名称
+ * @param inp
+ * @returns {boolean}
+ */
+function validateMaterielTypeName(method, inp) {
+    var name = $(inp).val();
+    var funResult;
+    if (name.length <= 0){
+        layer.tips(messageOfValidateNull(name), inp, {tips: 2});
+        return false;
+    } else if (name.length > 50){
+        layer.tips(messageOfValidateLength(name, 50), inp, {tips: 2});
+        return false;
+    }
+    $.ajax({
+        type: "GET",
+        url: "validateMaterielTypeName.do",
+        data: {"name": name, "method": method},
+        dataType: "json",
+        async: false,
+        success: function (data) {
+            var result = eval("(" + data + ")");
+            if (result.status == 200) {
+                layer.tips(materiel_type_validate_name_exist, inp, {tips: 2});
+                funResult = false;
+            } else {
+                funResult = true;
+            }
+        }
+    });
+    return funResult;
 }
 
 /**
@@ -216,15 +250,15 @@ function validateTel(inp) {
 /**
  * 验证金额
  */
-function validateMoney(inp){
+function validateMoney(inp) {
     var deposit = $(inp).val();
     var reg = /^[0-9]+(\.[0-9]+)?$/;
-    if (deposit.length <= 0){
+    if (deposit.length <= 0) {
         layer.tips(messageOfValidateNull(money), inp, {tips: 2});
         return false;
     }
-    if (!reg.test(deposit)){
-        layer.tips(money_wrong, inp, {tips:2});
+    if (!reg.test(deposit)) {
+        layer.tips(money_wrong, inp, {tips: 2});
         return false;
     }
     return true;
@@ -232,10 +266,10 @@ function validateMoney(inp){
 
 function validateMoneyValue(money) {
     var reg = /^[0-9]+(\.[0-9]+)?$/;
-    if (money.length <= 0){
+    if (money.length <= 0) {
         return false;
     }
-    if (!reg.test(money)){
+    if (!reg.test(money)) {
         return false;
     }
     return true;
@@ -244,38 +278,38 @@ function validateMoneyValue(money) {
 /**
  *计算天数差的函数，通用
  */
-function dateDiff(from,  to){    //sDate1和sDate2是2006-12-18格式
-    if (from == undefined || to == undefined){
+function dateDiff(from, to) {    //sDate1和sDate2是2006-12-18格式
+    if (from == undefined || to == undefined) {
         return 0;
     }
-    if (from instanceof Date){
+    if (from instanceof Date) {
         from = from.format("yyyy-MM-dd");
     }
-    var fromDate = new Date(from.replace(/-/g,"/"));
-    var toDate = new Date(to.replace(/-/g,"/"));
-    return  parseInt(Math.abs(toDate  -  fromDate)  /  1000  /  60  /  60  /24)    //把相差的毫秒数转换为天数;
+    var fromDate = new Date(from.replace(/-/g, "/"));
+    var toDate = new Date(to.replace(/-/g, "/"));
+    return parseInt(Math.abs(toDate - fromDate) / 1000 / 60 / 60 / 24)    //把相差的毫秒数转换为天数;
 }
 /**
  * 日期格式化
  * @param fmt
  * @returns {*}
  */
-Date.prototype.format = function(fmt) {
+Date.prototype.format = function (fmt) {
     var o = {
-        "M+" : this.getMonth()+1,                 //月份
-        "d+" : this.getDate(),                    //日
-        "h+" : this.getHours(),                   //小时
-        "m+" : this.getMinutes(),                 //分
-        "s+" : this.getSeconds(),                 //秒
-        "q+" : Math.floor((this.getMonth()+3)/3), //季度
-        "S"  : this.getMilliseconds()             //毫秒
+        "M+": this.getMonth() + 1,                 //月份
+        "d+": this.getDate(),                    //日
+        "h+": this.getHours(),                   //小时
+        "m+": this.getMinutes(),                 //分
+        "s+": this.getSeconds(),                 //秒
+        "q+": Math.floor((this.getMonth() + 3) / 3), //季度
+        "S": this.getMilliseconds()             //毫秒
     };
-    if(/(y+)/.test(fmt)) {
-        fmt=fmt.replace(RegExp.$1, (this.getFullYear()+"").substr(4 - RegExp.$1.length));
+    if (/(y+)/.test(fmt)) {
+        fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
     }
-    for(var k in o) {
-        if(new RegExp("("+ k +")").test(fmt)){
-            fmt = fmt.replace(RegExp.$1, (RegExp.$1.length==1) ? (o[k]) : (("00"+ o[k]).substr((""+ o[k]).length)));
+    for (var k in o) {
+        if (new RegExp("(" + k + ")").test(fmt)) {
+            fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
         }
     }
     return fmt;

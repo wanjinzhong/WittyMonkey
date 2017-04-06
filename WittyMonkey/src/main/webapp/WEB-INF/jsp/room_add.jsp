@@ -21,7 +21,6 @@
     <fmt:setBundle basename="i18n/messages_${loginUser.setting.lang }"/>
 </head>
 <body>
-<div class="add-form">
     <form id="room-form" class="layui-form">
         <!-- java端处理方式 -->
         <input type="hidden" name="method" value="add"/>
@@ -89,18 +88,17 @@
                 </td>
             </tr>
             <tr>
-                <td><label class="layui-form-label"><fmt:message key="room.add.other_facility"/></label></td>
+                <td style="margin-top: 10px;"><label class="layui-form-label"><fmt:message key="room.add.other_facility"/></label></td>
                 <td colspan="3">
                     <div class=""><textarea class="layui-textarea" id="otherFacility" name="otherFacility" onblur="validateOtherFacility(this)"></textarea></div>
                 </td>
             </tr>
             <tr>
-                <td><label class="layui-form-label"><fmt:message key="note"/></label></td>
+                <td style="margin-top: 10px;"><label class="layui-form-label"><fmt:message key="note"/></label></td>
                 <td colspan="3"><textarea class="layui-textarea" id="note" name="note" onblur="validateNote(this)"></textarea></td>
             </tr>
         </table>
     </form>
-</div>
 <div id="btnGroup">
     <input type="button" class="layui-btn layui-btn-danger layui-btn-radius" value="<fmt:message key="btn.close"/>" onclick="closeMe()"/>
     <input type="button" class="layui-btn layui-btn-radius" value="<fmt:message key="btn.save"/>" onclick="save('add')"/>

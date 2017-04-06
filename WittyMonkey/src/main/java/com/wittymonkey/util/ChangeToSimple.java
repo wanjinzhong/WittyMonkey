@@ -1,11 +1,10 @@
 package com.wittymonkey.util;
 
-import com.wittymonkey.entity.Floor;
-import com.wittymonkey.entity.Reserve;
-import com.wittymonkey.entity.RoomMaster;
+import com.wittymonkey.entity.*;
 import com.wittymonkey.service.IReserveService;
 import com.wittymonkey.service.IRoomMasterService;
 import com.wittymonkey.vo.SimpleFloor;
+import com.wittymonkey.vo.SimpleMaterielType;
 import com.wittymonkey.vo.SimpleReserve;
 import com.wittymonkey.vo.SimpleRoom;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +12,7 @@ import sun.java2d.pipe.SpanShapeRenderer;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -26,9 +26,10 @@ public class ChangeToSimple {
             SimpleFloor simpleFloor = new SimpleFloor();
             simpleFloor.setId(floor.getId());
             simpleFloor.setFloorNo(floor.getFloorNo());
-            for (int i = 0; i < floor.getRoomMasters().size(); i ++){
-                if (floor.getRoomMasters().get(i).getDelete() == true){
-                    floor.getRoomMasters().remove(i);
+            Iterator<RoomMaster> it = floor.getRoomMasters().iterator();
+            while(it.hasNext()){
+                if(it.next().getDelete()){
+                    it.remove();
                 }
             }
             simpleFloor.setRoomNum(floor.getRoomMasters().size());
@@ -79,5 +80,20 @@ public class ChangeToSimple {
             simpleReserves.add(simpleReserve);
         }
         return simpleReserves;
+    }
+
+    public static List<SimpleMaterielType> materielTypeList(List<MaterielType> materielTypes){
+        List<SimpleMaterielType> simpleMaterielTypes = new ArrayList<SimpleMaterielType>();
+        for(MaterielType materielType : materielTypes){
+            SimpleMaterielType simpleMaterielType = new SimpleMaterielType();
+            simpleMaterielType.setId(materielType.getId());
+            simpleMaterielType.setName(materielType.getName());
+            simpleMaterielType.setNote(materielType.getNote());
+            simpleMaterielType.setEntryUser(materielType.getEntryUser().getRealName());
+            simpleMaterielType.setEntryDatetime(materielType.getEntryDatetime());
+            simpleMaterielType.setMaterielNum(materielType.getMateriels().size());
+            simpleMaterielTypes.add(simpleMaterielType);
+        }
+        return simpleMaterielTypes;
     }
 }

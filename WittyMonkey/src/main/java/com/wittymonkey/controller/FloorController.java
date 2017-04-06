@@ -269,8 +269,8 @@ public class FloorController {
             return 400;
         }
         if (floorService.isFloorExist(hotel.getId(), floorNo)) {
-            if (method.equals(ADD) || method.equals(DELETE) ||
-                    (method.equals(UPDATE) && floorNo != editFloorNo)) {
+            if (ADD.equals(method) || DELETE.equals(method) ||
+                    (UPDATE.equals(method) && floorNo != editFloorNo)) {
                 return 200;
             } else {
                 return 201;

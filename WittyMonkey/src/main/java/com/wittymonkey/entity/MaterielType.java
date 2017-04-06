@@ -2,18 +2,10 @@ package com.wittymonkey.entity;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 
 /**
@@ -43,7 +35,30 @@ public class MaterielType implements Serializable{
 	
 	@Column(length=1024)
 	private String note;
-	
+
+	@Column(name="entry_datetime")
+	private Date entryDatetime;
+
+	@ManyToOne(targetEntity=User.class, fetch= FetchType.EAGER)
+	@JoinColumn(name="entry_id", referencedColumnName="id")
+	private User entryUser;
+
+	public Date getEntryDatetime() {
+		return entryDatetime;
+	}
+
+	public void setEntryDatetime(Date entryDatetime) {
+		this.entryDatetime = entryDatetime;
+	}
+
+	public User getEntryUser() {
+		return entryUser;
+	}
+
+	public void setEntryUser(User entryUser) {
+		this.entryUser = entryUser;
+	}
+
 	public String getNote() {
 		return note;
 	}

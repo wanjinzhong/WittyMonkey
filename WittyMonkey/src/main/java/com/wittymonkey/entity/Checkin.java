@@ -63,6 +63,10 @@ public class Checkin implements Serializable{
 	@Column(length=1024)
 	private String note;
 
+	// 车牌号
+	@Column(length = 100, name="plate_no")
+	private String plateNo;
+
 	@OneToMany(targetEntity = ChangeRoom.class, mappedBy = "checkin")
 	private List<ChangeRoom> changeRooms = new ArrayList<ChangeRoom>();
 
@@ -168,5 +172,13 @@ public class Checkin implements Serializable{
 
 	public void setChangeRooms(List<ChangeRoom> changeRooms) {
 		this.changeRooms = changeRooms;
+	}
+
+	public String getPlateNo() {
+		return plateNo;
+	}
+
+	public void setPlateNo(String plateNo) {
+		this.plateNo = plateNo;
 	}
 }
