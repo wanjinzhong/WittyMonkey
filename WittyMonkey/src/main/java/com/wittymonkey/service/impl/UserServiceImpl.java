@@ -8,6 +8,8 @@ import com.wittymonkey.dao.IUserDao;
 import com.wittymonkey.entity.User;
 import com.wittymonkey.service.IUserService;
 
+import java.util.List;
+
 @Service(value = "userService")
 public class UserServiceImpl implements IUserService {
 
@@ -49,6 +51,15 @@ public class UserServiceImpl implements IUserService {
 	@Override
 	public User getUserById(Integer id) {
 		return userDao.getUserById(id);
+	}
+
+	public Integer getTotalByHotel(Integer hotelId){
+		return userDao.getTotalByHotel(hotelId);
+	}
+
+	@Override
+	public List<User> getUserByPage(Integer hotelId, Integer start, Integer total) {
+		return userDao.getUserByPage(hotelId, start, total);
 	}
 
 }

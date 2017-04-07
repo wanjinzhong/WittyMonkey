@@ -80,15 +80,26 @@ public class User implements Serializable {
 	@Column(name = "regist_date")
 	private Date registDate;
 
-	@Column(length=1024)
-	private String note;
+	@Column(name = "dimission_date")
+	private Date dimissionDate;
 
-	public String getNote() {
-		return note;
+	@Column(length=1024, name = "dimission_note")
+	private String dimissionNote;
+
+	public Date getDimissionDate() {
+		return dimissionDate;
 	}
 
-	public void setNote(String note) {
-		this.note = note;
+	public void setDimissionDate(Date dimissionDate) {
+		this.dimissionDate = dimissionDate;
+	}
+
+	public String getDimissionNote() {
+		return dimissionNote;
+	}
+
+	public void setDimissionNote(String dimissionNote) {
+		this.dimissionNote = dimissionNote;
 	}
 
 	public Integer getId() {

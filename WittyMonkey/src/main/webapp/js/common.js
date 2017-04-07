@@ -212,8 +212,7 @@ function validateRealName(inp) {
 function validateTel(inp) {
     var tele = $(inp).val();
     if (tele.length <= 0) {
-        layer.tips(messageOfValidateNull(tel), inp, {tips: 2});
-        return false;
+        return true;
     }
     if (tele.length > 20) {
         layer.tips(messageOfValidateLength(tel, 20), inp, {tips: 2});

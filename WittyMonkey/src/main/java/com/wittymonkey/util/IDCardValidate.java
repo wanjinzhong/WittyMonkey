@@ -8,6 +8,7 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.servlet.ServletContext;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.ContextLoader;
@@ -70,6 +71,9 @@ public class IDCardValidate {
 	 * @return
 	 */
 	public static boolean validate(String id) {
+		if (StringUtils.isBlank(id)){
+			return false;
+		}
 		if (id.length() != 18){
 			return false;
 		}

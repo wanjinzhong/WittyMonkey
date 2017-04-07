@@ -2,6 +2,8 @@ package com.wittymonkey.service;
 
 import com.wittymonkey.entity.User;
 
+import java.util.List;
+
 public interface IUserService {
 	
 	/**
@@ -52,4 +54,13 @@ public interface IUserService {
 	 * </table>
 	 */
 	boolean validateLoginByEmail(String email, String password);
+
+	/**
+	 * 获取酒店内员工总数
+	 * @param hotelId
+	 * @return
+	 */
+	Integer getTotalByHotel(Integer hotelId);
+
+	List<User> getUserByPage(Integer hotelId, Integer start, Integer total);
 }

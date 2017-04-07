@@ -134,3 +134,6 @@ var choose_room_not_exist = "房间不存在";
 var choose_checkin_not_exist = "入住信息不存在";
 var reason = "原因";
 var change_success="换房成功";
+var btn_dimission="离职";
+var dimission_title="员工离职";
+var staff_add="员工入职";
