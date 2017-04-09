@@ -117,8 +117,7 @@ function validateRepassword(repwdInp) {
 function validateEmail(inp) {
     var email = $(inp).val();
     if (email.length <= 0) {
-        layer.tips(messageOfValidateNull(regist_email), inp, {tips: 2});
-        return false;
+        return true;
     }
     var reg = /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+/;
     if (!reg.test(email)) {

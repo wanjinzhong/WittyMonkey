@@ -67,7 +67,8 @@ public class Checkin implements Serializable{
 	@Column(length = 100, name="plate_no")
 	private String plateNo;
 
-	@OneToMany(targetEntity = ChangeRoom.class, mappedBy = "checkin")
+
+	@OneToMany(targetEntity = ChangeRoom.class, mappedBy = "checkin", cascade = {CascadeType.MERGE, CascadeType.PERSIST})
 	private List<ChangeRoom> changeRooms = new ArrayList<ChangeRoom>();
 
 	public Integer getId() {

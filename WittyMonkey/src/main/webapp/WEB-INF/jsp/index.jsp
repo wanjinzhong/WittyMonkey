@@ -19,22 +19,26 @@
         <div class="layui-main">
                 <div class="title">
                     <img src="pic/logo.gif" style="width: 50px; height: 50px;vertical-align: middle">
-                    <span class="hotel-name">${hotel.name}</span>
+                    <span class="hotel-name">
+                        <%--${hotel.name}--%>
+                    </span>
 
                 </div>
             <ul class="layui-nav admin-header-item">
 
                 <li class="layui-nav-item" id="video1">
-                    <a href="javascript:;">
-                        <c:forEach items="${loginUser.roles}" var="role" varStatus="index">
+                    <a href="javascript:;" id="roles">
+                        <%--<c:forEach items="${loginUser.roles}" var="role" varStatus="index">
                             ${role.name}
                             <c:if test="${fn:length(loginUser.roles) < index.index + 1}">/</c:if>
-                        </c:forEach>
+                        </c:forEach>--%>
                     </a>
                 </li>
                 <li class="layui-nav-item">
                     <a href="javascript:;" class="admin-header-user">
-                        <span>${loginUser.realName}</span>
+                        <span id="realName">
+                        <%--    ${loginUser.realName}--%>
+                        </span>
                     </a>
                     <dl class="layui-nav-child">
                         <dd>

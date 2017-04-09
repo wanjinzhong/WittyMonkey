@@ -7,6 +7,7 @@ import com.wittymonkey.vo.SimpleFloor;
 import com.wittymonkey.vo.SimpleMaterielType;
 import com.wittymonkey.vo.SimpleReserve;
 import com.wittymonkey.vo.SimpleRoom;
+import com.wittymonkey.vo.SimpleUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import sun.java2d.pipe.SpanShapeRenderer;
 
@@ -95,5 +96,29 @@ public class ChangeToSimple {
             simpleMaterielTypes.add(simpleMaterielType);
         }
         return simpleMaterielTypes;
+    }
+    
+    public static List<SimpleUser> userList(List<User> users){
+        List<SimpleUser> simpleUsers = new ArrayList<SimpleUser>();
+        for (User user : users){
+            SimpleUser simpleUser = new SimpleUser();
+            simpleUser.setId(user.getId());
+            simpleUser.setRealName(user.getRealName());
+            simpleUser.setLoginName(user.getLoginName());
+            simpleUser.setIdCardNo(user.getIdCardNo());
+            simpleUser.setHotelName(user.getHotel().getName());
+            simpleUser.setEntryDatetime(user.getEntryDatetime());
+            simpleUser.setEntryUser(user.getEntryUser().getRealName());
+            for(Role role : user.getRoles()){
+                simpleUser.getRoles().add(role.getName());
+            }
+            simpleUser.setTel(user.getTel());
+            simpleUser.setEmail(user.getEmail());
+            simpleUser.setRegistDate(user.getRegistDate());
+            simpleUser.setDimissionDate(user.getDimissionDate());
+            simpleUser.setDimissionNote(user.getDimissionNote());
+            simpleUsers.add(simpleUser);
+        }
+        return simpleUsers;
     }
 }

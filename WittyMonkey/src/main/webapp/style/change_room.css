@@ -8,3 +8,21 @@ td{
     font-size: 20px;
     cursor: pointer;
 }
+.container{
+    /*margin: 50px;*/
+}
+table{
+    margin:20px auto;
+    margin-left: 100px;
+}
+.layui-textarea{
+    height: 200px;
+}
+.content{
+    border: 2px solid #eeeeee;
+    border-radius: 10px;
+    width: 930px;
+    height: 550px;
+    margin-top: 20px;
+    margin-left: 30px;
+}

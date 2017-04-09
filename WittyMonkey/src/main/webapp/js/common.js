@@ -100,6 +100,14 @@ function page(url, curr, condition) {
     });
 }
 
+function validateLength(inp, name, length) {
+    var content = $(inp).val();
+    if (content.length > content){
+        layer.tips(messageOfValidateLength(name, length), {tips: 2});
+        return false;
+    }
+    return true;
+}
 
 /**
  * 验证楼层号
@@ -238,8 +246,7 @@ function validateRealName(inp) {
 function validateTel(inp) {
     var tele = $(inp).val();
     if (tele.length <= 0) {
-        layer.tips(messageOfValidateNull(tel), inp, {tips: 2});
-        return false;
+        return true;
     }
     if (tele.length > 20) {
         layer.tips(messageOfValidateLength(tel, 20), inp, {tips: 2});

@@ -242,7 +242,7 @@ function toCheckout(id) {
     event.cancelBubble = true;
 }
 function toChange(id) {
-    layer.open({
+        layer.open({
         title: room_change_title,
         content: "toChange.do?id=" + id,
         area: ['1000px', '700px'],

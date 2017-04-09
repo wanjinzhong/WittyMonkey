@@ -2,7 +2,7 @@ package com.wittymonkey.controller;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.sun.xml.internal.ws.resources.HttpserverMessages;
+import com.wittymonkey.dao.IChangeRoomDao;
 import com.wittymonkey.entity.*;
 import com.wittymonkey.service.*;
 import com.wittymonkey.util.ChangeToSimple;
@@ -43,6 +43,7 @@ public class RoomController {
     public static final String DELETE = "delete";
 
     private SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+    private RoomMaster chooseRoom = null;
 
     @Autowired
     private IRoomMasterService roomMasterService;
@@ -61,7 +62,9 @@ public class RoomController {
 
     @Autowired
     private ICheckinService checkinService;
-    private JSONArray array;
+
+    @Autowired
+    private IChangeRoomService changeRoomService;
 
     @RequestMapping(value = "toAddRoom", method = GET)
     public String toAddRoom(HttpServletRequest request) {
@@ -97,15 +100,15 @@ public class RoomController {
     }
 
     @RequestMapping(value = "toChooseRoom", method = GET)
-    public String toChooseRoom(HttpServletRequest request){
+    public String toChooseRoom(HttpServletRequest request) {
         Integer checkinId = Integer.parseInt(request.getParameter("id"));
-        request.getSession().setAttribute("checkinId", checkinId);
+        request.setAttribute("checkinId", checkinId);
         return "choose_room";
     }
 
     @RequestMapping(value = "getFreeRoomByDateRange", method = GET)
     @ResponseBody
-    public String getFreeRoomByDateRange(HttpServletRequest request){
+    public String getFreeRoomByDateRange(HttpServletRequest request) {
         JSONObject json = new JSONObject();
         Integer checkinId = Integer.parseInt(request.getParameter("id"));
         Integer curr = Integer.parseInt(request.getParameter("curr"));
@@ -113,8 +116,8 @@ public class RoomController {
         Integer pageSize = loginUser.getSetting().getPageSize();
         Hotel hotel = (Hotel) request.getSession().getAttribute("hotel");
         Checkin checkin = checkinService.getCheckinById(checkinId);
-        Integer count = roomMasterService.getTotalFreeByDate(hotel.getId(),RoomMaster.FREE, new Date(), checkin.getEstCheckoutDate());
-        List<RoomMaster> rooms = roomMasterService.getFreeByDate(hotel.getId(),RoomMaster.FREE,new Date(), checkin.getEstCheckoutDate(),(curr-1)*pageSize, pageSize);
+        Integer count = roomMasterService.getTotalFreeByDate(hotel.getId(), RoomMaster.FREE, new Date(), checkin.getEstCheckoutDate());
+        List<RoomMaster> rooms = roomMasterService.getFreeByDate(hotel.getId(), RoomMaster.FREE, new Date(), checkin.getEstCheckoutDate(), (curr - 1) * pageSize, pageSize);
         request.getSession().setAttribute("rooms", rooms);
         json.put("count", count);
         json.put("pageSize", pageSize);
@@ -145,23 +148,29 @@ public class RoomController {
     }
 
     @RequestMapping(value = "toChange", method = GET)
-    public String toChange(HttpServletRequest request){
+    public String toChange(HttpServletRequest request) {
         Integer roomId = Integer.parseInt(request.getParameter("id"));
         Checkin checkin = checkinService.getCheckinByRoomUncomplete(roomId);
-        request.getSession().setAttribute("checkin", checkin);
-        request.getSession().setAttribute("now",sdf.format(new Date()));
-        request.getSession().setAttribute("to",sdf.format(checkin.getEstCheckoutDate()));
-        request.getSession().setAttribute("total", DateUtil.dateDiffDays(new Date(), checkin.getEstCheckoutDate()));;
+        Integer totalDays = DateUtil.dateDiffDays(new Date(), checkin.getEstCheckoutDate());
+        request.setAttribute("checkin", checkin);
+        request.setAttribute("now", sdf.format(new Date()));
+        request.setAttribute("to", sdf.format(checkin.getEstCheckoutDate()));
+        request.setAttribute("total", totalDays);
+        if (chooseRoom != null) {
+            request.setAttribute("chooseRoom", chooseRoom);
+            Double diff = (chooseRoom.getPrice() - checkin.getRoom().getPrice()) * totalDays;
+            request.setAttribute("diff", diff);
+        }
         return "change_room";
     }
 
     @RequestMapping(value = "toCheckout", method = GET)
-    public String toCheckout(HttpServletRequest request){
+    public String toCheckout(HttpServletRequest request) {
         String id = request.getParameter("id");
         Integer roomId = null;
-        try{
+        try {
             roomId = Integer.parseInt(id);
-        } catch (NumberFormatException e){
+        } catch (NumberFormatException e) {
             e.printStackTrace();
         }
         Checkin checkin = checkinService.getCheckinByRoomUncomplete(roomId);
@@ -172,7 +181,7 @@ public class RoomController {
     }
 
     @RequestMapping(value = "toShowReserve", method = GET)
-    public String toShowReserve(HttpServletRequest request){
+    public String toShowReserve(HttpServletRequest request) {
         Integer roomId = Integer.parseInt(request.getParameter("id"));
         RoomMaster roomMaster = roomMasterService.getRoomById(roomId);
         request.getSession().setAttribute("room", roomMaster);
@@ -207,7 +216,7 @@ public class RoomController {
      */
     @RequestMapping(value = "checkout", method = GET)
     @ResponseBody
-    public String checkout(HttpServletRequest request){
+    public String checkout(HttpServletRequest request) {
         JSONObject json = new JSONObject();
         Integer checkinId = null;
         try {
@@ -217,11 +226,11 @@ public class RoomController {
             return json.toJSONString();
         }
         Checkin checkin = checkinService.getCheckinById(checkinId);
-        if (checkin == null){
+        if (checkin == null) {
             json.put("status", 400);
             return json.toJSONString();
         }
-        if (checkin.getActCheckoutDate() != null){
+        if (checkin.getActCheckoutDate() != null) {
             json.put("status", 410);
             return json.toJSONString();
         }
@@ -234,7 +243,7 @@ public class RoomController {
         checkin.getRoom().setEntryDatetime(new Date());
         try {
             checkinService.update(checkin);
-            json.put("status",200);
+            json.put("status", 200);
             return json.toJSONString();
         } catch (SQLException e) {
             json.put("status", 500);
@@ -242,10 +251,11 @@ public class RoomController {
         }
     }
 
-    public User getLoginUserPersistence(HttpServletRequest request){
+    public User getLoginUserPersistence(HttpServletRequest request) {
         User user = (User) request.getSession().getAttribute("loginUser");
         return userService.getUserById(user.getId());
     }
+
     @RequestMapping(value = "validateRoomNo", method = GET)
     @ResponseBody
     public String validateRoomNo(HttpServletRequest request) {
@@ -262,14 +272,14 @@ public class RoomController {
 
     @RequestMapping(value = "getReserveByPage", method = GET)
     @ResponseBody
-    public String getReserveByPage(HttpServletRequest request){
+    public String getReserveByPage(HttpServletRequest request) {
         JSONObject json = new JSONObject();
         Integer curr = Integer.parseInt(request.getParameter("curr"));
         Integer roomId = Integer.parseInt(request.getParameter("roomId"));
         User loginUser = (User) request.getSession().getAttribute("loginUser");
         Integer pageSize = loginUser.getSetting().getPageSize();
         Integer count = reserveService.getTotalByRoomIdReserved(roomId, Reserve.RESERVED);
-        List<Reserve> reserves = reserveService.getReserveByRoomId(roomId, Reserve.RESERVED, (curr-1)*pageSize, pageSize);
+        List<Reserve> reserves = reserveService.getReserveByRoomId(roomId, Reserve.RESERVED, (curr - 1) * pageSize, pageSize);
         List<SimpleReserve> simpleReserves = ChangeToSimple.reserveList(reserves);
         json.put("count", count);
         json.put("pageSize", pageSize);
@@ -763,11 +773,11 @@ public class RoomController {
             if (custId != null) {
                 customer = customerService.getCustomerById(custId);
                 if (!StringUtils.isNotBlank(customer.getName())
-                        ||(StringUtils.isNotBlank(customer.getName()) && !customer.getName().equals(name))){
+                        || (StringUtils.isNotBlank(customer.getName()) && !customer.getName().equals(name))) {
                     customer.setName(name);
                 }
                 if (!StringUtils.isNotBlank(customer.getTel())
-                        ||(StringUtils.isNotBlank(customer.getTel())&&!customer.getTel().equals(tel))) {
+                        || (StringUtils.isNotBlank(customer.getTel()) && !customer.getTel().equals(tel))) {
                     customer.setTel(tel);
                 }
             } else {
@@ -796,9 +806,9 @@ public class RoomController {
 
     /**
      * 退定
+     *
      * @param request
-     * @return
-     * <table border="1" cellspacing="0">
+     * @return <table border="1" cellspacing="0">
      * <tr>
      * <th>代码</th>
      * <th>说明</th>
@@ -834,35 +844,35 @@ public class RoomController {
      */
     @RequestMapping(value = "unsubscribe", method = GET)
     @ResponseBody
-    public String unsubscribe(HttpServletRequest request){
+    public String unsubscribe(HttpServletRequest request) {
         JSONObject json = new JSONObject();
         User user = (User) request.getSession().getAttribute("loginUser");
         Integer id = null;
         Double refund = null;
-        try{
+        try {
             id = Integer.parseInt(request.getParameter("id"));
-        } catch (NumberFormatException e){
+        } catch (NumberFormatException e) {
             json.put("status", 400);
             return json.toJSONString();
         }
-        try{
+        try {
             refund = Double.parseDouble(request.getParameter("refund"));
-        } catch (NumberFormatException e){
+        } catch (NumberFormatException e) {
             json.put("status", 410);
             return json.toJSONString();
         }
         Reserve reserve = reserveService.getReserveById(id);
-        if (reserve == null){
+        if (reserve == null) {
             json.put("status", 400);
             return json.toJSONString();
-        } else if (reserve.getStatus() == Reserve.CHECKEDIN){
+        } else if (reserve.getStatus() == Reserve.CHECKEDIN) {
             json.put("status", 420);
             return json.toJSONString();
-        } else if (reserve.getStatus() == Reserve.UNSUBSCRIBE){
+        } else if (reserve.getStatus() == Reserve.UNSUBSCRIBE) {
             json.put("status", 421);
             return json.toJSONString();
-        } else if (reserve.getStatus() == Reserve.RESERVED){
-            if (reserve.getDeposit() < refund){
+        } else if (reserve.getStatus() == Reserve.RESERVED) {
+            if (reserve.getDeposit() < refund) {
                 json.put("status", 430);
                 return json.toJSONString();
             } else {
@@ -874,7 +884,7 @@ public class RoomController {
                     reserveService.update(reserve);
                     json.put("status", 200);
                     return json.toJSONString();
-                } catch (SQLException e){
+                } catch (SQLException e) {
                     json.put("status", 500);
                     return json.toJSONString();
                 }
@@ -882,6 +892,7 @@ public class RoomController {
         }
         return json.toJSONString();
     }
+
     /**
      * 入住
      *
@@ -923,7 +934,7 @@ public class RoomController {
         Double foregift = 0.0;
         try {
             foregift = Double.parseDouble(request.getParameter("foregift"));
-            if (foregift < 0){
+            if (foregift < 0) {
                 json.put("status", 421);
                 return json.toJSONString();
             }
@@ -931,12 +942,12 @@ public class RoomController {
             json.put("status", 420);
             return json.toJSONString();
         }
-        if (note.length() > 1024){
+        if (note.length() > 1024) {
             json.put("status", 430);
             return json.toJSONString();
         }
         String reserveId = request.getParameter("reserveId");
-        Reserve reserve= null;
+        Reserve reserve = null;
 
         Checkin checkin = new Checkin();
         // 已预定的情况
@@ -947,7 +958,7 @@ public class RoomController {
             checkin.setReserve(reserve);
         }
         // 未预定的情况
-        else{
+        else {
             String to = request.getParameter("toDate");
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             Date toDate = null;
@@ -974,7 +985,7 @@ public class RoomController {
                 customer.setIdCard(idcards[i]);
             }
             if (!StringUtils.isNotBlank(customer.getName())
-                    ||(StringUtils.isNotBlank(customer.getName())&&!customer.getName().equals(name[i]))) {
+                    || (StringUtils.isNotBlank(customer.getName()) && !customer.getName().equals(name[i]))) {
                 customer.setName(name[i]);
             }
             customers.add(customer);
@@ -992,7 +1003,7 @@ public class RoomController {
         checkin.setForegift(foregift);
         checkin.setCheckinDate(new Date());
         checkin.setEntryDatetime(new Date());
-        checkin.setEntryUser(userService.getUserById(((User)request.getSession().getAttribute("loginUser")).getId()));
+        checkin.setEntryUser(userService.getUserById(((User) request.getSession().getAttribute("loginUser")).getId()));
         checkin.setNote(note);
         checkinService.checkin(checkin);
         json.put("status", 200);
@@ -1035,6 +1046,155 @@ public class RoomController {
             json.put("status", 400);
         }
         return json.toJSONString();
+    }
+
+    /**
+     * 换房
+     *
+     * @param request
+     * @return <table border="1" cellspacing="0">
+     * <tr>
+     * <th>代码</th>
+     * <th>说明</th>
+     * </tr>
+     * <tr>
+     * <td>200</td>
+     * <td>换房成功</td>
+     * </tr>
+     * <tr>
+     * <td>400</td>
+     * <td>房间号不存在</td>
+     * </tr>
+     * <tr>
+     * <td>410</td>
+     * <td>入住号不存在</td>
+     * </tr>
+     * <tr>
+     * <td>420</td>
+     * <td>原因过长</td>
+     * </tr>
+     */
+    @RequestMapping(value = "changeRoom", method = GET)
+    @ResponseBody
+    public String changeRoom(HttpServletRequest request) {
+        JSONObject json = new JSONObject();
+        Integer toRoomId;
+        Integer checkinId;
+        String reason = request.getParameter("reason");
+        User user = (User) request.getSession().getAttribute("loginUser");
+        try {
+            toRoomId = Integer.parseInt(request.getParameter("toRoomId"));
+        } catch (NumberFormatException e) {
+            json.put("status", 400);
+            return json.toJSONString();
+        }
+        try {
+            checkinId = Integer.parseInt(request.getParameter("checkinId"));
+        } catch (NumberFormatException e) {
+            json.put("status", 410);
+            return json.toJSONString();
+        }
+        Checkin checkin = checkinService.getCheckinById(checkinId);
+        if (checkin == null) {
+            json.put("status", 410);
+            return json.toJSONString();
+        }
+        RoomMaster toRoom = roomMasterService.getRoomById(toRoomId);
+        if (toRoom == null) {
+            json.put("status", 400);
+            return json.toJSONString();
+        }
+        if (toRoom.getDelete()) {
+            json.put("status", 400);
+            return json.toJSONString();
+        }
+        if (reason != null && reason.length() > 1024) {
+            json.put("status", 420);
+            return json.toJSONString();
+        }
+        RoomMaster fromRoom = roomMasterService.getRoomById(checkin.getRoom().getId());
+        fromRoom.setStatus(RoomMaster.CLEAN);
+        toRoom.setStatus(RoomMaster.CHECKED_IN);
+        user = userService.getUserById(user.getId());
+        checkin.setEntryDatetime(new Date());
+        checkin.setEntryUser(user);
+        checkin.setRoom(toRoom);
+        ChangeRoom changeRoom = new ChangeRoom();
+        changeRoom.setFromRoom(fromRoom);
+        changeRoom.setToRoom(toRoom);
+        changeRoom.setReason(reason);
+        changeRoom.setEntryDatetime(new Date());
+        changeRoom.setEntryUser(user);
+        Double diff = (toRoom.getPrice() - fromRoom.getPrice()) * DateUtil.dateDiffDays(new Date(), checkin.getEstCheckoutDate());
+        changeRoom.setPriceDifference(diff);
+        changeRoom.setCheckin(checkin);
+        changeRoomService.save(changeRoom);
+        json.put("status", 200);
+        return json.toJSONString();
+    }
+
+    /**
+     * 选择换房
+     *
+     * @param request
+     * @return <table border="1" cellspacing="0">
+     * <tr>
+     * <th>代码</th>
+     * <th>说明</th>
+     * </tr>
+     * <tr>
+     * <td>200</td>
+     * <td>选择通过</td>
+     * </tr>
+     * <tr>
+     * <td>400</td>
+     * <td>房间号不存在</td>
+     * </tr>
+     * <tr>
+     * <td>410</td>
+     * <td>入住号不存在</td>
+     * </tr>
+     * <tr>
+     * <td>420</td>
+     * <td>时间冲突</td>
+     * </tr>
+     */
+    @RequestMapping(value = "chooseRoomById", method = GET)
+    @ResponseBody
+    public String chooseRoomById(HttpServletRequest request) {
+        JSONObject json = new JSONObject();
+        Integer roomId;
+        Integer checkinId;
+        Checkin checkin;
+        try {
+            roomId = Integer.parseInt(request.getParameter("roomId"));
+        } catch (NumberFormatException e) {
+            json.put("status", 400);
+            return json.toJSONString();
+        }
+        try {
+            checkinId = Integer.parseInt(request.getParameter("checkinId"));
+            checkin = checkinService.getCheckinById(checkinId);
+            if (checkin == null) {
+                json.put("status", 410);
+                return json.toJSONString();
+            }
+        } catch (NumberFormatException e) {
+            json.put("status", 410);
+            return json.toJSONString();
+        }
+        chooseRoom = roomMasterService.getRoomById(roomId);
+        if (chooseRoom == null) {
+            json.put("status", 400);
+            return json.toJSONString();
+        } else if (!isTimeOK(roomId, new Date(), checkin.getEstCheckoutDate())) {
+            chooseRoom = null;
+            json.put("status", 420);
+            return json.toJSONString();
+        } else {
+            json.put("status", 200);
+            return json.toJSONString();
+        }
     }
 
     /**

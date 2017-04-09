@@ -1,6 +1,7 @@
 package com.wittymonkey.dao;
 
 import java.io.Serializable;
+import java.util.List;
 
 import com.wittymonkey.entity.User;
 
@@ -41,5 +42,19 @@ public interface IUserDao extends IGenericDao<User, Serializable>{
 	 */
 	User getUserByEmail(String email);
 
+	/**
+	 * 分页获取酒店内所有员工
+	 * @param hotel
+	 * @param start
+	 * @param total
+	 * @return
+	 */
+	List<User> getUserByPage(Integer hotel, Integer start, Integer total);
 
+	/**
+	 * 获取酒店内所有员工人数
+	 * @param hotel
+	 * @return
+	 */
+	Integer getTotalByHotel(Integer hotel);
 }
