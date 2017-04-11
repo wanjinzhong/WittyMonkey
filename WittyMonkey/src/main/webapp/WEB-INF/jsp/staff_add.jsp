@@ -16,14 +16,15 @@
           type="text/css"/>
 </head>
 <script type="text/javascript" src="js/common.js"></script>
-<script type="text/javascript" src="js/staff_manage.js"></script>
+<script type="text/javascript" src="js/staff_add.js"></script>
+<link type="text/css" href="style/staff_manage.css" rel="stylesheet"/>
 <!-- 根据设置动态加载js语言 -->
 <script type="text/javascript" src="i18n/messages_${loginUser.setting.lang }.js"></script>
 <fmt:setBundle basename="i18n/messages_${loginUser.setting.lang }"/>
 <body>
 <div id="border">
     <form id="add_form">
-        <table>
+        <table class="form_table">
             <tr>
                 <td><label class="layui-form-label"><fmt:message key="staff.real_name"/></label></td>
                 <td><input type="text" class="layui-input" name="realName"
@@ -40,7 +41,7 @@
             <tr>
                 <td><label class="layui-form-label"><fmt:message key="staff.email"/></label></td>
                 <td><input type="text" class="layui-input" name="email"
-                           id="email" onblur="validateEmail(this)"></td>
+                           id="email" onblur="validateEmailFormat(this)"></td>
             </tr>
         </table>
     </form>

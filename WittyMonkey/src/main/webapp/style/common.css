@@ -89,3 +89,13 @@ td{
 	color: #FF5722;
 	transition: border-color, color 0.5s,0.5s;
 }
+
+.form_table {
+	margin: 0 auto;
+	margin-top: 20px;
+}
+
+.form_table td {
+	text-align: right;
+	padding: 5px;
+}

@@ -126,6 +126,8 @@ public class StaffController {
         user.setPassword("witty");
         user.setIdCardNo(idcard);
         user.setEntryDatetime(new Date());
+        user.setTel(tel);
+        user.setEmail(email);
 
         return json.toJSONString();
     }

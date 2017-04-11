@@ -255,6 +255,22 @@ function validateTel(inp) {
     return true;
 }
 /**
+ * 验证邮箱
+ * @param email
+ * @returns
+ */
+function validateEmailFormat(inp) {
+    var email = $(inp).val();
+    if (email.length <= 0) {
+        return true;
+    }
+    var reg = /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+/;
+    if (!reg.test(email)) {
+        layer.tips(regist_email_is_wrong, inp, {tips: 2});
+        return false;
+    }
+}
+/**
  * 验证金额
  */
 function validateMoney(inp) {

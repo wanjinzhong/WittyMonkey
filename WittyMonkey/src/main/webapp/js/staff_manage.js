@@ -64,36 +64,10 @@ function editStaff(id) {
 function showAddStaff() {
     layer.open({
         type: 2,
-        area: ['700px', '350px'],
+        area: ['500px', '300px'],
         maxmin: false,
         shade: 0.4,
         title: staff_add,
         content: "toAddStaff.do"
-    });
-}
-function save() {
-    if (!validateRealName($("#realName"))){
-        return false;
-    }
-    if (!validateIdCard($("#idCard"))){
-        return false;
-    }
-    if (!validateTel($("#tel"))){
-        return false;
-    }
-    if (!validateEmail($("#email"))){
-        return false;
-    }
-    $.ajax({
-        url: "saveStaff.do",
-        data: $("#add_form").serialize(),
-        dataType: "JSON",
-        Type: "get",
-        success: function (data) {
-            var res = eval("(" + data + ")");
-            switch (res["status"]){
-
-            }
-        }
     });
 }

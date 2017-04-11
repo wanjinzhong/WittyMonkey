@@ -8,6 +8,7 @@ import java.util.regex.Pattern;
 import javax.servlet.http.HttpServletRequest;
 
 import com.alibaba.fastjson.JSONArray;
+import com.wittymonkey.entity.*;
 import com.wittymonkey.util.*;
 import com.wittymonkey.vo.SimplePlace;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,15 +18,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSONObject;
-import com.wittymonkey.entity.Area;
-import com.wittymonkey.entity.City;
-import com.wittymonkey.entity.Hotel;
-import com.wittymonkey.entity.LeaveType;
-import com.wittymonkey.entity.MaterielType;
-import com.wittymonkey.entity.Province;
-import com.wittymonkey.entity.Role;
-import com.wittymonkey.entity.Setting;
-import com.wittymonkey.entity.User;
 import com.wittymonkey.service.IAreaService;
 import com.wittymonkey.service.ICityService;
 import com.wittymonkey.service.IHotelService;
@@ -539,6 +531,9 @@ public class LoginController {
         role.setEntryUser(system);
         role.setMenus(menuService.getAll());
 
+        // 添加酒店员工ID配置
+        Odom odom = new Odom();
+        odom.setSequence(1);
         // 添加酒店
         hotel.setAddDate(now);
         hotel.setEntryDatetime(now);
@@ -546,6 +541,7 @@ public class LoginController {
         hotel.setLeaveTypes(leaveTypes);
         hotel.getMaterielTypes().add(materielType);
         hotel.setIsClose(false);
+        hotel.setOdom(odom);
 
         // 添加用户设置
         Setting setting = new Setting();

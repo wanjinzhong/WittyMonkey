@@ -1,0 +1,9 @@
+table {
+    margin: 0 auto;
+    margin-top: 20px;
+}
+
+td {
+    text-align: right;
+    padding: 5px;
+}

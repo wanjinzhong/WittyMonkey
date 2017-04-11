@@ -14,7 +14,7 @@ public class UserDaoImpl extends GenericDaoImpl<User> implements IUserDao {
 
 	@Override
 	public User getUserByLoginName(String loginName) {
-		String hql = "from User where loginName = :loginName and dimissionDate is not null";
+		String hql = "from User where loginName = :loginName and dimissionDate is null";
 		Map<String, Object> param = new HashMap<String, Object>();
 		param.put("loginName", loginName);
 		List<User> users = queryListHQL(hql, param);
@@ -27,7 +27,7 @@ public class UserDaoImpl extends GenericDaoImpl<User> implements IUserDao {
 
 	@Override
 	public User getUserByLoginNameAndPassword(String loginName, String password) {
-		String hql = "from User where loginName = :loginName and password = :password and dimissionDate is not null";
+		String hql = "from User where loginName = :loginName and password = :password and dimissionDate is null";
 		Map<String, Object> param = new HashMap<String, Object>();
 		param.put("loginName", loginName);
 		param.put("password", password);
@@ -36,7 +36,7 @@ public class UserDaoImpl extends GenericDaoImpl<User> implements IUserDao {
 
 	@Override
 	public User getUserByEmailAndPassword(String email, String password) {
-		String hql = "from User where email = :email and password = :password and dimissionDate is not null";
+		String hql = "from User where email = :email and password = :password and dimissionDate is null";
 		Map<String, Object> param = new HashMap<String, Object>();
 		param.put("email", email);
 		param.put("password", password);
@@ -51,7 +51,7 @@ public class UserDaoImpl extends GenericDaoImpl<User> implements IUserDao {
 
 	@Override
 	public User getUserByEmail(String email) {
-		String hql = "from User where email = :email and dimissionDate is not null";
+		String hql = "from User where email = :email and dimissionDate is null";
 		Map<String, Object> param = new HashMap<String, Object>();
 		param.put("email", email.toLowerCase());
 		return queryOneHql(hql,param);
@@ -59,7 +59,7 @@ public class UserDaoImpl extends GenericDaoImpl<User> implements IUserDao {
 
 	@Override
 	public List<User> getUserByPage(Integer hotel, Integer start, Integer total) {
-		String hql = "from User where hotel.id = :hotelId and dimissionDate is not null order by id";
+		String hql = "from User where hotel.id = :hotelId and dimissionDate is null order by id";
 		Map<String, Object> param = new HashMap<String, Object>();
 		param.put("hotelId", hotel);
 		return queryListHQL(hql,param,start,total);
@@ -67,7 +67,7 @@ public class UserDaoImpl extends GenericDaoImpl<User> implements IUserDao {
 
 	@Override
 	public Integer getTotalByHotel(Integer hotel) {
-		String hql = "select count(1) from User where hotel.id = :hotelId and dimissionDate is not null";
+		String hql = "select count(1) from User where hotel.id = :hotelId and dimissionDate is null";
 		Map<String, Object> param = new HashMap<String, Object>();
 		param.put("hotelId", hotel);
 		return countHQL(hql,param);
@@ -75,7 +75,7 @@ public class UserDaoImpl extends GenericDaoImpl<User> implements IUserDao {
 
 	@Override
 	public User getUserById(Integer id) {
-		String hql = "from User where id = :id and dimissionDate is not null";
+		String hql = "from User where id = :id and dimissionDate is null";
 		Map<String, Object> param = new HashMap<String, Object>();
 		param.put("id",id);
 		List<User> users = queryListHQL(hql, param);

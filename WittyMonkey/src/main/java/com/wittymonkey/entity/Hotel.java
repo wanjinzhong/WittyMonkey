@@ -5,17 +5,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 /**
  * 酒店
@@ -61,10 +51,14 @@ public class Hotel implements Serializable{
 	//加入时间
 	@Column(name="add_date")
 	private Date addDate;
+
 	
 	@Column(name="entry_datetime")
 	private Date entryDatetime;
-	
+
+	@OneToOne(targetEntity=Odom.class,mappedBy = "hotel", cascade={CascadeType.ALL})
+	private Odom odom;
+
 	@ManyToOne(targetEntity=User.class, fetch=FetchType.EAGER, cascade={CascadeType.PERSIST,CascadeType.MERGE})
 	@JoinColumn(name="entry_id", referencedColumnName="id")
 	private User entryUser;
@@ -96,7 +90,15 @@ public class Hotel implements Serializable{
 	
 	@OneToMany(targetEntity=LeaveType.class, cascade={CascadeType.ALL})
 	private List<LeaveType> leaveTypes = new ArrayList<LeaveType>();
-	
+
+	public Odom getOdom() {
+		return odom;
+	}
+
+	public void setOdom(Odom odom) {
+		this.odom = odom;
+	}
+
 	public Boolean getIsClose() {
 		return isClose;
 	}
