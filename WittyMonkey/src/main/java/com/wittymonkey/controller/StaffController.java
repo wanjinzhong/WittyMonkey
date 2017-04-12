@@ -5,11 +5,13 @@ import com.alibaba.fastjson.JSONObject;
 import com.wittymonkey.dao.IHotelDao;
 import com.wittymonkey.entity.Floor;
 import com.wittymonkey.entity.Hotel;
+import com.wittymonkey.entity.Setting;
 import com.wittymonkey.entity.User;
 import com.wittymonkey.service.IHotelService;
 import com.wittymonkey.service.IUserService;
 import com.wittymonkey.util.ChangeToSimple;
 import com.wittymonkey.util.IDCardValidate;
+import com.wittymonkey.util.MD5Util;
 import com.wittymonkey.vo.SimpleFloor;
 import com.wittymonkey.vo.SimpleUser;
 import org.apache.commons.lang.StringUtils;
@@ -69,6 +71,10 @@ public class StaffController {
      * <th>说明</th>
      * </tr>
      * <tr>
+     * <td>200</td>
+     * <td>添加成功</td>
+     * </tr>
+     * <tr>
      * <td>400</td>
      * <td>没有填写真实姓名</td>
      * </tr>
@@ -120,15 +126,27 @@ public class StaffController {
             return json.toJSONString();
         }
         User user = new User();
+        String initPassword = "000000";
+        String secritePwd = MD5Util.encrypt(initPassword);
         user.setRealName(realName);
         user.setHotel(hotelService.findHotelById(hotel.getId()));
-        user.setEntryUser(userService.getUserById(user.getId()));
-        user.setPassword("witty");
+        user.setEntryUser(userService.getUserById(loginUser.getId()));
+        user.setPassword(secritePwd);
         user.setIdCardNo(idcard);
         user.setEntryDatetime(new Date());
         user.setTel(tel);
         user.setEmail(email);
-
+        String staffNo = userService.getNextStaffNoByHotel(hotel.getId());
+        user.setStaffNo(staffNo);
+        Setting setting = new Setting();
+        setting.setLang(Setting.LANG_ZH_CN);
+        setting.setPageSize(10);
+        user.setSetting(setting);
+        user.setRegistDate(new Date());
+        Object obj = userService.saveUser(user);
+        json.put("status", 200);
+        json.put("staffNo", staffNo);
+        json.put("initPwd", initPassword);
         return json.toJSONString();
     }
 }

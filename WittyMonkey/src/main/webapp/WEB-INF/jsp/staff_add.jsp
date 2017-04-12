@@ -47,7 +47,7 @@
     </form>
     <div id="btnGroup">
         <input type="button" class="layui-btn layui-btn-radius layui-btn-danger" value="<fmt:message key="btn.close"/>"
-               onclick="closeMe()"/>
+               onclick="ss()"/>
         <input type="button" class="layui-btn layui-btn-radius" value="<fmt:message key="btn.save"/>"
                onclick="save()"/>
     </div>

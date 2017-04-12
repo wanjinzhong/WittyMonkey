@@ -10,7 +10,8 @@ public class HotelDaoImpl extends GenericDaoImpl<Hotel> implements IHotelDao {
 
 	@Override
 	public Hotel findHotelById(int id) {
-		return (Hotel) this.load(id);
+		String hql = "from Hotel where id = ?";
+		return queryOneHql(hql, id);
 	}
 
 	@Override

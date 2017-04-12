@@ -1,9 +1,19 @@
 package com.wittymonkey.dao.impl;
 
+import java.sql.CallableStatement;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.hibernate.SQLQuery;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.cfg.Configuration;
+import org.hibernate.jdbc.Work;
+import org.springframework.orm.hibernate4.SessionFactoryUtils;
 import org.springframework.stereotype.Repository;
 
 import com.wittymonkey.dao.IUserDao;
@@ -13,10 +23,10 @@ import com.wittymonkey.entity.User;
 public class UserDaoImpl extends GenericDaoImpl<User> implements IUserDao {
 
 	@Override
-	public User getUserByLoginName(String loginName) {
-		String hql = "from User where loginName = :loginName and dimissionDate is null";
+	public User getUserByStaffNo(String staffNo) {
+		String hql = "from User where staffNo = :staffNo and dimissionDate is null";
 		Map<String, Object> param = new HashMap<String, Object>();
-		param.put("loginName", loginName);
+		param.put("staffNo", staffNo);
 		List<User> users = queryListHQL(hql, param);
 		if (users == null || users.isEmpty()) {
 			return null;
@@ -26,10 +36,10 @@ public class UserDaoImpl extends GenericDaoImpl<User> implements IUserDao {
 	}
 
 	@Override
-	public User getUserByLoginNameAndPassword(String loginName, String password) {
-		String hql = "from User where loginName = :loginName and password = :password and dimissionDate is null";
+	public User getUserByStaffNoAndPassword(String staffNo, String password) {
+		String hql = "from User where staffNo = :staffNo and password = :password and dimissionDate is null";
 		Map<String, Object> param = new HashMap<String, Object>();
-		param.put("loginName", loginName);
+		param.put("staffNo", staffNo);
 		param.put("password", password);
 		return queryOneHql(hql,param);
 	}
@@ -72,20 +82,29 @@ public class UserDaoImpl extends GenericDaoImpl<User> implements IUserDao {
 		param.put("hotelId", hotel);
 		return countHQL(hql,param);
 	}
+	String nextStaffNo;
+	@Override
+	public String getNextStaffNoByHotel(final Integer hotelId) {
+		nextStaffNo = null;
+		getCurrentSession().doWork(new Work() {
+			@Override
+			public void execute(Connection connection) throws SQLException {
+				CallableStatement call = connection.prepareCall("{call get_next_staff_id(?)}");
+				call.setInt(1,hotelId);
+				ResultSet resultSet = call.executeQuery();
+				if (resultSet != null){
+					while (resultSet.next()){
+						UserDaoImpl.this.nextStaffNo = resultSet.getString(1);
+					}
+				}
+			}
+		});
+		return nextStaffNo;
+	}
 
 	@Override
 	public User getUserById(Integer id) {
-		String hql = "from User where id = :id and dimissionDate is null";
-		Map<String, Object> param = new HashMap<String, Object>();
-		param.put("id",id);
-		List<User> users = queryListHQL(hql, param);
-		if (users == null || users.isEmpty()){
-			return null;
-		} else {
-			return users.get(0);
-		}
+		String hql = "from User where id = ?";
+		return queryOneHql(hql, id);
 	}
-	
-	
-
 }

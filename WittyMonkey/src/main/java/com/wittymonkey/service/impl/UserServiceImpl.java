@@ -17,8 +17,8 @@ public class UserServiceImpl implements IUserService {
 	private IUserDao userDao;
 
 	@Override
-	public User getUserByLoginName(String loginName) {
-		return userDao.getUserByLoginName(loginName);
+	public User getUserByStaffNo(String staffNo) {
+		return userDao.getUserByStaffNo(staffNo);
 	}
 
 	@Override
@@ -27,13 +27,13 @@ public class UserServiceImpl implements IUserService {
 	}
 
 	@Override
-	public void saveUser(User user) {
-		userDao.save(user);
+	public User saveUser(User user) {
+		return (User) userDao.save(user);
 	}
 
 	@Override
-	public boolean validateLoginByLoginName(String loginName, String password) {
-		if (userDao.getUserByLoginNameAndPassword(loginName, MD5Util.encrypt(password)) == null) {
+	public boolean validateLoginByLoginName(String staffNo, String password) {
+		if (userDao.getUserByStaffNoAndPassword(staffNo, MD5Util.encrypt(password)) == null) {
 			return false;
 		} else {
 			return true;
@@ -60,6 +60,11 @@ public class UserServiceImpl implements IUserService {
 	@Override
 	public List<User> getUserByPage(Integer hotelId, Integer start, Integer total) {
 		return userDao.getUserByPage(hotelId, start, total);
+	}
+
+	@Override
+	public String getNextStaffNoByHotel(Integer hotelId) {
+		return userDao.getNextStaffNoByHotel(hotelId);
 	}
 
 }

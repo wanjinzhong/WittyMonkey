@@ -96,7 +96,7 @@
         margin-left: 30px;
     }
 
-    #hint {
+    .hint {
         font-size: 20px;
         font-weight: bold;
         text-align: center;
@@ -160,17 +160,8 @@
     <span id="form_title"><fmt:message key="regist.complete.title"/></span>
     <div id="result_form">
         <div id="disp">
-            <span id="hint"><fmt:message key="regist.complete.loginMethod.hint"/></span>
-            <table>
-                <tr>
-                    <td id="loginNameHint"><fmt:message key="regist.user.login_name"/>:</td>
-                    <td id="loginName">${loginUserName}</td>
-                </tr>
-                <tr>
-                    <td id="emailHint"><fmt:message key="regist.user.email"/>:</td>
-                    <td id="email">${loginUserEmail}</td>
-                </tr>
-            </table>
+            <span class="hint"><fmt:message key="regist.complete.staff_no.hint"/>${staffNo}</span>
+            <span class="hint"><fmt:message key="regist.complete.login_method.hint"/> </span>
         </div>
     </div>
     <div id="btnGroup">

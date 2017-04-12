@@ -2,7 +2,13 @@ package com.wittymonkey.service;
 
 import com.wittymonkey.entity.Role;
 
+import java.util.List;
+
 public interface IRoleService {
 
-	public void saveRole(Role role);
+	void saveRole(Role role);
+
+	Integer getTotal(Integer hotelId);
+
+	List<Role> getRoleByPage(Integer hotelId, Integer start, Integer pageSize);
 }

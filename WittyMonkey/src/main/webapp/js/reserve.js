@@ -85,10 +85,10 @@ function reserve() {
                         layer.tips(messageOfValidateLength(cust_name, 20), $("#name"), {tips: 2});
                         return false;
                     case 420:
-                        layer.tips(messageOfValidateNull(tel), $("#tel"), {tips: 2});
+                        layer.tips(messageOfValidateNull(message_tel), $("#tel"), {tips: 2});
                         return false;
                     case 421:
-                        layer.tips(messageOfValidateLength(tel, 20), $("#tel"), {tips: 2});
+                        layer.tips(messageOfValidateLength(message_tel, 20), $("#tel"), {tips: 2});
                         return false;
                     case 430:
                         layer.tips(messageOfValidateNull(room_reserve_date), $(".date"), {tips: 2});

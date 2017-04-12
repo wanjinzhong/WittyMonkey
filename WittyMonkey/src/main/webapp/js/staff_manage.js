@@ -18,7 +18,7 @@ function refreshTable(obj) {
     } else {
         for (var i in obj) {
             html += "<tr class='text-c'>" +
-                "<td>" + obj[i].loginName + "</td>" +
+                "<td>" + obj[i].staffNo + "</td>" +
                 "<td>" + obj[i].realName + "</td>" +
                 "<td>" + obj[i].roles + "</td>" +
                 "<td>" + formatDate(obj[i].registDate) + "</td>" +

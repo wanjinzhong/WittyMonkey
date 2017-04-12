@@ -13,10 +13,10 @@ public interface IUserService {
 	User getUserById(Integer id);
 	/**
 	 * 根据登陆名查询用户
-	 * @param loginName
+	 * @param StaffNo
 	 * @return
 	 */
-	User getUserByLoginName(String loginName);
+	User getUserByStaffNo(String StaffNo);
 
 	/**
 	 * 根据邮箱查找用户
@@ -29,7 +29,7 @@ public interface IUserService {
 	 * 添加用户
 	 * @param user
 	 */
-	void saveUser(User user);
+	User saveUser(User user);
 	
 	/**
 	 * 验证用户名和密码
@@ -63,4 +63,6 @@ public interface IUserService {
 	Integer getTotalByHotel(Integer hotelId);
 
 	List<User> getUserByPage(Integer hotelId, Integer start, Integer total);
+
+	String getNextStaffNoByHotel(final Integer hotelId);
 }

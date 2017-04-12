@@ -52,7 +52,7 @@ public class Role implements Serializable{
 	private List<User> users = new ArrayList<User>();
 
 	// 该权限可操作的菜单
-	@ManyToMany(targetEntity=Menu.class)
+	@ManyToMany(targetEntity=Menu.class, fetch = FetchType.EAGER)
 	@JoinTable(name = "role_menu", 
 	joinColumns = { @JoinColumn(name = "role_id", referencedColumnName = "id") },
 	inverseJoinColumns={@JoinColumn(name = "menu_id", referencedColumnName = "id")})

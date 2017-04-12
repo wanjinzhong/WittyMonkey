@@ -14,17 +14,17 @@ public interface IUserDao extends IGenericDao<User, Serializable>{
 	User getUserById(Integer id);
 	/**
 	 * 根据登陆名获取用户
-	 * @param loginName
+	 * @param staffNo
 	 * @return
 	 */
-	User getUserByLoginName(String loginName);
+	User getUserByStaffNo(String staffNo);
 	
 	/**
 	 * 根据登陆名和密码获取用户（用于登陆验证）
 	 * @param
 	 * @return
 	 */
-	User getUserByLoginNameAndPassword(String loginName, String password);
+	User getUserByStaffNoAndPassword(String staffNo, String password);
 
 	/**
 	 * 根据邮箱和密码获取用户（用于登陆验证）
@@ -57,4 +57,11 @@ public interface IUserDao extends IGenericDao<User, Serializable>{
 	 * @return
 	 */
 	Integer getTotalByHotel(Integer hotel);
+
+	/**
+	 * 根据酒店id生成下一个员工的员工号（调用存储过程）
+	 * @param hotelId
+	 * @return
+	 */
+	String getNextStaffNoByHotel(Integer hotelId);
 }

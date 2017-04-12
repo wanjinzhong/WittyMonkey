@@ -249,13 +249,13 @@ function validateTel(inp) {
         return true;
     }
     if (tele.length > 20) {
-        layer.tips(messageOfValidateLength(tel, 20), inp, {tips: 2});
+        layer.tips(messageOfValidateLength(message_tel, 20), inp, {tips: 2});
         return false;
     }
     return true;
 }
 /**
- * 验证邮箱
+ * 验证邮箱格式
  * @param email
  * @returns
  */
@@ -268,6 +268,8 @@ function validateEmailFormat(inp) {
     if (!reg.test(email)) {
         layer.tips(regist_email_is_wrong, inp, {tips: 2});
         return false;
+    } else {
+        return true;
     }
 }
 /**

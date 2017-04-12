@@ -22,7 +22,7 @@ public class SimpleUser implements Serializable {
 
     private String realName;
 
-    private String loginName;
+    private String staffNo;
 
     private String idCardNo;
 
@@ -60,12 +60,12 @@ public class SimpleUser implements Serializable {
         this.realName = realName;
     }
 
-    public String getLoginName() {
-        return loginName;
+    public String getStaffNo() {
+        return staffNo;
     }
 
-    public void setLoginName(String loginName) {
-        this.loginName = loginName;
+    public void setStaffNo(String loginName) {
+        this.staffNo = loginName;
     }
 
     public String getIdCardNo() {

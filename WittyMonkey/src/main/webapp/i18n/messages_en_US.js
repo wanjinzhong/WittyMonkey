@@ -95,7 +95,7 @@ var room_unsubscribe_title = "Unsubscribe";
 var room_checkin_title = "Checkin";
 var room_checkout_title = "Checkout";
 var room_change_title = "Change Room";
-var tel = "Tel";
+var message_tel = "Tel";
 var room_reserve_date = "Reserve Date";
 var date_wrong = "Wrong Date";
 var date_range = "Wrong date range";
@@ -145,3 +145,17 @@ var choose_room_not_exist = "Room does not exist";
 var choose_checkin_not_exist = "Checkin does not exist";
 var reason = "Reason";
 var change_success = "Change room success";
+
+var btn_dimission="Dimission";
+var dimission_title="Staff Dimission";
+var staff_add="Add Staff";
+var staff_add_success="Add Staff successfully";
+var staff_no="staff no/login name";
+var staff_initpassword="init password";
+
+var role_delete_hint = "Are you sure to delete this role? This action will affect the relevant users";
+var role_delete_title = "Delete Role";
+var role_delete_not_exist = "The role does not exist and may have been deleted";
+var role_delete_success = "Delete role successfully";
+var role_edit_title = "Edit role";
+var role_add_title = "Add role";

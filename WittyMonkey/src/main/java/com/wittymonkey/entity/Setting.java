@@ -20,6 +20,8 @@ public class Setting implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
 
+	public static final String LANG_ZH_CN ="zh_CN";
+	public static final String LANG_EN_US ="en_US";
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Integer id;

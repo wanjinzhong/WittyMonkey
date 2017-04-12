@@ -95,7 +95,7 @@ var room_unsubscribe_title = "退定";
 var room_checkin_title = "入住";
 var room_checkout_title = "退房";
 var room_change_title = "换房";
-var tel = "电话";
+var message_tel = "电话";
 var room_reserve_date = "预定时间";
 var date_wrong = "时间不正确";
 var date_range = "时间范围不正确"
@@ -144,6 +144,17 @@ var choose_room_not_exist = "房间不存在";
 var choose_checkin_not_exist = "入住信息不存在";
 var reason = "原因";
 var change_success="换房成功";
+
 var btn_dimission="离职";
 var dimission_title="员工离职";
 var staff_add="员工入职";
+var staff_add_success="员工入职成功";
+var staff_no="工号/登陆名";
+var staff_initpassword="初始密码";
+
+var role_delete_hint = "确定要删除这个角色吗？该动作会影响到相关用户";
+var role_delete_title = "删除角色";
+var role_delete_not_exist = "角色不存在，可能已被删除";
+var role_delete_success = "角色删除成功";
+var role_edit_title = "编辑角色";
+var role_add_title = "添加角色";

@@ -40,8 +40,8 @@ public class User implements Serializable {
 	@Column(name = "real_name", length=20)
 	private String realName;
 
-	@Column(name = "login_name", length=20)
-	private String loginName;
+	@Column(name = "staff_no", length=20)
+	private String staffNo;
 
 	@Column(name = "password", length=24)
 	private String password;
@@ -60,7 +60,7 @@ public class User implements Serializable {
 	@JoinColumn(name = "entry_id", referencedColumnName = "id")
 	private User entryUser;
 
-	@ManyToMany(targetEntity=Role.class, cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.EAGER)
+	@ManyToMany(targetEntity=Role.class, fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
 	@JoinTable(name = "user_role",
 	joinColumns = { @JoinColumn(name = "user_id", referencedColumnName = "id") },
 	inverseJoinColumns={@JoinColumn(name = "role_id", referencedColumnName = "id")})
@@ -114,12 +114,12 @@ public class User implements Serializable {
 		this.realName = realName;
 	}
 
-	public String getLoginName() {
-		return loginName;
+	public String getStaffNo() {
+		return staffNo;
 	}
 
-	public void setLoginName(String loginName) {
-		this.loginName = loginName;
+	public void setStaffNo(String staffNo) {
+		this.staffNo = staffNo;
 	}
 
 	public String getPassword() {

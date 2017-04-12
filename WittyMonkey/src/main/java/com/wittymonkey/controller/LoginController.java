@@ -130,13 +130,11 @@ public class LoginController {
 
     @RequestMapping(value = "toPrev", method = RequestMethod.POST)
     public String toPrev(HttpServletRequest request) {
-        String loginName = request.getParameter("loginName");
         String realName = request.getParameter("realName");
         String idCard = request.getParameter("idCard");
         String email = request.getParameter("email");
         String code = request.getParameter("code");
         User user = new User();
-        user.setLoginName(loginName);
         user.setRealName(realName);
         user.setIdCardNo(idCard);
         user.setEmail(email);
@@ -230,17 +228,11 @@ public class LoginController {
             json.put("status", 421);
             return json.toJSONString();
         } else {
-            User user = new User();
-            user.setLoginName(loginName);
-            user.setPassword(password);
             if (!userService.validateLoginByLoginName(loginName, password) &&
                     !userService.validateLoginByEmail(loginName, password)) {
                 json.put("status", 430);
             } else {
-                User loginUser = userService.getUserByLoginName(loginName);
-                if (loginUser == null){
-                    loginUser = userService.getUserByEmail(loginName);
-                }
+                User loginUser = userService.getUserByStaffNo(loginName);
                 request.getSession().setAttribute("loginUser", loginUser);
                 request.getSession().setAttribute("hotel", loginUser.getHotel());
                 json.put("status", 200);
@@ -271,7 +263,7 @@ public class LoginController {
     @RequestMapping(value = "index", method = RequestMethod.GET)
     public String index(HttpServletRequest request) {
         // 测试数据
-        User user = userService.getUserByLoginName("lyf");
+        User user = userService.getUserByStaffNo("10001");
         request.getSession().setAttribute("loginUser",user);
         request.getSession().setAttribute("hotel",user.getHotel());
         return "index";
@@ -448,9 +440,8 @@ public class LoginController {
         } else {
             // 注册酒店
             Hotel hotel = (Hotel) request.getSession().getAttribute("registHotel");
-            registToDatabase(hotel, loginName, password,realName, email);
-            request.getSession().setAttribute("loginUserName", loginName);
-            request.getSession().setAttribute("loginUserEmail",email);
+            User newUser = registToDatabase(hotel, loginName, password,realName, email);
+            request.getSession().setAttribute("staffNo", newUser.getStaffNo());
             json.put("status", 200);
             json.put("url", "toComplete.do");
         }
@@ -470,7 +461,7 @@ public class LoginController {
      * @param password
      * @param email
      */
-    private void registToDatabase(Hotel hotel, String loginName, String password, String realName, String email) {
+    private User registToDatabase(Hotel hotel, String loginName, String password, String realName, String email) {
         User system = userService.getUserById(0);
         Date now = new Date();
         // 添加初始化请假类型
@@ -550,7 +541,6 @@ public class LoginController {
 
         // 添加用户
         User user = new User();
-        user.setLoginName(loginName);
         user.setRealName(realName);
         user.setPassword(MD5Util.encrypt(password));
         user.setEmail(email.toLowerCase());
@@ -560,8 +550,11 @@ public class LoginController {
         user.setEntryDatetime(now);
         user.setEntryUser(system);
         user.setSetting(setting);
-        userService.saveUser(user);
-
+        User newUser = userService.saveUser(user);
+        String staffNo = userService.getNextStaffNoByHotel(newUser.getHotel().getId());
+        newUser.setStaffNo(staffNo);
+        newUser = userService.saveUser(newUser);
+        return newUser;
     }
 
     /**
@@ -658,7 +651,7 @@ public class LoginController {
      * </table>
      */
     public boolean isLoginNameExist(String loginName) {
-        if (userService.getUserByLoginName(loginName) == null) {
+        if (userService.getUserByStaffNo(loginName) == null) {
             return false;
         } else {
             return true;
