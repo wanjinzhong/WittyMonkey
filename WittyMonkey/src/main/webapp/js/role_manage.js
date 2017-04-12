@@ -3,7 +3,7 @@
  */
 var layer;
 var laypage;
-layui.use(['layer', 'laypage'],function () {
+layui.use(['layer', 'laypage'], function () {
     layer = layui.layer;
     laypage = layui.laypage;
     page("getRoleByPage.do");
@@ -20,7 +20,7 @@ function refreshTable(obj) {
             html += "<tr class='text-c'>" +
                 "<td>" + obj[i].name + "</td>" +
                 "<td>" + obj[i].menus + "</td>" +
-                "<td>" + ((obj[i].note==undefined)?"": obj[i].note)+ "</td>" +
+                "<td>" + ((obj[i].note == undefined) ? "" : obj[i].note) + "</td>" +
                 "<td>" + obj[i].users + "</td>" +
                 "<td>" + obj[i].entryUser + "</td>" +
                 "<td>" + formatDate(obj[i].entryDatetime) + "</td>" +
@@ -88,10 +88,11 @@ function editFloor(id) {
 function showAddRole() {
     layer.open({
         type: 2,
-        area: ['400px', '280px'],
+        area: ['700px', '450px'],
         maxmin: false,
         shade: 0.4,
         title: role_add_title,
         content: "toAddRole.do"
     });
 }
+

@@ -38,13 +38,6 @@ public class Menu implements Serializable{
 	@Column
 	private String description;
 	
-	@Column(name="entry_datetime")
-	private Date entryDatetime;
-
-	@ManyToOne(targetEntity=User.class, fetch=FetchType.EAGER)
-	@JoinColumn(name="entry_id", referencedColumnName="id")
-	private User entryUser;
-	
 	@ManyToMany(targetEntity= Role.class, mappedBy="menus")
 	private List<Role> roles = new ArrayList<Role>();
 
@@ -70,22 +63,6 @@ public class Menu implements Serializable{
 
 	public void setDescription(String description) {
 		this.description = description;
-	}
-
-	public Date getEntryDatetime() {
-		return entryDatetime;
-	}
-
-	public void setEntryDatetime(Date entryDatetime) {
-		this.entryDatetime = entryDatetime;
-	}
-
-	public User getEntryUser() {
-		return entryUser;
-	}
-
-	public void setEntryUser(User entryUser) {
-		this.entryUser = entryUser;
 	}
 
 	public List<Role> getRoles() {

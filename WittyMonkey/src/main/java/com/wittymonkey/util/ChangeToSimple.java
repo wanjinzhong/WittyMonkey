@@ -124,12 +124,6 @@ public class ChangeToSimple {
 
     public static List<SimpleRole> roleList(String lang, List<Role> roles) {
         List<SimpleRole> simpleRoles = new ArrayList<SimpleRole>();
-        Properties props = new Properties();
-        try {
-            props.load(IndexController.class.getResourceAsStream("/i18n/messages_" + lang + ".properties"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
         for (Role role : roles) {
             SimpleRole simpleRole = new SimpleRole();
             simpleRole.setId(role.getId());
@@ -141,49 +135,79 @@ public class ChangeToSimple {
                 simpleRole.getUsers().add(user.getRealName());
             }
             for (Menu menu : role.getMenus()) {
-                String menuName = null;
-                switch (menu.getId()) {
-                    case 1:
-                        menuName = props.getProperty("index.menu.floor");
-                        break;
-                    case 2:
-                        menuName = props.getProperty("index.menu.room");
-                        break;
-                    case 3:
-                        menuName = props.getProperty("index.menu.materiel");
-                        break;
-                    case 4:
-                        menuName = props.getProperty("index.menu.inventory");
-                        break;
-                    case 5:
-                        menuName = props.getProperty("index.menu.role");
-                        break;
-                    case 6:
-                        menuName = props.getProperty("index.menu.room");
-                        break;
-                    case 7:
-                        menuName = props.getProperty("index.menu.leave");
-                        break;
-                    case 8:
-                        menuName = props.getProperty("index.menu.finance");
-                        break;
-                    case 9:
-                        menuName = props.getProperty("index.menu.report");
-                        break;
-                    case 10:
-                        menuName = props.getProperty("index.menu.room");
-                        break;
-                    case 11:
-                        menuName = props.getProperty("index.menu.notify");
-                        break;
-                    case 12:
-                        menuName = props.getProperty("index.menu.room.settting");
-                        break;
-                }
-                simpleRole.getMenus().add(menuName);
+                simpleRole.getMenus().add(menuI180n(lang, menu).getName());
             }
             simpleRoles.add(simpleRole);
         }
         return simpleRoles;
+    }
+
+    public static Menu menuI180n(String lang, Menu menu) {
+        Properties props = new Properties();
+        try {
+            props.load(IndexController.class.getResourceAsStream("/i18n/messages_" + lang + ".properties"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        switch (menu.getId()) {
+            case 1:
+                menu.setName(props.getProperty("index.menu.floor"));
+                break;
+            case 2:
+                menu.setName(props.getProperty("index.menu.room"));
+                break;
+            case 3:
+                menu.setName(props.getProperty("index.menu.materiel"));
+                break;
+            case 4:
+                menu.setName(props.getProperty("index.menu.inventory"));
+                break;
+            case 5:
+                menu.setName(props.getProperty("index.menu.role"));
+                break;
+            case 6:
+                menu.setName(props.getProperty("index.menu.staff"));
+                break;
+            case 7:
+                menu.setName(props.getProperty("index.menu.leave"));
+                break;
+            case 8:
+                menu.setName(props.getProperty("index.menu.finance"));
+                break;
+            case 9:
+                menu.setName(props.getProperty("index.menu.report"));
+                break;
+            case 10:
+                menu.setName(props.getProperty("index.menu.notify"));
+                break;
+            case 11:
+                menu.setName(props.getProperty("index.menu.hotel_info"));
+                break;
+            case 12:
+                menu.setName(props.getProperty("index.menu.settting"));
+                break;
+        }
+        return menu;
+    }
+
+    public static List<Menu> menuI180n(String lang, List<Menu> menus){
+        List<Menu> res = new ArrayList<Menu>();
+        for (Menu menu : menus){
+            res.add(menuI180n(lang, menu));
+        }
+        return res;
+    }
+
+    public static List<SimpleMenu> menuList(String lang, List<Menu> menus) {
+        List<SimpleMenu> simpleMenus = new ArrayList<SimpleMenu>();
+        for (Menu menu : menus) {
+            menu = menuI180n(lang, menu);
+            SimpleMenu simpleMenu = new SimpleMenu();
+            simpleMenu.setId(menu.getId());
+            simpleMenu.setDescription(menu.getDescription());
+            simpleMenu.setName(menu.getName());
+            simpleMenus.add(simpleMenu);
+        }
+        return simpleMenus;
     }
 }

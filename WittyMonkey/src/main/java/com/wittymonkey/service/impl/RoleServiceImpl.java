@@ -30,4 +30,9 @@ public class RoleServiceImpl implements IRoleService{
 		return roleDao.getRolesByPage(hotelId,start,pageSize);
 	}
 
+	@Override
+	public Role getRoleByRoleName(Integer hotelId, String roleName) {
+		return roleDao.getRoleByRoleName(hotelId, roleName);
+	}
+
 }

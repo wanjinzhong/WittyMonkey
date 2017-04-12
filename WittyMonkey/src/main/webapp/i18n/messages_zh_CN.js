@@ -158,3 +158,5 @@ var role_delete_not_exist = "角色不存在，可能已被删除";
 var role_delete_success = "角色删除成功";
 var role_edit_title = "编辑角色";
 var role_add_title = "添加角色";
+var role_name = "角色名";
+var role_exist = "角色已存在";

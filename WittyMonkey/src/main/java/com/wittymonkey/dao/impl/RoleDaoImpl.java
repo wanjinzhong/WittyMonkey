@@ -25,4 +25,13 @@ public class RoleDaoImpl extends GenericDaoImpl<Role> implements IRoleDao{
         param.put("hotelId", hotel);
         return queryListHQL(hql,param,start,pageSize);
     }
+
+    @Override
+    public Role getRoleByRoleName(Integer hotelId, String roleName) {
+        String hql = "from Role where hotel.id = :hotelId and name = :roleName";
+        Map<String, Object> param = new HashMap<String, Object>();
+        param.put("hotelId", hotelId);
+        param.put("roleName", roleName);
+        return queryOneHql(hql, param);
+    }
 }

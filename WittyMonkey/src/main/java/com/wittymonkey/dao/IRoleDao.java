@@ -10,4 +10,6 @@ public interface IRoleDao extends IGenericDao<Role, Serializable>{
     Integer getTotal(Integer hotelId);
 
     List<Role> getRolesByPage(Integer hotel, Integer start, Integer pageSize);
+
+    Role getRoleByRoleName(Integer hotelId, String roleName);
 }

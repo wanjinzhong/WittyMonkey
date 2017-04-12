@@ -11,4 +11,6 @@ public interface IRoleService {
 	Integer getTotal(Integer hotelId);
 
 	List<Role> getRoleByPage(Integer hotelId, Integer start, Integer pageSize);
+
+	Role getRoleByRoleName(Integer hotelId, String roleName);
 }

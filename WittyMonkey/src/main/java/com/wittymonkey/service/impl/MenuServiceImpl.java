@@ -1,7 +1,10 @@
 package com.wittymonkey.service.impl;
 
+import java.io.IOException;
 import java.util.List;
+import java.util.Properties;
 
+import com.wittymonkey.controller.IndexController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,5 +22,4 @@ public class MenuServiceImpl implements IMenuService {
 	public List<Menu> getAll() {
 		return menuDao.getAll();
 	}
-
 }
