@@ -1,9 +1,15 @@
+DELIMITER $$
+
+USE `wittymonkey`$$
+
+DROP PROCEDURE IF EXISTS `get_next_staff_id`$$
+
 CREATE DEFINER=`root`@`localhost` PROCEDURE `get_next_staff_id`(
 		IN hotelId INT)
 BEGIN
 DECLARE curr_no INT;
 DECLARE next_no INT;
-declare staffNo VARCHAR(20);
+DECLARE staffNo VARCHAR(20);
 IF (hotelId IS NULL) THEN
 	SET curr_no = -1;
 ELSE
@@ -37,4 +43,6 @@ ELSE
 	END IF;
 END IF;
 SELECT staffNo AS staff_no;
-END
+END$$
+
+DELIMITER ;
