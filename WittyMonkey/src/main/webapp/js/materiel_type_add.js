@@ -39,7 +39,7 @@ function save() {
                         layer.tips(materiel_type_validate_name_empty, $("#name"), {tips: 2});
                         break;
                     case 401:
-                        layer.tips(messageOfValidateLength(null, 50), $("#name"), {tips: 2});
+                        layer.tips(messageOfValidateLength(null, 10), $("#name"), {tips: 2});
                         break;
                     case 410:
                         layer.tips(messageOfValidateLength(null, 1024), $("#note"), {tips: 2});

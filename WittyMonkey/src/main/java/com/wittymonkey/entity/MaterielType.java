@@ -27,7 +27,7 @@ public class MaterielType implements Serializable{
 	@JoinColumn(name="hotel_id", referencedColumnName="id")
 	private Hotel hotel;
 	
-	@Column(length=50)
+	@Column(length=10)
 	private String name;
 	
 	@OneToMany(targetEntity=Materiel.class, mappedBy="materielType")

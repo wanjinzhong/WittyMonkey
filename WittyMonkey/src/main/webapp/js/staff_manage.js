@@ -54,7 +54,7 @@ function dimissionStaff(id) {
 function editStaff(id) {
     layer.open({
         type: 2,
-        area: ['700px', '350px'],
+        area: ['700px', '450px'],
         maxmin: false,
         shade: 0.4,
         title: floor_manage_edit_title,
@@ -64,7 +64,7 @@ function editStaff(id) {
 function showAddStaff() {
     layer.open({
         type: 2,
-        area: ['500px', '300px'],
+        area: ['700px', '450px'],
         maxmin: false,
         shade: 0.4,
         title: staff_add,

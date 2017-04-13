@@ -31,7 +31,7 @@
         </tr>
         <tr>
             <td><label class="layui-form-label"><fmt:message key="role.permission"/></label></td>
-            <td width="400px">
+            <td width="400px" style="text-align: left">
                 <c:forEach items="${menus}" var="menu">
                     <input type="checkbox" name="menu" value="${menu.id}" title="${menu.name}">
                 </c:forEach>

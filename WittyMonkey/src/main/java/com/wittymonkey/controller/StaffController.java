@@ -3,16 +3,16 @@ package com.wittymonkey.controller;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.wittymonkey.dao.IHotelDao;
-import com.wittymonkey.entity.Floor;
-import com.wittymonkey.entity.Hotel;
-import com.wittymonkey.entity.Setting;
-import com.wittymonkey.entity.User;
+import com.wittymonkey.entity.*;
 import com.wittymonkey.service.IHotelService;
+import com.wittymonkey.service.IRoleService;
 import com.wittymonkey.service.IUserService;
 import com.wittymonkey.util.ChangeToSimple;
 import com.wittymonkey.util.IDCardValidate;
 import com.wittymonkey.util.MD5Util;
 import com.wittymonkey.vo.SimpleFloor;
+import com.wittymonkey.vo.SimpleMenu;
+import com.wittymonkey.vo.SimpleRole;
 import com.wittymonkey.vo.SimpleUser;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,10 +22,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by neilw on 2017/4/7.
@@ -35,8 +32,12 @@ public class StaffController {
 
     @Autowired
     private IUserService userService;
+
     @Autowired
     private IHotelService hotelService;
+
+    @Autowired
+    private IRoleService roleService;
 
     @RequestMapping(value = "getStaffByPage", method = RequestMethod.GET)
     @ResponseBody
@@ -59,6 +60,9 @@ public class StaffController {
 
     @RequestMapping(value = "toAddStaff", method = RequestMethod.GET)
     public String toAddStaff(HttpServletRequest request){
+        Hotel hotel = (Hotel) request.getSession().getAttribute("hotel");
+        List<Role> roles = roleService.getRoleByPage(hotel.getId(), null, null);
+        request.setAttribute("roles", roles);
         return "staff_add";
     }
 
@@ -105,26 +109,27 @@ public class StaffController {
         String idcard = request.getParameter("idcard");
         String tel = request.getParameter("tel");
         String email = request.getParameter("email");
-        if (StringUtils.isBlank(realName)){
-            json.put("status", 400);
+        String[] rolesStr = request.getParameterValues("roles");
+        Integer staffVali = validateStaff(realName,idcard,tel,email);
+        if (staffVali != 200){
+            json.put("status", staffVali);
             return json.toJSONString();
         }
-        if (realName.length() > 20){
-            json.put("status", 401);
-            return json.toJSONString();
+        List<Role> roles = new ArrayList<Role>();
+        if (rolesStr != null){
+            for(String str : rolesStr){
+                try{
+                    Integer id = Integer.parseInt(str);
+                    Role role = roleService.getRoleById(id);
+                    if (role != null){
+                        roles.add(role);
+                    }
+                } catch (NumberFormatException e){
+                    continue;
+                }
+            }
         }
-        if (!IDCardValidate.validate(idcard)){
-            json.put("status", 410);
-            return json.toJSONString();
-        }
-        if (StringUtils.isNotBlank(tel) && tel.trim().length()> 15){
-            json.put("status", 420);
-            return json.toJSONString();
-        }
-        if (StringUtils.isNotBlank(email) && email.trim().length() > 50){
-            json.put("status", 430);
-            return json.toJSONString();
-        }
+
         User user = new User();
         String initPassword = "000000";
         String secritePwd = MD5Util.encrypt(initPassword);
@@ -136,6 +141,7 @@ public class StaffController {
         user.setEntryDatetime(new Date());
         user.setTel(tel);
         user.setEmail(email);
+        user.setRoles(roles);
         String staffNo = userService.getNextStaffNoByHotel(hotel.getId());
         user.setStaffNo(staffNo);
         Setting setting = new Setting();
@@ -148,5 +154,51 @@ public class StaffController {
         json.put("staffNo", staffNo);
         json.put("initPwd", initPassword);
         return json.toJSONString();
+    }
+
+
+    public Integer validateStaff(String realName, String idcard, String tel, String email){
+        if (StringUtils.isBlank(realName)){
+            return 400;
+        }
+        if (realName.length() > 20){
+            return 401;
+        }
+        if (!IDCardValidate.validate(idcard)){
+            return 410;
+        }
+        if (StringUtils.isNotBlank(tel) && tel.trim().length()> 15){
+            return 420;
+        }
+        if (StringUtils.isNotBlank(email) && email.trim().length() > 50){
+            return 430;
+        }
+        return 200;
+    }
+
+    @RequestMapping(value = "toEditStaff", method = RequestMethod.GET)
+    public String toEditStaff(HttpServletRequest request){
+        String idStr = request.getParameter("id");
+        try{
+            Integer id = Integer.parseInt(idStr);
+            User staff = userService.getUserById(id);
+            request.getSession().setAttribute("editStaff", staff);
+            Hotel hotel = (Hotel) request.getSession().getAttribute("hotel");
+            User loginUser = (User) request.getSession().getAttribute("loginUser");
+            List<Role> roles = roleService.getRoleByPage(hotel.getId(), null, null);
+            List<SimpleRole> simpleRoles = ChangeToSimple.roleList(loginUser.getSetting().getLang(),roles);
+            for (SimpleRole role : simpleRoles){
+                role.setSelected(false);
+                for(Role myRole : staff.getRoles()){
+                    if (myRole.getId().equals(role.getId())){
+                        role.setSelected(true);
+                    }
+                }
+            }
+            request.setAttribute("roles", simpleRoles);
+        } catch (NumberFormatException e){
+            e.printStackTrace();
+        }
+        return "staff_edit";
     }
 }

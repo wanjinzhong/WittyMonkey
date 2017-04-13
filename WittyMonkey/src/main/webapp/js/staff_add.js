@@ -2,8 +2,10 @@
  * Created by neilw on 2017/4/11.
  */
 var layer;
-layui.use(['layer'], function (){
+var form;
+layui.use(['layer', 'form'], function (){
     layer = layui.layer;
+    form = layui.form();
 });
 function save() {
     if (!validateRealName($("#realName"))){

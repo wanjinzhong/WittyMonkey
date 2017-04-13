@@ -29,7 +29,7 @@ function save() {
                     layer.tips(messageOfValidateNull(role_name), $("#name"), {tips: 2});
                     break;
                 case 401:
-                    layer.tips(messageOfValidateLength(role_name, 50), $("#name"), {tips: 2});
+                    layer.tips(messageOfValidateLength(role_name, 10), $("#name"), {tips: 2});
                     break;
                 case 402:
                     layer.tips(role_exist, $("#name"), {tips: 2});

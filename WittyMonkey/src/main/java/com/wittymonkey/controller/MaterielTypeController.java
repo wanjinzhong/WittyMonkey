@@ -197,7 +197,7 @@ public class MaterielTypeController {
             json.put("status", 400);
             return json.toJSONString();
         }
-        if (name.length() > 50) {
+        if (name.length() > 10) {
             json.put("status", 401);
             return json.toJSONString();
         }

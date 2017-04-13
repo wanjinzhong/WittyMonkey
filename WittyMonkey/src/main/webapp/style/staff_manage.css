@@ -7,3 +7,9 @@ td {
     text-align: right;
     padding: 5px;
 }
+.role_choose{
+    width: 100%;
+    height:150px;
+    overflow-y: scroll;
+    text-align: left;
+}

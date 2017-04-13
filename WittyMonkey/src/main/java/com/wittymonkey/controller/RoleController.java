@@ -151,7 +151,7 @@ public class RoleController {
         if (StringUtils.isBlank(roleName)) {
             return 400;
         }
-        if (roleName.trim().length() > 50) {
+        if (roleName.trim().length() > 10) {
             return 401;
         }
         if (UPDATE.equals(type)) {

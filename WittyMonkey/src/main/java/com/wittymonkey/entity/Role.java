@@ -36,7 +36,7 @@ public class Role implements Serializable{
 	@JoinColumn(name="hotel_id", referencedColumnName="id")
 	private Hotel hotel;
 	
-	@Column(length=50)
+	@Column(length=10)
 	private String name;
 	
 	@Column(name="entry_datetime")

@@ -28,19 +28,19 @@
             <tr>
                 <td><label class="layui-form-label"><fmt:message key="staff.real_name"/></label></td>
                 <td width="400px"><input type="text" class="layui-input" name="realName"
-                           id="realName" onblur="validateRealName(this)"></td>
+                           id="realName" value="${editStaff.realName}" onblur="validateRealName(this)"></td>
             </tr>
             <tr>
                 <td><label class="layui-form-label"><fmt:message key="staff.idcard"/></label></td>
                 <td width="400px"><input type="text" class="layui-input" name="idcard"
-                           id="idcard" onblur="validateIdCard(this)"></td>
+                           id="idcard" value="${editStaff.idCardNo}" onblur="validateIdCard(this)"></td>
             </tr>
             <tr><td><label class="layui-form-label"><fmt:message key="staff.tel"/></label></td>
                 <td width="400px"><input type="text" class="layui-input" name="tel"
-                           id="tel" onblur="validateTel(this)"></td></tr>
+                           id="tel" onblur="validateTel(this)" value="${editStaff.tel}"></td></tr>
             <tr>
                 <td><label class="layui-form-label"><fmt:message key="staff.email"/></label></td>
-                <td width="400px"><input type="text" class="layui-input" name="email"
+                <td width="400px"><input type="text" class="layui-input" name="email" value="${editStaff.email}"
                            id="email" onblur="validateEmailFormat(this)"></td>
             </tr>
             <tr>
@@ -48,7 +48,9 @@
                 <td width="400px">
                     <div class="role_choose">
                         <c:forEach items="${roles}" var="role">
-                            <input type="checkbox" name="roles" value="${role.id}" title="${role.name}"/>
+                            <input type="checkbox" name="roles" value="${role.id}" title="${role.name}"
+                                    <c:if test="${role.selected}">checked="checked"</c:if>
+                            />
                         </c:forEach>
                     </div>
                 </td>

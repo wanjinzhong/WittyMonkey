@@ -25,6 +25,16 @@ public class SimpleRole implements Serializable{
 
     private String note;
 
+    private Boolean selected;
+
+    public Boolean getSelected() {
+        return selected;
+    }
+
+    public void setSelected(Boolean selected) {
+        this.selected = selected;
+    }
+
     public Integer getId() {
         return id;
     }

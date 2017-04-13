@@ -121,8 +121,8 @@ function validateRoleName(type, inp) {
         layer.tips(messageOfValidateNull(role_name), inp, {tips: 2});
         return false;
     }
-    if (roleName.trim().length > 50) {
-        layer.tips(messageOfValidateLength(role_name, 50), inp, {tips: 2});
+    if (roleName.trim().length > 10) {
+        layer.tips(messageOfValidateLength(role_name, 10), inp, {tips: 2});
         return false;
     }
     var funcRes;
@@ -140,7 +140,7 @@ function validateRoleName(type, inp) {
                     funcRes = false;
                     break;
                 case 401:
-                    layer.tips(messageOfValidateLength(role_name, 50), inp, {tips: 2});
+                    layer.tips(messageOfValidateLength(role_name, 10), inp, {tips: 2});
                     funcRes = false;
                     break;
                 case 200:
@@ -204,8 +204,8 @@ function validateMaterielTypeName(method, inp) {
     if (name.length <= 0){
         layer.tips(messageOfValidateNull(name), inp, {tips: 2});
         return false;
-    } else if (name.length > 50){
-        layer.tips(messageOfValidateLength(name, 50), inp, {tips: 2});
+    } else if (name.length > 10){
+        layer.tips(messageOfValidateLength(name, 10), inp, {tips: 2});
         return false;
     }
     $.ajax({

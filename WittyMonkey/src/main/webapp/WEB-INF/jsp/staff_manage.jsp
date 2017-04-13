@@ -33,7 +33,7 @@
                 <th width="100px"><fmt:message key="staff.real_name"/></th>
                 <th><fmt:message key="staff.roles"/></th>
                 <th width="130px"><fmt:message key="staff.induction"/></th>
-                <th width="1300px"><fmt:message key="staff.tel"/></th>
+                <th width="130px"><fmt:message key="staff.tel"/></th>
                 <th width="150px"><fmt:message key="staff.email"/></th>
                 <th width="150px"><fmt:message key="operation"/></th>
             </tr>
