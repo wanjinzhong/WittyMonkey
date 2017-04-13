@@ -13,6 +13,12 @@ import java.util.Map;
 public class RoleDaoImpl extends GenericDaoImpl<Role> implements IRoleDao{
 
     @Override
+    public Role getRoleById(Integer id) {
+        String hql = "from Role where id = ?";
+        return queryOneHql(hql, id);
+    }
+
+    @Override
     public Integer getTotal(Integer hotelId) {
         String hql = "select count(1) from Role where hotel.id = ?";
         return countHQL(hql,hotelId);
@@ -33,5 +39,12 @@ public class RoleDaoImpl extends GenericDaoImpl<Role> implements IRoleDao{
         param.put("hotelId", hotelId);
         param.put("roleName", roleName);
         return queryOneHql(hql, param);
+    }
+
+    @Override
+    public void deleteRole(Role role) {
+        String sql = "delete from user_role where role_id = ?";
+        executeSQL(sql, role.getId());
+        super.delete(role);
     }
 }

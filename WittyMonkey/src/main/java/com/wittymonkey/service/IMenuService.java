@@ -12,4 +12,18 @@ public interface IMenuService {
 	 * @return
 	 */
 	List<Menu> getAll();
+
+	Menu getMenuById(Integer id);
+
+	/**
+	 * 获取所有不可配置的菜单
+	 * @return
+	 */
+	List<Menu> getAllUnconfigurable();
+
+	/**
+	 * 获取所有可配置的菜单
+	 * @return
+	 */
+	List<Menu> getAllConfigurable();
 }

@@ -41,6 +41,10 @@ public class Menu implements Serializable{
 	@ManyToMany(targetEntity= Role.class, mappedBy="menus")
 	private List<Role> roles = new ArrayList<Role>();
 
+	// 是否可配置该菜单
+	@Column
+	private Boolean configurable;
+
 	public Integer getId() {
 		return id;
 	}
@@ -73,6 +77,11 @@ public class Menu implements Serializable{
 		this.roles = roles;
 	}
 
-	
-	
+	public Boolean getConfigurable() {
+		return configurable;
+	}
+
+	public void setConfigurable(Boolean configurable) {
+		this.configurable = configurable;
+	}
 }

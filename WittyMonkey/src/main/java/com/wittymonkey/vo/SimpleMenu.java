@@ -14,6 +14,8 @@ public class SimpleMenu {
 
     private String description;
 
+    private Boolean selected;
+
     private List<String> roles = new ArrayList<String>();
 
     public Integer getId() {
@@ -46,5 +48,13 @@ public class SimpleMenu {
 
     public void setRoles(List<String> roles) {
         this.roles = roles;
+    }
+
+    public Boolean getSelected() {
+        return selected;
+    }
+
+    public void setSelected(Boolean selected) {
+        this.selected = selected;
     }
 }

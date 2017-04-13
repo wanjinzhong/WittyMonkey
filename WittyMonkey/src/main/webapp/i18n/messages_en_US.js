@@ -159,3 +159,7 @@ var role_delete_not_exist = "The role does not exist and may have been deleted";
 var role_delete_success = "Delete role successfully";
 var role_edit_title = "Edit role";
 var role_add_title = "Add role";
+var no_menu_chosen = "No permission chosen";
+var menu_duplicate = "Permissions duplicate whith a role :";
+var role_add_success = "Add role successfully";
+var role_edit_success = "Role modification success";

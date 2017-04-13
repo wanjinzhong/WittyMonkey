@@ -25,8 +25,8 @@ function refreshTable(obj) {
                 "<td>" + obj[i].entryUser + "</td>" +
                 "<td>" + formatDate(obj[i].entryDatetime) + "</td>" +
                 "<td>" +
-                "<i class='editBtn layui-icon layui-btn layui-btn-primary layui-btn-small' onclick='editFloor(" + obj[i].id + ")'>&#xe642; " + btn_edit + "</i>" +
-                "<i class='deleteBtn layui-icon layui-btn layui-btn-primary layui-btn-small' onclick='deleteFloor(" + obj[i].id + ")'>&#xe640; " + btn_delete + "</i>" +
+                "<i class='editBtn layui-icon layui-btn layui-btn-primary layui-btn-small' onclick='editRole(" + obj[i].id + ")'>&#xe642; " + btn_edit + "</i>" +
+                "<i class='deleteBtn layui-icon layui-btn layui-btn-primary layui-btn-small' onclick='deleteRole(" + obj[i].id + ")'>&#xe640; " + btn_delete + "</i>" +
                 "</td>" +
                 "</tr>";
         }
@@ -40,20 +40,12 @@ function deleteRole(id) {
                 url: "deleteRole.do",
                 data: {"id": id},
                 dataType: "json",
-                type: "GET",
+                type: "POST",
                 success: function (data) {
                     var result = eval("(" + data + ")");
                     switch (result.status) {
                         case 400:
                             layer.msg(role_delete_not_exist, {
-                                icon: 2, time: 2000
-                            }, function () {
-                                parent.location.reload();
-                                closeMe();
-                            });
-                            break;
-                        case 500:
-                            layer.msg(error_500, {
                                 icon: 2, time: 2000
                             }, function () {
                                 parent.location.reload();
@@ -75,10 +67,10 @@ function deleteRole(id) {
             layer.close(index);
         });
 }
-function editFloor(id) {
+function editRole(id) {
     layer.open({
         type: 2,
-        area: ['400px', '280px'],
+        area: ['700px', '450px'],
         maxmin: false,
         shade: 0.4,
         title: role_edit_title,

@@ -1,5 +1,5 @@
 /**
- * Created by neilw on 2017/4/12.
+ * Created by neilw on 2017/4/13.
  */
 var layer;
 var form;
@@ -8,19 +8,17 @@ layui.use(['layer', 'form'], function () {
     form = layui.form();
 });
 
-
-
-function save() {
-    if (!validateRoleName("add", $("#name"))) {
+function update() {
+    if (!validateRoleName("update", $("#name"))) {
         return;
     }
     if (!validateNote($("#note"))) {
         return;
     }
     $.ajax({
-        type: "get",
-        url: "saveRole.do",
-        data: $("#add_form").serialize(),
+        type: "POST",
+        url: "updateRole.do",
+        data: $("#edit_form").serialize(),
         dataType: "json",
         success: function (data) {
             var res = eval("(" + data + ")");
@@ -48,7 +46,7 @@ function save() {
                     });
                     break;
                 case 200:
-                    layer.msg(role_add_success, {
+                    layer.msg(role_edit_success, {
                         icon: 1,
                         time: 2000
                     }, function () {

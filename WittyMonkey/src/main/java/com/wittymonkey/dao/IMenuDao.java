@@ -13,4 +13,10 @@ public interface IMenuDao extends IGenericDao<Menu, Serializable> {
 	 */
 	List<Menu> getAll();
 
+	Menu getMenuById(Integer id);
+
+	List<Menu> getAllUnconfigurable();
+
+	List<Menu> getAllConfigurable();
+
 }

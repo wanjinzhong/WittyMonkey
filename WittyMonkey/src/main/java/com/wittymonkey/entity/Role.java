@@ -3,9 +3,7 @@ package com.wittymonkey.entity;
 import com.alibaba.fastjson.annotation.JSONField;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -124,5 +122,29 @@ public class Role implements Serializable{
 		this.menus = menus;
 	}
 
-	
+	/**
+	 * 判断两个角色是否拥有相同菜单
+	 * @return
+	 */
+	public Boolean isMenuSame(Role role){
+		List<Integer> thisMenuIds = new ArrayList<Integer>();
+		List<Integer> menuIds = new ArrayList<Integer>();
+		for(Menu menu: getMenus()){
+			thisMenuIds.add(menu.getId());
+		}
+		for (Menu menu : role.getMenus()){
+			menuIds.add(menu.getId());
+		}
+		if (thisMenuIds.size() != menuIds.size()){
+			return false;
+		}
+		Collections.sort(thisMenuIds);
+		Collections.sort(menuIds);
+		for (int i = 0; i < thisMenuIds.size(); i ++){
+			if (!thisMenuIds.get(i).equals(menuIds.get(i))){
+				return false;
+			}
+		}
+		return true;
+	}
 }

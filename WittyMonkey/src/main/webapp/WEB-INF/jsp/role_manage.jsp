@@ -36,11 +36,11 @@
         <table class="layui-table" lay-skin="line">
             <thead>
             <tr>
-                <th width="100px"><fmt:message key="role.name"/></th>
+                <th width="50px"><fmt:message key="role.name"/></th>
                 <th width="200px"><fmt:message key="role.permission"/></th>
                 <th width="100px"><fmt:message key="note"/></th>
                 <th width="200px"><fmt:message key="role.user"/></th>
-                <th width="100px"><fmt:message key="floor.manage.entry_user"/></th>
+                <th width="50px"><fmt:message key="floor.manage.entry_user"/></th>
                 <th width="150px"><fmt:message key="floor.manage.entry_date"/></th>
                 <th width="150px"><fmt:message key="operation"/></th>
             </tr>

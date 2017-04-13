@@ -160,3 +160,7 @@ var role_edit_title = "编辑角色";
 var role_add_title = "添加角色";
 var role_name = "角色名";
 var role_exist = "角色已存在";
+var no_menu_chosen = "没有选择权限";
+var menu_duplicate = "已有角色拥有这些权限: ";
+var role_add_success = "角色添加成功";
+var role_edit_success = "角色修改成功";

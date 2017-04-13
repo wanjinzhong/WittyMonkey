@@ -16,4 +16,22 @@ public class MenuDaoImpl extends GenericDaoImpl<Menu> implements IMenuDao {
 		return queryListHQL(hql, null);
 	}
 
+	@Override
+	public Menu getMenuById(Integer id) {
+		String hql = "from Menu where id = ?";
+		return queryOneHql(hql, id);
+	}
+
+	@Override
+	public List<Menu> getAllUnconfigurable() {
+		String hql = "from Menu where configurable = false";
+		return queryListHQL(hql,null);
+	}
+
+	@Override
+	public List<Menu> getAllConfigurable() {
+		String hql = "from Menu where configurable = true";
+		return queryListHQL(hql,null);
+	}
+
 }
