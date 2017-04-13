@@ -152,6 +152,8 @@ var staff_add="Add Staff";
 var staff_add_success="Add Staff successfully";
 var staff_no="staff no/login name";
 var staff_initpassword="init password";
+var staff_edit="Edit Staff";
+var staff_edit_success="Edit staff successfully";
 
 var role_delete_hint = "Are you sure to delete this role? This action will affect the relevant users";
 var role_delete_title = "Delete Role";

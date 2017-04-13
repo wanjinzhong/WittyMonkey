@@ -49,14 +49,14 @@ public interface IUserDao extends IGenericDao<User, Serializable>{
 	 * @param total
 	 * @return
 	 */
-	List<User> getUserByPage(Integer hotel, Integer start, Integer total);
+	List<User> getUserByPage(Integer hotel, Integer type, Integer start, Integer total);
 
 	/**
 	 * 获取酒店内所有员工人数
 	 * @param hotel
 	 * @return
 	 */
-	Integer getTotalByHotel(Integer hotel);
+	Integer getTotalByHotel(Integer hotel, Integer type);
 
 	/**
 	 * 根据酒店id生成下一个员工的员工号（调用存储过程）

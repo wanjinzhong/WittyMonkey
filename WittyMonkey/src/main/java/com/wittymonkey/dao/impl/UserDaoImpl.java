@@ -68,19 +68,30 @@ public class UserDaoImpl extends GenericDaoImpl<User> implements IUserDao {
 	}
 
 	@Override
-	public List<User> getUserByPage(Integer hotel, Integer start, Integer total) {
-		String hql = "from User where hotel.id = :hotelId and dimissionDate is null order by id";
+	public List<User> getUserByPage(Integer hotel, Integer type, Integer start, Integer total) {
+		StringBuffer hql = new StringBuffer("from User where hotel.id = :hotelId ");
+		if (User.INCUMBENT.equals(type)){
+			hql.append("and dimissionDate is null ");
+		} else if (User.DIMISSORY.equals(type)){
+			hql.append("and dimissionDate is not null ");
+		}
+		hql.append("order by id");
 		Map<String, Object> param = new HashMap<String, Object>();
 		param.put("hotelId", hotel);
-		return queryListHQL(hql,param,start,total);
+		return queryListHQL(hql.toString(),param,start,total);
 	}
 
 	@Override
-	public Integer getTotalByHotel(Integer hotel) {
-		String hql = "select count(1) from User where hotel.id = :hotelId and dimissionDate is null";
+	public Integer getTotalByHotel(Integer hotel, Integer type) {
+		StringBuffer hql = new StringBuffer("select count(1) from User where hotel.id = :hotelId ");
+		if (User.INCUMBENT.equals(type)){
+			hql.append("and dimissionDate is null ");
+		} else if (User.DIMISSORY.equals(type)){
+			hql.append("and dimissionDate is not null ");
+		}
 		Map<String, Object> param = new HashMap<String, Object>();
 		param.put("hotelId", hotel);
-		return countHQL(hql,param);
+		return countHQL(hql.toString(),param);
 	}
 	String nextStaffNo;
 	@Override

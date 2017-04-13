@@ -60,9 +60,9 @@ public interface IUserService {
 	 * @param hotelId
 	 * @return
 	 */
-	Integer getTotalByHotel(Integer hotelId);
+	Integer getTotalByHotel(Integer hotelId, Integer type);
 
-	List<User> getUserByPage(Integer hotelId, Integer start, Integer total);
+	List<User> getUserByPage(Integer hotelId, Integer type, Integer start, Integer total);
 
 	String getNextStaffNoByHotel(final Integer hotelId);
 }

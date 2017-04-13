@@ -25,18 +25,18 @@
         <i class="refreshBtn layui-icon layui-btn layui-btn-small" onclick="reload();">&#x1002;</i>
     </nav>
     <div id="main">
-        <i class="newBtn layui-icon layui-btn layui-btn-radius layui-btn-normal" onclick="showAddStaff()">&#xe61f; <fmt:message key="staff.add"/></i>
+        <i class="newBtn layui-icon layui-btn layui-btn-radius layui-btn-normal" onclick="showAddStaff()">&#xe61f;
+            <fmt:message key="staff.add"/></i>
+        <form class="layui-form">
+            <div style="width: 200px; margin: 0 auto">
+                <select name="type" id="type" lay-filter="type" lay-verify="required" onchange="changeType()">
+                    <option value="0" selected><fmt:message key="staff.incumbent"/></option>
+                    <option value="1"><fmt:message key="staff.dimissory"/></option>
+                </select>
+            </div>
+        </form>
         <table class="layui-table" lay-skin="line">
-            <thead>
-            <tr>
-                <th width="50px"><fmt:message key="staff.no"/></th>
-                <th width="100px"><fmt:message key="staff.real_name"/></th>
-                <th><fmt:message key="staff.roles"/></th>
-                <th width="130px"><fmt:message key="staff.induction"/></th>
-                <th width="130px"><fmt:message key="staff.tel"/></th>
-                <th width="150px"><fmt:message key="staff.email"/></th>
-                <th width="150px"><fmt:message key="operation"/></th>
-            </tr>
+            <thead id="tableHead">
             </thead>
             <tbody id="dataTabel">
             </tbody>

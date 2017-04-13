@@ -44,11 +44,12 @@ public class StaffController {
     public String getStaffByPage(HttpServletRequest request){
         JSONObject json = new JSONObject();
         Integer curr = Integer.parseInt(request.getParameter("curr"));
+        Integer type = Integer.parseInt(request.getParameter("type"));
         User loginUser = (User) request.getSession().getAttribute("loginUser");
         Integer pageSize = loginUser.getSetting().getPageSize();
         Hotel hotel = (Hotel) request.getSession().getAttribute("hotel");
-        Integer count = userService.getTotalByHotel(hotel.getId());
-        List<User> users = userService.getUserByPage(hotel.getId(), (curr - 1) * pageSize, pageSize);
+        Integer count = userService.getTotalByHotel(hotel.getId(), type);
+        List<User> users = userService.getUserByPage(hotel.getId(), type,(curr - 1) * pageSize, pageSize);
         List<SimpleUser> simpleUsers = ChangeToSimple.userList(users);
         json.put("count", count);
         json.put("pageSize", pageSize);
@@ -99,9 +100,9 @@ public class StaffController {
      * <td>邮箱过长</td>
      * </tr>
      */
-    @RequestMapping(value = "saveStaff", method = RequestMethod.GET)
+    @RequestMapping(value = "saveStaff", method = RequestMethod.POST)
     @ResponseBody
-    public String aveStaff(HttpServletRequest request){
+    public String saveStaff(HttpServletRequest request){
         JSONObject json = new JSONObject();
         User loginUser = (User) request.getSession().getAttribute("loginUser");
         Hotel hotel = (Hotel) request.getSession().getAttribute("hotel");
@@ -149,7 +150,7 @@ public class StaffController {
         setting.setPageSize(10);
         user.setSetting(setting);
         user.setRegistDate(new Date());
-        Object obj = userService.saveUser(user);
+        userService.saveUser(user);
         json.put("status", 200);
         json.put("staffNo", staffNo);
         json.put("initPwd", initPassword);
@@ -200,5 +201,56 @@ public class StaffController {
             e.printStackTrace();
         }
         return "staff_edit";
+    }
+
+    @RequestMapping(value = "updateStaff", method = RequestMethod.POST)
+    @ResponseBody
+    public String updateStaff(HttpServletRequest request){
+        User editStaff = (User)request.getSession().getAttribute("editStaff");
+        JSONObject json = new JSONObject();
+        User loginUser = (User) request.getSession().getAttribute("loginUser");
+        String realName = request.getParameter("realName");
+        String idcard = request.getParameter("idcard");
+        String tel = request.getParameter("tel");
+        String email = request.getParameter("email");
+        String[] rolesStr = request.getParameterValues("roles");
+        Integer staffVali = validateStaff(realName,idcard,tel,email);
+        if (staffVali != 200){
+            json.put("status", staffVali);
+            return json.toJSONString();
+        }
+        List<Role> roles = new ArrayList<Role>();
+        if (rolesStr != null){
+            for(String str : rolesStr){
+                try{
+                    Integer id = Integer.parseInt(str);
+                    Role role = roleService.getRoleById(id);
+                    if (role != null){
+                        roles.add(role);
+                    }
+                } catch (NumberFormatException e){
+                    continue;
+                }
+            }
+        }
+        User staff = userService.getUserById(editStaff.getId());
+        staff.setRealName(realName);
+        staff.setIdCardNo(idcard);
+        staff.setTel(tel);
+        staff.setEmail(email);
+        staff.setRoles(roles);
+        staff.setEntryUser(userService.getUserById(loginUser.getId()));
+        staff.setEntryDatetime(new Date());
+        userService.saveUser(staff);
+        json.put("status", 200);
+        return json.toJSONString();
+    }
+
+    @RequestMapping(value = "toDimission", method = RequestMethod.POST)
+    public String toDimission(HttpServletRequest request){
+        Integer id = Integer.parseInt((String) request.getParameter("id"));
+        User user = userService.getUserById(id);
+        request.getSession().setAttribute("dimissionUser", user);
+        return "staff_dimission";
     }
 }

@@ -26,12 +26,12 @@
     <table>
         <tr>
             <td><label class="layui-form-label"><fmt:message key="role.name"/></label></td>
-            <td width="400px"><input type="text" class="layui-input" name="name" value="${editRole.name}"
+            <td width="400px" ><input type="text" class="layui-input" name="name" value="${editRole.name}"
                                      id="name" onblur="validateRoleName('update',this)"></td>
         </tr>
         <tr>
             <td><label class="layui-form-label"><fmt:message key="role.permission"/></label></td>
-            <td width="400px">
+            <td width="400px" style="text-align: left">
                 <c:forEach items="${menus}" var="menu">
                     <input type="checkbox" name="menu" value="${menu.id}" title="${menu.name}"
                            <c:if test="${menu.selected}">checked="checked"</c:if>/>

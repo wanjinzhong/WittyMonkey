@@ -59,7 +59,7 @@
         <input type="button" class="layui-btn layui-btn-radius layui-btn-danger" value="<fmt:message key="btn.close"/>"
                onclick="closeMe()"/>
         <input type="button" class="layui-btn layui-btn-radius" value="<fmt:message key="btn.save"/>"
-               onclick="save()"/>
+               onclick="save('save')"/>
     </div>
 </div>
 </body>
