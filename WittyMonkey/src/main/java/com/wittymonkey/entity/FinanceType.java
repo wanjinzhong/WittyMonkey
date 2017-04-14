@@ -32,11 +32,11 @@ public class FinanceType implements Serializable{
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Integer id;
 	
-	// 收/支
+	// 是否是收入
 	@Column
-	private Integer type;
+	private Boolean income;
 	
-	@Column(length=20)
+	@Column(length=10)
 	private String name;
 
 	@ManyToOne(targetEntity=Hotel.class)
@@ -88,12 +88,12 @@ public class FinanceType implements Serializable{
 		this.id = id;
 	}
 
-	public Integer getType() {
-		return type;
+	public Boolean getIncome() {
+		return income;
 	}
 
-	public void setType(Integer type) {
-		this.type = type;
+	public void setIncome(Boolean income) {
+		this.income = income;
 	}
 
 	public String getName() {

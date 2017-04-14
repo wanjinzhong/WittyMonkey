@@ -110,6 +110,41 @@ function validateLength(inp, name, length) {
 }
 
 /**
+ * 验证财务类型名
+ * @param type
+ * @param inp
+ * @returns {*}
+ */
+function validateFinanceTypeName(type, inp){
+    var name = $(inp).val();
+    var funResult;
+    if (name.length <= 0){
+        layer.tips(messageOfValidateNull(name), inp, {tips: 2});
+        return false;
+    } else if (name.length > 10){
+        layer.tips(messageOfValidateLength(name, 10), inp, {tips: 2});
+        return false;
+    }
+    $.ajax({
+        type: "GET",
+        url: "validateFinanceTypeName.do",
+        data: {"name": name, "method": type},
+        dataType: "json",
+        async: false,
+        success: function (data) {
+            var result = eval("(" + data + ")");
+            if (result.status == 200) {
+                layer.tips(finance_type_validate_name_exist, inp, {tips: 2});
+                funResult = false;
+            } else {
+                funResult = true;
+            }
+        }
+    });
+    return funResult;
+}
+
+/**
  * 验证角色名
  * @param type
  * @param inp

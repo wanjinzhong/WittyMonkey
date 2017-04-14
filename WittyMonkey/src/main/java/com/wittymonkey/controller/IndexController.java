@@ -32,8 +32,8 @@ public class IndexController {
     public String getMenu(HttpServletRequest request) {
         User user = (User) request.getSession().getAttribute("loginUser");
         Set<Integer> menuId = new HashSet<Integer>();
-        for (Role role : user.getRoles()){
-            for (Menu menu : role.getMenus()){
+        for (Role role : user.getRoles()) {
+            for (Menu menu : role.getMenus()) {
                 menuId.add(menu.getId());
             }
         }
@@ -152,6 +152,11 @@ public class IndexController {
                 financeMenu.put("icon", "#icon-caiwu");
                 financeMenu.put("spread", false);
                 JSONArray financeChildren = new JSONArray();
+                //财务类型
+                JSONObject type = new JSONObject();
+                type.put("title", props.getProperty("finance_type.title"));
+                type.put("href", "toFinanceType.do");
+                financeChildren.add(type);
                 //收支登记子菜单
                 JSONObject add = new JSONObject();
                 add.put("title", props.getProperty("index.menu.finance.add"));

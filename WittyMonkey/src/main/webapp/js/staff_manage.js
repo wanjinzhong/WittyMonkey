@@ -8,14 +8,14 @@ layui.use(['layer', 'laypage', 'form'], function () {
     layer = layui.layer;
     laypage = layui.laypage;
     form = layui.form();
-    page("getStaffByPage.do", undefined, {type: 0});
+    page("getStaffByPage.do", undefined, {"type": 0});
     form.on('select(type)', function (data) {
         changeType(data.value);
     });
 });
 function changeType() {
     var type = $("#type").val();
-    page("getStaffByPage.do", undefined, {type: type});
+    page("getStaffByPage.do", undefined, {"type": type});
 }
 function refreshTable(obj) {
     var head = "";

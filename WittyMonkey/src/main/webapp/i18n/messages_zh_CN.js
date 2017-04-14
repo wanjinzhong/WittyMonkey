@@ -175,4 +175,11 @@ var menu_duplicate = "已有角色拥有这些权限: ";
 var role_add_success = "角色添加成功";
 var role_edit_success = "角色修改成功";
 var role_incumbency = "在职";
-var role_dimission = ""
+var role_dimission = "已离职";
+
+var finance_type_in = "收入";
+var finance_type_out = "支出";
+var finance_type_add_title = "添加类型";
+var finance_type_validate_name_exist = "类型名已存在";
+var finance_type_name = "类型名";
+var finance_type_add_success = "类型添加成功";

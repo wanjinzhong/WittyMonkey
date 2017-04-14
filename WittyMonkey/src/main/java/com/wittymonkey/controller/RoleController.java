@@ -3,16 +3,12 @@ package com.wittymonkey.controller;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.wittymonkey.entity.*;
-import com.wittymonkey.service.IHotelService;
-import com.wittymonkey.service.IMenuService;
-import com.wittymonkey.service.IRoleService;
-import com.wittymonkey.service.IUserService;
+import com.wittymonkey.service.*;
 import com.wittymonkey.util.ChangeToSimple;
-import com.wittymonkey.vo.SimpleFloor;
+import com.wittymonkey.vo.Constriant;
 import com.wittymonkey.vo.SimpleMenu;
 import com.wittymonkey.vo.SimpleRole;
 import org.apache.commons.lang.StringUtils;
-import org.hibernate.SQLQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,10 +24,6 @@ import java.util.*;
  */
 @Controller
 public class RoleController {
-
-    public static final String ADD = "add";
-    public static final String UPDATE = "update";
-    public static final String DELETE = "delete";
 
     @Autowired
     private IRoleService roleService;
@@ -154,14 +146,14 @@ public class RoleController {
         if (roleName.trim().length() > 10) {
             return 401;
         }
-        if (UPDATE.equals(type)) {
+        if (Constriant.UPDATE.equals(type)) {
             editRole = ((Role) request.getSession().getAttribute("editRole")).getName();
         }
         Role role = roleService.getRoleByRoleName(hotel.getId(), roleName);
 
         if (role != null) {
-            if (ADD.equals(type) || DELETE.equals(type)
-                    || (UPDATE.equals(type) && !editRole.equals(roleName))) {
+            if (Constriant.ADD.equals(type) || Constriant.DELETE.equals(type)
+                    || (Constriant.UPDATE.equals(type) && !editRole.equals(roleName))) {
                 return 200;
             } else {
                 return 201;
@@ -219,7 +211,7 @@ public class RoleController {
         String note = request.getParameter("note");
         String[] menusIdStr = request.getParameterValues("menu");
         List<Integer> menusId = changeToInteger(menusIdStr);
-        Integer roleVali = validateRole(request,ADD,roleName,note,menusId);
+        Integer roleVali = validateRole(request,Constriant.ADD,roleName,note,menusId);
         if (!new Integer(200).equals(roleVali)){
             json.put("status", roleVali);
             return json.toJSONString();
@@ -343,7 +335,7 @@ public class RoleController {
         String[] menusIdStr = request.getParameterValues("menu");
         List<Integer> menusId = changeToInteger(menusIdStr);
 
-        Integer roleVali = validateRole(request,UPDATE,roleName,note,menusId);
+        Integer roleVali = validateRole(request,Constriant.UPDATE,roleName,note,menusId);
         if (!new Integer(200).equals(roleVali)){
             json.put("status", roleVali);
             return json.toJSONString();

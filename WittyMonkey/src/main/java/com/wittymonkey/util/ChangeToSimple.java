@@ -210,4 +210,20 @@ public class ChangeToSimple {
         }
         return simpleMenus;
     }
+
+    public static List<SimpleFinanceType> financeTypeList(List<FinanceType> financeTypes){
+        List<SimpleFinanceType> simpleFinanceTypes = new ArrayList<SimpleFinanceType>();
+        for(FinanceType financeType : financeTypes){
+            SimpleFinanceType simpleFinanceType = new SimpleFinanceType();
+            simpleFinanceType.setId(financeType.getId());
+            simpleFinanceType.setHotel(financeType.getHotel().getName());
+            simpleFinanceType.setIncome(financeType.getIncome());
+            simpleFinanceType.setNote(financeType.getNote());
+            simpleFinanceType.setEntryUser(financeType.getEntryUser().getRealName());
+            simpleFinanceType.setEntryDatetime(financeType.getEntryDatetime());
+            simpleFinanceType.setName(financeType.getName());
+            simpleFinanceTypes.add(simpleFinanceType);
+        }
+        return simpleFinanceTypes;
+    }
 }

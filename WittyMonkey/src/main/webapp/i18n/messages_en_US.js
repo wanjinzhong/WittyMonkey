@@ -165,3 +165,10 @@ var no_menu_chosen = "No permission chosen";
 var menu_duplicate = "Permissions duplicate whith a role :";
 var role_add_success = "Add role successfully";
 var role_edit_success = "Role modification success";
+
+var finance_type_in = "IN";
+var finance_type_out = "OUT";
+var finance_type_add_title = "Add Type";
+var finance_type_validate_name_exist = "Type name is exist";
+var finance_type_name = "Type name";
+var finance_type_add_success = "Save type successfully";

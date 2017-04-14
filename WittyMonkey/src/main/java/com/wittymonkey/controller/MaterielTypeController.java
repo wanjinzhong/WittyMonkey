@@ -3,9 +3,9 @@ package com.wittymonkey.controller;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.wittymonkey.entity.Hotel;
-import com.wittymonkey.entity.Materiel;
 import com.wittymonkey.entity.MaterielType;
 import com.wittymonkey.entity.User;
+import com.wittymonkey.vo.Constriant;
 import com.wittymonkey.service.IHotelService;
 import com.wittymonkey.service.IMaterielTypeService;
 import com.wittymonkey.service.IUserService;
@@ -15,10 +15,8 @@ import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 import java.util.List;
@@ -30,10 +28,6 @@ import static org.springframework.web.bind.annotation.RequestMethod.GET;
  */
 @Controller
 public class MaterielTypeController {
-
-    public static final String UPDATE = "update";
-    public static final String ADD = "add";
-    public static final String DELETE = "delete";
 
     @Autowired
     private IMaterielTypeService materielTypeService;
@@ -137,7 +131,7 @@ public class MaterielTypeController {
     public Integer validateMaterielTypeName(HttpServletRequest request, String method, String typeName) {
         Hotel hotel = (Hotel) request.getSession().getAttribute("hotel");
         String editTypeName = null;
-        if (UPDATE.equals(method)) {
+        if (Constriant.UPDATE.equals(method)) {
             editTypeName = ((MaterielType) request.getSession().getAttribute("editMaterielType")).getName();
         }
         if (StringUtils.isBlank(typeName)) {
@@ -147,8 +141,8 @@ public class MaterielTypeController {
         if (materielType == null) {
             return 201;
         }
-        if (ADD.equals(method) || DELETE.equals(method)
-                || (UPDATE.equals(method) && !editTypeName.equals(typeName))) {
+        if (Constriant.ADD.equals(method) || Constriant.DELETE.equals(method)
+                || (Constriant.UPDATE.equals(method) && !editTypeName.equals(typeName))) {
             return 200;
         }
         return 201;

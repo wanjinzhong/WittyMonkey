@@ -2,12 +2,12 @@ package com.wittymonkey.controller;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.wittymonkey.dao.IChangeRoomDao;
 import com.wittymonkey.entity.*;
 import com.wittymonkey.service.*;
 import com.wittymonkey.util.ChangeToSimple;
 import com.wittymonkey.util.DateUtil;
 import com.wittymonkey.util.IDCardValidate;
+import com.wittymonkey.vo.Constriant;
 import com.wittymonkey.vo.SimpleFloor;
 import com.wittymonkey.vo.SimpleReserve;
 import com.wittymonkey.vo.SimpleRoom;
@@ -37,10 +37,6 @@ public class RoomController {
     public static final Integer TYPE_ROOM_NO = 2;
     public static final Integer TYPE_ROOM_NAME = 3 ;
     public static final Integer TYPE_PERSON_NUM = 4;
-
-    public static final String ADD = "add";
-    public static final String UPDATE = "update";
-    public static final String DELETE = "delete";
 
     private SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
     private RoomMaster chooseRoom = null;
@@ -521,9 +517,9 @@ public class RoomController {
         roomMaster.setEntryUser(userService.getUserById(loginUser.getId()));
         roomMaster.setRoomExt(roomExt);
         roomMaster.setDelete(false);
-        if (method.equals(ADD)) {
+        if (method.equals(Constriant.ADD)) {
             roomMasterService.saveRoom(roomMaster);
-        } else if (method.equals(UPDATE)) {
+        } else if (method.equals(Constriant.UPDATE)) {
             try {
                 roomMasterService.updateRoom(roomMaster);
             } catch (SQLException e) {
@@ -1237,8 +1233,8 @@ public class RoomController {
         } else {
             RoomMaster newRoom = roomMasterService.getRoomMasterByNo(hotel, roomNo);
             if (newRoom != null) {
-                if (method.equals(ADD) || method.equals(DELETE) ||
-                        (method.equals(UPDATE) && room.getId() != newRoom.getId())) {
+                if (method.equals(Constriant.ADD) || method.equals(Constriant.DELETE) ||
+                        (method.equals(Constriant.UPDATE) && room.getId() != newRoom.getId())) {
                     return 200;
                 } else {
                     return 210;
