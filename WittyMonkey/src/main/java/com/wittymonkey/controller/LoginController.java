@@ -471,36 +471,42 @@ public class LoginController {
         affair.setName("affair");
         affair.setEntryDatetime(now);
         affair.setEntryUser(system);
+        affair.setEditable(false);
         // 年假
         LeaveType year = new LeaveType();
         year.setDeduct(0.0);
         year.setName("year");
         year.setEntryDatetime(now);
         year.setEntryUser(system);
+        year.setEditable(false);
         // 婚假
         LeaveType marry = new LeaveType();
         marry.setDeduct(0.0);
         marry.setName("marry");
         marry.setEntryDatetime(now);
         marry.setEntryUser(system);
+        marry.setEditable(false);
         // 丧假
         LeaveType funeral = new LeaveType();
         funeral.setDeduct(0.0);
         funeral.setName("funeral");
         funeral.setEntryDatetime(now);
         funeral.setEntryUser(system);
+        funeral.setEditable(false);
         // 病假
         LeaveType sick = new LeaveType();
         sick.setDeduct(0.0);
         sick.setName("sick");
         sick.setEntryDatetime(now);
         sick.setEntryUser(system);
+        sick.setEditable(false);
         // 产假
         LeaveType maternity = new LeaveType();
         maternity.setDeduct(0.0);
         maternity.setName("maternity");
         maternity.setEntryDatetime(now);
         maternity.setEntryUser(system);
+        maternity.setEditable(false);
 
         List<LeaveType> leaveTypes = new ArrayList<LeaveType>();
         leaveTypes.add(affair);
@@ -520,7 +526,28 @@ public class LoginController {
         role.setEntryDatetime(now);
         role.setName("Admin(经理)");
         role.setEntryUser(system);
+        role.setEditable(false);
         role.setMenus(menuService.getAll());
+
+        List<FinanceType> financeTypes = new ArrayList<FinanceType>();
+
+        FinanceType defaltIn = new FinanceType();
+        defaltIn.setName("Default In(默认收入)");
+        defaltIn.setIncome(true);
+        defaltIn.setNote("Default In(默认收入)");
+        defaltIn.setEntryUser(system);
+        defaltIn.setEntryDatetime(now);
+        defaltIn.setEditable(false);
+        financeTypes.add(defaltIn);
+
+        FinanceType defaultOut = new FinanceType();
+        defaultOut.setName("Default Out(默认支出)");
+        defaultOut.setIncome(false);
+        defaultOut.setNote("Default Out(默认支出)");
+        defaultOut.setEntryUser(system);
+        defaultOut.setEntryDatetime(now);
+        defaultOut.setEditable(false);
+        financeTypes.add(defaultOut);
 
         // 添加酒店员工ID配置
         Odom odom = new Odom();
@@ -533,6 +560,7 @@ public class LoginController {
         hotel.getMaterielTypes().add(materielType);
         hotel.setIsClose(false);
         hotel.setOdom(odom);
+        hotel.setFinanceTypes(financeTypes);
 
         // 添加用户设置
         Setting setting = new Setting();

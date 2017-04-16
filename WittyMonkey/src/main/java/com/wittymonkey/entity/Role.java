@@ -58,6 +58,9 @@ public class Role implements Serializable{
 	
 	@Column(length=1024)
 	private String note;
+
+	@Column
+	private Boolean editable;
 	
 	public String getNote() {
 		return note;
@@ -120,6 +123,14 @@ public class Role implements Serializable{
 
 	public void setMenus(List<Menu> menus) {
 		this.menus = menus;
+	}
+
+	public Boolean getEditable() {
+		return editable;
+	}
+
+	public void setEditable(Boolean editable) {
+		this.editable = editable;
 	}
 
 	/**

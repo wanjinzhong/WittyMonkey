@@ -44,6 +44,9 @@ public class LeaveType implements Serializable{
 	
 	@Column(length=1024)
 	private String note;
+
+	@Column
+	private Boolean editable;
 	
 	public Date getEntryDatetime() {
 		return entryDatetime;
@@ -114,7 +117,13 @@ public class LeaveType implements Serializable{
 
 	public void setNote(String note) {
 		this.note = note;
-	} 
-	
-	
+	}
+
+	public Boolean getEditable() {
+		return editable;
+	}
+
+	public void setEditable(Boolean editable) {
+		this.editable = editable;
+	}
 }

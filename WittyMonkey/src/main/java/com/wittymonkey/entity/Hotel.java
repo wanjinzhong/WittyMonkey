@@ -9,257 +9,273 @@ import javax.persistence.*;
 
 /**
  * 酒店
- * @author Neil
  *
+ * @author Neil
  */
-@Table(name="hotel")
+@Table(name = "hotel")
 @Entity
-public class Hotel implements Serializable{
-	
-	private static final long serialVersionUID = 1L;
+public class Hotel implements Serializable {
 
-	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
-	private Integer id;
-	
-	@Column(length=50)
-	private String name;
-	
-	@Column(name="palce_code")
-	private Integer placeCode;
-	
-	@Column(name="place_detail")
-	private String placeDetail;
-	
-	// 星级
-	@Column
-	private Integer star;
-	
-	@Column(length=20)
-	private String tel;
-	
-	@Column(length=20)
-	private String fax;
-	
-	@Column(length=50)
-	private String email;
-	
-	// 开业时间
-	@Column(name="open_date")
-	private Date openDate;
-	
-	//加入时间
-	@Column(name="add_date")
-	private Date addDate;
+    private static final long serialVersionUID = 1L;
 
-	
-	@Column(name="entry_datetime")
-	private Date entryDatetime;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Integer id;
 
-	@OneToOne(targetEntity=Odom.class,mappedBy = "hotel", cascade={CascadeType.ALL})
-	private Odom odom;
+    @Column(length = 50)
+    private String name;
 
-	@ManyToOne(targetEntity=User.class, fetch=FetchType.EAGER, cascade={CascadeType.PERSIST,CascadeType.MERGE})
-	@JoinColumn(name="entry_id", referencedColumnName="id")
-	private User entryUser;
-	
-	@OneToMany(targetEntity=Floor.class, mappedBy="hotel", fetch = FetchType.EAGER)
-	private List<Floor> floors = new ArrayList<Floor>();
+    @Column(name = "palce_code")
+    private Integer placeCode;
 
-	@Column(length=1024)
-	private String note;
-	
-	// 法人名字
-	@Column(name="legal_name",length=20)
-	private String legalName;
-	
-	// 法人身份证号
-	@Column(name="legal_idcard",length=18)
-	private String legalIdCard;
-	
-	// 营业执照编号
-	@Column(name="license_no", length=15)
-	private String licenseNo;
-	
-	// 是否停业
-	@Column
-	private Boolean isClose;
-	
-	@OneToMany(targetEntity=MaterielType.class, cascade={CascadeType.ALL})
-	private List<MaterielType> materielTypes = new ArrayList<MaterielType>();
-	
-	@OneToMany(targetEntity=LeaveType.class, cascade={CascadeType.ALL})
-	private List<LeaveType> leaveTypes = new ArrayList<LeaveType>();
+    @Column(name = "place_detail")
+    private String placeDetail;
 
-	public Odom getOdom() {
-		return odom;
-	}
+    // 星级
+    @Column
+    private Integer star;
 
-	public void setOdom(Odom odom) {
-		this.odom = odom;
-	}
+    @Column(length = 20)
+    private String tel;
 
-	public Boolean getIsClose() {
-		return isClose;
-	}
+    @Column(length = 20)
+    private String fax;
 
-	public void setIsClose(Boolean isClose) {
-		this.isClose = isClose;
-	}
+    @Column(length = 50)
+    private String email;
 
-	public String getNote() {
-		return note;
-	}
+    // 开业时间
+    @Column(name = "open_date")
+    private Date openDate;
 
-	public void setNote(String note) {
-		this.note = note;
-	}
+    //加入时间
+    @Column(name = "add_date")
+    private Date addDate;
 
-	public Integer getId() {
-		return id;
-	}
 
-	public void setId(Integer id) {
-		this.id = id;
-	}
+    @Column(name = "entry_datetime")
+    private Date entryDatetime;
 
-	public String getName() {
-		return name;
-	}
+    @OneToOne(targetEntity = Odom.class, mappedBy = "hotel", cascade = {CascadeType.ALL})
+    private Odom odom;
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    @ManyToOne(targetEntity = User.class, fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinColumn(name = "entry_id", referencedColumnName = "id")
+    private User entryUser;
 
-	
+    @OneToMany(targetEntity = Floor.class, mappedBy = "hotel", fetch = FetchType.EAGER)
+    private List<Floor> floors = new ArrayList<Floor>();
 
-	public Integer getPlaceCode() {
-		return placeCode;
-	}
+    @Column(length = 1024)
+    private String note;
 
-	public void setPlaceCode(Integer placeCode) {
-		this.placeCode = placeCode;
-	}
+    // 法人名字
+    @Column(name = "legal_name", length = 20)
+    private String legalName;
 
-	public String getPlaceDetail() {
-		return placeDetail;
-	}
+    // 法人身份证号
+    @Column(name = "legal_idcard", length = 18)
+    private String legalIdCard;
 
-	public void setPlaceDetail(String placeDetail) {
-		this.placeDetail = placeDetail;
-	}
+    // 营业执照编号
+    @Column(name = "license_no", length = 15)
+    private String licenseNo;
 
-	public Integer getStar() {
-		return star;
-	}
+    // 是否停业
+    @Column
+    private Boolean isClose;
 
-	public void setStar(Integer star) {
-		this.star = star;
-	}
+    @OneToMany(targetEntity = MaterielType.class, cascade = {CascadeType.ALL})
+    private List<MaterielType> materielTypes = new ArrayList<MaterielType>();
 
-	public String getTel() {
-		return tel;
-	}
+    @OneToMany(targetEntity = LeaveType.class, cascade = {CascadeType.ALL})
+    private List<LeaveType> leaveTypes = new ArrayList<LeaveType>();
 
-	public void setTel(String tel) {
-		this.tel = tel;
-	}
+    @OneToMany(targetEntity = FinanceType.class, cascade = {CascadeType.ALL})
+    private List<FinanceType> financeTypes = new ArrayList<FinanceType>();
 
-	public String getFax() {
-		return fax;
-	}
+    public Odom getOdom() {
+        return odom;
+    }
 
-	public void setFax(String fax) {
-		this.fax = fax;
-	}
+    public void setOdom(Odom odom) {
+        this.odom = odom;
+    }
 
-	public String getEmail() {
-		return email;
-	}
+    public Boolean getIsClose() {
+        return isClose;
+    }
 
-	public void setEmail(String email) {
-		this.email = email;
-	}
+    public void setIsClose(Boolean isClose) {
+        this.isClose = isClose;
+    }
 
-	public Date getOpenDate() {
-		return openDate;
-	}
+    public String getNote() {
+        return note;
+    }
 
-	public void setOpenDate(Date openDate) {
-		this.openDate = openDate;
-	}
+    public void setNote(String note) {
+        this.note = note;
+    }
 
-	public Date getAddDate() {
-		return addDate;
-	}
+    public Integer getId() {
+        return id;
+    }
 
-	public void setAddDate(Date addDate) {
-		this.addDate = addDate;
-	}
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
-	public Date getEntryDatetime() {
-		return entryDatetime;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public void setEntryDatetime(Date entryDatetime) {
-		this.entryDatetime = entryDatetime;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public User getEntryUser() {
-		return entryUser;
-	}
 
-	public void setEntryUser(User entryUser) {
-		this.entryUser = entryUser;
-	}
+    public Integer getPlaceCode() {
+        return placeCode;
+    }
 
-	public List<Floor> getFloors() {
-		return floors;
-	}
+    public void setPlaceCode(Integer placeCode) {
+        this.placeCode = placeCode;
+    }
 
-	public void setFloors(List<Floor> floors) {
-		this.floors = floors;
-	}
+    public String getPlaceDetail() {
+        return placeDetail;
+    }
 
-	public String getLegalName() {
-		return legalName;
-	}
+    public void setPlaceDetail(String placeDetail) {
+        this.placeDetail = placeDetail;
+    }
 
-	public void setLegalName(String legalName) {
-		this.legalName = legalName;
-	}
+    public Integer getStar() {
+        return star;
+    }
 
-	public String getLegalIdCard() {
-		return legalIdCard;
-	}
+    public void setStar(Integer star) {
+        this.star = star;
+    }
 
-	public void setLegalIdCard(String legalIdCard) {
-		this.legalIdCard = legalIdCard;
-	}
+    public String getTel() {
+        return tel;
+    }
 
-	public String getLicenseNo() {
-		return licenseNo;
-	}
+    public void setTel(String tel) {
+        this.tel = tel;
+    }
 
-	public void setLicenseNo(String licenseNo) {
-		this.licenseNo = licenseNo;
-	}
+    public String getFax() {
+        return fax;
+    }
 
-	public List<MaterielType> getMaterielTypes() {
-		return materielTypes;
-	}
+    public void setFax(String fax) {
+        this.fax = fax;
+    }
 
-	public void setMaterielTypes(List<MaterielType> materielTypes) {
-		this.materielTypes = materielTypes;
-	}
+    public String getEmail() {
+        return email;
+    }
 
-	public List<LeaveType> getLeaveTypes() {
-		return leaveTypes;
-	}
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
-	public void setLeaveTypes(List<LeaveType> leaveTypes) {
-		this.leaveTypes = leaveTypes;
-	}
+    public Date getOpenDate() {
+        return openDate;
+    }
 
-	
+    public void setOpenDate(Date openDate) {
+        this.openDate = openDate;
+    }
+
+    public Date getAddDate() {
+        return addDate;
+    }
+
+    public void setAddDate(Date addDate) {
+        this.addDate = addDate;
+    }
+
+    public Date getEntryDatetime() {
+        return entryDatetime;
+    }
+
+    public void setEntryDatetime(Date entryDatetime) {
+        this.entryDatetime = entryDatetime;
+    }
+
+    public User getEntryUser() {
+        return entryUser;
+    }
+
+    public void setEntryUser(User entryUser) {
+        this.entryUser = entryUser;
+    }
+
+    public List<Floor> getFloors() {
+        return floors;
+    }
+
+    public void setFloors(List<Floor> floors) {
+        this.floors = floors;
+    }
+
+    public String getLegalName() {
+        return legalName;
+    }
+
+    public void setLegalName(String legalName) {
+        this.legalName = legalName;
+    }
+
+    public String getLegalIdCard() {
+        return legalIdCard;
+    }
+
+    public void setLegalIdCard(String legalIdCard) {
+        this.legalIdCard = legalIdCard;
+    }
+
+    public String getLicenseNo() {
+        return licenseNo;
+    }
+
+    public void setLicenseNo(String licenseNo) {
+        this.licenseNo = licenseNo;
+    }
+
+    public List<MaterielType> getMaterielTypes() {
+        return materielTypes;
+    }
+
+    public void setMaterielTypes(List<MaterielType> materielTypes) {
+        this.materielTypes = materielTypes;
+    }
+
+    public List<LeaveType> getLeaveTypes() {
+        return leaveTypes;
+    }
+
+    public void setLeaveTypes(List<LeaveType> leaveTypes) {
+        this.leaveTypes = leaveTypes;
+    }
+
+    public Boolean getClose() {
+        return isClose;
+    }
+
+    public void setClose(Boolean close) {
+        isClose = close;
+    }
+
+    public List<FinanceType> getFinanceTypes() {
+        return financeTypes;
+    }
+
+    public void setFinanceTypes(List<FinanceType> financeTypes) {
+        this.financeTypes = financeTypes;
+    }
 }

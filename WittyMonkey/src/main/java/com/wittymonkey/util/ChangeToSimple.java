@@ -222,6 +222,7 @@ public class ChangeToSimple {
             simpleFinanceType.setEntryUser(financeType.getEntryUser().getRealName());
             simpleFinanceType.setEntryDatetime(financeType.getEntryDatetime());
             simpleFinanceType.setName(financeType.getName());
+            simpleFinanceType.setEditable(financeType.getEditable());
             simpleFinanceTypes.add(simpleFinanceType);
         }
         return simpleFinanceTypes;

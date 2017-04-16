@@ -1,6 +1,5 @@
 package com.wittymonkey.dao.impl;
 
-import com.wittymonkey.entity.Hotel;
 import com.wittymonkey.vo.Constriant;
 import org.springframework.stereotype.Repository;
 
@@ -13,6 +12,12 @@ import java.util.Map;
 
 @Repository(value="financeTypeDao")
 public class FinanceTypeDaoImpl extends GenericDaoImpl<FinanceType> implements IFinanceTypeDao{
+
+    @Override
+    public FinanceType getFinanceTypeById(Integer id) {
+        String hql = "from FinanceType where id = ?";
+        return queryOneHql(hql, id);
+    }
 
     @Override
     public List<FinanceType> getFinanceTypeByPage(Integer hotelId, Integer type, Integer start, Integer total) {
@@ -39,5 +44,14 @@ public class FinanceTypeDaoImpl extends GenericDaoImpl<FinanceType> implements I
         param.put("hotelId", hotelId);
         param.put("name", name);
         return queryOneHql(hql, param);
+    }
+
+    @Override
+    public FinanceType getDefaultType(Boolean income, Integer hotelId) {
+        String hql = "from FinanceType where income = :income and hotel.id = :hotelId and editable = false";
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("income", income);
+        map.put("hotelId", hotelId);
+        return queryOneHql(hql, map);
     }
 }

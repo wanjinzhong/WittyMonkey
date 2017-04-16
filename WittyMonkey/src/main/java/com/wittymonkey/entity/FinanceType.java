@@ -55,7 +55,10 @@ public class FinanceType implements Serializable{
 	@ManyToOne(targetEntity=User.class, fetch=FetchType.EAGER)
 	@JoinColumn(name="entry_id", referencedColumnName="id")
 	private User entryUser;
-	
+
+	@Column
+	private Boolean editable;
+
 	public Date getEntryDatetime() {
 		return entryDatetime;
 	}
@@ -119,6 +122,12 @@ public class FinanceType implements Serializable{
 	public void setFinances(List<Finance> finances) {
 		this.finances = finances;
 	}
-	
-	
+
+	public Boolean getEditable() {
+		return editable;
+	}
+
+	public void setEditable(Boolean editable) {
+		this.editable = editable;
+	}
 }

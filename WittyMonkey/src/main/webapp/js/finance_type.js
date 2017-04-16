@@ -27,10 +27,12 @@ function refreshTable(obj) {
                 "<td>" + ((obj[i].note == undefined) ? "" : obj[i].note) + "</td>" +
                 "<td>" + obj[i].entryUser + "</td>" +
                 "<td>" + formatDate(obj[i].entryDatetime) + "</td>" +
-                "<td>" +
-                "<i class='editBtn layui-icon layui-btn layui-btn-primary layui-btn-small' onclick='editFinanceType(" + obj[i].id + ")'>&#xe642; " + btn_edit + "</i>" +
-                "<i class='deleteBtn layui-icon layui-btn layui-btn-primary layui-btn-small' onclick='deleteFinanceType(" + obj[i].id + ")'>&#xe640; " + btn_delete + "</i>" +
-                "</td>" +
+                "<td>";
+            if (obj[i].editable) {
+                html += "<i class='editBtn layui-icon layui-btn layui-btn-primary layui-btn-small' onclick='editFinanceType(" + obj[i].id + ")'>&#xe642; " + btn_edit + "</i>" +
+                    "<i class='deleteBtn layui-icon layui-btn layui-btn-primary layui-btn-small' onclick='deleteFinanceType(" + obj[i].id + ")'>&#xe640; " + btn_delete + "</i>";
+            }
+            html += "</td>" +
                 "</tr>";
         }
     }
@@ -53,10 +55,56 @@ function showAddFinanceType() {
     });
 }
 
-function editFinanceType(id){
-
+function editFinanceType(id) {
+    layer.open({
+        type: 2,
+        area: ['500px', '350px'],
+        maxmin: false,
+        shade: 0.4,
+        title: finance_type_edit_title,
+        content: "toEditFinanceType.do?id=" + id
+    });
 }
 
-function deleteFinanceType(id){
-
+function deleteFinanceType(id) {
+    layer.confirm(finance_type_delete_hint, {icon: 7, title: finance_type_delete_title},
+        function (index) {
+            $.ajax({
+                url: "deleteFinanceType.do",
+                data: {"id": id},
+                dataType: "json",
+                type: "POST",
+                success: function (data) {
+                    var result = eval("(" + data + ")");
+                    switch (result.status) {
+                        case 400:
+                            layer.msg(finance_type_delete_not_exist, {
+                                icon: 2, time: 2000
+                            }, function () {
+                                parent.location.reload();
+                                closeMe();
+                            });
+                            break;
+                        case 500:
+                            layer.msg(error_500, {
+                                icon: 2, time: 2000
+                            }, function () {
+                                parent.location.reload();
+                                closeMe();
+                            });
+                            break;
+                        case 200:
+                            layer.msg(finance_type_delete_success, {
+                                icon: 6,
+                                time: 2000
+                            }, function () {
+                                window.location.reload();
+                                closeMe();
+                            });
+                            break;
+                    }
+                }
+            });
+            layer.close(index);
+        });
 }

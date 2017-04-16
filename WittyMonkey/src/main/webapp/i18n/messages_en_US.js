@@ -172,3 +172,12 @@ var finance_type_add_title = "Add Type";
 var finance_type_validate_name_exist = "Type name is exist";
 var finance_type_name = "Type name";
 var finance_type_add_success = "Save type successfully";
+var finance_type_edit_not_exist = "The edited type does not exist";
+var finance_type_edit_title = "Edit Type";
+var finance_type_can_not_edit = "This type cannot be edited";
+var finance_type_edit_success = "Edit finance type successfully";
+var finance_type_delete_hint = "Are you sure to delete this type?<br/>" +
+    " All financial records under this type will be moved to the default type.";
+var finance_type_delete_title = "Delete Type";
+var finance_type_delete_not_exist = "This type is not exist";
+var finance_type_delete_success = "Delete type successfully";

@@ -31,6 +31,8 @@ public class SimpleFinanceType implements Serializable {
 
     private String entryUser;
 
+    private Boolean editable;
+
     public Integer getId() {
         return id;
     }
@@ -85,5 +87,13 @@ public class SimpleFinanceType implements Serializable {
 
     public void setEntryUser(String entryUser) {
         this.entryUser = entryUser;
+    }
+
+    public Boolean getEditable() {
+        return editable;
+    }
+
+    public void setEditable(Boolean editable) {
+        this.editable = editable;
     }
 }

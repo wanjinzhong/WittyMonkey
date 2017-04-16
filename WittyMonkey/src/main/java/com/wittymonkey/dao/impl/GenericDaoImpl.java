@@ -106,6 +106,8 @@ public class GenericDaoImpl<T> implements IGenericDao<T, Serializable> {
                 query.setDouble(entry.getKey(), (Double) entry.getValue());
             } else if (obj instanceof Date) {
                 query.setDate(entry.getKey(), (Date) entry.getValue());
+            } else if (obj instanceof Boolean) {
+                query.setBoolean(entry.getKey(), (Boolean) entry.getValue());
             }
 
         }
@@ -120,6 +122,8 @@ public class GenericDaoImpl<T> implements IGenericDao<T, Serializable> {
             query.setDouble(0, (Double) obj);
         } else if (obj instanceof Date) {
             query.setDate(0, (Date) obj);
+        } else if (obj instanceof Boolean) {
+            query.setBoolean(0, (Boolean) obj);
         }
     }
 

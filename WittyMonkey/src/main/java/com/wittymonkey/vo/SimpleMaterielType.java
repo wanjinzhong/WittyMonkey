@@ -70,4 +70,5 @@ public class SimpleMaterielType implements Serializable {
     public void setEntryUser(String entryUser) {
         this.entryUser = entryUser;
     }
+
 }

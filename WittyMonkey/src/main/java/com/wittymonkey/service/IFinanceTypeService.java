@@ -2,6 +2,7 @@ package com.wittymonkey.service;
 
 import com.wittymonkey.entity.FinanceType;
 
+import java.sql.SQLException;
 import java.util.List;
 
 public interface IFinanceTypeService {
@@ -13,4 +14,8 @@ public interface IFinanceTypeService {
     FinanceType getFinanceTypeByName(Integer hotelId, String name);
 
     void save(FinanceType financeType);
+
+    FinanceType getFinanceTypeById(Integer id);
+
+    void delete(FinanceType financeType, Integer hotelId, Integer userId) throws SQLException;
 }

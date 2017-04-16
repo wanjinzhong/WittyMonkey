@@ -27,6 +27,8 @@ public class SimpleRole implements Serializable{
 
     private Boolean selected;
 
+    private Boolean editable;
+
     public Boolean getSelected() {
         return selected;
     }
@@ -89,5 +91,13 @@ public class SimpleRole implements Serializable{
 
     public void setNote(String note) {
         this.note = note;
+    }
+
+    public Boolean getEditable() {
+        return editable;
+    }
+
+    public void setEditable(Boolean editable) {
+        this.editable = editable;
     }
 }
