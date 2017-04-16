@@ -258,6 +258,10 @@ public class RoleController {
      * <td>没有这个角色</td>
      * </tr>
      * <tr>
+     * <td>410</td>
+     * <td>不允许删除这个角色</td>
+     * </tr>
+     * <tr>
      * <td>200</td>
      * <td>删除成功</td>
      * </tr>
@@ -276,6 +280,10 @@ public class RoleController {
         }
         try {
             Role role = roleService.getRoleById(id);
+            if (!role.getEditable()){
+                jsonObject.put("status", 410);
+                return jsonObject.toJSONString();
+            }
             roleService.deleteRole(role);
         } catch (SQLException e) {
             jsonObject.put("status", 400);

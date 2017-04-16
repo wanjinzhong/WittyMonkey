@@ -24,16 +24,18 @@ function refreshTable(obj) {
                 "<td>" + obj[i].users + "</td>" +
                 "<td>" + obj[i].entryUser + "</td>" +
                 "<td>" + formatDate(obj[i].entryDatetime) + "</td>" +
-                "<td>" +
-                "<i class='editBtn layui-icon layui-btn layui-btn-primary layui-btn-small' onclick='editRole(" + obj[i].id + ")'>&#xe642; " + btn_edit + "</i>" +
-                "<i class='deleteBtn layui-icon layui-btn layui-btn-primary layui-btn-small' onclick='deleteRole(" + obj[i].id + ")'>&#xe640; " + btn_delete + "</i>" +
-                "</td>" +
-                "</tr>";
+                "<td>";
+            if (obj[i].editable) {
+                html += "<i class='editBtn layui-icon layui-btn layui-btn-primary layui-btn-small' onclick='editRole(" + obj[i].id + ")'>&#xe642; " + btn_edit + "</i>" +
+                    "<i class='deleteBtn layui-icon layui-btn layui-btn-primary layui-btn-small' onclick='deleteRole(" + obj[i].id + ")'>&#xe640; " + btn_delete + "</i>";
+            }
+                html += "</td></tr>";
         }
     }
     $("#dataTabel").html(html);
 }
 function deleteRole(id) {
+    var load = layer.load();
     layer.confirm(role_delete_hint, {icon: 7, title: role_delete_title},
         function (index) {
             $.ajax({
@@ -42,10 +44,19 @@ function deleteRole(id) {
                 dataType: "json",
                 type: "POST",
                 success: function (data) {
+                    layer.close(load);
                     var result = eval("(" + data + ")");
                     switch (result.status) {
                         case 400:
                             layer.msg(role_delete_not_exist, {
+                                icon: 2, time: 2000
+                            }, function () {
+                                parent.location.reload();
+                                closeMe();
+                            });
+                            break;
+                        case 410:
+                            layer.msg(role_can_not_delete, {
                                 icon: 2, time: 2000
                             }, function () {
                                 parent.location.reload();

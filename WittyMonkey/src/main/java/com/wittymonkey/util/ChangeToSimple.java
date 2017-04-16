@@ -137,6 +137,7 @@ public class ChangeToSimple {
             for (Menu menu : role.getMenus()) {
                 simpleRole.getMenus().add(menuI180n(lang, menu).getName());
             }
+            simpleRole.setEditable(role.getEditable());
             simpleRoles.add(simpleRole);
         }
         return simpleRoles;

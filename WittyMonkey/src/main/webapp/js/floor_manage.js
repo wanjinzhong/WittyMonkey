@@ -35,12 +35,14 @@ function refreshTable(obj) {
 function deleteFloor(floorNo) {
     layer.confirm(floor_manage_delete_hint, {icon: 7, title: floor_manage_delete_title},
         function (index) {
+            var load = layer.load();
             $.ajax({
                 url: "deleteFloor.do",
                 data: {"floorNo": floorNo},
                 dataType: "json",
                 type: "GET",
                 success: function (data) {
+                    layer.close(load);
                     var result = eval("(" + data + ")");
                     switch (result.status) {
                         case 400:

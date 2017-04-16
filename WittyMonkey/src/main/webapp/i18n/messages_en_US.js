@@ -165,6 +165,7 @@ var no_menu_chosen = "No permission chosen";
 var menu_duplicate = "Permissions duplicate whith a role :";
 var role_add_success = "Add role successfully";
 var role_edit_success = "Role modification success";
+var role_can_not_delete = "This role is not allowed to be deleted";
 
 var finance_type_in = "IN";
 var finance_type_out = "OUT";

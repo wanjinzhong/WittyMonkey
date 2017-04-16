@@ -72,12 +72,14 @@ function page(url, curr, condition) {
     } else {
         condition["curr"] = curr;
     }
+    var load = layer.load();
     $.ajax({
         type: "GET",
         url: url,
         data: condition,
         dataType: "json",
         success: function (data) {
+            layer.close(load);
             var res = eval("(" + data + ")");
             var pageSize = res["pageSize"];
             laypage({

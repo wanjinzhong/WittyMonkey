@@ -174,6 +174,7 @@ var no_menu_chosen = "没有选择权限";
 var menu_duplicate = "已有角色拥有这些权限: ";
 var role_add_success = "角色添加成功";
 var role_edit_success = "角色修改成功";
+var role_can_not_delete = "不允许删除这个角色";
 var role_incumbency = "在职";
 var role_dimission = "已离职";
 

@@ -69,12 +69,14 @@ function editFinanceType(id) {
 function deleteFinanceType(id) {
     layer.confirm(finance_type_delete_hint, {icon: 7, title: finance_type_delete_title},
         function (index) {
+            var load = layer.load();
             $.ajax({
                 url: "deleteFinanceType.do",
                 data: {"id": id},
                 dataType: "json",
                 type: "POST",
                 success: function (data) {
+                    layer.close(load);
                     var result = eval("(" + data + ")");
                     switch (result.status) {
                         case 400:
