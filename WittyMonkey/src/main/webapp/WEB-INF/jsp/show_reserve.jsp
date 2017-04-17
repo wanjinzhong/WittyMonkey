@@ -27,7 +27,7 @@
     <input type="hidden" disabled value="${room.id}" id="roomId"/>
     <table class="layui-table" lay-skin="line">
         <thead>
-        <th width="100px"><fmt:message key="show_reserve.reserver"/></th>
+        <th width="50px"><fmt:message key="show_reserve.reserver"/></th>
         <th width="120px"><fmt:message key="show_reserve.tel"/></th>
         <th width="100px"><fmt:message key="show_reserve.reserve_date"/></th>
         <th width="100px"><fmt:message key="show_reserve.est_checkin_date"/></th>

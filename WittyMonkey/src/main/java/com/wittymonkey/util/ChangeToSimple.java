@@ -2,15 +2,9 @@ package com.wittymonkey.util;
 
 import com.wittymonkey.controller.IndexController;
 import com.wittymonkey.entity.*;
-import com.wittymonkey.service.IReserveService;
-import com.wittymonkey.service.IRoomMasterService;
 import com.wittymonkey.vo.*;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jca.cci.object.SimpleRecordOperation;
-import sun.java2d.pipe.SpanShapeRenderer;
 
 import java.io.IOException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -191,9 +185,9 @@ public class ChangeToSimple {
         return menu;
     }
 
-    public static List<Menu> menuI180n(String lang, List<Menu> menus){
+    public static List<Menu> menuI180n(String lang, List<Menu> menus) {
         List<Menu> res = new ArrayList<Menu>();
-        for (Menu menu : menus){
+        for (Menu menu : menus) {
             res.add(menuI180n(lang, menu));
         }
         return res;
@@ -212,9 +206,9 @@ public class ChangeToSimple {
         return simpleMenus;
     }
 
-    public static List<SimpleFinanceType> financeTypeList(List<FinanceType> financeTypes){
+    public static List<SimpleFinanceType> financeTypeList(List<FinanceType> financeTypes) {
         List<SimpleFinanceType> simpleFinanceTypes = new ArrayList<SimpleFinanceType>();
-        for(FinanceType financeType : financeTypes){
+        for (FinanceType financeType : financeTypes) {
             SimpleFinanceType simpleFinanceType = new SimpleFinanceType();
             simpleFinanceType.setId(financeType.getId());
             simpleFinanceType.setHotel(financeType.getHotel().getName());
@@ -227,5 +221,21 @@ public class ChangeToSimple {
             simpleFinanceTypes.add(simpleFinanceType);
         }
         return simpleFinanceTypes;
+    }
+
+    public static List<SimpleFinance> financeList(List<Finance> finances) {
+        List<SimpleFinance> simpleFinances = new ArrayList<SimpleFinance>();
+        for (Finance finance : finances) {
+            SimpleFinance simpleFinance = new SimpleFinance();
+            simpleFinance.setEntryDatetime(finance.getEntryDatetime());
+            simpleFinance.setEntryUser(finance.getEntryUser().getRealName());
+            simpleFinance.setFinanceType(finance.getFinanceType().getName());
+            simpleFinance.setId(finance.getId());
+            simpleFinance.setMoney(finance.getMoney());
+            simpleFinance.setNote(finance.getNote());
+            simpleFinance.setIncome(finance.getFinanceType().getIncome());
+            simpleFinances.add(simpleFinance);
+        }
+        return simpleFinances;
     }
 }

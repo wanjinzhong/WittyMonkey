@@ -3,7 +3,6 @@ package com.wittymonkey.controller;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.regex.Pattern;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -538,6 +537,7 @@ public class LoginController {
         defaltIn.setEntryUser(system);
         defaltIn.setEntryDatetime(now);
         defaltIn.setEditable(false);
+        defaltIn.setDefault(true);
         financeTypes.add(defaltIn);
 
         FinanceType defaultOut = new FinanceType();
@@ -547,7 +547,48 @@ public class LoginController {
         defaultOut.setEntryUser(system);
         defaultOut.setEntryDatetime(now);
         defaultOut.setEditable(false);
+        defaltIn.setDefault(true);
         financeTypes.add(defaultOut);
+
+        FinanceType roomIn = new FinanceType();
+        roomIn.setName("Room In(住房收入)");
+        roomIn.setIncome(true);
+        roomIn.setNote("Room In(住房收入)");
+        roomIn.setEntryUser(system);
+        roomIn.setEntryDatetime(now);
+        roomIn.setEditable(false);
+        defaltIn.setDefault(false);
+        financeTypes.add(roomIn);
+
+        FinanceType purchase = new FinanceType();
+        purchase.setName("Purchase Out(进货支出)");
+        purchase.setIncome(false);
+        purchase.setNote("Purchase Out(进货支出)");
+        purchase.setEntryUser(system);
+        purchase.setEntryDatetime(now);
+        purchase.setEditable(false);
+        defaltIn.setDefault(false);
+        financeTypes.add(purchase);
+
+        FinanceType catering = new FinanceType();
+        catering.setName("Catering Out(餐饮收入)");
+        catering.setIncome(false);
+        catering.setNote("Catering Out(餐饮收入)");
+        catering.setEntryUser(system);
+        catering.setEntryDatetime(now);
+        catering.setEditable(false);
+        defaltIn.setDefault(false);
+        financeTypes.add(catering);
+
+        FinanceType salary = new FinanceType();
+        salary.setName("Salary Out(工资支出)");
+        salary.setIncome(false);
+        salary.setNote("Salary Out(工资支出)");
+        salary.setEntryUser(system);
+        salary.setEntryDatetime(now);
+        salary.setEditable(false);
+        defaltIn.setDefault(false);
+        financeTypes.add(salary);
 
         // 添加酒店员工ID配置
         Odom odom = new Odom();

@@ -59,6 +59,9 @@ public class FinanceType implements Serializable{
 	@Column
 	private Boolean editable;
 
+	@Column
+	private Boolean isDefault;
+
 	public Date getEntryDatetime() {
 		return entryDatetime;
 	}
@@ -129,5 +132,13 @@ public class FinanceType implements Serializable{
 
 	public void setEditable(Boolean editable) {
 		this.editable = editable;
+	}
+
+	public Boolean getDefault() {
+		return isDefault;
+	}
+
+	public void setDefault(Boolean aDefault) {
+		isDefault = aDefault;
 	}
 }

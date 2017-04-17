@@ -6,11 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%
-    //User loginUser = (User) session.getAttribute("loginUser");
-    //String lang = loginUser.getSetting().getLang();
-    String lang = "zh_CN";
-%>
+
 <%@ include file="common/taglib.jsp" %>
 <%@ include file="common/js&css.jsp" %>
 <%@ include file="common/iconfont.jsp" %>
@@ -25,9 +21,9 @@
 </head>
 <script type="text/javascript" src="js/common.js"></script>
 <!-- 根据设置动态加载js语言 -->
-<script type="text/javascript" src="i18n/messages_<%=lang%>.js"></script>
-<%--<fmt:setBundle basename="i18n/messages_${loginUser.setting.lang }"/>--%>
-<fmt:setBundle basename="i18n/messages"/>
+<!-- 根据设置动态加载js语言 -->
+<script type="text/javascript" src="i18n/messages_${loginUser.setting.lang }.js"></script>
+<fmt:setBundle basename="i18n/messages_${loginUser.setting.lang }"/>
 <body>
     <form id="add_form">
         <!-- java端处理方式 -->

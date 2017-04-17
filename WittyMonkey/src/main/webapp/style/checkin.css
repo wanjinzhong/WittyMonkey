@@ -12,20 +12,12 @@
     border: solid grey 1px;
     background-color:transparent;
 }
-#checkin-border{
-    width: 900px;
-    height: 600px;
-    margin-left: 20px;
-    margin-top: 20px;
-    border: 2px solid #eeeeee;
-    border-radius: 10px;
-}
 
 .layui-table{
-    margin: 0px;
+    margin: 0 auto;
 }
 td{
-    padding: 5px;
+    padding-top: 5px;
 }
 .btn-add-customer{
     cursor: pointer;

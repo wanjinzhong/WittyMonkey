@@ -185,7 +185,7 @@ var room_detail;
 function showRoomDetail(id){
     room_detail = layer.open({
         title: room_detail_title,
-        area: ['1000px', '700px'],
+        area: ['800px', '540px'],
         maxmin: false,
         shade: 0.4,
         content: "showRoomDetail.do?roomId=" + id,
@@ -197,7 +197,7 @@ function toReserve(id) {
     layer.open({
         title: room_reserve_title,
         content: "toReserve.do?id=" + id,
-        area: ['700px', '630px'],
+        area: ['650px', '470px'],
         maxmin: false,
         shade: 0.4,
         scrollbar: false,
@@ -221,7 +221,7 @@ function toCheckin(id) {
     layer.open({
         title: room_checkin_title,
         content: "toCheckin.do?id=" + id,
-        area: ['950px', '750px'],
+        area: ['900px', '550px'],
         maxmin: false,
         shade: 0.4,
         scrollbar: false,
@@ -233,7 +233,7 @@ function toCheckout(id) {
     layer.open({
         title: room_checkout_title,
         content: "toCheckout.do?id=" + id,
-        area: ['950px', '600px'],
+        area: ['900px', '550px'],
         maxmin: false,
         shade: 0.4,
         scrollbar: false,
@@ -245,7 +245,7 @@ function toChange(id) {
         layer.open({
         title: room_change_title,
         content: "toChange.do?id=" + id,
-        area: ['1000px', '700px'],
+        area: ['800px', '500px'],
         maxmin: false,
         shade: 0.4,
         scrollbar: false,
@@ -288,7 +288,7 @@ function showReserve(id, no, name) {
     layer.open({
         title: show_reserve_title + " - " + no + " " + name,
         content: "toShowReserve.do?id=" + id,
-        area: ['1100px', '700px'],
+        area: ['900px', '600px'],
         maxmin: false,
         shade: 0.4,
         scrollbar: false,

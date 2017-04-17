@@ -23,10 +23,9 @@
 <script type="text/javascript" src="i18n/messages_${loginUser.setting.lang }.js"></script>
 <fmt:setBundle basename="i18n/messages_${loginUser.setting.lang }"/>
 <body>
-<div id="checkout-border">
     <form id="checkout-form" method="post">
         <input type="hidden" disabled value="${checkin.id}" id="checkinId">
-        <table>
+        <table class="form-table">
             <tr>
                 <td class="td_title"><label class="layui-form-label"><fmt:message key="room.add.number"/></label></td>
                 <td style="width: 300px">
@@ -86,7 +85,6 @@
             </tr>
         </table>
     </form>
-</div>
 <div id="btnGroup">
     <input id="closeBtn" type="button"
            value="<fmt:message key="regist.btn.close"/>"

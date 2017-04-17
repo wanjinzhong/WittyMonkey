@@ -10,7 +10,7 @@ function showRoom() {
     layer.open({
         title: false,
         content: "toChooseRoom.do?id=" + $("#checkin_id").val(),
-        area: ['800px', '650px'],
+        area: ['750px', '450px'],
         maxmin: false,
         scrollbar: false,
         type: 2,

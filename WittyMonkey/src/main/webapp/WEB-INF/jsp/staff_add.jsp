@@ -11,7 +11,6 @@
 <%@ include file="common/iconfont.jsp" %>
 <html>
 <head>
-    <title><fmt:message key="index.menu.floor.add"/></title>
     <link href="style/common.css" rel="stylesheet"
           type="text/css"/>
 </head>

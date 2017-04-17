@@ -159,8 +159,8 @@ public class IndexController {
                 financeChildren.add(type);
                 //收支登记子菜单
                 JSONObject add = new JSONObject();
-                add.put("title", props.getProperty("index.menu.finance.add"));
-                add.put("href", "toFinanceAdd.do");
+                add.put("title", props.getProperty("index.menu.finance.record"));
+                add.put("href", "toFinanceRecord.do");
                 financeChildren.add(add);
                 //报销子菜单
                 JSONObject reimburse = new JSONObject();
@@ -303,9 +303,9 @@ public class IndexController {
         return "leave_type";
     }
 
-    @RequestMapping(value = "toFinanceAdd", method = RequestMethod.GET)
+    @RequestMapping(value = "toFinanceRecord", method = RequestMethod.GET)
     public String toFinanceAdd(HttpServletRequest request) {
-        return "finance_add";
+        return "finance_record";
     }
 
     @RequestMapping(value = "toFinanceReimburse", method = RequestMethod.GET)

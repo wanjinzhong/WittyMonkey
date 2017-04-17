@@ -1,13 +1,5 @@
-#reserve-border{
-    border: 2px solid #eeeeee;
-    border-radius: 10px;
-    width: 655px;
-    height: 480px;
-    margin-top: 20px;
-    margin-left: 20px;
-}
 td{
-    padding: 5px;
+    padding-top: 5px;
 }
 table {
     width: 500px;

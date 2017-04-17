@@ -28,8 +28,7 @@
     <input type="hidden" id="id"/>
     <input type="hidden" id="checkin_id" value="${checkin.id}"/>
     <input type="hidden" id="toId"/>
-    <div class="content">
-    <table>
+    <table class="form-table">
         <tr>
             <td class="td_title"><label class="layui-form-label"><fmt:message key="room.add.number"/></label></td>
             <td><input class="layui-input" type="text" disabled value="${checkin.room.number}" id="fromNumber"/>
@@ -39,7 +38,7 @@
                     <use xlink:href="#icon-arrow-right-copy"/>
                 </svg>
             </td>
-            <td><input class="layui-input" type="text" disabled  id="toNumber"}/></td>
+            <td><input class="layui-input" type="text" disabled id="toNumber" }/></td>
             <td><i class="showRoom layui-icon" onclick="showRoom()">&#xe62d;</i></td>
         </tr>
         <tr>
@@ -57,7 +56,7 @@
             <td colspan="3">
                 <input id="total" type="hidden" value="${total}"/>
                 <input class="layui-input" type="text" disabled
-                                   value="${now} - ${to}  <fmt:message key="change.total"/> ${total} <fmt:message key="change.day"/>">
+                       value="${now} - ${to}  <fmt:message key="change.total"/> ${total} <fmt:message key="change.day"/>">
             </td>
         </tr>
         <tr>
@@ -67,15 +66,16 @@
         </tr>
         <tr>
             <td class="td_title"><label class="layui-form-label"><fmt:message key="change.reason"/></label></td>
-            <td colspan="3"><textarea class="layui-textarea" onblur="validateLength(this,<fmt:message key="change.reason"/>,1024)" id="reason"></textarea></td>
+            <td colspan="3"><textarea class="layui-textarea"
+                                      onblur="validateLength(this,'<fmt:message key="change.reason"/>',1024)"
+                                      id="reason"></textarea></td>
         </tr>
     </table>
-
-    </div>
-    <div id="btnGroup">
-        <input type="button" class="layui-btn layui-btn-danger layui-btn-radius" value="<fmt:message key="btn.close"/>" onclick="closeMe()"/>
-        <input type="button" class="layui-btn layui-btn-radius" value="<fmt:message key="btn.change"/>" onclick="change()"/>
-    </div>
+<div id="btnGroup">
+    <input type="button" class="layui-btn layui-btn-danger layui-btn-radius" value="<fmt:message key="btn.close"/>"
+           onclick="closeMe()"/>
+    <input type="button" class="layui-btn layui-btn-radius" value="<fmt:message key="btn.change"/>" onclick="change()"/>
+</div>
 </div>
 </body>
 </html>
