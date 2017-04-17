@@ -1,5 +1,6 @@
 package com.wittymonkey.controller;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.sun.xml.internal.ws.resources.HttpserverMessages;
@@ -122,8 +123,7 @@ public class FinanceTypeController {
      *
      * @param type
      * @param name
-     * @return
-     * <table border="1" cellspacing="0">
+     * @return <table border="1" cellspacing="0">
      * <tr>
      * <th>代码</th>
      * <th>说明</th>
@@ -181,7 +181,7 @@ public class FinanceTypeController {
 
     @RequestMapping(value = "updateFinanceType", method = RequestMethod.POST)
     @ResponseBody
-    public String updateFinanceType(HttpServletRequest request){
+    public String updateFinanceType(HttpServletRequest request) {
         JSONObject json = new JSONObject();
         Hotel hotel = (Hotel) request.getSession().getAttribute("hotel");
         User loginUser = (User) request.getSession().getAttribute("loginUser");
@@ -209,11 +209,11 @@ public class FinanceTypeController {
         }
         FinanceType financeType = financeTypeService.getFinanceTypeById(
                 ((FinanceType) request.getSession().getAttribute("editFinanceType")).getId());
-        if (financeType == null){
+        if (financeType == null) {
             json.put("status", 420);
             return json.toJSONString();
         }
-        if (!financeType.getEditable()){
+        if (!financeType.getEditable()) {
             json.put("status", 430);
             return json.toJSONString();
         }
@@ -230,9 +230,9 @@ public class FinanceTypeController {
 
     /**
      * 删除财务类型
+     *
      * @param request
-     * @return
-     * <table border="1" cellspacing="0">
+     * @return <table border="1" cellspacing="0">
      * <tr>
      * <th>代码</th>
      * <th>说明</th>
@@ -252,19 +252,19 @@ public class FinanceTypeController {
      */
     @RequestMapping(value = "deleteFinanceType", method = RequestMethod.POST)
     @ResponseBody
-    public String deleteFinanceType(HttpServletRequest request){
+    public String deleteFinanceType(HttpServletRequest request) {
         JSONObject json = new JSONObject();
         Hotel hotel = (Hotel) request.getSession().getAttribute("hotel");
         User loginUser = (User) request.getSession().getAttribute("loginUser");
         Integer id = null;
-        try{
+        try {
             id = Integer.parseInt(request.getParameter("id"));
-        } catch (NumberFormatException e){
+        } catch (NumberFormatException e) {
             json.put("status", 400);
             return json.toJSONString();
         }
         FinanceType financeType = financeTypeService.getFinanceTypeById(id);
-        if (financeType == null){
+        if (financeType == null) {
             json.put("status", 400);
             return json.toJSONString();
         }
@@ -275,6 +275,18 @@ public class FinanceTypeController {
             return json.toJSONString();
         }
         json.put("status", 200);
+        return json.toJSONString();
+    }
+
+    @RequestMapping(value = "getFinanceTypeByType", method = RequestMethod.GET)
+    @ResponseBody
+    public String getFinanceTypeByType(HttpServletRequest request) {
+        JSONObject json = new JSONObject();
+        Hotel hotel = (Hotel) request.getSession().getAttribute("hotel");
+        Integer type = Integer.parseInt(request.getParameter("type"));
+        List<FinanceType> financeTypes = financeTypeService.getFinanceTypeByPage(hotel.getId(), type, null, null);
+        List<SimpleFinanceType> simpleFinanceTypes = ChangeToSimple.financeTypeList(financeTypes);
+        json.put("data", simpleFinanceTypes);
         return json.toJSONString();
     }
 }

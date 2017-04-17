@@ -8,35 +8,31 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="common/taglib.jsp" %>
 <%@ include file="common/js&css.jsp" %>
-<%@ include file="common/iconfont.jsp" %>
+<%@include file="common/iconfont.jsp" %>
 <html>
 <head>
-    <title><fmt:message key="index.menu.floor.add"/></title>
-    <link href="style/common.css" rel="stylesheet"
-          type="text/css"/>
 </head>
+<link rel="stylesheet" type="text/css" href="style/common.css"/>
 <script type="text/javascript" src="js/common.js"></script>
 <script type="text/javascript" src="js/finance_add.js"></script>
 <!-- 根据设置动态加载js语言 -->
 <script type="text/javascript" src="i18n/messages_${loginUser.setting.lang }.js"></script>
 <fmt:setBundle basename="i18n/messages_${loginUser.setting.lang }"/>
 <body>
+<body>
     <form id="add_form" class="layui-form">
         <table class="form-table">
             <tr>
                 <td><label class="layui-form-label"><fmt:message key="finance_type.in/out"/></label></td>
                 <td>
-                    <select>
+                    <select name="type" id="type" lay-filter="type">
                         <option value="1" selected><fmt:message key="finance_type.in"/></option>
                         <option value="0"><fmt:message key="finance_type.out"/></option>
                     </select>
                 </td>
                 <td><label class="layui-form-label"  style="margin-left: 10px"><fmt:message key="finance.type"/></label></td>
                 <td>
-                    <select id="type" name="type">
-                        <c:forEach items="${types}" var="type">
-                            <option value="${type.id}">${type.name}</option>
-                        </c:forEach>
+                    <select id="financeType" name="financeType">
                     </select>
                 </td>
             </tr>

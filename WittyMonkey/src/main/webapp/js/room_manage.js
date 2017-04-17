@@ -4,7 +4,6 @@
 var layer;
 var form;
 var laypage;
-
 layui.use(['layer', 'form', 'laypage'], function () {
     layer = layui.layer;
     laypage = layui.laypage;
@@ -23,7 +22,7 @@ function showAddRoom() {
         shade: 0.4,
         content: "toAddRoom.do",
         scrollbar: false,
-        type: 2,
+        type: 2
     });
 }
 
@@ -159,11 +158,13 @@ function changeType(obj) {
             '<option value="3">' + room_hint_clean + '</option>' +
             '</select>';
     } else if (type == 1) {
+        var load = layer.load();
         $.ajax({
             url: "getFloor.do",
             dataType: "json",
             type: "get",
             success: function (data) {
+                layer.close(load);
                 var res = eval("(" + data + ")");
                 var html;
                 html = '<select name="searchContent" lay-verify="required" id="searchContent">';
