@@ -231,6 +231,7 @@ public class RoleController {
         }
         // 添加不可配置的菜单
         newRole.getMenus().addAll(menuService.getAllUnconfigurable());
+        // 判断重复
         List<Role> roles = roleService.getRoleByPage(hotel.getId(), null, null);
         for (Role role : roles) {
             if (newRole.isMenuSame(role)) {
@@ -239,6 +240,8 @@ public class RoleController {
                 return json.toJSONString();
             }
         }
+        // 可编辑
+        newRole.setEditable(true);
         roleService.saveRole(newRole);
         json.put("status", 200);
         return json.toJSONString();

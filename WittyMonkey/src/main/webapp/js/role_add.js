@@ -17,12 +17,14 @@ function save() {
     if (!validateNote($("#note"))) {
         return;
     }
+    var load = layer.load();
     $.ajax({
         type: "get",
         url: "saveRole.do",
         data: $("#add_form").serialize(),
         dataType: "json",
         success: function (data) {
+            layer.close(load);
             var res = eval("(" + data + ")");
             switch (res["status"]) {
                 case 400:

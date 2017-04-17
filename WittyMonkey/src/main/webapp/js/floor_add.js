@@ -25,12 +25,14 @@ function validateAddFloor(form) {
 
 function save() {
     if (validateFloorNo("add", $("#floorNo"))) {
+        var load = layer.load();
         $.ajax({
             type: "GET",
             url: "saveFloor.do",
             data: $("#add_form").serialize(),
             dataType: "json",
             success: function (data) {
+                layer.close(load);
                 var funResult = eval("(" + data + ")");
                 switch (funResult.status) {
                     case 400:

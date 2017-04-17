@@ -255,12 +255,14 @@ function toChange(id) {
 }
 function toClean(id) {
     layer.confirm(clean_hint,{icon: 3, title: clean_title}, function (index) {
+        var load = layer.load();
         $.ajax({
             url: "cleanRoom.do?",
             data: {"id": id},
             dataType: "json",
             type: "get",
             success: function (data) {
+                layer.close(load);
                 var res = eval("(" + data + ")");
                 if (res["status"] == 200){
                     layer.msg(operation_success, {

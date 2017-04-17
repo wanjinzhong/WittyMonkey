@@ -26,12 +26,14 @@ function save(type) {
     } else if (type == "update") {
         url = "updateStaff.do";
     }
+    var load = layer.load();
     $.ajax({
         url: url,
         data: $("#add_form").serialize(),
         dataType: "JSON",
         type: "POST",
         success: function (data) {
+            layer.close(load);
             var res = eval("(" + data + ")");
             switch (res["status"]) {
                 case 400:
