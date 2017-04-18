@@ -238,4 +238,25 @@ public class ChangeToSimple {
         }
         return simpleFinances;
     }
+
+    public static List<SimpleReimbuse> reimbuseList(List<Reimburse> reimburses){
+        List<SimpleReimbuse> simpleReimbuses = new ArrayList<SimpleReimbuse>();
+        for (Reimburse reimburse : reimburses){
+            SimpleReimbuse simpleReimbuse = new SimpleReimbuse();
+            simpleReimbuse.setApplyDatetime(reimburse.getApplyDatetime());
+            simpleReimbuse.setApplyUser(reimburse.getApplyUser().getRealName());
+            simpleReimbuse.setApplyUserNote(reimburse.getApplyUserNote());
+            simpleReimbuse.setEntryDatetime(reimburse.getEntryDatetime());
+            if (reimburse.getEntryUser() != null) {
+                simpleReimbuse.setEntryUser(reimburse.getEntryUser().getRealName());
+            }
+            simpleReimbuse.setEntryUserNote(reimburse.getEntryUserNote());
+            simpleReimbuse.setId(reimburse.getId());
+            simpleReimbuse.setMoney(reimburse.getMoney());
+            simpleReimbuse.setStatus(reimburse.getStatus());
+            simpleReimbuse.setHotel(reimburse.getHotel().getName());
+            simpleReimbuses.add(simpleReimbuse);
+        }
+        return simpleReimbuses;
+    }
 }

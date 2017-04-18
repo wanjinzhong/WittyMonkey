@@ -187,4 +187,9 @@ var finance_type_not_exist = "Type is not exist, may have been deleted";
 var money_error = "Amount error";
 var money_not_negative = "Amount cannot be negative";
 var finance_add_success = "Add finance successfully";
-var finance_type_all = "All"
+var finance_type_all = "All";
+
+var reimburse_pending = "Pending";
+var reimburse_passed = "Passed";
+var reimburse_rejected = "Rejected";
+var reimburse_unknown = "Unknown";

@@ -24,7 +24,7 @@ public class FinanceDaoImpl extends GenericDaoImpl<Finance> implements IFinanceD
             hql.append("and financeType.income = true ");
         } else if (new Integer(-1).equals(type)){
             hql.append("and financeType.income = false ");
-        } else {
+        } else if (type > 0){
             hql.append("and financeType.id = :type ");
             param.put("type", type);
         }
@@ -33,11 +33,8 @@ public class FinanceDaoImpl extends GenericDaoImpl<Finance> implements IFinanceD
             param.put("from", from);
         }
         if (to != null){
-            hql.append(" and entryDatetime < :to");
-            Calendar calendar = new GregorianCalendar();
-            calendar.setTime(to);
-            calendar.add(Calendar.DATE, 1);
-            param.put("to", calendar.getTime());
+            hql.append(" and entryDatetime < :to ");
+            param.put("to", to);
         }
         param.put("hotelId", hotelId);
         return countHQL(hql.toString(), param);
@@ -61,12 +58,9 @@ public class FinanceDaoImpl extends GenericDaoImpl<Finance> implements IFinanceD
         }
         if (to != null){
             hql.append(" and entryDatetime < :to ");
-            Calendar calendar = new GregorianCalendar();
-            calendar.setTime(to);
-            calendar.add(Calendar.DATE, 1);
-            param.put("to", calendar.getTime());
+            param.put("to", to);
         }
-        hql.append("order by entryDatetime");
+        hql.append("order by entryDatetime desc");
         param.put("hotelId", hotelId);
         return queryListHQL(hql.toString(), param, start, total);
     }

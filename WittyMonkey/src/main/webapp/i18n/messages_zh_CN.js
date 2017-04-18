@@ -198,3 +198,8 @@ var money_error = "金额不正确";
 var money_not_negative = "金额不能为负数";
 var finance_add_success = "财务添加成功";
 var finance_type_all = "全部";
+
+var reimburse_pending = "待审核";
+var reimburse_passed = "已通过";
+var reimburse_rejected = "已驳回";
+var reimburse_unknown = "未知";

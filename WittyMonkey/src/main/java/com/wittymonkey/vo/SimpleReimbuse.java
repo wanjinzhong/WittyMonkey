@@ -24,6 +24,8 @@ public class SimpleReimbuse {
 
     private String entryUserNote;
 
+    private String hotel;
+
     public Integer getId() {
         return id;
     }
@@ -94,5 +96,13 @@ public class SimpleReimbuse {
 
     public void setEntryUserNote(String entryUserNote) {
         this.entryUserNote = entryUserNote;
+    }
+
+    public String getHotel() {
+        return hotel;
+    }
+
+    public void setHotel(String hotel) {
+        this.hotel = hotel;
     }
 }

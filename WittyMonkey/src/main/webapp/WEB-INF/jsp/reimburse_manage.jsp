@@ -15,7 +15,7 @@
 </head>
 <script type="text/javascript" src="js/common.js"></script>
 <link type="text/css" rel="stylesheet" href="style/finance.css"/>
-<script type="text/javascript" src="js/finance_record.js"></script>
+<script type="text/javascript" src="js/reimburse_manage.js"></script>
 <!-- 根据设置动态加载js语言 -->
 <script type="text/javascript" src="i18n/messages_${loginUser.setting.lang }.js"></script>
 <fmt:setBundle basename="i18n/messages_${loginUser.setting.lang }"/>
@@ -26,7 +26,7 @@
         <i class="refreshBtn layui-icon layui-btn layui-btn-small" onclick="reload();">&#x1002;</i>
     </nav>
     <div id="main">
-        <i class="newBtn layui-icon layui-btn layui-btn-radius layui-btn-normal" onclick="showAddFinance()">&#xe61f;
+        <i class="newBtn layui-icon layui-btn layui-btn-radius layui-btn-normal" onclick="showAddReimburse()">&#xe61f;
             <fmt:message key="finance.add"/></i>
         <form class="layui-form">
             <div>

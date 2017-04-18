@@ -1,6 +1,8 @@
 package com.wittymonkey.util;
 
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 
 /**
  * Created by neilw on 2017/3/9.
@@ -8,5 +10,19 @@ import java.util.Date;
 public class DateUtil {
     public static Integer dateDiffDays(Date d1, Date d2){
         return (int) Math.ceil((d2.getTime() - d1.getTime())*1.0/(1000*60*60*24));
+    }
+    /**
+     * 在当前日期上加一天
+     * @param date
+     * @return
+     */
+    public static Date addOneDay(Date date){
+        if (date == null){
+            return null;
+        }
+        Calendar calendar = new GregorianCalendar();
+        calendar.setTime(date);
+        calendar.add(Calendar.DATE, 1);
+        return calendar.getTime();
     }
 }

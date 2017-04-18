@@ -5,16 +5,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 /**
  * 报销
@@ -57,6 +48,10 @@ public class Reimburse implements Serializable{
 	
 	@Column(name="entry_user_note", length=1024)
 	private String entryUserNote;
+
+	@ManyToOne(targetEntity = Hotel.class, fetch = FetchType.EAGER,cascade={CascadeType.PERSIST,CascadeType.MERGE})
+	@JoinColumn(name = "hotel_id", referencedColumnName = "id")
+	private Hotel hotel;
 	
 	@OneToMany(targetEntity=Invoice.class, fetch=FetchType.EAGER)
 	@JoinColumn(name="reimburse_id")
@@ -140,5 +135,13 @@ public class Reimburse implements Serializable{
 
 	public void setApplyDatetime(Date applyDatetime) {
 		this.applyDatetime = applyDatetime;
+	}
+
+	public Hotel getHotel() {
+		return hotel;
+	}
+
+	public void setHotel(Hotel hotel) {
+		this.hotel = hotel;
 	}
 }

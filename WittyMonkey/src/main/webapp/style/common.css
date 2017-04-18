@@ -77,7 +77,7 @@ td{
 .eye:hover{
 	color: grey;
 }
-.editBtn, .deleteBtn{
+.editBtn, .deleteBtn, .showBtn{
 	font-size: 13px;
 }
 .editBtn:hover{
@@ -90,7 +90,11 @@ td{
 	color: #FF5722;
 	transition: border-color, color 0.5s,0.5s;
 }
-
+.showBtn:hover{
+	border-color: #1AA094;
+	color: #1AA094;
+	transition: border-color, color 0.5s,0.5s;
+}
 .form_table td {
 	text-align: right;
 	padding: 5px;
