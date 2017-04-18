@@ -5,7 +5,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.wittymonkey.entity.*;
 import com.wittymonkey.service.*;
 import com.wittymonkey.util.ChangeToSimple;
-import com.wittymonkey.vo.Constriant;
+import com.wittymonkey.vo.Constraint;
 import com.wittymonkey.vo.SimpleMenu;
 import com.wittymonkey.vo.SimpleRole;
 import org.apache.commons.lang.StringUtils;
@@ -146,14 +146,14 @@ public class RoleController {
         if (roleName.trim().length() > 10) {
             return 401;
         }
-        if (Constriant.UPDATE.equals(type)) {
+        if (Constraint.UPDATE.equals(type)) {
             editRole = ((Role) request.getSession().getAttribute("editRole")).getName();
         }
         Role role = roleService.getRoleByRoleName(hotel.getId(), roleName);
 
         if (role != null) {
-            if (Constriant.ADD.equals(type) || Constriant.DELETE.equals(type)
-                    || (Constriant.UPDATE.equals(type) && !editRole.equals(roleName))) {
+            if (Constraint.ADD.equals(type) || Constraint.DELETE.equals(type)
+                    || (Constraint.UPDATE.equals(type) && !editRole.equals(roleName))) {
                 return 200;
             } else {
                 return 201;
@@ -211,7 +211,7 @@ public class RoleController {
         String note = request.getParameter("note");
         String[] menusIdStr = request.getParameterValues("menu");
         List<Integer> menusId = changeToInteger(menusIdStr);
-        Integer roleVali = validateRole(request,Constriant.ADD,roleName,note,menusId);
+        Integer roleVali = validateRole(request, Constraint.ADD,roleName,note,menusId);
         if (!new Integer(200).equals(roleVali)){
             json.put("status", roleVali);
             return json.toJSONString();
@@ -346,7 +346,7 @@ public class RoleController {
         String[] menusIdStr = request.getParameterValues("menu");
         List<Integer> menusId = changeToInteger(menusIdStr);
 
-        Integer roleVali = validateRole(request,Constriant.UPDATE,roleName,note,menusId);
+        Integer roleVali = validateRole(request, Constraint.UPDATE,roleName,note,menusId);
         if (!new Integer(200).equals(roleVali)){
             json.put("status", roleVali);
             return json.toJSONString();

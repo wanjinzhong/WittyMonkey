@@ -165,7 +165,7 @@ public class IndexController {
                 //报销子菜单
                 JSONObject reimburse = new JSONObject();
                 reimburse.put("title", props.getProperty("index.menu.finance.reimburse"));
-                reimburse.put("href", "toFinanaceReimburse.do");
+                reimburse.put("href", "toReimburseManage.do");
                 financeChildren.add(reimburse);
                 //工资更改
                 JSONObject salaryChange = new JSONObject();
@@ -308,9 +308,9 @@ public class IndexController {
         return "finance_record";
     }
 
-    @RequestMapping(value = "toFinanceReimburse", method = RequestMethod.GET)
+    @RequestMapping(value = "toReimburseManage", method = RequestMethod.GET)
     public String toFinanceReimburse(HttpServletRequest request) {
-        return "finance_reimburse";
+        return "reimburse_manage";
     }
 
     @RequestMapping(value = "toFinanceSalaryChange", method = RequestMethod.GET)

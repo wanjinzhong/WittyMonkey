@@ -44,6 +44,9 @@ public class Reimburse implements Serializable{
 	
 	@Column(name="apply_user_note",length=1024)
 	private String applyUserNote;
+
+	@Column(name="apply_datetime")
+	private Date applyDatetime;
 	
 	@Column(name="entry_datetime")
 	private Date entryDatetime;
@@ -130,6 +133,12 @@ public class Reimburse implements Serializable{
 	public void setInvoices(List<Invoice> invoices) {
 		this.invoices = invoices;
 	}
-	
 
+	public Date getApplyDatetime() {
+		return applyDatetime;
+	}
+
+	public void setApplyDatetime(Date applyDatetime) {
+		this.applyDatetime = applyDatetime;
+	}
 }

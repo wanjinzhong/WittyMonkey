@@ -1,13 +1,11 @@
 package com.wittymonkey.controller;
 
-import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.sun.xml.internal.ws.resources.HttpserverMessages;
 import com.wittymonkey.entity.*;
 import com.wittymonkey.service.*;
 import com.wittymonkey.util.ChangeToSimple;
-import com.wittymonkey.vo.Constriant;
+import com.wittymonkey.vo.Constraint;
 import com.wittymonkey.vo.SimpleFinanceType;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +13,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.context.annotation.RequestScope;
 
 import javax.servlet.http.HttpServletRequest;
 import java.sql.SQLException;
@@ -82,7 +79,7 @@ public class FinanceTypeController {
             return json.toJSONString();
         }
         String note = request.getParameter("note");
-        Integer nameVali = validateFinanceTypeName(request, Constriant.ADD, name);
+        Integer nameVali = validateFinanceTypeName(request, Constraint.ADD, name);
         if (!new Integer(201).equals(nameVali)) {
             if (new Integer(200).equals(nameVali)) {
                 json.put("status", 402);
@@ -154,14 +151,14 @@ public class FinanceTypeController {
         if (name.trim().length() > 10) {
             return 401;
         }
-        if (Constriant.UPDATE.equals(type)) {
+        if (Constraint.UPDATE.equals(type)) {
             editFianceType = ((FinanceType) request.getSession().getAttribute("editFinanceType")).getName();
         }
         FinanceType financeType = financeTypeService.getFinanceTypeByName(hotel.getId(), name);
 
         if (financeType != null) {
-            if (Constriant.ADD.equals(type) || Constriant.DELETE.equals(type)
-                    || (Constriant.UPDATE.equals(type) && !editFianceType.equals(name))) {
+            if (Constraint.ADD.equals(type) || Constraint.DELETE.equals(type)
+                    || (Constraint.UPDATE.equals(type) && !editFianceType.equals(name))) {
                 return 200;
             } else {
                 return 201;
@@ -194,7 +191,7 @@ public class FinanceTypeController {
             return json.toJSONString();
         }
         String note = request.getParameter("note");
-        Integer nameVali = validateFinanceTypeName(request, Constriant.UPDATE, name);
+        Integer nameVali = validateFinanceTypeName(request, Constraint.UPDATE, name);
         if (!new Integer(201).equals(nameVali)) {
             if (new Integer(200).equals(nameVali)) {
                 json.put("status", 402);

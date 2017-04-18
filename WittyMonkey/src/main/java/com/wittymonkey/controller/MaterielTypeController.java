@@ -5,7 +5,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.wittymonkey.entity.Hotel;
 import com.wittymonkey.entity.MaterielType;
 import com.wittymonkey.entity.User;
-import com.wittymonkey.vo.Constriant;
+import com.wittymonkey.vo.Constraint;
 import com.wittymonkey.service.IHotelService;
 import com.wittymonkey.service.IMaterielTypeService;
 import com.wittymonkey.service.IUserService;
@@ -131,7 +131,7 @@ public class MaterielTypeController {
     public Integer validateMaterielTypeName(HttpServletRequest request, String method, String typeName) {
         Hotel hotel = (Hotel) request.getSession().getAttribute("hotel");
         String editTypeName = null;
-        if (Constriant.UPDATE.equals(method)) {
+        if (Constraint.UPDATE.equals(method)) {
             editTypeName = ((MaterielType) request.getSession().getAttribute("editMaterielType")).getName();
         }
         if (StringUtils.isBlank(typeName)) {
@@ -141,8 +141,8 @@ public class MaterielTypeController {
         if (materielType == null) {
             return 201;
         }
-        if (Constriant.ADD.equals(method) || Constriant.DELETE.equals(method)
-                || (Constriant.UPDATE.equals(method) && !editTypeName.equals(typeName))) {
+        if (Constraint.ADD.equals(method) || Constraint.DELETE.equals(method)
+                || (Constraint.UPDATE.equals(method) && !editTypeName.equals(typeName))) {
             return 200;
         }
         return 201;

@@ -7,7 +7,7 @@ import com.wittymonkey.service.*;
 import com.wittymonkey.util.ChangeToSimple;
 import com.wittymonkey.util.DateUtil;
 import com.wittymonkey.util.IDCardValidate;
-import com.wittymonkey.vo.Constriant;
+import com.wittymonkey.vo.Constraint;
 import com.wittymonkey.vo.SimpleFloor;
 import com.wittymonkey.vo.SimpleReserve;
 import com.wittymonkey.vo.SimpleRoom;
@@ -517,9 +517,9 @@ public class RoomController {
         roomMaster.setEntryUser(userService.getUserById(loginUser.getId()));
         roomMaster.setRoomExt(roomExt);
         roomMaster.setDelete(false);
-        if (method.equals(Constriant.ADD)) {
+        if (method.equals(Constraint.ADD)) {
             roomMasterService.saveRoom(roomMaster);
-        } else if (method.equals(Constriant.UPDATE)) {
+        } else if (method.equals(Constraint.UPDATE)) {
             try {
                 roomMasterService.updateRoom(roomMaster);
             } catch (SQLException e) {
@@ -1233,8 +1233,8 @@ public class RoomController {
         } else {
             RoomMaster newRoom = roomMasterService.getRoomMasterByNo(hotel, roomNo);
             if (newRoom != null) {
-                if (method.equals(Constriant.ADD) || method.equals(Constriant.DELETE) ||
-                        (method.equals(Constriant.UPDATE) && room.getId() != newRoom.getId())) {
+                if (method.equals(Constraint.ADD) || method.equals(Constraint.DELETE) ||
+                        (method.equals(Constraint.UPDATE) && room.getId() != newRoom.getId())) {
                     return 200;
                 } else {
                     return 210;

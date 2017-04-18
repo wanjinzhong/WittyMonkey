@@ -8,10 +8,9 @@ import com.wittymonkey.service.IFinanceTypeService;
 import com.wittymonkey.service.IHotelService;
 import com.wittymonkey.service.IUserService;
 import com.wittymonkey.util.ChangeToSimple;
-import com.wittymonkey.vo.Constriant;
+import com.wittymonkey.vo.Constraint;
 import com.wittymonkey.vo.SimpleFinance;
 import com.wittymonkey.vo.SimpleFinanceType;
-import com.wittymonkey.vo.SimpleFloor;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -84,7 +83,7 @@ public class FinanceController {
     @RequestMapping(value = "toAddFinance", method = RequestMethod.GET)
     public String toAddFinance(HttpServletRequest request) {
         Hotel hotel = (Hotel) request.getSession().getAttribute("hotel");
-        List<FinanceType> financeTypes = financeTypeService.getFinanceTypeByPage(hotel.getId(), Constriant.FINANCE_TYPE_DEFAULT_IN, null, null);
+        List<FinanceType> financeTypes = financeTypeService.getFinanceTypeByPage(hotel.getId(), Constraint.FINANCE_TYPE_DEFAULT_IN, null, null);
         request.setAttribute("types", financeTypes);
         return "finance_add";
     }

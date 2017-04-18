@@ -1,7 +1,5 @@
 package com.wittymonkey.dao.impl;
 
-import com.wittymonkey.vo.Constriant;
-import org.hibernate.mapping.Constraint;
 import org.springframework.stereotype.Repository;
 
 import com.wittymonkey.dao.IFinanceDao;

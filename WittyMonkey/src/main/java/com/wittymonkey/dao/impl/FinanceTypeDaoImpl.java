@@ -1,6 +1,6 @@
 package com.wittymonkey.dao.impl;
 
-import com.wittymonkey.vo.Constriant;
+import com.wittymonkey.vo.Constraint;
 import org.springframework.stereotype.Repository;
 
 import com.wittymonkey.dao.IFinanceTypeDao;
@@ -22,9 +22,9 @@ public class FinanceTypeDaoImpl extends GenericDaoImpl<FinanceType> implements I
     @Override
     public List<FinanceType> getFinanceTypeByPage(Integer hotelId, Integer type, Integer start, Integer total) {
         StringBuffer hql = new StringBuffer("from FinanceType where hotel.id = ? ");
-        if (Constriant.FINANCE_TYPE_IN.equals(type)){
+        if (Constraint.FINANCE_TYPE_IN.equals(type)){
             hql.append(" and income = true");
-        } else if (Constriant.FINANCE_TYPE_OUT.equals(type)){
+        } else if (Constraint.FINANCE_TYPE_OUT.equals(type)){
             hql.append(" and income = false");
         }
         hql.append(" order by id");

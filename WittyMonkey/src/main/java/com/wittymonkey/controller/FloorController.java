@@ -5,7 +5,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.wittymonkey.entity.Floor;
 import com.wittymonkey.entity.Hotel;
 import com.wittymonkey.entity.User;
-import com.wittymonkey.vo.Constriant;
+import com.wittymonkey.vo.Constraint;
 import com.wittymonkey.service.IFloorService;
 import com.wittymonkey.util.ChangeToSimple;
 import com.wittymonkey.vo.SimpleFloor;
@@ -96,7 +96,7 @@ public class FloorController {
             if (note.length() > 1024) {
                 status = 410;
             } else {
-                if (method.equals(Constriant.ADD)) {
+                if (method.equals(Constraint.ADD)) {
                     Floor floor = new Floor();
                     floor.setHotel(hotel);
                     floor.setFloorNo(Integer.parseInt(floorNo));
@@ -104,7 +104,7 @@ public class FloorController {
                     floor.setEntryUser(user);
                     floor.setEntryDatetime(new Date());
                     floorService.saveFloor(floor);
-                } else if (method.equals(Constriant.UPDATE)) {
+                } else if (method.equals(Constraint.UPDATE)) {
                     Floor floor = floorService.getFloorByNo(hotel.getId(), editFloor.getFloorNo());
                     floor.setFloorNo(Integer.parseInt(floorNo));
                     floor.setNote(note);
@@ -153,7 +153,7 @@ public class FloorController {
         String floorNo = request.getParameter("floorNo");
         Hotel hotel = (Hotel) request.getSession().getAttribute("hotel");
         int status = 500;
-        switch (validateFloorNo(request, Constriant.DELETE, floorNo)) {
+        switch (validateFloorNo(request, Constraint.DELETE, floorNo)) {
             case 201:
                 status = 400;
                 break;
@@ -259,15 +259,15 @@ public class FloorController {
         Hotel hotel = (Hotel) request.getSession().getAttribute("hotel");
         try {
             floorNo = Integer.parseInt(floorNoStr);
-            if (method.equals(Constriant.UPDATE)) {
+            if (method.equals(Constraint.UPDATE)) {
                 editFloorNo = ((Floor) request.getSession().getAttribute("editFloor")).getFloorNo();
             }
         } catch (NumberFormatException e) {
             return 400;
         }
         if (floorService.isFloorExist(hotel.getId(), floorNo)) {
-            if (Constriant.ADD.equals(method) || Constriant.DELETE.equals(method) ||
-                    (Constriant.UPDATE.equals(method) && floorNo != editFloorNo)) {
+            if (Constraint.ADD.equals(method) || Constraint.DELETE.equals(method) ||
+                    (Constraint.UPDATE.equals(method) && floorNo != editFloorNo)) {
                 return 200;
             } else {
                 return 201;
