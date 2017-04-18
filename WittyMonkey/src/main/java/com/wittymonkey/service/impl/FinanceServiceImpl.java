@@ -26,4 +26,9 @@ public class FinanceServiceImpl implements IFinanceService{
     public List<Finance> getFinanceByPage(Integer hotelId, Integer income, Integer start, Integer total) {
         return financeDao.getFinanceByPage(hotelId, income, start, total);
     }
+
+    @Override
+    public void save(Finance finance) {
+        financeDao.save(finance);
+    }
 }

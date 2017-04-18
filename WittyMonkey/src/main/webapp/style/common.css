@@ -103,3 +103,6 @@ td{
 body{
 	height: 98%;
 }
+.layui-form{
+	text-align: center;
+}

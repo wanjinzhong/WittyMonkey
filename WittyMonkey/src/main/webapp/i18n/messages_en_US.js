@@ -182,3 +182,8 @@ var finance_type_delete_hint = "Are you sure to delete this type?<br/>" +
 var finance_type_delete_title = "Delete Type";
 var finance_type_delete_not_exist = "This type is not exist";
 var finance_type_delete_success = "Delete type successfully";
+
+var finance_type_not_exist = "Type is not exist, may have been deleted";
+var money_error = "Amount error";
+var money_not_negative = "Amount cannot be negative";
+var finance_add_success = "Add finance successfully";

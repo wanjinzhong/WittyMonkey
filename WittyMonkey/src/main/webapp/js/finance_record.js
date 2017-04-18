@@ -27,12 +27,10 @@ function refreshTable(obj) {
                 "<td>" + (obj[i].income ? finance_type_in : finance_type_out) + "</td>" +
                 "<td>" + obj[i].money + "</td>" +
                 "<td>" + ((obj[i].note == undefined) ? "" : obj[i].note) + "</td>" +
-                "<td>" + obj[i].entryUser + "</td>" +
-                "<td>";
-                html += "<i class='editBtn layui-icon layui-btn layui-btn-primary layui-btn-small' onclick='editFinance(" + obj[i].id + ")'>&#xe642; " + btn_edit + "</i>" +
-                    "<i class='deleteBtn layui-icon layui-btn layui-btn-primary layui-btn-small' onclick='deleteFinance(" + obj[i].id + ")'>&#xe640; " + btn_delete + "</i>";
-            html += "</td>" +
-                "</tr>";
+                "<td>" + obj[i].entryUser + "</td>";
+                // html += ""<td>"<i class='editBtn layui-icon layui-btn layui-btn-primary layui-btn-small' onclick='editFinance(" + obj[i].id + ")'>&#xe642; " + btn_edit + "</i>" +
+                //     "<i class='deleteBtn layui-icon layui-btn layui-btn-primary layui-btn-small' onclick='deleteFinance(" + obj[i].id + ")'>&#xe640; " + btn_delete + "</i></td>";
+            html += "</tr>";
         }
     }
     $("#dataTabel").html(html);
@@ -46,7 +44,7 @@ function changeType() {
 function showAddFinance() {
     layer.open({
         type: 2,
-        area: ['700px', '350px'],
+        area: ['770px', '350px'],
         maxmin: false,
         shade: 0.4,
         title: finance_type_add_title,

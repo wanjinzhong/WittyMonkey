@@ -192,3 +192,8 @@ var finance_type_delete_hint = "确定要删除这个类型吗？<br/>删除后�
 var finance_type_delete_title = "删除类型";
 var finance_type_delete_not_exist = "该类型不存在";
 var finance_type_delete_success = "类型删除成功";
+
+var finance_type_not_exist = "类型不存在，可能已被删除";
+var money_error = "金额不正确";
+var money_not_negative = "金额不能为负数";
+var finance_add_success = "财务添加成功";

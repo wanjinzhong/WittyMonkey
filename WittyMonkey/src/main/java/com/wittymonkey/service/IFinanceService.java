@@ -11,4 +11,5 @@ public interface IFinanceService {
 
     List<Finance> getFinanceByPage(Integer hotelId, Integer income, Integer start, Integer total);
 
+    void save(Finance finance);
 }

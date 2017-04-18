@@ -19,7 +19,7 @@
 <script type="text/javascript" src="i18n/messages_${loginUser.setting.lang }.js"></script>
 <fmt:setBundle basename="i18n/messages_${loginUser.setting.lang }"/>
 <body>
-<form id="add_form"  class="layui-form">
+<form class="layui-form">
     <table class="form_table">
         <tr>
             <td><label class="layui-form-label"><fmt:message key="finance_type.in/out"/></label></td>
@@ -30,17 +30,15 @@
                 </select>
             </td>
             <td><label class="layui-form-label" style="margin-left: 10px"><fmt:message key="finance.type"/></label></td>
-            <td>
-                <select id="financeType" name="financeType"></select>
-            </td>
+            <td id="financeType"></td>
         </tr>
         <tr>
             <td><label class="layui-form-label"><fmt:message key="finance.money"/></label></td>
-            <td colspan="3"><input type="number" name="money" id="money" class="layui-input"/></td>
+            <td colspan="3"><input type="number" name="money" id="money" class="layui-input" onblur="validateMoney(this)"/></td>
         </tr>
         <tr>
             <td><label class="layui-form-label"><fmt:message key="note"/></label></td>
-            <td colspan="3"><textarea id="note" name="note" class="layui-textarea"></textarea></td>
+            <td colspan="3"><textarea id="note" name="note" class="layui-textarea" onblur="validateNote(this)"></textarea></td>
         </tr>
     </table>
 </form>
