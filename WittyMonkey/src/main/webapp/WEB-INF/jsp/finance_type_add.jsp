@@ -23,7 +23,7 @@
 <fmt:setBundle basename="i18n/messages_${loginUser.setting.lang }"/>
 <body>
 <form id="add_form" class="layui-form">
-    <table>
+    <table class="form_table">
         <tr>
             <td><label class="layui-form-label"><fmt:message key="finance_type.name"/></label></td>
             <td><input type="text" class="layui-input" name="name"

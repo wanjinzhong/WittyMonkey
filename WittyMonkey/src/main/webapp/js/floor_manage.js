@@ -79,7 +79,7 @@ function deleteFloor(floorNo) {
 function editFloor(obj) {
     layer.open({
         type: 2,
-        area: ['400px', '280px'],
+        area: ['500px', '270px'],
         maxmin: false,
         shade: 0.4,
         title: floor_manage_edit_title,
@@ -89,7 +89,7 @@ function editFloor(obj) {
 function showAddFloor() {
     layer.open({
         type: 2,
-        area: ['500px', '280px'],
+        area: ['500px', '270px'],
         maxmin: false,
         shade: 0.4,
         title: floor_manage_add_title,

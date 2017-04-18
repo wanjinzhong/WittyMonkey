@@ -24,11 +24,11 @@
 <!-- 根据设置动态加载js语言 -->
 <script type="text/javascript" src="i18n/messages_${loginUser.setting.lang }.js"></script>
 <fmt:setBundle basename="i18n/messages_${loginUser.setting.lang }"/>
-<body>
+<body style="margin-top: -15px">
     <form id="add_form">
         <!-- java端处理方式 -->
         <input type="hidden" name="method" value="update"/>
-        <table>
+        <table class="form_table">
             <tr>
                 <td class="table-header"><label class="layui-form-label"><fmt:message key="floor.manage.floor_no"/></label></td>
                 <td><input type="text" class="layui-input" name="floorNo"

@@ -81,7 +81,7 @@ function deleteRole(id) {
 function editRole(id) {
     layer.open({
         type: 2,
-        area: ['700px', '450px'],
+        area: ['700px', '400px'],
         maxmin: false,
         shade: 0.4,
         title: role_edit_title,
@@ -91,7 +91,7 @@ function editRole(id) {
 function showAddRole() {
     layer.open({
         type: 2,
-        area: ['700px', '450px'],
+        area: ['700px', '400px'],
         maxmin: false,
         shade: 0.4,
         title: role_add_title,

@@ -25,8 +25,7 @@
     <form id="add_form">
         <!-- java端处理方式 -->
         <input type="hidden" name="method" value="add"/>
-        <table>
-
+        <table class="form_table">
             <tr>
                 <td><label class="layui-form-label"><fmt:message key="floor.manage.floor_no"/></label></td>
                 <td><input type="text" class="layui-input" name="floorNo"

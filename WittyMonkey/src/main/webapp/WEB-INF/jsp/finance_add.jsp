@@ -19,38 +19,36 @@
 <script type="text/javascript" src="i18n/messages_${loginUser.setting.lang }.js"></script>
 <fmt:setBundle basename="i18n/messages_${loginUser.setting.lang }"/>
 <body>
-<body>
-    <form id="add_form" class="layui-form">
-        <table class="form-table">
-            <tr>
-                <td><label class="layui-form-label"><fmt:message key="finance_type.in/out"/></label></td>
-                <td>
-                    <select name="type" id="type" lay-filter="type">
-                        <option value="1" selected><fmt:message key="finance_type.in"/></option>
-                        <option value="0"><fmt:message key="finance_type.out"/></option>
-                    </select>
-                </td>
-                <td><label class="layui-form-label"  style="margin-left: 10px"><fmt:message key="finance.type"/></label></td>
-                <td>
-                    <select id="financeType" name="financeType">
-                    </select>
-                </td>
-            </tr>
-            <tr>
-                <td><label class="layui-form-label"><fmt:message key="finance.money"/></label></td>
-                <td colspan="3"><input type="number" class="layui-input" name="money" id="money"></input></td>
-            </tr>
-            <tr>
-                <td><label class="layui-form-label"><fmt:message key="note"/></label></td>
-                <td colspan="3"><textarea class="layui-textarea" name="note" id="note"></textarea></td>
-            </tr>
-        </table>
-    </form>
-    <div id="btnGroup">
-        <input type="button" class="layui-btn layui-btn-radius layui-btn-danger" value="<fmt:message key="btn.close"/>"
-               onclick="closeMe()"/>
-        <input type="button" class="layui-btn layui-btn-radius" value="<fmt:message key="btn.save"/>"
-               onclick="save()"/>
-    </div>
+<form id="add_form"  class="layui-form">
+    <table class="form_table">
+        <tr>
+            <td><label class="layui-form-label"><fmt:message key="finance_type.in/out"/></label></td>
+            <td>
+                <select name="type" id="type" lay-filter="type">
+                    <option value="1" selected><fmt:message key="finance_type.in"/></option>
+                    <option value="0"><fmt:message key="finance_type.out"/></option>
+                </select>
+            </td>
+            <td><label class="layui-form-label" style="margin-left: 10px"><fmt:message key="finance.type"/></label></td>
+            <td>
+                <select id="financeType" name="financeType"></select>
+            </td>
+        </tr>
+        <tr>
+            <td><label class="layui-form-label"><fmt:message key="finance.money"/></label></td>
+            <td colspan="3"><input type="number" name="money" id="money" class="layui-input"/></td>
+        </tr>
+        <tr>
+            <td><label class="layui-form-label"><fmt:message key="note"/></label></td>
+            <td colspan="3"><textarea id="note" name="note" class="layui-textarea"></textarea></td>
+        </tr>
+    </table>
+</form>
+<div id="btnGroup">
+    <input type="button" class="layui-btn layui-btn-radius layui-btn-danger" value="<fmt:message key="btn.close"/>"
+           onclick="closeMe()"/>
+    <input type="button" class="layui-btn layui-btn-radius" value="<fmt:message key="btn.save"/>"
+           onclick="save()"/>
+</div>
 </body>
 </html>

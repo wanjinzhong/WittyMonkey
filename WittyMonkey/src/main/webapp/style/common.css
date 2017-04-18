@@ -91,21 +91,15 @@ td{
 	transition: border-color, color 0.5s,0.5s;
 }
 
-.form_table {
-	margin: 0 auto;
-	margin-top: 20px;
-}
-
 .form_table td {
 	text-align: right;
 	padding: 5px;
 }
 
-.form-table{
+.form_table{
 	margin: 0 auto;
 }
 
-
-.form-table td{
-	padding-top: 5px;
+body{
+	height: 98%;
 }

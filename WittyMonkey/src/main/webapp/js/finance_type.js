@@ -47,7 +47,7 @@ function changeType() {
 function showAddFinanceType() {
     layer.open({
         type: 2,
-        area: ['500px', '350px'],
+        area: ['500px', '320px'],
         maxmin: false,
         shade: 0.4,
         title: finance_type_add_title,
@@ -58,7 +58,7 @@ function showAddFinanceType() {
 function editFinanceType(id) {
     layer.open({
         type: 2,
-        area: ['500px', '350px'],
+        area: ['500px', '320px'],
         maxmin: false,
         shade: 0.4,
         title: finance_type_edit_title,
