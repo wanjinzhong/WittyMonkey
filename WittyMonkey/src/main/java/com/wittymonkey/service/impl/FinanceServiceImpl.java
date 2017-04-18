@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.wittymonkey.service.IFinanceService;
 
+import java.util.Date;
 import java.util.List;
 
 @Service(value="financeService")
@@ -18,13 +19,13 @@ public class FinanceServiceImpl implements IFinanceService{
     private IFinanceDao financeDao;
 
     @Override
-    public Integer getTotal(Integer hotelId, Integer type) {
-        return financeDao.getTotal(hotelId, type);
+    public Integer getTotal(Integer hotelId, Integer type, Date form, Date to) {
+        return financeDao.getTotal(hotelId, type, form, to);
     }
 
     @Override
-    public List<Finance> getFinanceByPage(Integer hotelId, Integer income, Integer start, Integer total) {
-        return financeDao.getFinanceByPage(hotelId, income, start, total);
+    public List<Finance> getFinanceByPage(Integer hotelId, Integer type, Date form, Date to, Integer start, Integer total) {
+        return financeDao.getFinanceByPage(hotelId, type, form, to, start, total);
     }
 
     @Override

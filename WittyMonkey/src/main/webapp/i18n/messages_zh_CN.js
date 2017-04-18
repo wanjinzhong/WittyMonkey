@@ -197,3 +197,4 @@ var finance_type_not_exist = "类型不存在，可能已被删除";
 var money_error = "金额不正确";
 var money_not_negative = "金额不能为负数";
 var finance_add_success = "财务添加成功";
+var finance_type_all = "全部";

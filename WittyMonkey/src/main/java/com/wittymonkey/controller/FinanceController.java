@@ -10,6 +10,7 @@ import com.wittymonkey.service.IUserService;
 import com.wittymonkey.util.ChangeToSimple;
 import com.wittymonkey.vo.Constriant;
 import com.wittymonkey.vo.SimpleFinance;
+import com.wittymonkey.vo.SimpleFinanceType;
 import com.wittymonkey.vo.SimpleFloor;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,10 +20,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.Date;
-import java.util.List;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 /**
  * Created by neilw on 2017/4/17.
@@ -47,12 +47,31 @@ public class FinanceController {
     public String getFinanceByPage(HttpServletRequest request) {
         JSONObject json = new JSONObject();
         Integer curr = Integer.parseInt(request.getParameter("curr"));
-        Integer type = Integer.parseInt(request.getParameter("type"));
+        String typeId = request.getParameter("type");
+        Integer type = Integer.parseInt(typeId);
+        Date from = null;
+        Date to = null;
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        String fromStr = request.getParameter("from");
+        String toStr = request.getParameter("to");
+        if (StringUtils.isNotBlank(fromStr)){
+            try {
+                from = dateFormat.parse(fromStr);
+            } catch (ParseException e) {
+            }
+        }
+        if (StringUtils.isNotBlank(toStr)){
+            try {
+                to = dateFormat.parse(toStr);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        }
         User loginUser = (User) request.getSession().getAttribute("loginUser");
         Integer pageSize = loginUser.getSetting().getPageSize();
         Hotel hotel = (Hotel) request.getSession().getAttribute("hotel");
-        Integer count = financeService.getTotal(hotel.getId(), type);
-        List<Finance> finances = financeService.getFinanceByPage(hotel.getId(), type, (curr - 1) * pageSize, pageSize);
+        Integer count = financeService.getTotal(hotel.getId(), type, from, to);
+        List<Finance> finances = financeService.getFinanceByPage(hotel.getId(), type, from, to, (curr - 1) * pageSize, pageSize);
         List<SimpleFinance> simpleFinances = ChangeToSimple.financeList(finances);
         json.put("count", count);
         json.put("pageSize", pageSize);
@@ -139,6 +158,23 @@ public class FinanceController {
         finance.setNote(note);
         financeService.save(finance);
         json.put("status", 200);
+        return json.toJSONString();
+    }
+
+    @RequestMapping(value = "getFinanceByType", method = RequestMethod.GET)
+    @ResponseBody
+    public String getFinanceByType(HttpServletRequest request) {
+        JSONObject json = new JSONObject();
+        Hotel hotel = (Hotel) request.getSession().getAttribute("hotel");
+        Integer type = Integer.parseInt(request.getParameter("type"));
+
+        List<FinanceType> financeTypes;
+        financeTypes = financeTypeService.getFinanceTypeByPage(hotel.getId(), type, null, null);
+        if (financeTypes == null) {
+            financeTypes = new ArrayList<FinanceType>();
+        }
+        List<SimpleFinanceType> simpleFinanceTypes = ChangeToSimple.financeTypeList(financeTypes);
+        json.put("data", simpleFinanceTypes);
         return json.toJSONString();
     }
 }

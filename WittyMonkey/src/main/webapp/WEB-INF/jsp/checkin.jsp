@@ -23,7 +23,7 @@
 <form id="checkin-form" method="post">
     <input type="hidden" value="${checkinRoom.id}" name="roomId"/>
     <input type="hidden" value="${reserve.id}" name="reserveId" id="reserveId"/>
-    <table class="form-table">
+    <table class="form_table">
         <tr>
             <td class="td_title"><label class="layui-form-label"><fmt:message key="room.add.number"/></label></td>
             <td style="width: 300px">
@@ -44,7 +44,7 @@
                     <thead>
                     <th width="200px"><fmt:message key="checkin.idcard"/></th>
                     <th width="150px"><fmt:message key="checkin.name"/></th>
-                    <th><fmt:message key="operation"/></th>
+                    <th width="150px"><fmt:message key="operation"/></th>
                     </thead>
                 </table>
                 <div class="table-div">
@@ -58,7 +58,7 @@
                                                          class="table-input idcard-input" name="idcard"/></td>
                                 <td width="150px"><input type="text" value="${reserve.customer.name}"
                                                          class="table-input name-input" name="name"/></td>
-                                <td class="operation"><i
+                                <td class="operation" width="150px"><i
                                         class="deleteBtn layui-icon layui-btn layui-btn-primary layui-btn-small"
                                         onclick="removePerson(this)">&#xe640;<fmt:message key="delete"/></i></td>
                             </tr>

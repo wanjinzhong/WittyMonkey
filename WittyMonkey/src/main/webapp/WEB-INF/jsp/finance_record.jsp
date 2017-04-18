@@ -11,18 +11,16 @@
 <%@ include file="common/iconfont.jsp" %>
 <html>
 <head>
-    <title><fmt:message key="finance.add.title"/></title>
-    <link href="style/common.css" rel="stylesheet"
-          type="text/css"/>
     <link href="style/common.css" rel="stylesheet" type="text/css"/>
 </head>
 <script type="text/javascript" src="js/common.js"></script>
+<link type="text/css" rel="stylesheet" href="style/finance.css"/>
 <script type="text/javascript" src="js/finance_record.js"></script>
 <!-- 根据设置动态加载js语言 -->
 <script type="text/javascript" src="i18n/messages_${loginUser.setting.lang }.js"></script>
 <fmt:setBundle basename="i18n/messages_${loginUser.setting.lang }"/>
 <body>
-
+<input type="hidden" id="lang" value="${loginUser.setting.lang }"/>
 <div>
     <nav class="breadcrumb">
         <i class="refreshBtn layui-icon layui-btn layui-btn-small" onclick="reload();">&#x1002;</i>
@@ -31,12 +29,23 @@
         <i class="newBtn layui-icon layui-btn layui-btn-radius layui-btn-normal" onclick="showAddFinance()">&#xe61f;
             <fmt:message key="finance.add"/></i>
         <form class="layui-form">
-            <div style="width: 200px; margin: 0 auto">
-                <select name="type" id="type" lay-filter="type" lay-verify="required" onchange="changeType()">
-                    <option value="2" selected><fmt:message key="all"/></option>
-                    <option value="1"><fmt:message key="finance_type.in"/></option>
-                    <option value="0"><fmt:message key="finance_type.out"/></option>
-                </select>
+            <div>
+                <div class="searchTypeDiv">
+                    <select name="searchType" id="searchType" lay-filter="searchType" onchange="searchTypeChange()">
+                        <option value="2" selected><fmt:message key="all"/></option>
+                        <option value="1"><fmt:message key="finance_type.in"/></option>
+                        <option value="0"><fmt:message key="finance_type.out"/></option>
+                    </select>
+                </div>
+                <div class="searchTypeDiv" id="typeDiv">
+
+                </div>
+                <input class="layui-input date" id="from" style="display: inline-block;"/>
+                -
+                <input class="layui-input date" id="to" style="display: inline-block;"/>
+                <div class="searchBtn" onclick="search()" style="display: inline-block;"><i
+                        class="layui-btn layui-icon">&#xe615;</i>
+                </div>
             </div>
         </form>
         <table class="layui-table" lay-skin="line">

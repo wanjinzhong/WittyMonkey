@@ -28,7 +28,7 @@
     <input type="hidden" id="id"/>
     <input type="hidden" id="checkin_id" value="${checkin.id}"/>
     <input type="hidden" id="toId"/>
-    <table class="form-table">
+    <table class="form_table">
         <tr>
             <td class="td_title"><label class="layui-form-label"><fmt:message key="room.add.number"/></label></td>
             <td><input class="layui-input" type="text" disabled value="${checkin.room.number}" id="fromNumber"/>

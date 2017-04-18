@@ -121,9 +121,7 @@
     margin-top: 10px;
     text-align: center;
 }
-.searchBtn, .searchType, .searchContent{
-    display: inline-block;
-}
+
 .searchType{
     width: 150px;
 }

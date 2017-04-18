@@ -106,3 +106,10 @@ body{
 .layui-form{
 	text-align: center;
 }
+.searchBtn, .searchType, .searchContent{
+	display: inline-block;
+}
+
+.searchBtn{
+	height: 30px;
+}
