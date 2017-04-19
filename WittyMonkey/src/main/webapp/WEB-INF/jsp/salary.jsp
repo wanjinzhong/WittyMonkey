@@ -27,6 +27,45 @@
 <%--<fmt:setBundle basename="i18n/messages_${loginUser.setting.lang }"/>--%>
 <fmt:setBundle basename="i18n/messages"/>
 <body>
-    <h1><fmt:message key="finance.salary.title"/></h1>
+<nav class="breadcrumb">
+    <i class="refreshBtn layui-icon layui-btn layui-btn-small" onclick="reload();">&#x1002;</i>
+</nav>
+<div id="main">
+    <form class="layui-form">
+        <div>
+            <div class="searchTypeDiv">
+                <select name="type" id="type" lay-filter="type" >
+                    <option value="0" selected><fmt:message key="reimburse.status.all"/></option>
+                    <option value="1"><fmt:message key="reimburse.status.pending"/></option>
+                    <option value="2"><fmt:message key="reimburse.status.approved"/></option>
+                    <option value="3"><fmt:message key="reimburse.status.rejected"/></option>
+                </select>
+            </div>
+            <input class="layui-input date" id="from" placeholder="" style="display: inline-block;"/>
+            -
+            <input class="layui-input date" id="to" style="display: inline-block;"/>
+            <div class="searchBtn" onclick="search()" style="display: inline-block;"><i
+                    class="layui-btn layui-icon">&#xe615;</i>
+            </div>
+        </div>
+    </form>
+    <table class="layui-table" lay-skin="line">
+        <thead>
+        <tr>
+            <th width="100px"><fmt:message key="reimburse.apply_user"/></th>
+            <th width="150px"><fmt:message key="reimburse.apply_date"/></th>
+            <th width="50px"><fmt:message key="reimburse.money"/></th>
+            <th width="50px"><fmt:message key="reimburse.status"/></th>
+            <th width="100px"><fmt:message key="reimburse.opt_user"/></th>
+            <th width="150px"><fmt:message key="reimburse.opt_date"/></th>
+            <th width="150px"><fmt:message key="operation"/></th>
+        </tr>
+        </thead>
+        <tbody id="dataTabel">
+        </tbody>
+    </table>
+    <div id="page"></div>
+</div>
+</div>
 </body>
 </html>

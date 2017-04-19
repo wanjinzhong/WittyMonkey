@@ -39,7 +39,7 @@
             <td>
                 <select name="status" id="status" lay-filter="status">
                     <option value="1"><fmt:message key="reimburse.opt.pending"/></option>
-                    <option value="2"><fmt:message key="reimburse.opt.passed"/></option>
+                    <option value="2"><fmt:message key="reimburse.opt.approved"/></option>
                     <option value="3"><fmt:message key="reimburse.opt.rejected"/></option>
                 </select>
             </td>

@@ -5,10 +5,7 @@ import com.wittymonkey.entity.*;
 import com.wittymonkey.vo.*;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Properties;
+import java.util.*;
 
 /**
  * Created by neilw on 2017/2/16.
@@ -258,5 +255,80 @@ public class ChangeToSimple {
             simpleReimbuses.add(simpleReimbuse);
         }
         return simpleReimbuses;
+    }
+
+    public static List<SimpleSalary> salaryList(List<Salary> salaries){
+        List<SimpleSalary> simpleSalaries = new ArrayList<SimpleSalary>();
+        for (Salary salary : salaries){
+            SimpleSalary simpleSalary = new SimpleSalary();
+            simpleSalary.setId(salary.getId());
+            simpleSalary.setStaff(salary.getStaff().getRealName());
+            simpleSalary.setStaffNo(salary.getStaff().getStaffNo());
+            simpleSalary.setSalaryRecords(salaryRecordList(salary.getSalaryRecords()));
+            simpleSalaries.add(simpleSalary);
+        }
+        return simpleSalaries;
+    }
+
+    public static List<SimpleSalaryRecord> salaryRecordList(List<SalaryRecord> salaryRecords){
+        List<SimpleSalaryRecord> simpleSalaryRecords = new ArrayList<SimpleSalaryRecord>();
+        Collections.sort(salaryRecords, new Comparator<SalaryRecord>() {
+            @Override
+            public int compare(SalaryRecord o1, SalaryRecord o2) {
+                return o2.getStartDate().after(o1.getStartDate())? 1 : -1;
+            }
+        });
+        for(SalaryRecord salaryRecord : salaryRecords){
+            SimpleSalaryRecord simpleSalaryRecord = new SimpleSalaryRecord();
+            simpleSalaryRecord.setEntryDatetime(salaryRecord.getEntryDatetime());
+            simpleSalaryRecord.setEntryUser(salaryRecord.getEntryUser().getRealName());
+            simpleSalaryRecord.setId(salaryRecord.getId());
+            simpleSalaryRecord.setMoney(salaryRecord.getMoney());
+            simpleSalaryRecord.setNote(salaryRecord.getNote());
+            simpleSalaryRecord.setStartDate(salaryRecord.getStartDate());
+            simpleSalaryRecords.add(simpleSalaryRecord);
+        }
+        return simpleSalaryRecords;
+    }
+
+    /**
+     * 提取工资记录在某个指定时间点上的工资
+     * @param salary
+     * @param date
+     * @return
+     */
+    public static SalaryVO convertSalaryByTime(Salary salary, Date date){
+        SalaryVO salaryVO = new SalaryVO();
+        salaryVO.setId(salary.getId());
+        salaryVO.setStaff(salary.getStaff().getRealName());
+        List<SalaryRecord> salaryRecords = salary.getSalaryRecords();
+        if (salaryRecords == null || salaryRecords.isEmpty()){
+            return salaryVO;
+        }
+        Collections.sort(salaryRecords, new Comparator<SalaryRecord>() {
+            @Override
+            public int compare(SalaryRecord o1, SalaryRecord o2) {
+                return o2.getStartDate().after(o1.getStartDate())? 1 : -1;
+            }
+        });
+        for (SalaryRecord salaryRecord : salaryRecords){
+            if (salaryRecord.getStartDate().before(date)){
+                salaryVO.setStartDate(salaryRecord.getStartDate());
+                salaryVO.setEntryDatetime(salaryRecord.getEntryDatetime());
+                salaryVO.setEntryUser(salaryRecord.getEntryUser().getRealName());
+                salaryVO.setMoney(salaryRecord.getMoney());
+                salaryVO.setNote(salaryRecord.getNote());
+                break;
+            }
+        }
+        return salaryVO;
+    }
+
+    public static List<SalaryVO> convertSalariesByTime(List<Salary> salaries, Date date){
+        List<SalaryVO> salaryVOS = new ArrayList<SalaryVO>();
+        for (Salary salary : salaries){
+            salaryVOS.add(convertSalaryByTime(salary, date));
+        }
+        return salaryVOS;
     }
 }

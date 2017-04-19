@@ -38,9 +38,9 @@
                         <option value="3"><fmt:message key="reimburse.status.rejected"/></option>
                     </select>
                 </div>
-                <input class="layui-input date" id="from" style="display: inline-block;"/>
+                <input class="layui-input date" id="from" placeholder="<fmt:message key="start_date_hint"/>" style="display: inline-block;"/>
                 -
-                <input class="layui-input date" id="to" style="display: inline-block;"/>
+                <input class="layui-input date" id="to" placeholder="<fmt:message key="end_date_hint"/>" style="display: inline-block;"/>
                 <div class="searchBtn" onclick="search()" style="display: inline-block;"><i
                         class="layui-btn layui-icon">&#xe615;</i>
                 </div>

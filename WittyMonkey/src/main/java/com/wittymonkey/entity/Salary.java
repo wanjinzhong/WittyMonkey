@@ -29,6 +29,9 @@ public class Salary implements Serializable{
 	@OneToMany(targetEntity = SalaryRecord.class, mappedBy = "salary", cascade = {CascadeType.ALL})
 	private List<SalaryRecord> salaryRecords = new ArrayList<SalaryRecord>();
 
+	@OneToMany(targetEntity = SalaryHistory.class, mappedBy = "salary", cascade = {CascadeType.ALL})
+	private List<SalaryHistory> salaryHistories = new ArrayList<SalaryHistory>();
+
 	public Integer getId() {
 		return id;
 	}
@@ -45,4 +48,19 @@ public class Salary implements Serializable{
 		this.staff = staff;
 	}
 
+	public List<SalaryRecord> getSalaryRecords() {
+		return salaryRecords;
+	}
+
+	public void setSalaryRecords(List<SalaryRecord> salaryRecords) {
+		this.salaryRecords = salaryRecords;
+	}
+
+	public List<SalaryHistory> getSalaryHistories() {
+		return salaryHistories;
+	}
+
+	public void setSalaryHistories(List<SalaryHistory> salaryHistories) {
+		this.salaryHistories = salaryHistories;
+	}
 }
