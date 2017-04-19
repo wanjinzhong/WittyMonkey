@@ -167,12 +167,7 @@ public class IndexController {
                 reimburse.put("title", props.getProperty("index.menu.finance.reimburse"));
                 reimburse.put("href", "toReimburseManage.do");
                 financeChildren.add(reimburse);
-                //工资更改
-                JSONObject salaryChange = new JSONObject();
-                salaryChange.put("title", props.getProperty("index.menu.finance.salary_change"));
-                salaryChange.put("href", "toFinanceSalaryChange.do");
-                financeChildren.add(salaryChange);
-                //工资记录
+                //员工
                 JSONObject salary = new JSONObject();
                 salary.put("title", props.getProperty("index.menu.finance.salary"));
                 salary.put("href", "toFinanceSalary.do");
@@ -313,14 +308,9 @@ public class IndexController {
         return "reimburse_manage";
     }
 
-    @RequestMapping(value = "toFinanceSalaryChange", method = RequestMethod.GET)
-    public String toFinanceSalaryChange(HttpServletRequest request) {
-        return "finance_salary_change";
-    }
-
     @RequestMapping(value = "toFinanceSalary", method = RequestMethod.GET)
     public String toFinanceSalary(HttpServletRequest request) {
-        return "finance_salary";
+        return "salary";
     }
 
     @RequestMapping(value = "toReport", method = RequestMethod.GET)
