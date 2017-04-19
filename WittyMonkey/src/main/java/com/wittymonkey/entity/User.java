@@ -32,8 +32,6 @@ import javax.persistence.Table;
 public class User implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	public static final Integer INCUMBENT = 0;
-	public static final Integer DIMISSORY = 1;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)

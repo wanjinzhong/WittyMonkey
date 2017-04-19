@@ -25,4 +25,9 @@ public class ReimburseServiceImpl implements IReimburseService{
     public List<Reimburse> getReimburseByPage(Integer hotelId, Integer status, Date from, Date to, Integer start, Integer total) {
         return reimburseDao.getReimburseByPage(hotelId, status, from, DateUtil.addOneDay(to), start, total);
     }
+
+    @Override
+    public void save(Reimburse reimburse) {
+        reimburseDao.save(reimburse);
+    }
 }

@@ -70,7 +70,7 @@ function save() {
                     });
                     break;
                 case 411:
-                    layer.msg(money_not_negative, {
+                    layer.msg(money_only_positive, {
                         icon: 2, time: 2000
                     }, function () {
                         parent.location.reload();

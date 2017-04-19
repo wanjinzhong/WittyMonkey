@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.wittymonkey.vo.Constraint;
 import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -70,9 +71,9 @@ public class UserDaoImpl extends GenericDaoImpl<User> implements IUserDao {
 	@Override
 	public List<User> getUserByPage(Integer hotel, Integer type, Integer start, Integer total) {
 		StringBuffer hql = new StringBuffer("from User where hotel.id = :hotelId ");
-		if (User.INCUMBENT.equals(type)){
+		if (Constraint.USER_INCUMBENT.equals(type)){
 			hql.append("and dimissionDate is null ");
-		} else if (User.DIMISSORY.equals(type)){
+		} else if (Constraint.USER_DIMISSORY.equals(type)){
 			hql.append("and dimissionDate is not null ");
 		}
 		hql.append("order by id");
@@ -84,9 +85,9 @@ public class UserDaoImpl extends GenericDaoImpl<User> implements IUserDao {
 	@Override
 	public Integer getTotalByHotel(Integer hotel, Integer type) {
 		StringBuffer hql = new StringBuffer("select count(1) from User where hotel.id = :hotelId ");
-		if (User.INCUMBENT.equals(type)){
+		if (Constraint.USER_INCUMBENT.equals(type)){
 			hql.append("and dimissionDate is null ");
-		} else if (User.DIMISSORY.equals(type)){
+		} else if (Constraint.USER_DIMISSORY.equals(type)){
 			hql.append("and dimissionDate is not null ");
 		}
 		Map<String, Object> param = new HashMap<String, Object>();

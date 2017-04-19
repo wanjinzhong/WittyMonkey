@@ -38,7 +38,7 @@ function refreshTable(obj) {
     var html = "";
     if (obj.length == 0) {
         html = '<tr class="text-c">' +
-            '<td colspan="6">' + no_data + '</td>' +
+            '<td colspan="7">' + no_data + '</td>' +
             '</tr>"';
     } else {
         for (var i in obj) {
@@ -74,4 +74,15 @@ function search() {
     var to = $("#to").val();
     var condition = {"type": type, "from": from, "to": to};
     page("getReimburseByPage.do", undefined, condition);
+}
+
+function showAddReimburse() {
+    layer.open({
+        type: 2,
+        area: ['780px', '420px'],
+        maxmin: false,
+        shade: 0.4,
+        title: role_add_title,
+        content: "toAddReimburse.do"
+    });
 }

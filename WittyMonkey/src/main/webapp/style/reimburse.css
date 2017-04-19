@@ -1,0 +1,7 @@
+.layui-form-select {
+    text-align: left;
+}
+
+.layui-form-select dl {
+    max-height: 250px;
+}

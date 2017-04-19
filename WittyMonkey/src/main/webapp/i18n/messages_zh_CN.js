@@ -195,7 +195,7 @@ var finance_type_delete_success = "类型删除成功";
 
 var finance_type_not_exist = "类型不存在，可能已被删除";
 var money_error = "金额不正确";
-var money_not_negative = "金额不能为负数";
+var money_only_positive = "金额只能为正数";
 var finance_add_success = "财务添加成功";
 var finance_type_all = "全部";
 
@@ -203,3 +203,5 @@ var reimburse_pending = "待审核";
 var reimburse_passed = "已通过";
 var reimburse_rejected = "已驳回";
 var reimburse_unknown = "未知";
+var apply_note = "申请说明";
+var opt_note = "审核说明";

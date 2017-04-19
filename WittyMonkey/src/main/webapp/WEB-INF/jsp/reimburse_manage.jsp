@@ -27,7 +27,7 @@
     </nav>
     <div id="main">
         <i class="newBtn layui-icon layui-btn layui-btn-radius layui-btn-normal" onclick="showAddReimburse()">&#xe61f;
-            <fmt:message key="finance.add"/></i>
+            <fmt:message key="reimburse.add"/></i>
         <form class="layui-form">
             <div>
                 <div class="searchTypeDiv">

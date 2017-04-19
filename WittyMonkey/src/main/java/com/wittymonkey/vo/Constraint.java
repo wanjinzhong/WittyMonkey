@@ -10,6 +10,8 @@ public class Constraint {
     public static final String ADD = "add";
     public static final String UPDATE = "update";
     public static final String DELETE = "delete";
+    public static final Integer USER_INCUMBENT = 0;
+    public static final Integer USER_DIMISSORY = 1;
     public static final Integer FINANCE_TYPE_ALL = 2;
     public static final Integer FINANCE_TYPE_IN = 1;
     public static final Integer FINANCE_TYPE_OUT = 0;

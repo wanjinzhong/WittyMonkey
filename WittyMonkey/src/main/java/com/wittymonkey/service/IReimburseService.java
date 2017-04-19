@@ -10,4 +10,6 @@ public interface IReimburseService {
     Integer getTotal(Integer hotelId, Integer status, Date from, Date to);
 
     List<Reimburse> getReimburseByPage(Integer hotelId, Integer status, Date from, Date to, Integer start, Integer total );
+
+    void save(Reimburse reimburse);
 }
