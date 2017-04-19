@@ -28,12 +28,15 @@ public class SalaryRecord implements Serializable{
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Integer id;
 	
-	@ManyToOne(targetEntity=User.class)
-	@JoinColumn(name="user_id", referencedColumnName="id")
-	private User user;
+	@ManyToOne(targetEntity=Salary.class)
+	@JoinColumn(name="salary_id", referencedColumnName="id")
+	private Salary salary;
 	
 	@Column
-	private Double salary;
+	private Double money;
+
+	@Column
+	private Date startDate;
 	
 	@Column(name="entry_datetime")
 	private Date entryDatetime;
@@ -53,20 +56,28 @@ public class SalaryRecord implements Serializable{
 		this.id = id;
 	}
 
-	public User getUser() {
-		return user;
-	}
-
-	public void setUser(User user) {
-		this.user = user;
-	}
-
-	public Double getSalary() {
+	public Salary getSalary() {
 		return salary;
 	}
 
-	public void setSalary(Double salary) {
+	public void setSalary(Salary salary) {
 		this.salary = salary;
+	}
+
+	public Double getMoney() {
+		return money;
+	}
+
+	public void setMoney(Double money) {
+		this.money = money;
+	}
+
+	public Date getStartDate() {
+		return startDate;
+	}
+
+	public void setStartDate(Date startDate) {
+		this.startDate = startDate;
 	}
 
 	public Date getEntryDatetime() {
@@ -92,5 +103,4 @@ public class SalaryRecord implements Serializable{
 	public void setNote(String note) {
 		this.note = note;
 	}
-	
 }

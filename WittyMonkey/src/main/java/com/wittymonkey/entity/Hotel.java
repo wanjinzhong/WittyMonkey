@@ -85,13 +85,13 @@ public class Hotel implements Serializable {
     @Column
     private Boolean isClose;
 
-    @OneToMany(targetEntity = MaterielType.class, cascade = {CascadeType.ALL})
+    @OneToMany(targetEntity = MaterielType.class, mappedBy = "hotel", cascade = {CascadeType.ALL})
     private List<MaterielType> materielTypes = new ArrayList<MaterielType>();
 
-    @OneToMany(targetEntity = LeaveType.class, cascade = {CascadeType.ALL})
+    @OneToMany(targetEntity = LeaveType.class, mappedBy = "hotel", cascade = {CascadeType.ALL})
     private List<LeaveType> leaveTypes = new ArrayList<LeaveType>();
 
-    @OneToMany(targetEntity = FinanceType.class, cascade = {CascadeType.ALL})
+    @OneToMany(targetEntity = FinanceType.class, mappedBy = "hotel", cascade = {CascadeType.ALL})
     private List<FinanceType> financeTypes = new ArrayList<FinanceType>();
 
     public Odom getOdom() {
