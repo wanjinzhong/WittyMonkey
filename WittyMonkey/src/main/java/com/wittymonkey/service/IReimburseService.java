@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.List;
 
 public interface IReimburseService {
+    Reimburse getReimburseById(Integer id);
 
     Integer getTotal(Integer hotelId, Integer status, Date from, Date to);
 

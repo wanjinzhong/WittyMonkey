@@ -34,7 +34,7 @@
                     <select name="type" id="type" lay-filter="type" >
                         <option value="0" selected><fmt:message key="reimburse.status.all"/></option>
                         <option value="1"><fmt:message key="reimburse.status.pending"/></option>
-                        <option value="2"><fmt:message key="reimburse.status.passed"/></option>
+                        <option value="2"><fmt:message key="reimburse.status.approved"/></option>
                         <option value="3"><fmt:message key="reimburse.status.rejected"/></option>
                     </select>
                 </div>

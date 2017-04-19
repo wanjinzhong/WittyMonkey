@@ -13,6 +13,12 @@ import java.util.Map;
 public class ReimburseDaoImpl extends GenericDaoImpl<Reimburse> implements IReimburseDao{
 
     @Override
+    public Reimburse getReimburseById(Integer id) {
+        String hql = "from Reimburse where id = ?";
+        return queryOneHql(hql, id);
+    }
+
+    @Override
     public Integer getTotal(Integer hotelId, Integer status, Date from, Date to) {
         StringBuffer hql = new StringBuffer("select count(1) from Reimburse where hotel.id = :hotelId ");
         Map<String, Object> param = new HashMap<String, Object>();

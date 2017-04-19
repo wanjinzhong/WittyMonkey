@@ -17,6 +17,11 @@ public class ReimburseServiceImpl implements IReimburseService{
     private IReimburseDao reimburseDao;
 
     @Override
+    public Reimburse getReimburseById(Integer id) {
+        return reimburseDao.getReimburseById(id);
+    }
+
+    @Override
     public Integer getTotal(Integer hotelId, Integer status, Date from, Date to) {
         return reimburseDao.getTotal(hotelId, status, from, DateUtil.addOneDay(to));
     }

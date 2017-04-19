@@ -3,56 +3,39 @@
  */
 var layer;
 var form;
-layui.use(['layer', 'form'], function () {
+layui.use(["layer", "form"], function () {
     layer = layui.layer;
     form = layui.form();
-    form.on("select(status)", function (data) {
-        changeStatus();
-    });
-    changeStatus();
 });
-
-function changeStatus() {
-    var status = $("#status").val();
-    if (status == 1) {
-        $("#optNote").val("");
-        $("#optNote").attr("disabled", true);
-    } else {
-        $("#optNote").attr("disabled", false);
-    }
-}
-
-function save() {
-    var status = $("#status").val();
-    if (!validateMoney($("#money"))) {
+function operate(type) {
+    if (!validateNote($("#optNote"))) {
         return false;
-    }
-    if (!validateNote($("#applyNote"))) {
-        return false;
-    }
-    if (status != 1 && !validateNote($("#optNote"))) {
-        return false
     }
     var load = layer.load();
+    var title;
+    var hint;
+    if (type == 1) {
+        title = reimburse_approve_title;
+        hint = reimburse_approve_hint;
+    } else if (type == 2) {
+        title = reimburse_reject_title;
+        hint = reimburse_reject_hint;
+    }
     $.ajax({
-        url: "saveReimburse.do",
-        data: $("#add-form").serialize(),
+        url: "reimburseOperate.do",
+        data: {"method": type, "note": $("#optNote").val()},
         dataType: "json",
         type: "POST",
+        async: false,
         success: function (data) {
             layer.close(load);
             var res = eval("(" + data + ")");
             switch (res["status"]) {
                 case 400:
-                    layer.msg(money_error, {
-                        icon: 2, time: 2000
-                    }, function () {
-                        parent.location.reload();
-                        closeMe();
-                    });
+                    layer.tips(messageOfValidateLength(message_note, 1024), $("#optNote"), {tips: 2});
                     break;
                 case 401:
-                    layer.msg(money_only_positive, {
+                    layer.msg(reimburse_not_exist, {
                         icon: 2, time: 2000
                     }, function () {
                         parent.location.reload();
@@ -60,15 +43,23 @@ function save() {
                     });
                     break;
                 case 410:
-                    layer.msg(messageOfValidateLength(apply_note, 1024), {
+                    layer.msg(reimburse_updated, {
                         icon: 2, time: 2000
                     }, function () {
                         parent.location.reload();
                         closeMe();
                     });
                     break;
-                case 420:
-                    layer.msg(messageOfValidateLength(opt_note, 1024), {
+                case 422:
+                    layer.msg(reimburse_has_approved + res["optUser"], {
+                        icon: 2, time: 2000
+                    }, function () {
+                        parent.location.reload();
+                        closeMe();
+                    });
+                    break;
+                case 423:
+                    layer.msg(reimburse_has_reject + res["optUser"], {
                         icon: 2, time: 2000
                     }, function () {
                         parent.location.reload();
@@ -76,9 +67,16 @@ function save() {
                     });
                     break;
                 case 200:
-                    layer.msg(finance_add_success, {
-                        icon: 1,
-                        time: 2000
+                    layer.msg(reimburse_reject_success, {
+                        icon: 1, time: 2000
+                    }, function () {
+                        parent.location.reload();
+                        closeMe();
+                    });
+                    break;
+                case 201:
+                    layer.msg(reimburse_approve_success, {
+                        icon: 1, time: 2000
                     }, function () {
                         parent.location.reload();
                         closeMe();

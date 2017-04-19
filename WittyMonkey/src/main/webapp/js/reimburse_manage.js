@@ -51,7 +51,7 @@ function refreshTable(obj) {
                         html += '<td>' + reimburse_pending + '</td>';
                         break;
                     case 2:
-                        html += '<td>' + reimburse_passed + '</td>';
+                        html += '<td>' + reimburse_approved + '</td>';
                         break;
                     case 3:
                         html += '<td>' + reimburse_rejected + '</td>';
@@ -82,7 +82,18 @@ function showAddReimburse() {
         area: ['780px', '420px'],
         maxmin: false,
         shade: 0.4,
-        title: role_add_title,
+        title: reimburse_add,
         content: "toAddReimburse.do"
+    });
+}
+
+function showDetail(id) {
+    layer.open({
+        type: 2,
+        area: ['780px', '450px'],
+        maxmin: false,
+        shade: 0.4,
+        title: reimburse_detail,
+        content: "toShowReimburse.do?id=" + id
     });
 }

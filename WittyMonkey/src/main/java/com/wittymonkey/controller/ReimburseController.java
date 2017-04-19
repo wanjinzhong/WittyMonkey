@@ -162,4 +162,86 @@ public class ReimburseController {
         return json.toJSONString();
     }
 
+    @RequestMapping(value = "toShowReimburse", method = RequestMethod.GET)
+    public String toShowReimburse(HttpServletRequest request) {
+        Integer id = Integer.parseInt(request.getParameter("id"));
+        Reimburse reimburse = reimburseService.getReimburseById(id);
+        request.getSession().setAttribute("reimburse", reimburse);
+        return "reimburse_detail";
+    }
+
+
+    /**
+     * 批准或驳回报销
+     *
+     * @param request
+     * @return <table border="1" cellspacing="0">
+     * <tr>
+     * <th>代码</th>
+     * <th>说明</th>
+     * </tr>
+     * <tr>
+     * <td>400</td>
+     * <td>备注过长</td>
+     * </tr>
+     * <tr>
+     * <td>401</td>
+     * <td>报销不存在</td>
+     * </tr>
+     * <tr>
+     * <td>410</td>
+     * <td>报销已更新</td>
+     * </tr>
+     * <tr>
+     * <td>422</td>
+     * <td>已通过</td>
+     * </tr>
+     * <tr>
+     * <td>423</td>
+     * <td>已驳回</td>
+     * </tr>
+     * <tr>
+     * <td>200</td>
+     * <td>驳回成功</td>
+     * </tr>
+     * <tr>
+     * <td>201</td>
+     * <td>批准成功</td>
+     * </tr>
+     */
+    @RequestMapping(value = "reimburseOperate", method = RequestMethod.POST)
+    @ResponseBody
+    public String reimburseOperate(HttpServletRequest request) {
+        User loginUser = (User) request.getSession().getAttribute("loginUser");
+        Hotel hotel = (Hotel) request.getSession().getAttribute("hotel");
+        JSONObject json = new JSONObject();
+        Integer method = Integer.parseInt(request.getParameter("method"));
+        Reimburse reimburse = (Reimburse) request.getSession().getAttribute("reimburse");
+        String note = request.getParameter("note");
+        if (StringUtils.isNotBlank(note) && note.length() > 1024) {
+            json.put("status", 400);
+            return json.toJSONString();
+        }
+        Reimburse updateReimburse = reimburseService.getReimburseById(reimburse.getId());
+        if (updateReimburse == null) {
+            json.put("status", 401);
+            return json.toJSONString();
+        }
+        if (!updateReimburse.getApplyDatetime().equals(reimburse.getApplyDatetime())) {
+            json.put("status", 410);
+            return json.toJSONString();
+        }
+        if (updateReimburse.getStatus() != 1) {
+            json.put("status", 420 + updateReimburse.getStatus());
+            json.put("optUser", updateReimburse.getEntryUser().getRealName());
+            return json.toJSONString();
+        }
+        updateReimburse.setEntryUser(userService.getUserById(loginUser.getId()));
+        updateReimburse.setEntryDatetime(new Date());
+        updateReimburse.setEntryUserNote(note);
+        updateReimburse.setStatus((Constraint.REIMBURSE_OPT_PASSE.equals(method) ? Constraint.REIMBURSE_STATUS_PASSED : Constraint.REIMBURSE_STATUS_REJECTED));
+        reimburseService.save(updateReimburse);
+        json.put("status", 200 + method);
+        return json.toJSONString();
+    }
 }

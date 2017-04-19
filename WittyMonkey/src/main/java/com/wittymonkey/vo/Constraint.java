@@ -27,5 +27,7 @@ public class Constraint {
     public static final Integer REIMBURSE_STATUS_PENDING = 1;
     public static final Integer REIMBURSE_STATUS_PASSED = 2;
     public static final Integer REIMBURSE_STATUS_REJECTED = 3;
+    public static final Integer REIMBURSE_OPT_PASSE = 1;
+    public static final Integer REIMBURSE_OPT_REJECTE = 0;
 
 }
