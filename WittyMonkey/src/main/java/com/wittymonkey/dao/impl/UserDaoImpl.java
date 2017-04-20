@@ -9,12 +9,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.wittymonkey.vo.Constraint;
-import org.hibernate.SQLQuery;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.cfg.Configuration;
 import org.hibernate.jdbc.Work;
-import org.springframework.orm.hibernate4.SessionFactoryUtils;
 import org.springframework.stereotype.Repository;
 
 import com.wittymonkey.dao.IUserDao;

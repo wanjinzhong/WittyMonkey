@@ -1,0 +1,17 @@
+.layui-form-select {
+    width: 150px;
+    text-align: left;
+}
+
+.layui-form-select dl {
+    max-height: 250px;
+}
+.searchTypeDiv{
+    display: inline-block;
+}
+#searchContent{
+    display: inline-block;
+}
+#from, #to, #name, #staffNo{
+    width: 120px;
+}

@@ -217,3 +217,6 @@ var reimburse_has_approved = "该报销已批准, 审核人：";
 var reimburse_has_reject = "该报销已驳回, 审核人：";
 var reimburse_approve_success = "批准成功";
 var reimburse_reject_success = "驳回成功";
+
+var btn_change = "变动";
+var btn_history = "历史";

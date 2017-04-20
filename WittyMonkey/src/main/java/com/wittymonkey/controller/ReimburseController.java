@@ -2,7 +2,6 @@ package com.wittymonkey.controller;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.wittymonkey.entity.Floor;
 import com.wittymonkey.entity.Hotel;
 import com.wittymonkey.entity.Reimburse;
 import com.wittymonkey.entity.User;
@@ -11,7 +10,6 @@ import com.wittymonkey.service.IReimburseService;
 import com.wittymonkey.service.IUserService;
 import com.wittymonkey.util.ChangeToSimple;
 import com.wittymonkey.vo.Constraint;
-import com.wittymonkey.vo.SimpleFloor;
 import com.wittymonkey.vo.SimpleReimbuse;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,8 +21,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.servlet.http.HttpServletRequest;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 

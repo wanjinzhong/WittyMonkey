@@ -207,3 +207,6 @@ var reimburse_has_approved = "The reimbursement has been approved, the reviewer:
 var reimburse_has_reject = "The reimbursement has been rejected, the reviewer:";
 var reimburse_approve_success = "Approve successfully";
 var reimburse_reject_success = "Reject successfully";
+
+var btn_change = "Change";
+var btn_history = "History";

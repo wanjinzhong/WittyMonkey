@@ -301,6 +301,7 @@ public class ChangeToSimple {
         SalaryVO salaryVO = new SalaryVO();
         salaryVO.setId(salary.getId());
         salaryVO.setStaff(salary.getStaff().getRealName());
+        salaryVO.setStaffNo(salary.getStaff().getStaffNo());
         List<SalaryRecord> salaryRecords = salary.getSalaryRecords();
         if (salaryRecords == null || salaryRecords.isEmpty()){
             return salaryVO;

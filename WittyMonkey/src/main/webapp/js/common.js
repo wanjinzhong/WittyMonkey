@@ -45,6 +45,23 @@ function formatDate(obj) {
     }
     return year + "-" + month + "-" + date + " " + hour + ":" + minutes + ":" + second;
 }
+/**
+ * 日期格式化 - 精确到天
+ */
+function formatDay(obj) {
+    var time = new Date(obj);
+    var year = time.getFullYear();
+    var month = time.getMonth() + 1;
+    var date = time.getDate();
+    //月, 日小于10时，补0
+    if (month < 10) {
+        month = "0" + month;
+    }
+    if (date < 10) {
+        date = "0" + date;
+    }
+    return year + "-" + month + "-" + date;
+}
 
 /**
  * 验证备注
