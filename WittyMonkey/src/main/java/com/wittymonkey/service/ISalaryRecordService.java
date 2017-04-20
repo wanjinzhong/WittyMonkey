@@ -12,7 +12,7 @@ public interface ISalaryRecordService {
 
     List<SalaryRecord> getSalaryRecordByPage(Integer salaryId, Integer start, Integer total);
 
-    SalaryRecord getSalaryRecordByStartDate(Date startDate);
+    SalaryRecord getSalaryRecordByStartDate(Integer salaryId, Date startDate);
 
     void save(SalaryRecord salaryRecord);
 

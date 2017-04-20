@@ -218,3 +218,4 @@ var salary_delete_title = "Salary Change Delete";
 var salary_delete_hint = "Are you sure to delete the salary change?";
 var salary_not_exist = "Salary change does not exist, may have been deleted";
 var salary_delete_success = "Delete Succesfully";
+var to_back = "Back";

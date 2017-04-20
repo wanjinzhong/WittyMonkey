@@ -2,7 +2,6 @@ package com.wittymonkey.controller;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.wittymonkey.dao.ISalaryRecordDao;
 import com.wittymonkey.entity.*;
 import com.wittymonkey.service.ISalaryRecordService;
 import com.wittymonkey.service.ISalaryService;
@@ -10,7 +9,6 @@ import com.wittymonkey.service.IUserService;
 import com.wittymonkey.util.ChangeToSimple;
 import com.wittymonkey.vo.Constraint;
 import com.wittymonkey.vo.SalaryVO;
-import com.wittymonkey.vo.SimpleFloor;
 import com.wittymonkey.vo.SimpleSalaryRecord;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -103,10 +101,10 @@ public class SalaryController {
         return json.toJSONString();
     }
 
-    @RequestMapping(value = "toSalaryChange", method = RequestMethod.GET)
-    public String toSalaryChange(HttpServletRequest request) {
+    @RequestMapping(value = "toSalaryAdd", method = RequestMethod.GET)
+    public String toSalaryAdd(HttpServletRequest request) {
         request.setAttribute("id", Integer.parseInt(request.getParameter("id")));
-        return "salary_change";
+        return "salary_add";
     }
 
     /**
@@ -149,6 +147,7 @@ public class SalaryController {
     public String saveSalaryChange(HttpServletRequest request) {
         JSONObject json = new JSONObject();
         User loginUser = (User) request.getSession().getAttribute("loginUser");
+        Integer id = Integer.parseInt(request.getParameter("id"));
         Double money = null;
         try {
             money = Double.parseDouble(request.getParameter("salary"));
@@ -173,7 +172,7 @@ public class SalaryController {
             json.put("status", 420);
             return json.toJSONString();
         }
-        SalaryRecord salaryRecord = salaryRecordService.getSalaryRecordByStartDate(date);
+        SalaryRecord salaryRecord = salaryRecordService.getSalaryRecordByStartDate(id, date);
         if (salaryRecord != null) {
             json.put("status", 411);
             return json.toJSONString();
@@ -238,5 +237,14 @@ public class SalaryController {
         }
         json.put("status", 200);
         return json.toJSONString();
+    }
+
+    @RequestMapping(value = "toEditSalary", method = RequestMethod.GET)
+    public String toEditSalary(HttpServletRequest request){
+        Integer id = Integer.parseInt(request.getParameter("id"));
+        SalaryRecord salaryRecord = salaryRecordService.getSalaryRecordById(id);
+        request.getSession().setAttribute("salary", salaryRecord);
+        request.setAttribute("id", salaryRecord.getId());
+        return "salary_edit";
     }
 }

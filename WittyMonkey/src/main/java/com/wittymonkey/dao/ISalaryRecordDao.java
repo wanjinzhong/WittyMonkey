@@ -12,7 +12,7 @@ public interface ISalaryRecordDao extends IGenericDao<SalaryRecord, Serializable
 
     List<SalaryRecord> getSalaryRecordByPage(Integer salaryId, Integer start, Integer total);
 
-    SalaryRecord getSalaryRecordByStartDate(Date startDate);
+    SalaryRecord getSalaryRecordByStartDate(Integer salaryId, Date startDate);
 
     SalaryRecord getSalaryRecordById(Integer id);
 }

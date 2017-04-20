@@ -19,10 +19,10 @@ layui.use(["layer"], function () {
 });
 
 function save() {
-    if (!validateMoney($("#salary"))){
+    if (!validateMoney($("#salary"))) {
         return false;
     }
-    if(!validateNote($("#note"))){
+    if (!validateNote($("#note"))) {
         return false;
     }
     var load = layer.load();
@@ -34,11 +34,13 @@ function save() {
         success: function (data) {
             layer.close(load);
             var res = eval("(" + data + ")");
-            switch (res["status"]){
+            switch (res["status"]) {
                 case 400:
-                    layer.tips(money_error, $("#salary"), {tips: 2}); break;
+                    layer.tips(money_error, $("#salary"), {tips: 2});
+                    break;
                 case 410:
-                    layer.tips(time_error, $("#startDate"), {tips: 2});break;
+                    layer.tips(time_error, $("#startDate"), {tips: 2});
+                    break;
                 case 411:
                     layer.msg(time_conflict, {
                         icon: 2, time: 2000
@@ -47,7 +49,8 @@ function save() {
                     });
                     break;
                 case 420:
-                    layer.tips(messageOfValidateLength(message_note, 1024), $("#note"), {tips: 2}); break;
+                    layer.tips(messageOfValidateLength(message_note, 1024), $("#note"), {tips: 2});
+                    break;
                 case 500:
                     layer.msg(error_500, {
                         icon: 2, time: 2000
@@ -59,10 +62,14 @@ function save() {
                 case 200:
                     layer.msg(add_success,
                         {icon: 1, time: 2000},
-                    function () {
-                        window.location.href="toSalaryChangeRecord.do?id=" + $("#id").val();
-                    });
+                        function () {
+                            window.location.href = "toSalaryChangeRecord.do?id=" + $("#id").val();
+                        });
             }
         }
     })
+}
+
+function toBack() {
+    window.location.href = "toSalaryChangeRecord.do?id=" + $("#id").val();
 }

@@ -33,7 +33,7 @@ function refreshTable(obj) {
     $("#dataTable").html(html);
 }
 function editSalaryRecord(id){
-    window.location.href="toUpdateSalary.do?id=" + id;
+    window.location.href="toEditSalary.do?id=" + id;
 }
 
 function deleteSalaryRecord(id) {
@@ -60,7 +60,7 @@ function deleteSalaryRecord(id) {
                         layer.msg(salary_delete_success,
                             {icon: 1, time: 2000},
                             function () {
-                                window.location.href="toSalaryChangeRecord.do?id=" + $("#id").val();
+                                location.reload();
                             });
                         break;
                 }
@@ -71,5 +71,5 @@ function deleteSalaryRecord(id) {
 }
 
 function showAddSalaryRecord(id){
-    window.location.href="toSalaryChange.do?id=" + id;
+    window.location.href="toSalaryAdd.do?id=" + id;
 }

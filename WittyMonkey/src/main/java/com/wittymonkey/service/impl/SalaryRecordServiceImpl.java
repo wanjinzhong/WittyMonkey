@@ -29,8 +29,8 @@ public class SalaryRecordServiceImpl implements ISalaryRecordService{
     }
 
     @Override
-    public SalaryRecord getSalaryRecordByStartDate(Date startDate) {
-        return salaryRecordDao.getSalaryRecordByStartDate(startDate);
+    public SalaryRecord getSalaryRecordByStartDate(Integer salaryId, Date startDate) {
+        return salaryRecordDao.getSalaryRecordByStartDate(salaryId, startDate);
     }
 
     @Override

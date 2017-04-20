@@ -63,10 +63,10 @@ function refreshTable(obj) {
             html += "<tr class='text-c'>" +
                 "<td>" + obj[i]["staffNo"] + "</td>" +
                 "<td>" + obj[i]["staff"] + "</td>" +
-                "<td>" + obj[i]["money"] + "</td>" +
-                "<td>" + formatDay(obj[i]["startDate"]) + "</td>" +
-                "<td>" + obj[i]["entryUser"] + "</td>" +
-                "<td>" + formatDate(obj[i]["entryDatetime"]) + "</td>" +
+                "<td>" + (obj[i]["money"] != undefined?obj[i]["money"]:"") + "</td>" +
+                "<td>" + (obj[i]["startDate"] != undefined?formatDay(obj[i]["startDate"]):"") + "</td>" +
+                "<td>" + (obj[i]["entryUser"] != undefined?obj[i]["entryUser"]:"") + "</td>" +
+                "<td>" + (obj[i]["entryDatetime"] != undefined?formatDate(obj[i]["entryDatetime"]):"") + "</td>" +
                 "<td>" +
                 "<i class='editBtn layui-icon layui-btn layui-btn-primary layui-btn-small' onclick='changeSalary(" + obj[i].id + ")'>&#xe631; " + btn_change + "</i>" +
                 "<i class='showBtn layui-icon layui-btn layui-btn-primary layui-btn-small' onclick='salaryHistory(" + obj[i].id + ")'>&#xe62c; " + btn_history + "</i>" +

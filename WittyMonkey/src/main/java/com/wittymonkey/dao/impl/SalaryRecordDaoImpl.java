@@ -6,7 +6,9 @@ import com.wittymonkey.dao.ISalaryRecordDao;
 import com.wittymonkey.entity.SalaryRecord;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Repository(value="salaryRecordDao")
 public class SalaryRecordDaoImpl extends GenericDaoImpl<SalaryRecord> implements ISalaryRecordDao{
@@ -24,9 +26,12 @@ public class SalaryRecordDaoImpl extends GenericDaoImpl<SalaryRecord> implements
     }
 
     @Override
-    public SalaryRecord getSalaryRecordByStartDate(Date startDate) {
-        String hql = "from SalaryRecord where startDate = ?";
-        return queryOneHql(hql, startDate);
+    public SalaryRecord getSalaryRecordByStartDate(Integer salaryId, Date startDate) {
+        String hql = "from SalaryRecord where startDate = :startDate and salary.id = :salaryId";
+        Map<String, Object> param = new HashMap<String, Object>();
+        param.put("startDate", startDate);
+        param.put("salaryId", salaryId);
+        return queryOneHql(hql, param);
     }
 
     @Override
