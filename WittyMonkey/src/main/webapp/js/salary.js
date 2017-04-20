@@ -77,7 +77,15 @@ function refreshTable(obj) {
 }
 
 function changeSalary(id) {
-
+    layer.open({
+        title: change_title,
+        content: "toSalaryChangeRecord.do?id=" + id,
+        area: ['900px', '550px'],
+        maxmin: false,
+        shade: 0.4,
+        scrollbar: false,
+        type: 2
+    });
 }
 
 function salaryHistory(id) {

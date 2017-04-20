@@ -11,4 +11,6 @@ public interface ISalaryDao extends IGenericDao<Salary, Serializable>{
     Integer getTotal(Map<Integer, Object> condition);
 
     List<Salary> getSalaryByPage(Map<Integer, Object> condition, Integer start, Integer total);
+
+    Salary getSalaryById(Integer id);
 }

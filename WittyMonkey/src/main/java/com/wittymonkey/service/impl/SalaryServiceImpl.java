@@ -25,4 +25,9 @@ public class SalaryServiceImpl implements ISalaryService{
     public List<Salary> getSalaryByPage(Map<Integer, Object> condition, Integer start, Integer total) {
         return salaryDao.getSalaryByPage(condition, start, total);
     }
+
+    @Override
+    public Salary getSalaryById(Integer id) {
+        return salaryDao.getSalaryById(id);
+    }
 }

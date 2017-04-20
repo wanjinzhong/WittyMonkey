@@ -29,6 +29,12 @@ public class SalaryDaoImpl extends GenericDaoImpl<Salary> implements ISalaryDao 
         return queryListHQL(hql.toString(), conditionModel.getParam(), start, total);
     }
 
+    @Override
+    public Salary getSalaryById(Integer id) {
+        String hql = "from Salary where id = ?";
+        return queryOneHql(hql, id);
+    }
+
     private ConditionModel assymblyCondition(Map<Integer, Object> condition) {
         ConditionModel conditionModel = new ConditionModel();
         StringBuffer hql = new StringBuffer(" where");

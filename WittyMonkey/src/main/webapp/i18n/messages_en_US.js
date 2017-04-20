@@ -210,3 +210,11 @@ var reimburse_reject_success = "Reject successfully";
 
 var btn_change = "Change";
 var btn_history = "History";
+var change_title = "Salary Change";
+var history_title= "Salary History";
+var time_error = "Time Error";
+var add_success = "Add succesfunlly";
+var salary_delete_title = "Salary Change Delete";
+var salary_delete_hint = "Are you sure to delete the salary change?";
+var salary_not_exist = "Salary change does not exist, may have been deleted";
+var salary_delete_success = "Delete Succesfully";

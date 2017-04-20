@@ -13,8 +13,6 @@
 <html>
 <head>
     <title><fmt:message key="checkin.change_room.title"/></title>
-    <link href="style/common.css" rel="stylesheet"
-          type="text/css"/>
     <link href="style/common.css" rel="stylesheet" type="text/css"/>
     <link href="style/choose_room.css" rel="stylesheet" type="text/css"/>
     <script type="text/javascript" src="js/choose_room.js"></script>

@@ -2,13 +2,16 @@ package com.wittymonkey.controller;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.wittymonkey.entity.Hotel;
-import com.wittymonkey.entity.Salary;
-import com.wittymonkey.entity.User;
+import com.wittymonkey.dao.ISalaryRecordDao;
+import com.wittymonkey.entity.*;
+import com.wittymonkey.service.ISalaryRecordService;
 import com.wittymonkey.service.ISalaryService;
+import com.wittymonkey.service.IUserService;
 import com.wittymonkey.util.ChangeToSimple;
 import com.wittymonkey.vo.Constraint;
 import com.wittymonkey.vo.SalaryVO;
+import com.wittymonkey.vo.SimpleFloor;
+import com.wittymonkey.vo.SimpleSalaryRecord;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,10 +20,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 /**
  * Created by neilw on 2017/4/20.
@@ -31,9 +34,15 @@ public class SalaryController {
     @Autowired
     private ISalaryService salaryService;
 
+    @Autowired
+    private ISalaryRecordService salaryRecordService;
+
+    @Autowired
+    private IUserService userService;
+
     @RequestMapping(value = "getSalaryByPage", method = RequestMethod.GET)
     @ResponseBody
-    public String getSalaryByPage(HttpServletRequest request){
+    public String getSalaryByPage(HttpServletRequest request) {
         JSONObject json = new JSONObject();
         Integer curr = Integer.parseInt(request.getParameter("curr"));
         User loginUser = (User) request.getSession().getAttribute("loginUser");
@@ -42,7 +51,7 @@ public class SalaryController {
         Map<Integer, Object> param = new HashMap<Integer, Object>();
         param.put(Constraint.SALARY_SEARCH_CONDITION_HOTEL_ID, hotel.getId());
         Integer type = Integer.parseInt(request.getParameter("type"));
-        switch (type){
+        switch (type) {
             case 2:
                 String name = request.getParameter("name");
                 if (StringUtils.isNotBlank(name)) {
@@ -56,13 +65,178 @@ public class SalaryController {
                 }
         }
         Integer count = salaryService.getTotal(param);
-        List<Salary> salaries = salaryService.getSalaryByPage(param,(curr - 1) * pageSize, pageSize);
+        List<Salary> salaries = salaryService.getSalaryByPage(param, (curr - 1) * pageSize, pageSize);
         List<SalaryVO> salaryVOS = ChangeToSimple.convertSalariesByTime(salaries, new Date());
         json.put("count", count);
         json.put("pageSize", pageSize);
         JSONArray array = new JSONArray();
         array.addAll(salaryVOS);
         json.put("data", array);
+        return json.toJSONString();
+    }
+
+    @RequestMapping(value = "toSalaryChangeRecord", method = RequestMethod.GET)
+    public String toSalaryChangeRecord(HttpServletRequest request) {
+        Integer id = Integer.parseInt(request.getParameter("id"));
+        Salary salary = salaryService.getSalaryById(id);
+        request.getSession().setAttribute("salary", salary);
+        return "salary_record";
+    }
+
+    @RequestMapping(value = "getSalaryRecordByPage", method = RequestMethod.GET)
+    @ResponseBody
+    public String getSalaryRecordByPage(HttpServletRequest request) {
+        JSONObject json = new JSONObject();
+        Salary salary = (Salary) request.getSession().getAttribute("salary");
+        Integer curr = Integer.parseInt(request.getParameter("curr"));
+        User loginUser = (User) request.getSession().getAttribute("loginUser");
+        Integer pageSize = loginUser.getSetting().getPageSize();
+        Hotel hotel = (Hotel) request.getSession().getAttribute("hotel");
+        Integer count = salaryRecordService.getTotal(salary.getId());
+        List<SalaryRecord> salaryRecords = salaryRecordService.getSalaryRecordByPage(salary.getId(), (curr - 1) * pageSize, pageSize);
+        List<SimpleSalaryRecord> simpleSalaryRecords = ChangeToSimple.salaryRecordList(salaryRecords);
+        json.put("count", count);
+        json.put("pageSize", pageSize);
+        JSONArray array = new JSONArray();
+        array.addAll(simpleSalaryRecords);
+        json.put("data", array);
+        return json.toJSONString();
+    }
+
+    @RequestMapping(value = "toSalaryChange", method = RequestMethod.GET)
+    public String toSalaryChange(HttpServletRequest request) {
+        request.setAttribute("id", Integer.parseInt(request.getParameter("id")));
+        return "salary_change";
+    }
+
+    /**
+     * 保存工资变动
+     *
+     * @param request
+     * @return <table border="1" cellspacing="0">
+     * <tr>
+     * <th>代码</th>
+     * <th>说明</th>
+     * </tr>
+     * <tr>
+     * <td>400</td>
+     * <td>金额不正确</td>
+     * </tr>
+     * <tr>
+     * <td>410</td>
+     * <td>时间不正确</td>
+     * </tr>
+     * <tr>
+     * <td>411</td>
+     * <td>时间冲突</td>
+     * </tr>
+     * <tr>
+     * <td>420</td>
+     * <td>备注过长</td>
+     * </tr>
+     * <tr>
+     * <tr>500</tr>
+     * <td>服务器错误</td>
+     * </tr>
+     * <tr>
+     * <td>200</td>
+     * <td>保存成功</td>
+     * </tr>
+     * </table>
+     */
+    @RequestMapping(value = "saveSalaryChange", method = RequestMethod.POST)
+    @ResponseBody
+    public String saveSalaryChange(HttpServletRequest request) {
+        JSONObject json = new JSONObject();
+        User loginUser = (User) request.getSession().getAttribute("loginUser");
+        Double money = null;
+        try {
+            money = Double.parseDouble(request.getParameter("salary"));
+        } catch (NumberFormatException e) {
+            json.put("status", 400);
+            return json.toJSONString();
+        }
+        Date date = null;
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM");
+        try {
+            date = dateFormat.parse(request.getParameter("startDate"));
+        } catch (ParseException e) {
+            json.put("status", 410);
+            return json.toJSONString();
+        }
+        if (money <= 0) {
+            json.put("status", 410);
+            return json.toJSONString();
+        }
+        String note = request.getParameter("note");
+        if (StringUtils.isNotBlank(note) && note.length() > 1024) {
+            json.put("status", 420);
+            return json.toJSONString();
+        }
+        SalaryRecord salaryRecord = salaryRecordService.getSalaryRecordByStartDate(date);
+        if (salaryRecord != null) {
+            json.put("status", 411);
+            return json.toJSONString();
+        }
+        Salary salary = (Salary) request.getSession().getAttribute("salary");
+        if (salary == null) {
+            json.put("status", 500);
+            return json.toJSONString();
+        }
+        SalaryRecord record = new SalaryRecord();
+        record.setEntryDatetime(new Date());
+        record.setEntryUser(userService.getUserById(loginUser.getId()));
+        record.setMoney(money);
+        record.setNote(note);
+        record.setSalary(salaryService.getSalaryById(salary.getId()));
+        record.setStartDate(date);
+        salaryRecordService.save(record);
+        json.put("status", 200);
+        return json.toJSONString();
+    }
+
+    /**
+     * 删除工资记录
+     *
+     * @param request
+     * @return <table border="1" cellspacing="0">
+     * <tr>
+     * <th>代码</th>
+     * <th>说明</th>
+     * </tr>
+     * <tr>
+     * <td>400</td>
+     * <td>记录不存在</td>
+     * </tr>
+     * <tr>
+     * <td>200</td>
+     * <td>删除成功</td>
+     * </tr>
+     * </table>
+     */
+    @RequestMapping(value = "deleteSalaryRecord", method = RequestMethod.POST)
+    @ResponseBody
+    public String deleteSalaryRecord(HttpServletRequest request) {
+        JSONObject json = new JSONObject();
+        Integer id = null;
+        try {
+            id = Integer.parseInt(request.getParameter("id"));
+        } catch (NumberFormatException e) {
+            json.put("status", 400);
+            return json.toJSONString();
+        }
+        SalaryRecord salaryRecord = salaryRecordService.getSalaryRecordById(id);
+        if (salaryRecord == null) {
+            json.put("status", 400);
+            return json.toJSONString();
+        }
+        try {
+            salaryRecordService.delete(salaryRecord);
+        } catch (SQLException e) {
+            json.put("status", 400);
+            return json.toJSONString();
+        }
+        json.put("status", 200);
         return json.toJSONString();
     }
 }
