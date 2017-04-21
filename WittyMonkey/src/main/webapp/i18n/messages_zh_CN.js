@@ -230,3 +230,5 @@ var salary_delete_hint = "确定要删除工资变动吗?";
 var salary_not_exist = "工资变动不存在，可能已被删除";
 var salary_delete_success = "删除成功";
 var to_back = "返回";
+var salary_history = "工资历史";
+var salary_legend = "工资";
