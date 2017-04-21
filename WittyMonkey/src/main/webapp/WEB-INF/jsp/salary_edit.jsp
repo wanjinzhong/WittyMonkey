@@ -22,13 +22,14 @@
 <body>
 <input type="hidden" id="lang" value="${loginUser.setting.lang}"/>
     <form id="add_form">
-        <input type="hidden" id="id" name="id" value="${id}"/>
+        <input type="hidden" id="salaryId" name="salaryId" value="${salaryId}"/>
+        <input type="hidden" id="id" name="id" value="${salary.id}"/>
         <table class="form_table" style="width: 600px; padding-top: 20px">
             <tr>
                 <td><label class="layui-form-label"><fmt:message key="salary.salary"/></label></td>
                 <td><input class="layui-input" type="number" onblur="validateMoney(this)" name="salary" id="salary" value="${salary.money}"/></td>
                 <td><label class="layui-form-label" style="width:80px"><fmt:message key="start_date_hint"/></label></td>
-                <td><input class="layui-input date" id="startDate" name="startDate" value="${salary.startDate}"/></td>
+                <td><input class="layui-input date" id="startDate" name="startDate" value="<fmt:formatDate value="${salary.startDate}" pattern="yyyy-MM"/>"/></td>
             </tr>
             <tr>
                 <td><label class="layui-form-label"><fmt:message key="note"/></label></td>

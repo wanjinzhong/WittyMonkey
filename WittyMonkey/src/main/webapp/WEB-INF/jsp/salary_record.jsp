@@ -20,6 +20,7 @@
     <fmt:setBundle basename="i18n/messages_${loginUser.setting.lang }"/>
 </head>
 <body>
+    <input type="hidden" id="salaryId" value="${salary.id}"/>
     <div class="container" style="margin: 10px 10px">
         <i class="newBtn layui-icon layui-btn layui-btn-radius layui-btn-normal" onclick="showAddSalaryRecord(${salary.id})">&#xe61f; <fmt:message key="btn.add"/></i>
         <table class="layui-table">

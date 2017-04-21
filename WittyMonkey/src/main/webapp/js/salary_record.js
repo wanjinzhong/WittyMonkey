@@ -33,7 +33,7 @@ function refreshTable(obj) {
     $("#dataTable").html(html);
 }
 function editSalaryRecord(id){
-    window.location.href="toEditSalary.do?id=" + id;
+    window.location.href="toEditSalary.do?salaryId=" + $("#salaryId").val() + "&recordId=" + id;
 }
 
 function deleteSalaryRecord(id) {
@@ -52,7 +52,7 @@ function deleteSalaryRecord(id) {
                         layer.msg(salary_not_exist, {
                             icon: 2, time: 2000
                         }, function () {
-                            parent.location.reload();
+                            location.reload();
                             closeMe();
                         });
                         break;

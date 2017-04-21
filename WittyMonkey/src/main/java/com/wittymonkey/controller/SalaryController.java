@@ -1,5 +1,6 @@
 package com.wittymonkey.controller;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.wittymonkey.entity.*;
@@ -22,6 +23,8 @@ import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
+
+import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
 /**
  * Created by neilw on 2017/4/20.
@@ -142,7 +145,7 @@ public class SalaryController {
      * </tr>
      * </table>
      */
-    @RequestMapping(value = "saveSalaryChange", method = RequestMethod.POST)
+    @RequestMapping(value = "saveSalaryChange", method = POST)
     @ResponseBody
     public String saveSalaryChange(HttpServletRequest request) {
         JSONObject json = new JSONObject();
@@ -213,7 +216,7 @@ public class SalaryController {
      * </tr>
      * </table>
      */
-    @RequestMapping(value = "deleteSalaryRecord", method = RequestMethod.POST)
+    @RequestMapping(value = "deleteSalaryRecord", method = POST)
     @ResponseBody
     public String deleteSalaryRecord(HttpServletRequest request) {
         JSONObject json = new JSONObject();
@@ -241,10 +244,59 @@ public class SalaryController {
 
     @RequestMapping(value = "toEditSalary", method = RequestMethod.GET)
     public String toEditSalary(HttpServletRequest request){
-        Integer id = Integer.parseInt(request.getParameter("id"));
+        Integer salaryId = Integer.parseInt(request.getParameter("salaryId"));
+        Integer id = Integer.parseInt(request.getParameter("recordId"));
         SalaryRecord salaryRecord = salaryRecordService.getSalaryRecordById(id);
         request.getSession().setAttribute("salary", salaryRecord);
-        request.setAttribute("id", salaryRecord.getId());
+        request.setAttribute("salaryId", salaryId);
         return "salary_edit";
+    }
+
+    @RequestMapping(value = "updateSalary", method = POST)
+    @ResponseBody
+    public String updateSalary(HttpServletRequest request){
+        JSONObject json = new JSONObject();
+        Integer salaryId = Integer.parseInt(request.getParameter("salaryId"));
+        Integer recordId = Integer.parseInt(request.getParameter("id"));
+        User loginUser = (User) request.getSession().getAttribute("loginUser");
+        Double money = null;
+        try{
+            money = Double.parseDouble(request.getParameter("salary"));
+        } catch (NumberFormatException e){
+            json.put("status", 400);
+            return json.toJSONString();
+        }
+        Date startDate = null;
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM");
+        try{
+            startDate = dateFormat.parse(request.getParameter("startDate"));
+        } catch (ParseException e){
+            json.put("status", 410);
+            return json.toJSONString();
+        }
+        String note = request.getParameter("note");
+        if (StringUtils.isNotBlank(note) && note.length() > 1024){
+            json.put("status", 420);
+            return json.toJSONString();
+        }
+        SalaryRecord record = salaryRecordService.getSalaryRecordById(recordId);
+        if (record == null){
+            json.put("status", 403);
+            return json.toJSONString();
+        }
+        // 查重（开始时间）
+        SalaryRecord queryRecord = salaryRecordService.getSalaryRecordByStartDate(salaryId, startDate);
+        if (queryRecord != null && !queryRecord.getId().equals(recordId)){
+            json.put("status", 411);
+            return json.toJSONString();
+        }
+        record.setMoney(money);
+        record.setStartDate(startDate);
+        record.setNote(note);
+        record.setEntryUser(userService.getUserById(loginUser.getId()));
+        record.setEntryDatetime(new Date());
+        salaryRecordService.save(record);
+        json.put("status", 200);
+        return json.toJSONString();
     }
 }

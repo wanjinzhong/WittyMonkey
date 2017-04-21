@@ -224,6 +224,7 @@ var change_title = "工资变动";
 var history_title= "工资历史";
 var time_error = "时间不正确";
 var add_success = "添加成功";
+var update_success = "修改成功";
 var salary_delete_title = "工资变动删除";
 var salary_delete_hint = "确定要删除工资变动吗?";
 var salary_not_exist = "工资变动不存在，可能已被删除";
