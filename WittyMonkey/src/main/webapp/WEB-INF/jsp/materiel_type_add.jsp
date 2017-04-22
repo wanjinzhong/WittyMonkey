@@ -25,7 +25,7 @@
 <form id="add_form">
     <!-- java端处理方式 -->
     <input type="hidden" id="method" name="method" value="add"/>
-    <table>
+    <table class="form_table">
 
         <tr>
             <td><label class="layui-form-label"><fmt:message key="materiel_type.name"/></label></td>
@@ -34,7 +34,7 @@
         </tr>
         <tr>
             <td><label class="layui-form-label"><fmt:message key="note"/></label></td>
-            <td><textarea class="layui-textarea" name="note" id="note"></textarea></td>
+            <td><textarea class="layui-textarea" name="note" id="note" onblur="validateNote(this)"></textarea></td>
         </tr>
     </table>
 </form>

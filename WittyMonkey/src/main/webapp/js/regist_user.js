@@ -41,25 +41,17 @@ function regist() {
     }
     var myCode = $("#code").val();
     validateCode($("#code"));
+    var load = layer.load();
     $.ajax({
         type: "POST",
         url: "regist.do",
         data: $("#user_form").serialize(),
         dataType: "json",
         success: function (data) {
+            layer.close(load);
             var result = eval("(" + data + ")");
             var stu = result.status;
             switch (stu) {
-                case 400:
-                    layer.tips(regist_input_name_first, $("#loginName"), {
-                        tips: 4
-                    });
-                    break;
-                case 401:
-                    layer.tips(regist_user_is_exist, $("#loginName"), {
-                        tips: 4
-                    });
-                    break;
                 case 410:
                     layer.tips(regist_password_less_six, $("#password"), {
                         tips: 4

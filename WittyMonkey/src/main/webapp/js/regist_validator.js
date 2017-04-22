@@ -33,48 +33,6 @@ function validateLicenseNo(inp) {
     return true;
 }
 
-
-/**
- * 验证登陆名
- * @param nameInp
- * @returns
- */
-function validateLoginName(nameInp) {
-    var name = $(nameInp).val();
-    if (name.length <= 0) {
-        layer.tips(messageOfValidateNull(regist_login_name), nameInp, {tips: 2});
-        return false;
-    }
-    var reg = /^[a-zA-Z0-9_]{3,20}$/;
-    if (!reg.test(name)) {
-        layer.tips(regist_login_name_reg, nameInp, {tips: 2});
-        return false;
-    }
-    var funResult;
-    $.ajax({
-        type: "GET",
-        url: "validateLoginName.do",
-        data: {"loginName": name},
-        dataType: "json",
-        // ajax 同步
-        async: false,
-        success: function (data) {
-            var result = eval("(" + data + ")");
-            if (result.status == 200) {
-                layer.tips(regist_user_is_exist, nameInp, {tips: 2});
-                funResult = false;
-            } else {
-                funResult = true;
-            }
-        },
-        error: function (data) {
-            layer.msg(error_500, {time: 3000, icon: 5});
-            funResult = false;
-        }
-    });
-    return funResult;
-}
-
 /***
  * 验证密码
  * @param pwd
@@ -225,16 +183,12 @@ function validatePlaceDetail(inp) {
  * @returns
  */
 function validateRegistUserForm(form) {
-    var loginName = $(form).find("#loginName");
     var realName = $(form).find("#realName");
     var pwd = $(form).find("#password");
     var repwd = $(form).find("#repassword");
     var email = $(form).find("#email");
     var idCard = $(form).find("#idCard");
     var code = $(form).find("#code");
-    if (!validateLoginName(loginName)) {
-        return false;
-    }
     if (!validateRealName(realName)) {
         return false;
     }

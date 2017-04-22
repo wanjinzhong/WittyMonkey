@@ -59,7 +59,7 @@ public class RoomMaster implements Serializable {
     @Column
     private Integer status;
 
-    @OneToOne(targetEntity = RoomExt.class, cascade = {CascadeType.ALL})
+    @OneToOne(targetEntity = RoomExt.class)
     @JoinColumn(name = "room_ext_id", referencedColumnName = "id")
     private RoomExt roomExt;
 

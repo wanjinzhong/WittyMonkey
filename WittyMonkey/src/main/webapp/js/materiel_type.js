@@ -20,7 +20,7 @@ function refreshTable(obj) {
             html += "<tr class='text-c'>" +
                 "<td>" + obj[i].name + "</td>" +
                 "<td>" + obj[i].materielNum + "</td>" +
-                "<td>" + obj[i].note + "</td>" +
+                "<td>" + (obj[i].note != undefined? obj[i].note : "") + "</td>" +
                 "<td>" + obj[i].entryUser + "</td>" +
                 "<td>" + formatDate(obj[i].entryDatetime) + "</td>" +
                 "<td>" +

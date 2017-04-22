@@ -2,13 +2,8 @@ package com.wittymonkey.entity;
 
 import java.io.Serializable;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
+
 /**
  * 设置
  * @author neilw
@@ -20,12 +15,14 @@ public class Setting implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
 
-	public static final String LANG_ZH_CN ="zh_CN";
-	public static final String LANG_EN_US ="en_US";
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Integer id;
-	
+
+	@OneToOne(targetEntity = User.class, cascade={CascadeType.ALL})
+	@JoinColumn(name = "user_id", referencedColumnName = "id")
+	private User user;
+
 	// 语言
 	@Column(columnDefinition="VARCHAR(10) default 'zh_CN'")
 	private String lang;
@@ -56,5 +53,13 @@ public class Setting implements Serializable{
 
 	public void setPageSize(Integer pageSize) {
 		this.pageSize = pageSize;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
 	}
 }

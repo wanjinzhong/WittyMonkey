@@ -49,13 +49,6 @@
             <table>
                 <tr>
                     <td class="td_title"><label class="layui-form-label"><fmt:message
-                            key="regist.user.login_name"/></label></td>
-                    <td><input type="text" class="layui-input"
-                               name="loginName" id="loginName" onblur="validateLoginName(this)"
-                               value="${registUser.loginName}"/></td>
-                </tr>
-                <tr>
-                    <td class="td_title"><label class="layui-form-label"><fmt:message
                             key="regist.user.real_name"/></label></td>
                     <td><input type="text" class="layui-input"  id="realName"
                                name="realName" onblur="validateRealName(this)"

@@ -66,8 +66,7 @@ public class User implements Serializable {
 	inverseJoinColumns={@JoinColumn(name = "role_id", referencedColumnName = "id")})
 	private List<Role> roles = new ArrayList<Role>();
 
-	@OneToOne(targetEntity=Setting.class, fetch=FetchType.EAGER,cascade={CascadeType.PERSIST,CascadeType.MERGE})
-	@JoinColumn(name="setting_id", referencedColumnName="id")
+	@OneToOne(targetEntity=Setting.class, mappedBy = "user",cascade={CascadeType.PERSIST,CascadeType.MERGE})
 	private Setting setting;
 	
 	

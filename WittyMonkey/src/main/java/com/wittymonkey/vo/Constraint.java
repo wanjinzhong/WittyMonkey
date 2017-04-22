@@ -41,4 +41,8 @@ public class Constraint {
     public static final Integer SALARY_SEARCH_CONDITION_FROM = 4;
     public static final Integer SALARY_SEARCH_CONDITION_TO = 5;
     public static final Integer SALARY_SEARCH_CONDITION_INCUMBENT = 6;
+
+
+    public static final String LANG_ZH_CN ="zh_CN";
+    public static final String LANG_EN_US ="en_US";
 }

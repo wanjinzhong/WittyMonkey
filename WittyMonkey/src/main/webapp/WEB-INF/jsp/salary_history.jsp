@@ -22,6 +22,6 @@
 </head>
 <body>
     <input type="hidden" id="id" value="${id}"/>
-    <div id="main" style="width: 800px; height: 350px;"></div>
+    <div id="main" style="width: 800px; height: 350px; margin: 10px auto"></div>
 </body>
 </html>

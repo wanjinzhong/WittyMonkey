@@ -408,23 +408,12 @@ public class LoginController {
     @ResponseBody
     public String regist(HttpServletRequest request) {
         JSONObject json = new JSONObject();
-        String loginName = request.getParameter("loginName");
         String realName = request.getParameter("realName");
         String password = request.getParameter("password");
         String repassword = request.getParameter("repassword");
         String email = request.getParameter("email");
         String myCode = request.getParameter("code");
-        System.out.println(loginName);
-        System.out.println(realName);
-        System.out.println(password);
-        System.out.println(repassword);
-        System.out.println(email);
-        System.out.println(myCode);
-        if (loginName == null || loginName.trim().equals("")) {
-            json.put("status", 400);
-        } else if (isLoginNameExist(loginName)) {
-            json.put("status", 401);
-        } else if (password == null || password.trim().equals("") || password.length() < 6) {
+        if (password == null || password.trim().equals("") || password.length() < 6) {
             json.put("status", 410);
         } else if (!password.equals(repassword)) {
             json.put("status", 411);
@@ -439,7 +428,7 @@ public class LoginController {
         } else {
             // 注册酒店
             Hotel hotel = (Hotel) request.getSession().getAttribute("registHotel");
-            User newUser = registToDatabase(hotel, loginName, password,realName, email);
+            User newUser = registToDatabase(hotel, password,realName, email);
             request.getSession().setAttribute("staffNo", newUser.getStaffNo());
             json.put("status", 200);
             json.put("url", "toComplete.do");
@@ -451,179 +440,6 @@ public class LoginController {
     public String toComplete(HttpServletRequest request) {
 
         return "regist_complete";
-    }
-
-    /**
-     * 数据库初始化
-     *
-     * @param loginName
-     * @param password
-     * @param email
-     */
-    private User registToDatabase(Hotel hotel, String loginName, String password, String realName, String email) {
-        User system = userService.getUserById(0);
-        Date now = new Date();
-        // 添加初始化请假类型
-        // 事假
-        LeaveType affair = new LeaveType();
-        affair.setDeduct(0.0);
-        affair.setName("affair");
-        affair.setEntryDatetime(now);
-        affair.setEntryUser(system);
-        affair.setEditable(false);
-        // 年假
-        LeaveType year = new LeaveType();
-        year.setDeduct(0.0);
-        year.setName("year");
-        year.setEntryDatetime(now);
-        year.setEntryUser(system);
-        year.setEditable(false);
-        // 婚假
-        LeaveType marry = new LeaveType();
-        marry.setDeduct(0.0);
-        marry.setName("marry");
-        marry.setEntryDatetime(now);
-        marry.setEntryUser(system);
-        marry.setEditable(false);
-        // 丧假
-        LeaveType funeral = new LeaveType();
-        funeral.setDeduct(0.0);
-        funeral.setName("funeral");
-        funeral.setEntryDatetime(now);
-        funeral.setEntryUser(system);
-        funeral.setEditable(false);
-        // 病假
-        LeaveType sick = new LeaveType();
-        sick.setDeduct(0.0);
-        sick.setName("sick");
-        sick.setEntryDatetime(now);
-        sick.setEntryUser(system);
-        sick.setEditable(false);
-        // 产假
-        LeaveType maternity = new LeaveType();
-        maternity.setDeduct(0.0);
-        maternity.setName("maternity");
-        maternity.setEntryDatetime(now);
-        maternity.setEntryUser(system);
-        maternity.setEditable(false);
-
-        List<LeaveType> leaveTypes = new ArrayList<LeaveType>();
-        leaveTypes.add(affair);
-        leaveTypes.add(year);
-        leaveTypes.add(marry);
-        leaveTypes.add(funeral);
-        leaveTypes.add(sick);
-        leaveTypes.add(maternity);
-
-        // 添加默认物料类型
-        MaterielType materielType = new MaterielType();
-        materielType.setName("Other");
-
-        // 添加角色
-        Role role = new Role();
-        role.setHotel(hotel);
-        role.setEntryDatetime(now);
-        role.setName("Admin(经理)");
-        role.setEntryUser(system);
-        role.setEditable(false);
-        role.setMenus(menuService.getAll());
-
-        List<FinanceType> financeTypes = new ArrayList<FinanceType>();
-
-        FinanceType defaltIn = new FinanceType();
-        defaltIn.setName("Default In(默认收入)");
-        defaltIn.setIncome(true);
-        defaltIn.setNote("Default In(默认收入)");
-        defaltIn.setEntryUser(system);
-        defaltIn.setEntryDatetime(now);
-        defaltIn.setEditable(false);
-        defaltIn.setDefault(true);
-        financeTypes.add(defaltIn);
-
-        FinanceType defaultOut = new FinanceType();
-        defaultOut.setName("Default Out(默认支出)");
-        defaultOut.setIncome(false);
-        defaultOut.setNote("Default Out(默认支出)");
-        defaultOut.setEntryUser(system);
-        defaultOut.setEntryDatetime(now);
-        defaultOut.setEditable(false);
-        defaltIn.setDefault(true);
-        financeTypes.add(defaultOut);
-
-        FinanceType roomIn = new FinanceType();
-        roomIn.setName("Room In(住房收入)");
-        roomIn.setIncome(true);
-        roomIn.setNote("Room In(住房收入)");
-        roomIn.setEntryUser(system);
-        roomIn.setEntryDatetime(now);
-        roomIn.setEditable(false);
-        defaltIn.setDefault(false);
-        financeTypes.add(roomIn);
-
-        FinanceType purchase = new FinanceType();
-        purchase.setName("Purchase Out(进货支出)");
-        purchase.setIncome(false);
-        purchase.setNote("Purchase Out(进货支出)");
-        purchase.setEntryUser(system);
-        purchase.setEntryDatetime(now);
-        purchase.setEditable(false);
-        defaltIn.setDefault(false);
-        financeTypes.add(purchase);
-
-        FinanceType catering = new FinanceType();
-        catering.setName("Catering Out(餐饮收入)");
-        catering.setIncome(false);
-        catering.setNote("Catering Out(餐饮收入)");
-        catering.setEntryUser(system);
-        catering.setEntryDatetime(now);
-        catering.setEditable(false);
-        defaltIn.setDefault(false);
-        financeTypes.add(catering);
-
-        FinanceType salary = new FinanceType();
-        salary.setName("Salary Out(工资支出)");
-        salary.setIncome(false);
-        salary.setNote("Salary Out(工资支出)");
-        salary.setEntryUser(system);
-        salary.setEntryDatetime(now);
-        salary.setEditable(false);
-        defaltIn.setDefault(false);
-        financeTypes.add(salary);
-
-        // 添加酒店员工ID配置
-        Odom odom = new Odom();
-        odom.setSequence(1);
-        // 添加酒店
-        hotel.setAddDate(now);
-        hotel.setEntryDatetime(now);
-        hotel.setEntryUser(system);
-        hotel.setLeaveTypes(leaveTypes);
-        hotel.getMaterielTypes().add(materielType);
-        hotel.setIsClose(false);
-        hotel.setOdom(odom);
-        hotel.setFinanceTypes(financeTypes);
-
-        // 添加用户设置
-        Setting setting = new Setting();
-        setting.setLang("zh_CN");
-        setting.setPageSize(10);
-
-        // 添加用户
-        User user = new User();
-        user.setRealName(realName);
-        user.setPassword(MD5Util.encrypt(password));
-        user.setEmail(email.toLowerCase());
-        user.setHotel(hotel);
-        user.getRoles().add(role);
-        user.setRegistDate(now);
-        user.setEntryDatetime(now);
-        user.setEntryUser(system);
-        user.setSetting(setting);
-        User newUser = userService.saveUser(user);
-        String staffNo = userService.getNextStaffNoByHotel(newUser.getHotel().getId());
-        newUser.setStaffNo(staffNo);
-        newUser = userService.saveUser(newUser);
-        return newUser;
     }
 
     /**
@@ -657,6 +473,198 @@ public class LoginController {
             json.put("status", 201);
         }
         return json.toJSONString();
+    }
+
+    /**
+     * 数据库初始化
+     *
+     * @param
+     * @param password
+     * @param email
+     */
+    private User registToDatabase(Hotel hotel, String password, String realName, String email) {
+        User system = userService.getUserById(0);
+        Date now = new Date();
+        // 添加初始化请假类型
+        // 事假
+        LeaveType affair = new LeaveType();
+        affair.setDeduct(0.0);
+        affair.setName("affair");
+        affair.setEntryDatetime(now);
+        affair.setEntryUser(system);
+        affair.setEditable(false);
+        affair.setHotel(hotel);
+        // 年假
+        LeaveType year = new LeaveType();
+        year.setDeduct(0.0);
+        year.setName("year");
+        year.setEntryDatetime(now);
+        year.setEntryUser(system);
+        year.setEditable(false);
+        year.setHotel(hotel);
+        // 婚假
+        LeaveType marry = new LeaveType();
+        marry.setDeduct(0.0);
+        marry.setName("marry");
+        marry.setEntryDatetime(now);
+        marry.setEntryUser(system);
+        marry.setEditable(false);
+        marry.setHotel(hotel);
+        // 丧假
+        LeaveType funeral = new LeaveType();
+        funeral.setDeduct(0.0);
+        funeral.setName("funeral");
+        funeral.setEntryDatetime(now);
+        funeral.setEntryUser(system);
+        funeral.setEditable(false);
+        funeral.setHotel(hotel);
+        // 病假
+        LeaveType sick = new LeaveType();
+        sick.setDeduct(0.0);
+        sick.setName("sick");
+        sick.setEntryDatetime(now);
+        sick.setEntryUser(system);
+        sick.setEditable(false);
+        sick.setHotel(hotel);
+        // 产假
+        LeaveType maternity = new LeaveType();
+        maternity.setDeduct(0.0);
+        maternity.setName("maternity");
+        maternity.setEntryDatetime(now);
+        maternity.setEntryUser(system);
+        maternity.setEditable(false);
+        maternity.setHotel(hotel);
+
+        List<LeaveType> leaveTypes = new ArrayList<LeaveType>();
+        leaveTypes.add(affair);
+        leaveTypes.add(year);
+        leaveTypes.add(marry);
+        leaveTypes.add(funeral);
+        leaveTypes.add(sick);
+        leaveTypes.add(maternity);
+
+        // 添加默认物料类型
+        MaterielType materielType = new MaterielType();
+        materielType.setName("Other");
+        materielType.setEntryDatetime(now);
+        materielType.setEntryUser(system);
+        materielType.setHotel(hotel);
+
+        // 添加角色
+        Role role = new Role();
+        role.setHotel(hotel);
+        role.setEntryDatetime(now);
+        role.setName("Admin(经理)");
+        role.setEntryUser(system);
+        role.setEditable(false);
+        role.setMenus(menuService.getAll());
+
+        List<FinanceType> financeTypes = new ArrayList<FinanceType>();
+
+        FinanceType defaultIn = new FinanceType();
+        defaultIn.setName("Default In(默认收入)");
+        defaultIn.setIncome(true);
+        defaultIn.setNote("Default In(默认收入)");
+        defaultIn.setEntryUser(system);
+        defaultIn.setEntryDatetime(now);
+        defaultIn.setEditable(false);
+        defaultIn.setDefault(true);
+        defaultIn.setHotel(hotel);
+        financeTypes.add(defaultIn);
+
+        FinanceType defaultOut = new FinanceType();
+        defaultOut.setName("Default Out(默认支出)");
+        defaultOut.setIncome(false);
+        defaultOut.setNote("Default Out(默认支出)");
+        defaultOut.setEntryUser(system);
+        defaultOut.setEntryDatetime(now);
+        defaultOut.setEditable(false);
+        defaultOut.setDefault(true);
+        defaultOut.setHotel(hotel);
+        financeTypes.add(defaultOut);
+
+        FinanceType roomIn = new FinanceType();
+        roomIn.setName("Room In(住房收入)");
+        roomIn.setIncome(true);
+        roomIn.setNote("Room In(住房收入)");
+        roomIn.setEntryUser(system);
+        roomIn.setEntryDatetime(now);
+        roomIn.setEditable(false);
+        roomIn.setDefault(false);
+        roomIn.setHotel(hotel);
+        financeTypes.add(roomIn);
+
+        FinanceType purchase = new FinanceType();
+        purchase.setName("Purchase Out(进货支出)");
+        purchase.setIncome(false);
+        purchase.setNote("Purchase Out(进货支出)");
+        purchase.setEntryUser(system);
+        purchase.setEntryDatetime(now);
+        purchase.setEditable(false);
+        purchase.setDefault(false);
+        purchase.setHotel(hotel);
+        financeTypes.add(purchase);
+
+        FinanceType catering = new FinanceType();
+        catering.setName("Catering Out(餐饮收入)");
+        catering.setIncome(false);
+        catering.setNote("Catering Out(餐饮收入)");
+        catering.setEntryUser(system);
+        catering.setEntryDatetime(now);
+        catering.setEditable(false);
+        catering.setDefault(false);
+        catering.setHotel(hotel);
+        financeTypes.add(catering);
+
+        FinanceType salary = new FinanceType();
+        salary.setName("Salary Out(工资支出)");
+        salary.setIncome(false);
+        salary.setNote("Salary Out(工资支出)");
+        salary.setEntryUser(system);
+        salary.setEntryDatetime(now);
+        salary.setEditable(false);
+        salary.setDefault(false);
+        salary.setHotel(hotel);
+        financeTypes.add(salary);
+
+        // 添加酒店员工ID配置
+        Odom odom = new Odom();
+        odom.setSequence(0);
+        odom.setHotel(hotel);
+
+        // 添加酒店
+        hotel.setAddDate(now);
+        hotel.setEntryDatetime(now);
+        hotel.setEntryUser(system);
+        hotel.setLeaveTypes(leaveTypes);
+        hotel.getMaterielTypes().add(materielType);
+        hotel.setIsClose(false);
+        hotel.setFinanceTypes(financeTypes);
+        hotel.setOdom(odom);
+
+        // 添加用户设置
+        Setting setting = new Setting();
+        setting.setLang("zh_CN");
+        setting.setPageSize(10);
+
+        // 添加用户
+        User user = new User();
+        user.setRealName(realName);
+        user.setPassword(MD5Util.encrypt(password));
+        user.setEmail(email.toLowerCase());
+        user.setHotel(hotel);
+        user.getRoles().add(role);
+        user.setRegistDate(now);
+        user.setEntryDatetime(now);
+        user.setEntryUser(system);
+        user.setSetting(setting);
+        setting.setUser(user);
+        User newUser = userService.saveUser(user);
+
+        String staffNo = userService.getNextStaffNoByHotel(newUser.getHotel().getId());
+        newUser.setStaffNo(staffNo);
+        newUser = userService.saveUser(newUser);
+        return newUser;
     }
 
     /**
