@@ -23,11 +23,12 @@ function refreshTable(obj) {
                 "<td>" + (obj[i].note != undefined? obj[i].note : "") + "</td>" +
                 "<td>" + obj[i].entryUser + "</td>" +
                 "<td>" + formatDate(obj[i].entryDatetime) + "</td>" +
-                "<td>" +
-                "<i class='editBtn layui-icon layui-btn layui-btn-primary layui-btn-small' onclick='editMaterielType(" + obj[i].id + ")'>&#xe642; " + btn_edit + "</i>" +
-                "<i class='deleteBtn layui-icon layui-btn layui-btn-primary layui-btn-small' onclick='deleteMaterielType(" + obj[i].id + ")'>&#xe640; " + btn_delete + "</i>" +
-                "</td>" +
-                "</tr>";
+                "<td>";
+                if (obj[i].editable) {
+                    html += "<i class='editBtn layui-icon layui-btn layui-btn-primary layui-btn-small' onclick='editMaterielType(" + obj[i].id + ")'>&#xe642; " + btn_edit + "</i>" +
+                    "<i class='deleteBtn layui-icon layui-btn layui-btn-primary layui-btn-small' onclick='deleteMaterielType(" + obj[i].id + ")'>&#xe640; " + btn_delete + "</i>";
+                }
+            html += "</td></tr>";
         }
     }
     $("#dataTabel").html(html);
@@ -35,12 +36,14 @@ function refreshTable(obj) {
 function deleteMaterielType(typeId) {
     layer.confirm(materiel_type_delete_hint, {icon: 7, title: materiel_type_delete_title},
         function (index) {
+            var load = layer.load();
             $.ajax({
                 url: "deleteMaterielType.do",
                 data: {"typeId": typeId},
                 dataType: "json",
-                type: "GET",
+                type: "POST",
                 success: function (data) {
+                    layer.close(load);
                     var result = eval("(" + data + ")");
                     switch (result.status) {
                         case 400:

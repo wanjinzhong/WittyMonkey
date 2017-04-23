@@ -22,6 +22,8 @@ public class SimpleMaterielType implements Serializable {
     private String note;
     private Date entryDatetime;
     private String entryUser;
+    private Boolean editable;
+    private Boolean isDefault;
 
     public Integer getId() {
         return id;
@@ -71,4 +73,19 @@ public class SimpleMaterielType implements Serializable {
         this.entryUser = entryUser;
     }
 
+    public Boolean getEditable() {
+        return editable;
+    }
+
+    public void setEditable(Boolean editable) {
+        this.editable = editable;
+    }
+
+    public Boolean getDefault() {
+        return isDefault;
+    }
+
+    public void setDefault(Boolean aDefault) {
+        isDefault = aDefault;
+    }
 }

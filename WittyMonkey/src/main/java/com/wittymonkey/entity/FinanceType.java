@@ -36,7 +36,7 @@ public class FinanceType implements Serializable{
 	@Column
 	private Boolean income;
 	
-	@Column(length=10)
+	@Column(length=30)
 	private String name;
 
 	@ManyToOne(targetEntity=Hotel.class)

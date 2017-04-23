@@ -2,6 +2,7 @@ package com.wittymonkey.service;
 
 import com.wittymonkey.entity.MaterielType;
 
+import java.sql.SQLException;
 import java.util.List;
 
 public interface IMaterielTypeService {
@@ -17,4 +18,8 @@ public interface IMaterielTypeService {
 	List<MaterielType> getMaterielTypeByHotelId(Integer hotelId, Integer start, Integer pageSize);
 
 	MaterielType getMaterielTypeByName(Integer hotelId, String name);
+
+	MaterielType getMaterielTypeById(Integer id);
+
+	void deleteMaterielType(MaterielType materielType) throws SQLException;
 }

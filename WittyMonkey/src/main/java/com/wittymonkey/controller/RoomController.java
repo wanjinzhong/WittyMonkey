@@ -516,6 +516,7 @@ public class RoomController {
         roomMaster.setEntryDatetime(new Date());
         roomMaster.setEntryUser(userService.getUserById(loginUser.getId()));
         roomMaster.setRoomExt(roomExt);
+        roomExt.setRoomMaster(roomMaster);
         roomMaster.setDelete(false);
         if (method.equals(Constraint.ADD)) {
             roomMasterService.saveRoom(roomMaster);

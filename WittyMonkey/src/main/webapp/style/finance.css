@@ -3,3 +3,6 @@
     margin: 0 auto;
     display: inline-block;
 }
+.layui-form-select dl{
+    max-height: 200px;
+}

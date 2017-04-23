@@ -17,7 +17,7 @@ import javax.persistence.Table;
  *
  */
 @Entity
-@Table(name = "material")
+@Table(name = "materiel")
 public class Materiel implements Serializable{
 
 	private static final long serialVersionUID = 1L;
@@ -25,6 +25,10 @@ public class Materiel implements Serializable{
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Integer id;
+
+	// 条码号
+	@Column
+	private String barcode;
 	
 	@Column(length=100)
 	private String name;
@@ -114,6 +118,13 @@ public class Materiel implements Serializable{
 	public void setMaterielType(MaterielType materielType) {
 		this.materielType = materielType;
 	}
-	
-	
+
+
+	public String getBarcode() {
+		return barcode;
+	}
+
+	public void setBarcode(String barcode) {
+		this.barcode = barcode;
+	}
 }

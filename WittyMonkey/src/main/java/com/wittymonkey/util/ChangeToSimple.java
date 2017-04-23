@@ -84,6 +84,8 @@ public class ChangeToSimple {
             simpleMaterielType.setEntryUser(materielType.getEntryUser().getRealName());
             simpleMaterielType.setEntryDatetime(materielType.getEntryDatetime());
             simpleMaterielType.setMaterielNum(materielType.getMateriels().size());
+            simpleMaterielType.setEditable(materielType.getEditable());
+            simpleMaterielType.setDefault(materielType.getDefault());
             simpleMaterielTypes.add(simpleMaterielType);
         }
         return simpleMaterielTypes;

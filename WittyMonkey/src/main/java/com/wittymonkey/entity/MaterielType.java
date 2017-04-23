@@ -43,6 +43,12 @@ public class MaterielType implements Serializable{
 	@JoinColumn(name="entry_id", referencedColumnName="id")
 	private User entryUser;
 
+	@Column
+	private Boolean editable;
+
+	@Column
+	private Boolean isDefault;
+
 	public Date getEntryDatetime() {
 		return entryDatetime;
 	}
@@ -97,6 +103,20 @@ public class MaterielType implements Serializable{
 	public void setMateriels(List<Materiel> materiels) {
 		this.materiels = materiels;
 	}
-	
-	
+
+	public Boolean getEditable() {
+		return editable;
+	}
+
+	public void setEditable(Boolean editable) {
+		this.editable = editable;
+	}
+
+	public Boolean getDefault() {
+		return isDefault;
+	}
+
+	public void setDefault(Boolean aDefault) {
+		isDefault = aDefault;
+	}
 }

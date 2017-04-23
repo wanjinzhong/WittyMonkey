@@ -147,6 +147,9 @@ public class StaffController {
         setting.setPageSize(10);
         user.setSetting(setting);
         user.setRegistDate(new Date());
+        Salary salary = new Salary();
+        salary.setStaff(user);
+        user.setSalary(salary);
         userService.saveUser(user);
         json.put("status", 200);
         json.put("staffNo", staffNo);

@@ -14,6 +14,7 @@
 </head>
 <link rel="stylesheet" type="text/css" href="style/common.css"/>
 <script type="text/javascript" src="js/common.js"></script>
+<link rel="stylesheet" type="text/css" href="style/finance.css"/>
 <script type="text/javascript" src="js/finance_add.js"></script>
 <!-- 根据设置动态加载js语言 -->
 <script type="text/javascript" src="i18n/messages_${loginUser.setting.lang }.js"></script>

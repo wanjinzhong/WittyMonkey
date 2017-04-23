@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.wittymonkey.entity.Materiel;
 import com.wittymonkey.entity.MaterielType;
 
 public interface IMaterielTypeDao extends IGenericDao<MaterielType, Serializable>{
@@ -14,4 +15,8 @@ public interface IMaterielTypeDao extends IGenericDao<MaterielType, Serializable
     Integer getTotalByHotelId(Integer hotelId);
 
     MaterielType getMaterielTypeByName(Integer hotelId, String name);
+
+    MaterielType getMaterielTypeById(Integer id);
+
+    MaterielType getDefaultByHotel(Integer hotelId);
 }

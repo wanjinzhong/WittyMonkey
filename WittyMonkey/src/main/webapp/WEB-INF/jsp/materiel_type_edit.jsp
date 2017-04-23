@@ -30,17 +30,17 @@
 <body>
 <form id="add_form">
     <!-- java端处理方式 -->
-    <input type="hidden" name="method" value="update"/>
-    <table>
+    <input type="hidden" id="method" name="method" value="add"/>
+    <table class="form_table">
+
         <tr>
-            <td class="table-header"><label class="layui-form-label"><fmt:message key="floor.manage.floor_no"/></label></td>
-            <td><input type="text" class="layui-input" name="floorNo"
-                       value="${editFloor.floorNo}"
-                       id="floorNo" onblur="validateFloorNo('update',this)"></td>
+            <td><label class="layui-form-label"><fmt:message key="materiel_type.name"/></label></td>
+            <td><input type="text" class="layui-input" name="name" value="${materielType.name}"
+                       id="name" onblur="validateMaterielTypeName('update',this)"></td>
         </tr>
         <tr>
-            <td class="table-header"><label class="layui-form-label"><fmt:message key="note"/></label></td>
-            <td><textarea class="layui-textarea" name="note" id="note">${editFloor.note}</textarea></td>
+            <td><label class="layui-form-label"><fmt:message key="note"/></label></td>
+            <td><textarea class="layui-textarea" name="note" id="note" onblur="validateNote(this)">${materielType.note}</textarea></td>
         </tr>
     </table>
 </form>
@@ -50,53 +50,5 @@
     <input type="button" class="layui-btn layui-btn-radius" value="<fmt:message key="btn.save"/>"
            onclick="save()"/>
 </div>
-<script type="text/javascript">
-    var layer;
-    layui.use('layer', function () {
-        layer = layui.layer;
-    })
-    function save() {
-        if (validateFloorNo("update",$("#floorNo"))) {
-            $.ajax({
-                type: "GET",
-                url: "saveFloor.do",
-                data: $("#add_form").serialize(),
-                dataType: "json",
-                success: function (data) {
-                    var funResult = eval("(" + data + ")");
-                    switch (funResult.status) {
-                        case 400:
-                            layer.tips(floor_validate_no_exist, $("#floorNo"), {tips: 2});
-                            break;
-                        case 401:
-                            layer.tips(floor_validate_no_wrong, $("#floorNo"), {tips: 2});
-                            break;
-                        case 410:
-                            layer.tips(messageOfValidateLength($("note"), 1024), $("#note"), {tips: 2});
-                            break;
-                        case 500:
-                            layer.msg(error_500, {
-                                icon: 2, time: 2000
-                            }, function () {
-                                parent.location.reload();
-                                closeMe();
-                            });
-                            break;
-                        case 200:
-                            layer.msg(floor_manage_edit_success, {
-                                icon: 1,
-                                time: 2000
-                            }, function () {
-                                parent.location.reload();
-                                closeMe();
-                            });
-                            ;
-                            break;
-                    }
-                }
-            });
-        }
-    }
-</script>
 </body>
 </html>

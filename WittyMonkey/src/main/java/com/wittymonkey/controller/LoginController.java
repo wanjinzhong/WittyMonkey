@@ -545,10 +545,12 @@ public class LoginController {
 
         // 添加默认物料类型
         MaterielType materielType = new MaterielType();
-        materielType.setName("Other");
+        materielType.setName("Other(其它)");
         materielType.setEntryDatetime(now);
         materielType.setEntryUser(system);
         materielType.setHotel(hotel);
+        materielType.setDefault(true);
+        materielType.setEditable(false);
 
         // 添加角色
         Role role = new Role();
@@ -647,8 +649,11 @@ public class LoginController {
         setting.setLang("zh_CN");
         setting.setPageSize(10);
 
-        // 添加用户
+        // 添加用户和工资
         User user = new User();
+        Salary userSalary = new Salary();
+        userSalary.setStaff(user);
+        user.setSalary(userSalary);
         user.setRealName(realName);
         user.setPassword(MD5Util.encrypt(password));
         user.setEmail(email.toLowerCase());

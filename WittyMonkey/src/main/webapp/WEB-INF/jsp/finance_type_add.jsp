@@ -16,7 +16,7 @@
           type="text/css"/>
 </head>
 <script type="text/javascript" src="js/common.js"></script>
-<link type="text/css" rel="stylesheet" href="style/floor_add.css"/>
+<link type="text/css" rel="stylesheet" href="style/finance.css"/>
 <script type="text/javascript" src="js/finance_type_add.js"></script>
 <!-- 根据设置动态加载js语言 -->
 <script type="text/javascript" src="i18n/messages_${loginUser.setting.lang }.js"></script>
@@ -30,7 +30,7 @@
                        id="name" onblur="validateFinanceTypeName('add',this)"></td>
         </tr>
         <tr><td><label class="layui-form-label"><fmt:message key="finance_type.in/out"/></label></td>
-            <td style="text-align: left"><select name="type">
+            <td style="text-align: left"><select name="type" style="max-height: 200px">
                 <option value="1" selected><fmt:message key="finance_type.in"/></option>
                 <option value="0"><fmt:message key="finance_type.out"/></option>
             </select></td>

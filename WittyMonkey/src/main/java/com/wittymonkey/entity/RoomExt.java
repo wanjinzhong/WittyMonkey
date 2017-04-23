@@ -26,6 +26,7 @@ public class RoomExt implements Serializable{
 	private Integer id;
 	
 	@OneToOne(targetEntity=RoomMaster.class)
+	@JoinColumn(name = "room_id", referencedColumnName = "id")
 	private RoomMaster roomMaster;
 	
 	@Column(name="has_window")

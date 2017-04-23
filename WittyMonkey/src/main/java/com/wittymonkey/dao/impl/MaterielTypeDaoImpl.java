@@ -36,4 +36,16 @@ public class MaterielTypeDaoImpl extends GenericDaoImpl<MaterielType> implements
         param.put("name", name);
         return queryOneHql(hql, param);
     }
+
+    @Override
+    public MaterielType getMaterielTypeById(Integer id) {
+        String hql = "from MaterielType where id = ?";
+        return queryOneHql(hql, id);
+    }
+
+    @Override
+    public MaterielType getDefaultByHotel(Integer hotelId) {
+        String hql = "from MaterielType where hotel.id = ? and isDefault = true";
+        return queryOneHql(hql, hotelId);
+    }
 }

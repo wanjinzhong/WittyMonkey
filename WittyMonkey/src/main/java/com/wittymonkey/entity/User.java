@@ -68,6 +68,9 @@ public class User implements Serializable {
 
 	@OneToOne(targetEntity=Setting.class, mappedBy = "user",cascade={CascadeType.PERSIST,CascadeType.MERGE})
 	private Setting setting;
+
+	@OneToOne(targetEntity = Salary.class, mappedBy = "staff", cascade = {CascadeType.ALL})
+	private Salary salary;
 	
 	
 	@Column(length=15)
@@ -206,4 +209,11 @@ public class User implements Serializable {
 		this.setting = setting;
 	}
 
+	public Salary getSalary() {
+		return salary;
+	}
+
+	public void setSalary(Salary salary) {
+		this.salary = salary;
+	}
 }

@@ -18,10 +18,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
+import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
 
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
+import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
 /**
  * Created by neilw on 2017/3/25.
@@ -40,7 +42,10 @@ public class MaterielTypeController {
 
     @RequestMapping(value = "toEditMaterielType", method = GET)
     public String toEditMaterielType(HttpServletRequest request) {
-        return "materiel_type_add";
+        Integer id = Integer.parseInt(request.getParameter("typeId"));
+        MaterielType materielType = materielTypeService.getMaterielTypeById(id);
+        request.setAttribute("materielType", materielType);
+        return "materiel_type_edit";
     }
 
     @RequestMapping(value = "toAddMaterielType", method = GET)
@@ -67,10 +72,24 @@ public class MaterielTypeController {
         return json.toJSONString();
     }
 
-    @RequestMapping(value = "deleteMaterielType", method = GET)
+    @RequestMapping(value = "deleteMaterielType", method = POST)
     @ResponseBody
     public String deleteMaterielType(HttpServletRequest request) {
-        return null;
+        JSONObject json = new JSONObject();
+        Integer id = Integer.parseInt(request.getParameter("typeId"));
+        MaterielType materielType = materielTypeService.getMaterielTypeById(id);
+        if (materielType == null){
+            json.put("status", 400);
+            return json.toJSONString();
+        }
+        try {
+            materielTypeService.deleteMaterielType(materielType);
+        } catch (SQLException e) {
+            json.put("status", 500);
+            return json.toJSONString();
+        }
+        json.put("status", 200);
+        return json.toJSONString();
     }
 
     /**
@@ -209,6 +228,8 @@ public class MaterielTypeController {
         materielType.setNote(note);
         materielType.setEntryUser(userService.getUserById(user.getId()));
         materielType.setEntryDatetime(new Date());
+        materielType.setEditable(true);
+        materielType.setDefault(false);
         materielTypeService.saveMaterielType(materielType);
 
         json.put("status", 200);
