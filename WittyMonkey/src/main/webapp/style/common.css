@@ -1,119 +1,147 @@
 @CHARSET "UTF-8";
-*{
-	font-family: "Microsoft Yahei";
-	font-size: 13px;
+* {
+    font-family: "Microsoft Yahei";
+    font-size: 13px;
 }
-.layui-form-label{
-	font-size: 13px;
-	padding: 0;
-	padding-right: 15px;
-	width: auto;
-	float: right;
-	/* 宽度自适应 */
-	display:inline-block;
-	*display:inline;
-	*zoom:1;
+
+.layui-form-label {
+    font-size: 13px;
+    padding: 0;
+    padding-right: 15px;
+    width: auto;
+    float: right;
+    /* 宽度自适应 */
+    display: inline-block;
+    *display: inline;
+    *zoom: 1;
 }
-.layui-textarea{
-	resize: none;
+
+.layui-textarea {
+    resize: none;
 }
-.layui-table td, .layui-table th{
-	font-size: 13px;
+
+.layui-table td, .layui-table th {
+    font-size: 13px;
 }
-#form_title{
-	font-size: 20px;
-	font-weight: bold;
+
+#form_title {
+    font-size: 20px;
+    font-weight: bold;
 }
+
 .icon {
-	width: 1em; height: 1em;
-	vertical-align: -0.15em;
-	fill: currentColor;
-	overflow: hidden;
-}
-#refresh_btn{
-	width: 20px;
-	height: 20px;
+    width: 1em;
+    height: 1em;
+    vertical-align: -0.15em;
+    fill: currentColor;
+    overflow: hidden;
 }
 
-th{
-	text-align: center !important;
+#refresh_btn {
+    width: 20px;
+    height: 20px;
 }
-td{
-	text-align: center;
+
+th {
+    text-align: center !important;
 }
-#main{
-	margin: 10px;
+
+td {
+    text-align: center;
 }
+
+#main {
+    margin: 10px;
+}
+
 #btnGroup {
-	margin-top: 15px;
-	margin-right: 30px;
-	float: right;
+    margin-top: 15px;
+    margin-right: 30px;
+    float: right;
 }
+
 #btnGroup input {
-	margin-left: 10px;
+    margin-left: 10px;
 }
-#page{
-	margin-top: 20px;
-	margin-bottom: 50px;
+
+#page {
+    margin-top: 20px;
+    margin-bottom: 50px;
 }
-.refreshBtn{
-	font-size: 20px;
-	position: absolute;
-	top: 0px;
-	right: 20px;
+
+.refreshBtn {
+    font-size: 20px;
+    position: absolute;
+    top: 0px;
+    right: 20px;
 }
-.layui-input{
-	height: 30px;
-	line-height: 30px;
+
+.layui-input {
+    height: 30px;
+    line-height: 30px;
 }
-.newBtn{
-	font-size: 13px;
-	height: 35px;
+
+.newBtn {
+    font-size: 13px;
+    height: 35px;
 }
-.eye{
-	cursor: pointer;
-	transition: color 0.5s;
+
+.eye {
+    cursor: pointer;
+    transition: color 0.5s;
 }
-.eye:hover{
-	color: grey;
+
+.eye:hover {
+    color: grey;
 }
-.editBtn, .deleteBtn, .showBtn{
-	font-size: 13px;
+
+.editBtn, .deleteBtn, .showBtn {
+    font-size: 13px;
 }
-.editBtn:hover{
-	border-color: #1E9FFF;
-	color: #1E9FFF;
-	transition: border-color, color 0.5s,0.5s;
+
+.editBtn:hover {
+    border-color: #1E9FFF;
+    color: #1E9FFF;
+    transition: border-color, color 0.5s, 0.5s;
 }
-.deleteBtn:hover{
-	border-color: #FF5722;
-	color: #FF5722;
-	transition: border-color, color 0.5s,0.5s;
+
+.deleteBtn:hover {
+    border-color: #FF5722;
+    color: #FF5722;
+    transition: border-color, color 0.5s, 0.5s;
 }
-.showBtn:hover{
-	border-color: #1AA094;
-	color: #1AA094;
-	transition: border-color, color 0.5s,0.5s;
+
+.showBtn:hover {
+    border-color: #1AA094;
+    color: #1AA094;
+    transition: border-color, color 0.5s, 0.5s;
 }
+
 .form_table td {
-	text-align: right;
-	padding: 5px;
+    text-align: right;
+    padding: 5px;
 }
 
-.form_table{
-	margin: 0 auto;
+.form_table {
+    margin: 0 auto;
 }
 
-body{
-	height: 98%;
-}
-.layui-form{
-	text-align: center;
-}
-.searchBtn, .searchType, .searchContent{
-	display: inline-block;
+body {
+    height: 98%;
 }
 
-.searchBtn{
-	height: 30px;
+.layui-form {
+    text-align: center;
+}
+
+.searchBtn, .searchType, .searchContent {
+    display: inline-block;
+}
+
+.searchBtn {
+    height: 30px;
+}
+
+.text-highlight-red {
+    color: #FF5722;
 }

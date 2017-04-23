@@ -15,9 +15,11 @@
     <title><fmt:message key="materiel.manage.title"/></title>
 </head>
 <script type="text/javascript" src="js/common.js"></script>
+<script type="text/javascript" src="js/materiel_manage.js"></script>
 <!-- 根据设置动态加载js语言 -->
 <script type="text/javascript" src="i18n/messages_${loginUser.setting.lang }.js"></script>
 <link href="style/common.css" rel="stylesheet" type="text/css"/>
+<link href="style/materiel.css" rel="stylesheet" type="text/css"/>
 <fmt:setBundle basename="i18n/messages_${loginUser.setting.lang }"/>
 <body>
 <div>
@@ -25,13 +27,26 @@
         <i class="refreshBtn layui-icon layui-btn layui-btn-small" onclick="reload();">&#x1002;</i>
     </nav>
     <div id="main">
-        <i class="newBtn layui-icon layui-btn layui-btn-radius layui-btn-normal" onclick="showAddMaterielType()">&#xe61f; <fmt:message key="materiel_type.addbtn"/></i>
+    <i class="newBtn layui-icon layui-btn layui-btn-radius layui-btn-normal" onclick="showAddMaterielType()">&#xe61f;
+        <fmt:message key="materiel.add_btn"/></i>
+    <form class="layui-form">
+        <div class="searchTypeDiv">
+            <select name="searchType" id="searchType" lay-filter="searchType">
+                <option value="1" selected><fmt:message key="materiel.search.all"/></option>
+                <option value="2"><fmt:message key="materiel.search.type"/></option>
+                <option value="3"><fmt:message key="materiel.search.warn"/></option>
+            </select>
+        </div>
+        <div class="searchContent"></div>
+    </form>
         <table class="layui-table" lay-skin="line">
             <thead>
             <tr>
-                <th width="100px"><fmt:message key="materiel_type.name"/></th>
-                <th width="100px"><fmt:message key="materiel_type.number"/></th>
-                <th><fmt:message key="note"/></th>
+                <th width="150px"><fmt:message key="materiel.barcode"/></th>
+                <th width="100px"><fmt:message key="materiel.name"/></th>
+                <th width="100px"><fmt:message key="materiel.type"/></th>
+                <th width="50px"><fmt:message key="materiel.stock"/></th>
+                <th width="50px"><fmt:message key="materiel.unit"/></th>
                 <th width="150px"><fmt:message key="materiel_type.entry_user"/></th>
                 <th width="200px"><fmt:message key="materiel_type.entry_datetime"/></th>
                 <th width="200px"><fmt:message key="operation"/></th>

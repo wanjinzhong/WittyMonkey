@@ -334,4 +334,24 @@ public class ChangeToSimple {
         }
         return salaryVOS;
     }
+
+    public static List<SimpleMateriel> materielList(List<Materiel> materiels){
+        List<SimpleMateriel> simpleMateriels = new ArrayList<SimpleMateriel>();
+        for (Materiel materiel : materiels){
+            SimpleMateriel simpleMateriel = new SimpleMateriel();
+            simpleMateriel.setBarcode(materiel.getBarcode());
+            simpleMateriel.setEntryDatetime(materiel.getEntryDatetime());
+            simpleMateriel.setEntryUser(materiel.getEntryUser().getRealName());
+            simpleMateriel.setId(materiel.getId());
+            simpleMateriel.setMaterielType(materiel.getMaterielType().getName());
+            simpleMateriel.setName(materiel.getName());
+            simpleMateriel.setNote(materiel.getNote());
+            simpleMateriel.setSellPrice(materiel.getSellPrice());
+            simpleMateriel.setStock(materiel.getStock());
+            simpleMateriel.setUnit(materiel.getUnit());
+            simpleMateriel.setWarningStock(materiel.getWarningStock());
+            simpleMateriels.add(simpleMateriel);
+        }
+        return simpleMateriels;
+    }
 }

@@ -64,13 +64,26 @@ public class MaterielTypeController {
         Hotel hotel = (Hotel) request.getSession().getAttribute("hotel");
         Integer count = materielTypeService.getTotalByHotelId(hotel.getId());
         List<MaterielType> materielTypes = materielTypeService.getMaterielTypeByHotelId(hotel.getId(), (curr - 1) * pageSize, pageSize);
-        List<SimpleMaterielType> simpleFloors = ChangeToSimple.materielTypeList(materielTypes);
+        List<SimpleMaterielType> simpleMaterielTypes = ChangeToSimple.materielTypeList(materielTypes);
         json.put("count", count);
         json.put("pageSize", pageSize);
         JSONArray array = new JSONArray();
-        array.addAll(simpleFloors);
+        array.addAll(simpleMaterielTypes);
         json.put("data", array);
         return json.toJSONString();
+    }
+
+    @RequestMapping(value = "getAllMaterielTypeByHotel", method = GET)
+    @ResponseBody
+    public String getAllMaterielTypeByHotel(HttpServletRequest request){
+        JSONObject json = new JSONObject();
+        Hotel hotel = (Hotel) request.getSession().getAttribute("hotel");
+        List<MaterielType> materielTypes = materielTypeService.getMaterielTypeByHotelId(hotel.getId(), null, null);
+        List<SimpleMaterielType> simpleMaterielTypes = ChangeToSimple.materielTypeList(materielTypes);
+        JSONArray array = new JSONArray();
+        array.addAll(simpleMaterielTypes);
+        json.put("data", array);
+        return array.toJSONString();
     }
 
     @RequestMapping(value = "deleteMaterielType", method = POST)

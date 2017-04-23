@@ -42,7 +42,13 @@ public class Constraint {
     public static final Integer SALARY_SEARCH_CONDITION_TO = 5;
     public static final Integer SALARY_SEARCH_CONDITION_INCUMBENT = 6;
 
+    public static final Integer MATERIEL_SEARCHTYPE_ALL = 1;
+    public static final Integer MATERIEL_SEARCHTYPE_TYPE = 2;
+    public static final Integer MATERIEL_SEARCHTYPE_WARN = 3;
+    public static final Integer MATERIEL_SEARCH_CONDITION_HOTEL_ID = 1;
+    public static final Integer MATERIEL_SEARCH_CONDITION_TYPE_ID = 2;
+    public static final Integer MATERIEL_SEARCH_CONDITION_WARN = 3;
 
-    public static final String LANG_ZH_CN ="zh_CN";
-    public static final String LANG_EN_US ="en_US";
+    public static final String LANG_ZH_CN = "zh_CN";
+    public static final String LANG_EN_US = "en_US";
 }
