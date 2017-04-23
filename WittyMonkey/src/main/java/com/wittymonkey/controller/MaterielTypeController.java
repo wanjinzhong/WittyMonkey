@@ -3,6 +3,7 @@ package com.wittymonkey.controller;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.wittymonkey.entity.Hotel;
+import com.wittymonkey.entity.Materiel;
 import com.wittymonkey.entity.MaterielType;
 import com.wittymonkey.entity.User;
 import com.wittymonkey.vo.Constraint;
@@ -44,7 +45,7 @@ public class MaterielTypeController {
     public String toEditMaterielType(HttpServletRequest request) {
         Integer id = Integer.parseInt(request.getParameter("typeId"));
         MaterielType materielType = materielTypeService.getMaterielTypeById(id);
-        request.setAttribute("materielType", materielType);
+        request.getSession().setAttribute("editMaterielType", materielType);
         return "materiel_type_edit";
     }
 
@@ -234,5 +235,71 @@ public class MaterielTypeController {
 
         json.put("status", 200);
         return json.toJSONString();
+    }
+
+    /**
+     * 更新物料类型
+     * @param request
+     * @return
+     * <table border="1" cellspacing="0">
+     * <tr>
+     * <th>代码</th>
+     * <th>说明</th>
+     * </tr>
+     * <tr>
+     * <td>400</td>
+     * <td>姓名为空</td>
+     * </tr>
+     * <tr>
+     * <td>401</td>
+     * <td>姓名过长</td>
+     * </tr>
+     * <tr>
+     * <td>410</td>
+     * <td>备注过长</td>
+     * </tr>
+     * <tr>
+     * <td>420</td>
+     * <td>物料类型已存在</td>
+     * </tr>
+     * <tr>
+     * <td>200</td>
+     * <td>更新成功</td>
+     * </tr>
+     */
+    @RequestMapping(value = "updateMaterielType", method = POST)
+    @ResponseBody
+    public String updateMaterielType(HttpServletRequest request){
+        JSONObject json = new JSONObject();
+        User user = (User) request.getSession().getAttribute("loginUser");
+        MaterielType materielType = (MaterielType) request.getSession().getAttribute("editMaterielType");
+        String method = request.getParameter("method");
+        String name = request.getParameter("name");
+        String note = request.getParameter("note");
+        if (StringUtils.isBlank(name)) {
+            json.put("status", 400);
+            return json.toJSONString();
+        }
+        if (name.length() > 10) {
+            json.put("status", 401);
+            return json.toJSONString();
+        }
+        if (note.length() > 1024) {
+            json.put("status", 410);
+            return json.toJSONString();
+        }
+        if (validateMaterielTypeName(request, method, name) == 200) {
+            json.put("status", 420);
+            return json.toJSONString();
+        }
+        MaterielType type = materielTypeService.getMaterielTypeById(materielType.getId());
+        type.setName(name);
+        type.setNote(note);
+        type.setEntryDatetime(new Date());
+        type.setEntryUser(userService.getUserById(user.getId()));
+        materielTypeService.saveMaterielType(type);
+        json.put("status", 200);
+        return json.toJSONString();
+
     }
 }

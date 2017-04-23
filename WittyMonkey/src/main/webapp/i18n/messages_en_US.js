@@ -141,6 +141,7 @@ var materiel_type_add_title = "Add material type";
 var materiel_type_validate_name_exist = "Material type already exists";
 var materiel_type_validate_name_empty = "Material type is empty";
 var materiel_type_add_success = "Material type added successfully";
+var materiel_type_update_success = "Materiel Type updated successfully";
 var choose_room_not_exist = "Room does not exist";
 var choose_checkin_not_exist = "Checkin does not exist";
 var reason = "Reason";

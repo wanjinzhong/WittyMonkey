@@ -80,7 +80,7 @@ function deleteMaterielType(typeId) {
 function editMaterielType(typeId) {
     layer.open({
         type: 2,
-        area: ['400px', '280px'],
+        area: ['500px', '300px'],
         maxmin: false,
         shade: 0.4,
         title: materiel_type_edit_title,
@@ -90,7 +90,7 @@ function editMaterielType(typeId) {
 function showAddMaterielType() {
     layer.open({
         type: 2,
-        area: ['400px', '280px'],
+        area: ['500px', '300px'],
         maxmin: false,
         shade: 0.4,
         title: materiel_type_add_title,

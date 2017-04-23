@@ -140,6 +140,7 @@ var materiel_type_add_title = "添加物料类型";
 var materiel_type_validate_name_exist = "物料类型已存在";
 var materiel_type_validate_name_empty = "物料类型为空";
 var materiel_type_add_success = "物料类型添加成功";
+var materiel_type_update_success = "物料类型更新成功";
 var choose_room_not_exist = "房间不存在";
 var choose_checkin_not_exist = "入住信息不存在";
 var reason = "原因";
