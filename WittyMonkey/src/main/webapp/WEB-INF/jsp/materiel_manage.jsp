@@ -29,7 +29,7 @@
     <div id="main">
     <i class="newBtn layui-icon layui-btn layui-btn-radius layui-btn-normal" onclick="showAddMateriel()">&#xe61f;
         <fmt:message key="materiel.add_btn"/></i>
-    <form class="layui-form">
+    <form class="layui-form" style="min-width: 860px">
         <div class="searchTypeDiv">
             <select name="searchType" id="searchType" lay-filter="searchType">
                 <option value="1" selected><fmt:message key="materiel.search.all"/></option>
@@ -41,7 +41,7 @@
         </div>
         <div class="searchContent"></div>
     </form>
-        <table class="layui-table" lay-skin="line" style="min-width: 850px">
+        <table class="layui-table" lay-skin="line" style="min-width: 860px">
             <thead>
             <tr>
                 <th width="150px"><fmt:message key="materiel.barcode"/></th>
@@ -49,8 +49,8 @@
                 <th width="100px"><fmt:message key="materiel.type"/></th>
                 <th width="50px"><fmt:message key="materiel.stock"/></th>
                 <th width="50px"><fmt:message key="materiel.unit"/></th>
-                <th width="150px"><fmt:message key="materiel_type.entry_user"/></th>
-                <th width="200px"><fmt:message key="materiel_type.entry_datetime"/></th>
+                <th width="150px"><fmt:message key="entry_user"/></th>
+                <th width="200px"><fmt:message key="entry_date"/></th>
                 <th width="200px"><fmt:message key="operation"/></th>
             </tr>
             </thead>

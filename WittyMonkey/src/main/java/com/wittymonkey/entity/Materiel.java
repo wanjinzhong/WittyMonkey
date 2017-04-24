@@ -24,7 +24,7 @@ public class Materiel implements Serializable {
     @Column(length = 50)
     private String barcode;
 
-    @Column(length = 100)
+    @Column(length = 50)
     private String name;
 
     // 售价

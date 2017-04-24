@@ -121,8 +121,8 @@ function page(url, curr, condition) {
 
 function validateLength(inp, name, length) {
     var content = $(inp).val();
-    if (content.length > content){
-        layer.tips(messageOfValidateLength(name, length), {tips: 2});
+    if (content.length > length) {
+        layer.tips(messageOfValidateLength(name, length), inp , {tips: 2});
         return false;
     }
     return true;
@@ -134,13 +134,13 @@ function validateLength(inp, name, length) {
  * @param inp
  * @returns {*}
  */
-function validateFinanceTypeName(type, inp){
+function validateFinanceTypeName(type, inp) {
     var name = $(inp).val();
     var funResult;
-    if (name.length <= 0){
+    if (name.length <= 0) {
         layer.tips(messageOfValidateNull(name), inp, {tips: 2});
         return false;
-    } else if (name.length > 10){
+    } else if (name.length > 10) {
         layer.tips(messageOfValidateLength(name, 10), inp, {tips: 2});
         return false;
     }
@@ -255,10 +255,10 @@ function validateFloorNo(method, inp) {
 function validateMaterielTypeName(method, inp) {
     var name = $(inp).val();
     var funResult;
-    if (name.length <= 0){
+    if (name.length <= 0) {
         layer.tips(messageOfValidateNull(name), inp, {tips: 2});
         return false;
-    } else if (name.length > 10){
+    } else if (name.length > 10) {
         layer.tips(messageOfValidateLength(name, 10), inp, {tips: 2});
         return false;
     }
@@ -398,6 +398,42 @@ function validateMoneyValue(money) {
     if (!reg.test(money)) {
         return false;
     }
+    return true;
+}
+
+function validateBarcode(method, obj) {
+    var barcode = $(obj).val();
+    if (barcode.length <= 0) {
+        layer.tips(messageOfValidateNull(materiel_add_barcode, obj, {tips: 2}));
+        return false;
+    }
+    if (barcode.length > 50) {
+        layer.tips(messageOfValidateLength(barcode, 50), obj, {tips: 2});
+        return false;
+    }
+    $.ajax({
+        url: "validateBarcode.do",
+        data: {"barcode": barcode, "method": method},
+        dataType: "json",
+        type: "get",
+        async: false,
+        success: function (data) {
+            var res = eval("(" + data + ")");
+            switch (res["status"]) {
+                case 400:
+                    layer.tips(messageOfValidateNull(materiel_add_barcode, obj, {tips: 2}));
+                    return false;
+                case 401:
+                    layer.tips(messageOfValidateLength(barcode, 50), obj, {tips: 2});
+                    return false;
+                case 201:
+                    layer.tips(materiel_barcode_exist, obj, {tips: 2});
+                    return false;
+                case 200:
+                    return true;
+            }
+        }
+    });
     return true;
 }
 

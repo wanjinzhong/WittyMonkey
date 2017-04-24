@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 import com.wittymonkey.dao.IMaterielDao;
 import com.wittymonkey.entity.Materiel;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -34,6 +35,15 @@ public class MaterielDaoImpl extends GenericDaoImpl<Materiel> implements IMateri
         ConditionModel model = assymblyCondition(condition);
         hql += model.getHql() + " order by entryDatetime desc";
         return queryListHQL(hql, model.getParam(),start,total);
+    }
+
+    @Override
+    public Materiel getMaterielByBarcode(Integer hotelId, String barcode) {
+        String hql = "from Materiel where materielType.hotel.id = :hotelId and barcode = :barcode";
+        Map<String, Object> param = new HashMap<String, Object>();
+        param.put("hotelId", hotelId);
+        param.put("barcode", barcode);
+        return queryOneHql(hql, param);
     }
 
     private ConditionModel assymblyCondition(Map<Integer, Object> condition){

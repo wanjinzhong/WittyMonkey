@@ -100,7 +100,7 @@ function deleteMateriel(id) {
 function showAddMateriel(){
     layer.open({
         type: 2,
-        area: ['700px', '350px'],
+        area: ['800px', '350px'],
         maxmin: false,
         shade: 0.4,
         title: materiel_add_title,

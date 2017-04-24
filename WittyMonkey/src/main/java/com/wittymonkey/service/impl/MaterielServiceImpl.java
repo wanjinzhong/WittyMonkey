@@ -25,4 +25,14 @@ public class MaterielServiceImpl implements IMaterielService{
     public List<Materiel> getMaterielByPage(Map<Integer, Object> condition, Integer start, Integer total) {
         return materielDao.getMaterielByPage(condition, start, total);
     }
+
+    @Override
+    public Materiel getMaterielByBarcode(Integer hotelId, String barcode) {
+        return materielDao.getMaterielByBarcode(hotelId, barcode);
+    }
+
+    @Override
+    public void saveMateriel(Materiel materiel) {
+        materielDao.save(materiel);
+    }
 }

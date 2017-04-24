@@ -223,4 +223,14 @@ var salary_delete_success = "Delete Succesfully";
 var to_back = "Back";
 var salary_history = "Salary History";
 var salary_legend = "Salary";
+
 var materiel_add_title = "Add Materiel";
+var materiel_add_barcode = "Barcode";
+var materiel_barcode_exist = "Barcode is exist";
+var materiel_name = "Name";
+var materiel_unit = "Unit";
+var meteriel_warn_error = "Warning wrong";
+var materiel_warn_negative = "No negative";
+var meteriel_sell_error = "Sell price wrong";
+var materiel_sell_negative = "No negative";
+var materiel_add_success = "Materiel add successfully";

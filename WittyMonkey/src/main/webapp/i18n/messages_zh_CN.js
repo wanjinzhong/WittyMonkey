@@ -235,3 +235,12 @@ var salary_history = "工资历史";
 var salary_legend = "工资";
 
 var materiel_add_title = "添加物料";
+var materiel_add_barcode = "条码号";
+var materiel_barcode_exist = "条码号已存在";
+var materiel_name = "名称";
+var materiel_unit = "单位";
+var meteriel_warn_error = "预警不正确";
+var materiel_warn_negative = "预警不能为负";
+var meteriel_sell_error = "售价不正确";
+var materiel_sell_negative = "售价不能为负";
+var materiel_add_success = "物料保存成功";
