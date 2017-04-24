@@ -69,8 +69,8 @@ function refreshTable(obj) {
                 "<td>" + obj[i].entryUser + "</td>" +
                 "<td>" + formatDate(obj[i].entryDatetime) + "</td>" +
                 "<td>" +
-                "<i class='editBtn layui-icon layui-btn layui-btn-primary layui-btn-small' onclick='editFloor(" + obj[i].floorNo + ")'>&#xe642; " + btn_edit + "</i>" +
-                "<i class='deleteBtn layui-icon layui-btn layui-btn-primary layui-btn-small' onclick='deleteFloor(" + obj[i].floorNo + ")'>&#xe640; " + btn_delete + "</i>" +
+                "<i class='editBtn layui-icon layui-btn layui-btn-primary layui-btn-small' onclick='editMateriel(" + obj[i].id + ")'>&#xe642; " + btn_edit + "</i>" +
+                "<i class='deleteBtn layui-icon layui-btn layui-btn-primary layui-btn-small' onclick='deleteMateriel(" + obj[i].id + "," + obj[i].stock + ")'>&#xe640; " + btn_delete + "</i>" +
                 "</td>" +
                 "</tr>";
         }
@@ -90,11 +90,65 @@ function search() {
 }
 
 function editMateriel(id) {
-
+    layer.open({
+        type: 2,
+        area: ['800px', '350px'],
+        maxmin: false,
+        shade: 0.4,
+        title: materiel_detail_title,
+        content: "toMaterielDetail.do?id=" + id
+    });
 }
 
-function deleteMateriel(id) {
-
+function deleteMateriel(id, stock) {
+    var delete_hint;
+    if (stock != 0){
+        delete_hint = materiel_detele_not_null_hint;
+    } else {
+        delete_hint = materiel_delete_hint;
+    }
+    layer.confirm(delete_hint, {icon: 7, title: materiel_delete_title},
+        function (index) {
+            var load = layer.load();
+            $.ajax({
+                url: "deleteMateriel.do",
+                data: {"id": id},
+                dataType: "json",
+                type: "POST",
+                success: function (data) {
+                    layer.close(load);
+                    var result = eval("(" + data + ")");
+                    switch (result.status) {
+                        case 400:
+                            layer.msg(materiel_delete_not_exist, {
+                                icon: 2, time: 2000
+                            }, function () {
+                                parent.location.reload();
+                                closeMe();
+                            });
+                            break;
+                        case 500:
+                            layer.msg(error_500, {
+                                icon: 2, time: 2000
+                            }, function () {
+                                parent.location.reload();
+                                closeMe();
+                            });
+                            break;
+                        case 200:
+                            layer.msg(materiel_delete_success, {
+                                icon: 6,
+                                time: 2000
+                            }, function () {
+                                window.location.reload();
+                                closeMe();
+                            });
+                            break;
+                    }
+                }
+            });
+            layer.close(index);
+        });
 }
 
 function showAddMateriel(){

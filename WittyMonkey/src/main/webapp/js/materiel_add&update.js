@@ -21,8 +21,18 @@ function save() {
         return false;
     }
     var load = layer.load();
+    var url;
+    var success_hint;
+    var method = $("#method").val();
+    if (method == "add"){
+        url = "saveMateriel.do";
+        success_hint = materiel_add_success;
+    } else if (method == "update"){
+        url = "updateMateriel.do";
+        success_hint = materiel_update_success;
+    }
     $.ajax({
-        url: "saveMateriel.do",
+        url: url,
         data: $("#materiel_form").serialize(),
         dataType: "json",
         type: "POST",
@@ -67,7 +77,7 @@ function save() {
                     layer.tips(messageOfValidateLength(message_note, 10), $("#note"), {tips: 2});
                     break;
                 case 200:
-                    layer.msg(materiel_add_success, {
+                    layer.msg(success_hint, {
                         icon: 1,
                         time: 2000
                     }, function () {
@@ -78,4 +88,15 @@ function save() {
             }
         }
     });
+}
+function edit(){
+    $("#barcode").attr("disabled", false);
+    $("#name").attr("disabled", false);
+    $("#unit").attr("disabled", false);
+    $("#typeId").attr("disabled", false);
+    $("#warnStock").attr("disabled", false);
+    $("#sellPrice").attr("disabled", false);
+    $("#note").attr("disabled", false);
+    $('#updateBtn').attr('type', "button");
+    form.render("select");
 }

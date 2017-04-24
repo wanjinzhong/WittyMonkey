@@ -46,6 +46,12 @@ public class MaterielDaoImpl extends GenericDaoImpl<Materiel> implements IMateri
         return queryOneHql(hql, param);
     }
 
+    @Override
+    public Materiel getMaterielById(Integer id) {
+        String hql = "from Materiel where id = ?";
+        return queryOneHql(hql, id);
+    }
+
     private ConditionModel assymblyCondition(Map<Integer, Object> condition){
         ConditionModel model = new ConditionModel();
         StringBuilder builder = new StringBuilder(" where");

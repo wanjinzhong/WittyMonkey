@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.wittymonkey.service.IMaterielService;
 
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 
@@ -34,5 +35,15 @@ public class MaterielServiceImpl implements IMaterielService{
     @Override
     public void saveMateriel(Materiel materiel) {
         materielDao.save(materiel);
+    }
+
+    @Override
+    public Materiel getMaterielById(Integer id) {
+        return materielDao.getMaterielById(id);
+    }
+
+    @Override
+    public void deleteMateriel(Materiel materiel) throws SQLException {
+        materielDao.delete(materiel);
     }
 }

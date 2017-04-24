@@ -14,7 +14,7 @@
     <title><fmt:message key="room.add.title"/></title>
     <link rel="stylesheet" type="text/css" href="style/common.css"/>
     <script type="text/javascript" src="js/common.js"></script>
-    <script type="text/javascript" src="js/materiel_add.js"></script>
+    <script type="text/javascript" src="js/materiel_add&update.js"></script>
     <!-- 根据设置动态加载js语言 -->
     <script type="text/javascript" src="i18n/messages_${loginUser.setting.lang }.js"></script>
     <fmt:setBundle basename="i18n/messages_${loginUser.setting.lang }"/>
@@ -22,7 +22,7 @@
 <body>
     <form id="materiel_form" class="layui-form">
         <!-- java端处理方式 -->
-        <input type="hidden" name="method" value="add"/>
+        <input type="hidden" id="method" name="method" value="add"/>
         <table class="form_table">
             <tr>
                 <td><label class="layui-form-label"><fmt:message key="materiel.barcode"/></label></td>
