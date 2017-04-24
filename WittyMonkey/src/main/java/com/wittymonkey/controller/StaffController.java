@@ -145,6 +145,7 @@ public class StaffController {
         Setting setting = new Setting();
         setting.setLang(Constraint.LANG_ZH_CN);
         setting.setPageSize(10);
+        setting.setUser(user);
         user.setSetting(setting);
         user.setRegistDate(new Date());
         Salary salary = new Salary();
