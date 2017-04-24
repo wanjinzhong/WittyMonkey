@@ -29,7 +29,7 @@
         <i class="newBtn layui-icon layui-btn layui-btn-radius layui-btn-normal" onclick="showAddFinance()">&#xe61f;
             <fmt:message key="finance.add"/></i>
         <form class="layui-form">
-            <div>
+            <div style="min-width: 850px">
                 <div class="searchTypeDiv">
                     <select name="searchType" id="searchType" lay-filter="searchType" onchange="searchTypeChange()">
                         <option value="2" selected><fmt:message key="all"/></option>
@@ -48,7 +48,7 @@
                 </div>
             </div>
         </form>
-        <table class="layui-table" lay-skin="line">
+        <table class="layui-table" lay-skin="line" style="min-width: 850px">
             <thead>
             <tr>
                 <th width="150px"><fmt:message key="finance.time"/></th>

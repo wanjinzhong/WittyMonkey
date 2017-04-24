@@ -35,7 +35,7 @@
                 </select>
             </div>
         </form>
-        <table class="layui-table" lay-skin="line">
+        <table class="layui-table" lay-skin="line" style="min-width: 920px">
             <thead id="tableHead">
             </thead>
             <tbody id="dataTabel">

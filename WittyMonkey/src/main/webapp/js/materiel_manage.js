@@ -3,7 +3,7 @@
  */
 var layer;
 var form;
-layui.use(['layer', 'form'],function () {
+layui.use(['layer', 'form'], function () {
     layer = layui.layer;
     form = layui.form();
     form.on('select(type)', function (data) {
@@ -21,7 +21,7 @@ function changeType(obj) {
         html = "";
         var condition = {"searchType": type};
         page("getMaterielByPage.do", 1, condition);
-    } else if　(type == 2){
+    } else if (type == 2) {
         $.ajax({
             url: "getAllMaterielTypeByHotel.do",
             dataType: "json",
@@ -30,17 +30,25 @@ function changeType(obj) {
             success: function (data) {
                 var res = eval("(" + data + ")");
                 html = '<select name="type" id="type" lay-filter="type">';
-                for(var i in res){
+                for (var i in res) {
                     html += '<option value="' + res[i]["id"] + '">' + res[i]["name"] + '</option>';
                 }
                 html += '</select>';
             }
         });
+    } else if (type == 4 || type == 5){
+        html = "";
+        if (type == 4){
+            html = '<div style="display: inline-block;"><input type="text" name="barcode" id="barcode" class="layui-input layui-inline"/></div>';
+        } else if (type == 5){
+            html = '<div style="display: inline-block;"><input type="text" name="name" id="name" class="layui-input layui-inline"/></div>';
+        }
+        html += '<div class="searchBtn" onclick="search()"><i class="layui-btn layui-icon">&#xe615;</i>';
     }
     $(".searchContent").html(html);
     form.render("select");
 }
-function refreshTable(obj){
+function refreshTable(obj) {
     var html = "";
     if (obj.length == 0) {
         html = '<tr class="text-c">' +
@@ -49,7 +57,7 @@ function refreshTable(obj){
     } else {
         for (var i in obj) {
             html += "<tr class='text-c";
-            if (obj[i]["stock"] < obj[i]["warningStock"]){
+            if (obj[i]["stock"] < obj[i]["warningStock"]) {
                 html += ' text-highlight-red'
             }
             html += "'>" +
@@ -71,6 +79,31 @@ function refreshTable(obj){
 }
 
 function search() {
-    var condition = {"searchType": 2, "typeId": $("#type").val()};
+    var type = $("#searchType").val();
+    var condition;
+    if (type == 4) {
+        condition = {"searchType": type, "barcode": $("#barcode").val()};
+    } else if (type == 5){
+        condition = {"searchType": type, "name": $("#name").val()};
+    }
     page("getMaterielByPage.do", 1, condition);
+}
+
+function editMateriel(id) {
+
+}
+
+function deleteMateriel(id) {
+
+}
+
+function showAddMateriel(){
+    layer.open({
+        type: 2,
+        area: ['700px', '350px'],
+        maxmin: false,
+        shade: 0.4,
+        title: materiel_add_title,
+        content: "toAddMateriel.do"
+    });
 }

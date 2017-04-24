@@ -233,3 +233,5 @@ var salary_delete_success = "删除成功";
 var to_back = "返回";
 var salary_history = "工资历史";
 var salary_legend = "工资";
+
+var materiel_add_title = "添加物料";

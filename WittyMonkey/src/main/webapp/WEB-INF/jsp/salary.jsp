@@ -25,7 +25,7 @@
     <i class="refreshBtn layui-icon layui-btn layui-btn-small" onclick="reload();">&#x1002;</i>
 </nav>
 <div id="main">
-    <form class="layui-form">
+    <form class="layui-form" style="min-width: 850px;">
         <div>
             <div class="searchTypeDiv">
                 <select name="type" id="type" lay-filter="type" >
@@ -41,7 +41,7 @@
             </div>
         </div>
     </form>
-    <table class="layui-table" lay-skin="line">
+    <table class="layui-table" lay-skin="line" style="min-width: 850px;">
         <thead>
         <tr>
             <th width="50px"><fmt:message key="salary.staff_no"/></th>

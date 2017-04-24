@@ -35,15 +35,15 @@
                 </select>
             </div>
         </form>
-        <table class="layui-table" lay-skin="line">
+        <table class="layui-table" lay-skin="line" style="min-width: 900px">
             <thead>
             <tr>
                 <th width="100px"><fmt:message key="finance_type.name"/></th>
                 <th width="50px"><fmt:message key="finance_type.in/out"/></th>
                 <th><fmt:message key="note"/></th>
                 <th width="100px"><fmt:message key="entry_user"/></th>
-                <th width="200px"><fmt:message key="entry_date"/></th>
-                <th width="200px"><fmt:message key="operation"/></th>
+                <th width="100px"><fmt:message key="entry_date"/></th>
+                <th width="150px"><fmt:message key="operation"/></th>
             </tr>
             </thead>
             <tbody id="dataTabel">

@@ -26,15 +26,15 @@
     </nav>
     <div id="main">
         <i class="newBtn layui-icon layui-btn layui-btn-radius layui-btn-normal" onclick="showAddMaterielType()">&#xe61f; <fmt:message key="materiel_type.addbtn"/></i>
-        <table class="layui-table" lay-skin="line">
+        <table class="layui-table" lay-skin="line" style="min-width: 850px">
             <thead>
             <tr>
                 <th width="100px"><fmt:message key="materiel_type.name"/></th>
-                <th width="100px"><fmt:message key="materiel_type.number"/></th>
+                <th width="70px"><fmt:message key="materiel_type.number"/></th>
                 <th><fmt:message key="note"/></th>
-                <th width="150px"><fmt:message key="materiel_type.entry_user"/></th>
-                <th width="200px"><fmt:message key="materiel_type.entry_datetime"/></th>
-                <th width="200px"><fmt:message key="operation"/></th>
+                <th width="100px"><fmt:message key="materiel_type.entry_user"/></th>
+                <th width="150px"><fmt:message key="materiel_type.entry_datetime"/></th>
+                <th width="150px"><fmt:message key="operation"/></th>
             </tr>
             </thead>
             <tbody id="dataTabel">

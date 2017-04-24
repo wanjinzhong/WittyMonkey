@@ -28,15 +28,15 @@
     </nav>
     <div id="main">
             <i class="newBtn layui-icon layui-btn layui-btn-radius layui-btn-normal" onclick="showAddFloor()">&#xe61f; <fmt:message key="floor.btn.add"/></i>
-            <table class="layui-table" lay-skin="line">
+            <table class="layui-table" lay-skin="line" style="min-width: 850px">
             <thead>
             <tr>
-                <th width="100px"><fmt:message key="floor.manage.floor_no"/></th>
-                <th width="100px"><fmt:message key="floor.manage.room.num"/></th>
+                <th width="50px"><fmt:message key="floor.manage.floor_no"/></th>
+                <th width="50px"><fmt:message key="floor.manage.room.num"/></th>
                 <th><fmt:message key="note"/></th>
                 <th width="150px"><fmt:message key="floor.manage.entry_user"/></th>
                 <th width="200px"><fmt:message key="floor.manage.entry_date"/></th>
-                <th width="200px"><fmt:message key="operation"/></th>
+                <th width="150px"><fmt:message key="operation"/></th>
             </tr>
             </thead>
             <tbody id="dataTabel">

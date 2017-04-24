@@ -61,6 +61,16 @@ public class MaterielDaoImpl extends GenericDaoImpl<Materiel> implements IMateri
                 } else {
                     builder.append(" stock >= warningStock");
                 }
+            } else if (Constraint.MATERIEL_SEARCH_CONDITION_BARCODE.equals(entry.getKey())){
+                if (!model.getParam().isEmpty()){
+                    builder.append(" and");
+                }
+                builder.append(" barcode like '%" + entry.getValue() + "%'");
+            } else if (Constraint.MATERIEL_SEARCH_CONDITION_NAME.equals(entry.getKey())){
+                if (!model.getParam().isEmpty()){
+                    builder.append(" and");
+                }
+                builder.append(" name like '%" + entry.getValue() + "%'");
             }
         }
         model.setHql(builder.toString());

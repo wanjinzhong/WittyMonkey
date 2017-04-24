@@ -27,7 +27,7 @@
         <i class="refreshBtn layui-icon layui-btn layui-btn-small" onclick="reload();">&#x1002;</i>
     </nav>
     <div id="main">
-    <i class="newBtn layui-icon layui-btn layui-btn-radius layui-btn-normal" onclick="showAddMaterielType()">&#xe61f;
+    <i class="newBtn layui-icon layui-btn layui-btn-radius layui-btn-normal" onclick="showAddMateriel()">&#xe61f;
         <fmt:message key="materiel.add_btn"/></i>
     <form class="layui-form">
         <div class="searchTypeDiv">
@@ -35,11 +35,13 @@
                 <option value="1" selected><fmt:message key="materiel.search.all"/></option>
                 <option value="2"><fmt:message key="materiel.search.type"/></option>
                 <option value="3"><fmt:message key="materiel.search.warn"/></option>
+                <option value="4"><fmt:message key="materiel.barcode"/></option>
+                <option value="5"><fmt:message key="materiel.name"/></option>
             </select>
         </div>
         <div class="searchContent"></div>
     </form>
-        <table class="layui-table" lay-skin="line">
+        <table class="layui-table" lay-skin="line" style="min-width: 850px">
             <thead>
             <tr>
                 <th width="150px"><fmt:message key="materiel.barcode"/></th>

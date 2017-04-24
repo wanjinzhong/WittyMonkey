@@ -29,7 +29,7 @@
         <i class="newBtn layui-icon layui-btn layui-btn-radius layui-btn-normal" onclick="showAddReimburse()">&#xe61f;
             <fmt:message key="reimburse.add"/></i>
         <form class="layui-form">
-            <div>
+            <div style="min-width: 800px">
                 <div class="searchTypeDiv">
                     <select name="type" id="type" lay-filter="type" >
                         <option value="0" selected><fmt:message key="reimburse.status.all"/></option>
@@ -46,7 +46,7 @@
                 </div>
             </div>
         </form>
-        <table class="layui-table" lay-skin="line">
+        <table class="layui-table" lay-skin="line" style="min-width: 800px">
             <thead>
             <tr>
                 <th width="100px"><fmt:message key="reimburse.apply_user"/></th>
@@ -55,7 +55,7 @@
                 <th width="50px"><fmt:message key="reimburse.status"/></th>
                 <th width="100px"><fmt:message key="reimburse.opt_user"/></th>
                 <th width="150px"><fmt:message key="reimburse.opt_date"/></th>
-                <th width="150px"><fmt:message key="operation"/></th>
+                <th width="100px"><fmt:message key="operation"/></th>
             </tr>
             </thead>
             <tbody id="dataTabel">

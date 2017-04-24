@@ -223,3 +223,4 @@ var salary_delete_success = "Delete Succesfully";
 var to_back = "Back";
 var salary_history = "Salary History";
 var salary_legend = "Salary";
+var materiel_add_title = "Add Materiel";

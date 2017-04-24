@@ -2,11 +2,9 @@ package com.wittymonkey.controller;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.wittymonkey.entity.Floor;
-import com.wittymonkey.entity.Hotel;
-import com.wittymonkey.entity.Materiel;
-import com.wittymonkey.entity.User;
+import com.wittymonkey.entity.*;
 import com.wittymonkey.service.IMaterielService;
+import com.wittymonkey.service.IMaterielTypeService;
 import com.wittymonkey.util.ChangeToSimple;
 import com.wittymonkey.vo.Constraint;
 import com.wittymonkey.vo.SimpleFloor;
@@ -29,6 +27,9 @@ public class MaterielController {
     @Autowired
     private IMaterielService materielService;
 
+    @Autowired
+    private IMaterielTypeService materielTypeService;
+
     @RequestMapping(value = "getMaterielByPage", method = RequestMethod.GET)
     @ResponseBody
     public String getMaterielByPage(HttpServletRequest request){
@@ -47,6 +48,10 @@ public class MaterielController {
             condition.put(Constraint.MATERIEL_SEARCH_CONDITION_TYPE_ID, typeId);
         } else if (Constraint.MATERIEL_SEARCHTYPE_WARN.equals(searchType)){
             condition.put(Constraint.MATERIEL_SEARCH_CONDITION_WARN, true);
+        } else if (Constraint.MATERIEL_SEARCHTYPE_BARCODE.equals(searchType)){
+            condition.put(Constraint.MATERIEL_SEARCH_CONDITION_BARCODE, request.getParameter("barcode"));
+        } else if (Constraint.MATERIEL_SEARCHTYPE_NAME.equals(searchType)){
+            condition.put(Constraint.MATERIEL_SEARCH_CONDITION_NAME, request.getParameter("name"));
         }
         count = materielService.getTotal(condition);
         materiels = materielService.getMaterielByPage(condition, (curr - 1) * pageSize, pageSize);
@@ -57,5 +62,13 @@ public class MaterielController {
         array.addAll(simpleMateriels);
         json.put("data", array);
         return json.toJSONString();
+    }
+
+    @RequestMapping(value = "toAddMateriel", method = RequestMethod.GET)
+    public String toAddMateriel(HttpServletRequest request){
+        Hotel hotel = (Hotel) request.getSession().getAttribute("hotel");
+        List<MaterielType> materielTypes = materielTypeService.getMaterielTypeByHotelId(hotel.getId(), null, null);
+        request.setAttribute("types", materielTypes);
+        return "materiel_add";
     }
 }

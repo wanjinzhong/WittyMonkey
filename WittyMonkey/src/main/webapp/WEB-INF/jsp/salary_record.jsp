@@ -23,7 +23,7 @@
     <input type="hidden" id="salaryId" value="${salary.id}"/>
     <div class="container" style="margin: 10px 10px">
         <i class="newBtn layui-icon layui-btn layui-btn-radius layui-btn-normal" onclick="showAddSalaryRecord(${salary.id})">&#xe61f; <fmt:message key="btn.add"/></i>
-        <table class="layui-table">
+        <table class="layui-table" style="min-width: 850px;">
             <thead>
                 <th width="50px"><fmt:message key="salary.salary"/></th>
                 <th width="80px"><fmt:message key="salary.stat_date"/></th>
