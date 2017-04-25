@@ -1,6 +1,8 @@
 package com.wittymonkey.service.impl;
 
+import com.wittymonkey.dao.IInStockDao;
 import com.wittymonkey.dao.IMaterielDao;
+import com.wittymonkey.entity.InStock;
 import com.wittymonkey.entity.Materiel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,6 +18,9 @@ public class MaterielServiceImpl implements IMaterielService{
 
     @Autowired
     private IMaterielDao materielDao;
+
+    @Autowired
+    private IInStockDao inStockDao;
 
     @Override
     public Integer getTotal(Map<Integer, Object> condition) {
@@ -44,6 +49,11 @@ public class MaterielServiceImpl implements IMaterielService{
 
     @Override
     public void deleteMateriel(Materiel materiel) throws SQLException {
+        List<InStock> inStocks = inStockDao.getInStockByMateriel(materiel.getId());
+        for (InStock inStock : inStocks){
+            inStock.setMateriel(null);
+            inStockDao.save(inStock);
+        }
         materielDao.delete(materiel);
     }
 }
