@@ -8,7 +8,8 @@ layui.use(['layer', 'form'], function () {
     form = layui.form();
 });
 function save() {
-    if (!validateBarcode("add", $("#barcode"))) {
+    var method = $("#method").val();
+    if (!validateBarcode(method, $("#barcode"))) {
         return false;
     }
     if (!validateLength($("#name"), materiel_name, 50)) {
@@ -23,7 +24,6 @@ function save() {
     var load = layer.load();
     var url;
     var success_hint;
-    var method = $("#method").val();
     if (method == "add"){
         url = "saveMateriel.do";
         success_hint = materiel_add_success;

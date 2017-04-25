@@ -267,7 +267,6 @@ public class MaterielController {
         materiel.setName(name);
         materiel.setNote(note);
         materiel.setSellPrice(sellPrice);
-        materiel.setStock(0.0);
         materiel.setUnit(unit);
         materiel.setWarningStock(warnStock);
         materielService.saveMateriel(materiel);
@@ -293,10 +292,16 @@ public class MaterielController {
         String warnStock = request.getParameter("warnStock").trim();
         String sellPrice = request.getParameter("sellPrice").trim();
         String note = request.getParameter("note").trim();
+        String method = request.getParameter("method").trim();
         Hotel hotel = (Hotel) request.getSession().getAttribute("hotel");
-        Integer valiBarcode = validateBarcode(hotel.getId(), Constraint.ADD, barcode, null);
-        if (!valiBarcode.equals(200)) {
-            if (valiBarcode.equals(201)) {
+        Integer valiBarcode = null;
+        if (Constraint.ADD.equals(method) || Constraint.DELETE.equals(method)){
+            valiBarcode = validateBarcode(hotel.getId(), method, barcode, null);
+        } else if (Constraint.UPDATE.equals(method)){
+            valiBarcode = validateBarcode(hotel.getId(), method, barcode, (Materiel) request.getSession().getAttribute("editMateriel"));
+        }
+        if (!new Integer(200).equals(valiBarcode)) {
+            if (new Integer(201).equals(valiBarcode)) {
                 valiBarcode = 402;
             }
             return valiBarcode;
