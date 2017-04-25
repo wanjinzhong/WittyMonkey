@@ -57,6 +57,7 @@ public class Constraint {
     public static final Integer INSTOCK_SEARCHTYPE_TYPE = 1;
     public static final Integer INSTOCK_SEARCHTYPE_BARCODE = 2;
     public static final Integer INSTOCK_SEARCHTYPE_NAME = 3;
+    public static final Integer INSTOCK_SEARCH_CONDITION_HOTEL_ID = 0;
     public static final Integer INSTOCK_SEARCH_CONDITION_TYPE_ID = 1;
     public static final Integer INSTOCK_SEARCH_CONDITION_BARCODE = 2;
     public static final Integer INSTOCK_SEARCH_CONDITION_NAME = 3;

@@ -39,6 +39,13 @@ public class InStockDaoImpl extends GenericDaoImpl<InStock> implements IInStockD
         ConditionModel condition = new ConditionModel();
         StringBuilder hql = new StringBuilder(" where");
         for (Map.Entry<Integer, Object> entry : param.entrySet()) {
+            if (Constraint.INSTOCK_SEARCH_CONDITION_HOTEL_ID.equals(entry.getKey())) {
+                if (!condition.getParam().isEmpty()) {
+                    hql.append(" and");
+                }
+                hql.append(" hotel.id = :hotelId");
+                condition.getParam().put("hotelId", entry.getValue());
+            }
             if (Constraint.INSTOCK_SEARCH_CONDITION_TYPE_ID.equals(entry.getKey())) {
                 if (!condition.getParam().isEmpty()) {
                     hql.append(" and");
@@ -51,25 +58,25 @@ public class InStockDaoImpl extends GenericDaoImpl<InStock> implements IInStockD
                 }
                 hql.append(" materiel.barcode like '%" + entry.getValue() + "%'");
             } else if (Constraint.INSTOCK_SEARCH_CONDITION_NAME.equals(entry.getKey())) {
-                if (!condition.getParam().isEmpty()){
+                if (!condition.getParam().isEmpty()) {
                     hql.append(" and");
                 }
                 hql.append(" materiel.name like '%" + entry.getValue() + "%'");
-            } else if (Constraint.INSTOCK_SEARCH_CONDITION_FROM.equals(entry.getKey())){
-                if (!condition.getParam().isEmpty()){
+            } else if (Constraint.INSTOCK_SEARCH_CONDITION_FROM.equals(entry.getKey())) {
+                if (!condition.getParam().isEmpty()) {
                     hql.append(" and");
                 }
                 hql.append(" entryDatetime >= :from");
                 condition.getParam().put("from", entry.getValue());
-            } else if (Constraint.INSTOCK_SEARCH_CONDITION_TO.equals(entry.getKey())){
-                if (!condition.getParam().isEmpty()){
+            } else if (Constraint.INSTOCK_SEARCH_CONDITION_TO.equals(entry.getKey())) {
+                if (!condition.getParam().isEmpty()) {
                     hql.append(" and");
                 }
                 hql.append(" entryDatetime < :to");
                 condition.getParam().put("to", entry.getValue());
             }
         }
-        if (" where".equals(hql.toString())){
+        if (" where".equals(hql.toString())) {
             return new ConditionModel();
         } else {
             condition.setHql(hql.toString());

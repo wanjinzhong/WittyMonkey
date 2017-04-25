@@ -42,6 +42,7 @@ public class InventoryController {
         Hotel hotel = (Hotel) request.getSession().getAttribute("hotel");
         Integer searchType = Integer.parseInt(request.getParameter("searchType"));
         Map<Integer, Object> param = new HashMap<Integer, Object>();
+        param.put(Constraint.INSTOCK_SEARCH_CONDITION_HOTEL_ID, hotel.getId());
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         try {
             String dateFrom = request.getParameter("from");

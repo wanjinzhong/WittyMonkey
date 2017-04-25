@@ -3,15 +3,8 @@ package com.wittymonkey.entity;
 import java.io.Serializable;
 import java.util.Date;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
+
 /**
  * 入库
  * @author neilw
@@ -41,6 +34,10 @@ public class InStock implements Serializable{
 	// 总价
 	@Column
 	private Double payment;
+
+	@ManyToOne(targetEntity = Hotel.class, fetch = FetchType.EAGER,cascade={CascadeType.PERSIST,CascadeType.MERGE})
+	@JoinColumn(name = "hotel_id", referencedColumnName = "id")
+	private Hotel hotel;
 	
 	@Column(name="entry_datetime")
 	private Date entryDatetime;
@@ -113,5 +110,13 @@ public class InStock implements Serializable{
 
 	public void setPayment(Double payment) {
 		this.payment = payment;
+	}
+
+	public Hotel getHotel() {
+		return hotel;
+	}
+
+	public void setHotel(Hotel hotel) {
+		this.hotel = hotel;
 	}
 }
