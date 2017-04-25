@@ -3,15 +3,7 @@ package com.wittymonkey.entity;
 import java.io.Serializable;
 import java.util.Date;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 /**
  * 出库
@@ -28,17 +20,29 @@ public class OutStock implements Serializable{
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Integer id;
 	
-	// 出库类型（销售出库/损坏出库等）
+	// 出库类型（销售出库/损坏出库/消费出库）
 	@Column
 	private Integer type;
 	
 	@Column
 	private Double quantity;
-	
+
+	// 单价
+	@Column(name="price")
+	private Double price;
+
+	// 总价
+	@Column
+	private Double payment;
+
 	@ManyToOne(targetEntity=Materiel.class)
 	@JoinColumn(name="materiel_id", referencedColumnName="id")
 	private Materiel materiel;
-	
+
+	@ManyToOne(targetEntity = Hotel.class, fetch = FetchType.EAGER,cascade={CascadeType.PERSIST,CascadeType.MERGE})
+	@JoinColumn(name = "hotel_id", referencedColumnName = "id")
+	private Hotel hotel;
+
 	@Column(name="entry_datetime")
 	private Date entryDatetime;
 	
@@ -103,6 +107,20 @@ public class OutStock implements Serializable{
 	public void setEntryUser(User entryUser) {
 		this.entryUser = entryUser;
 	}
-	
-	
+
+	public Double getPrice() {
+		return price;
+	}
+
+	public void setPrice(Double price) {
+		this.price = price;
+	}
+
+	public Double getPayment() {
+		return payment;
+	}
+
+	public void setPayment(Double payment) {
+		this.payment = payment;
+	}
 }

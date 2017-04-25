@@ -64,6 +64,22 @@ public class Constraint {
     public static final Integer INSTOCK_SEARCH_CONDITION_FROM = 4;
     public static final Integer INSTOCK_SEARCH_CONDITION_TO = 5;
 
+    public static final Integer OUTSTOCK_SEARCHTYPE_ALL = 0;
+    public static final Integer OUTSTOCK_SEARCHTYPE_TYPE = 1;
+    public static final Integer OUTSTOCK_SEARCHTYPE_BARCODE = 2;
+    public static final Integer OUTSTOCK_SEARCHTYPE_NAME = 3;
+    public static final Integer OUTSTOCK_SEARCH_CONDITION_HOTEL_ID = 0;
+    public static final Integer OUTSTOCK_SEARCH_CONDITION_TYPE_ID = 1;
+    public static final Integer OUTSTOCK_SEARCH_CONDITION_BARCODE = 2;
+    public static final Integer OUTSTOCK_SEARCH_CONDITION_NAME = 3;
+    public static final Integer OUTSTOCK_SEARCH_CONDITION_FROM = 4;
+    public static final Integer OUTSTOCK_SEARCH_CONDITION_TO = 5;
+
+    public static final Integer OUTSTOCK_TYPE_SELL = 1;
+    // 消费出库类型
+    public static final Integer OUTSTOCK_TYPE_CONSUME = 2;
+    public static final Integer OUTSTOCK_TYPE_DAMAGE = 3;
+
     public static final String LANG_ZH_CN = "zh_CN";
     public static final String LANG_EN_US = "en_US";
 }

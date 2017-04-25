@@ -3,14 +3,12 @@ package com.wittymonkey.controller;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.wittymonkey.entity.*;
-import com.wittymonkey.service.IHotelService;
-import com.wittymonkey.service.IInStockService;
-import com.wittymonkey.service.IMaterielService;
-import com.wittymonkey.service.IUserService;
+import com.wittymonkey.service.*;
 import com.wittymonkey.util.ChangeToSimple;
 import com.wittymonkey.vo.Constraint;
 import com.wittymonkey.vo.SimpleFloor;
 import com.wittymonkey.vo.SimpleInStock;
+import com.wittymonkey.vo.SimpleOutStock;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -31,6 +29,9 @@ public class InventoryController {
 
     @Autowired
     private IInStockService inStockService;
+
+    @Autowired
+    private IOutStockService outStockService;
 
     @Autowired
     private IMaterielService materielService;
@@ -92,6 +93,57 @@ public class InventoryController {
         return json.toJSONString();
     }
 
+    @RequestMapping(value = "getOutStockByPage", method = RequestMethod.GET)
+    @ResponseBody
+    public String getOutStockByPage(HttpServletRequest request) {
+        JSONObject json = new JSONObject();
+        Integer curr = Integer.parseInt(request.getParameter("curr"));
+        User loginUser = (User) request.getSession().getAttribute("loginUser");
+        Integer pageSize = loginUser.getSetting().getPageSize();
+        Hotel hotel = (Hotel) request.getSession().getAttribute("hotel");
+        Integer searchType = Integer.parseInt(request.getParameter("searchType"));
+        Map<Integer, Object> param = new HashMap<Integer, Object>();
+        param.put(Constraint.OUTSTOCK_SEARCH_CONDITION_HOTEL_ID, hotel.getId());
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        try {
+            String dateFrom = request.getParameter("from");
+            if (StringUtils.isNotBlank(dateFrom)) {
+                Date from = dateFormat.parse(dateFrom);
+                param.put(Constraint.OUTSTOCK_SEARCH_CONDITION_FROM, from);
+            }
+        } catch (NullPointerException e) {
+        } catch (ParseException e) {
+        }
+        try {
+            String dateTo = request.getParameter("to");
+            if (StringUtils.isNotBlank(dateTo)) {
+                Date to = dateFormat.parse(dateTo);
+                param.put(Constraint.OUTSTOCK_SEARCH_CONDITION_TO, to);
+            }
+        } catch (NullPointerException e) {
+        } catch (ParseException e) {
+        }
+        if (Constraint.OUTSTOCK_SEARCHTYPE_TYPE.equals(searchType)) {
+            Integer type = Integer.parseInt(request.getParameter("type"));
+            param.put(Constraint.OUTSTOCK_SEARCH_CONDITION_TYPE_ID, type);
+        } else if (Constraint.OUTSTOCK_SEARCHTYPE_BARCODE.equals(searchType)) {
+            String barcode = request.getParameter("barcode");
+            param.put(Constraint.OUTSTOCK_SEARCH_CONDITION_BARCODE, barcode);
+        } else if (Constraint.OUTSTOCK_SEARCHTYPE_NAME.equals(searchType)) {
+            String name = request.getParameter("name");
+            param.put(Constraint.OUTSTOCK_SEARCH_CONDITION_NAME, name);
+        }
+        Integer count = outStockService.getTotal(param);
+        List<OutStock> outStocks = outStockService.getOutStocks(param, (curr - 1) * pageSize, pageSize);
+        List<SimpleOutStock> simpleOutStocks = ChangeToSimple.outStockList(outStocks);
+        json.put("count", count);
+        json.put("pageSize", pageSize);
+        JSONArray array = new JSONArray();
+        array.addAll(simpleOutStocks);
+        json.put("data", array);
+        return json.toJSONString();
+    }
+
     @RequestMapping(value = "toInStock", method = RequestMethod.GET)
     public String toInStock(HttpServletRequest request){
         Hotel hotel = (Hotel) request.getSession().getAttribute("hotel");
@@ -100,6 +152,15 @@ public class InventoryController {
         List<Materiel> materiels = materielService.getMaterielByPage(map, null, null);
         request.setAttribute("materiels", materiels);
         return "in_stock";
+    }
+    @RequestMapping(value = "toOutStock", method = RequestMethod.GET)
+    public String toIOutStock(HttpServletRequest request){
+        Hotel hotel = (Hotel) request.getSession().getAttribute("hotel");
+        Map<Integer, Object> map = new HashMap<Integer, Object>();
+        map.put(Constraint.MATERIEL_SEARCH_CONDITION_HOTEL_ID, hotel.getId());
+        List<Materiel> materiels = materielService.getMaterielByPage(map, null, null);
+        request.setAttribute("materiels", materiels);
+        return "out_stock";
     }
 
     /**
@@ -220,5 +281,13 @@ public class InventoryController {
         inStockService.save(inStock);
         json.put("status", 200);
         return json.toJSONString();
+    }
+
+    @RequestMapping(value = "saveOutStock")
+    @ResponseBody
+    public String saveOutStock(HttpServletRequest request){
+        JSONObject json = new JSONObject();
+        return json.toJSONString();
+
     }
 }

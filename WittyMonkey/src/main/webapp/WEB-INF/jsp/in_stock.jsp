@@ -13,13 +13,14 @@
 <head>
     <link rel="stylesheet" type="text/css" href="style/common.css"/>
     <script type="text/javascript" src="js/common.js"></script>
-    <script type="text/javascript" src="js/in_stock.js"></script>
+    <script type="text/javascript" src="js/stock.js"></script>
     <!-- 根据设置动态加载js语言 -->
     <script type="text/javascript" src="i18n/messages_${loginUser.setting.lang }.js"></script>
     <fmt:setBundle basename="i18n/messages_${loginUser.setting.lang }"/>
 </head>
 <body>
     <form id="instock_form" class="layui-form">
+        <input type="hidden" id="method" value="in"/>
         <table class="form_table">
             <tr>
                 <td><label class="layui-form-label"><fmt:message key="materiel.barcode"/></label></td>

@@ -280,7 +280,7 @@ public class IndexController {
 
     @RequestMapping(value = "toInventoryOut", method = RequestMethod.GET)
     public String toInventoryOut(HttpServletRequest request) {
-        return "inventory_out";
+        return "outstock_manage";
     }
 
     @RequestMapping(value = "toStaffManage", method = RequestMethod.GET)

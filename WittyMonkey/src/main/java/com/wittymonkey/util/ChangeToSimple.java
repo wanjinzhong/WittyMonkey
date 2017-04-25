@@ -238,9 +238,9 @@ public class ChangeToSimple {
         return simpleFinances;
     }
 
-    public static List<SimpleReimbuse> reimbuseList(List<Reimburse> reimburses){
+    public static List<SimpleReimbuse> reimbuseList(List<Reimburse> reimburses) {
         List<SimpleReimbuse> simpleReimbuses = new ArrayList<SimpleReimbuse>();
-        for (Reimburse reimburse : reimburses){
+        for (Reimburse reimburse : reimburses) {
             SimpleReimbuse simpleReimbuse = new SimpleReimbuse();
             simpleReimbuse.setApplyDatetime(reimburse.getApplyDatetime());
             simpleReimbuse.setApplyUser(reimburse.getApplyUser().getRealName());
@@ -259,9 +259,9 @@ public class ChangeToSimple {
         return simpleReimbuses;
     }
 
-    public static List<SimpleSalary> salaryList(List<Salary> salaries){
+    public static List<SimpleSalary> salaryList(List<Salary> salaries) {
         List<SimpleSalary> simpleSalaries = new ArrayList<SimpleSalary>();
-        for (Salary salary : salaries){
+        for (Salary salary : salaries) {
             SimpleSalary simpleSalary = new SimpleSalary();
             simpleSalary.setId(salary.getId());
             simpleSalary.setStaff(salary.getStaff().getRealName());
@@ -272,15 +272,15 @@ public class ChangeToSimple {
         return simpleSalaries;
     }
 
-    public static List<SimpleSalaryRecord> salaryRecordList(List<SalaryRecord> salaryRecords){
+    public static List<SimpleSalaryRecord> salaryRecordList(List<SalaryRecord> salaryRecords) {
         List<SimpleSalaryRecord> simpleSalaryRecords = new ArrayList<SimpleSalaryRecord>();
         Collections.sort(salaryRecords, new Comparator<SalaryRecord>() {
             @Override
             public int compare(SalaryRecord o1, SalaryRecord o2) {
-                return o2.getStartDate().after(o1.getStartDate())? 1 : -1;
+                return o2.getStartDate().after(o1.getStartDate()) ? 1 : -1;
             }
         });
-        for(SalaryRecord salaryRecord : salaryRecords){
+        for (SalaryRecord salaryRecord : salaryRecords) {
             SimpleSalaryRecord simpleSalaryRecord = new SimpleSalaryRecord();
             simpleSalaryRecord.setEntryDatetime(salaryRecord.getEntryDatetime());
             simpleSalaryRecord.setEntryUser(salaryRecord.getEntryUser().getRealName());
@@ -295,27 +295,28 @@ public class ChangeToSimple {
 
     /**
      * 提取工资记录在某个指定时间点上的工资
+     *
      * @param salary
      * @param date
      * @return
      */
-    public static SalaryVO convertSalaryByTime(Salary salary, Date date){
+    public static SalaryVO convertSalaryByTime(Salary salary, Date date) {
         SalaryVO salaryVO = new SalaryVO();
         salaryVO.setId(salary.getId());
         salaryVO.setStaff(salary.getStaff().getRealName());
         salaryVO.setStaffNo(salary.getStaff().getStaffNo());
         List<SalaryRecord> salaryRecords = salary.getSalaryRecords();
-        if (salaryRecords == null || salaryRecords.isEmpty()){
+        if (salaryRecords == null || salaryRecords.isEmpty()) {
             return salaryVO;
         }
         Collections.sort(salaryRecords, new Comparator<SalaryRecord>() {
             @Override
             public int compare(SalaryRecord o1, SalaryRecord o2) {
-                return o2.getStartDate().after(o1.getStartDate())? 1 : -1;
+                return o2.getStartDate().after(o1.getStartDate()) ? 1 : -1;
             }
         });
-        for (SalaryRecord salaryRecord : salaryRecords){
-            if (salaryRecord.getStartDate().before(date)){
+        for (SalaryRecord salaryRecord : salaryRecords) {
+            if (salaryRecord.getStartDate().before(date)) {
                 salaryVO.setStartDate(salaryRecord.getStartDate());
                 salaryVO.setEntryDatetime(salaryRecord.getEntryDatetime());
                 salaryVO.setEntryUser(salaryRecord.getEntryUser().getRealName());
@@ -327,37 +328,42 @@ public class ChangeToSimple {
         return salaryVO;
     }
 
-    public static List<SalaryVO> convertSalariesByTime(List<Salary> salaries, Date date){
+    public static List<SalaryVO> convertSalariesByTime(List<Salary> salaries, Date date) {
         List<SalaryVO> salaryVOS = new ArrayList<SalaryVO>();
-        for (Salary salary : salaries){
+        for (Salary salary : salaries) {
             salaryVOS.add(convertSalaryByTime(salary, date));
         }
         return salaryVOS;
     }
 
-    public static List<SimpleMateriel> materielList(List<Materiel> materiels){
+    public static List<SimpleMateriel> materielList(List<Materiel> materiels) {
         List<SimpleMateriel> simpleMateriels = new ArrayList<SimpleMateriel>();
-        for (Materiel materiel : materiels){
-            SimpleMateriel simpleMateriel = new SimpleMateriel();
-            simpleMateriel.setBarcode(materiel.getBarcode());
-            simpleMateriel.setEntryDatetime(materiel.getEntryDatetime());
-            simpleMateriel.setEntryUser(materiel.getEntryUser().getRealName());
-            simpleMateriel.setId(materiel.getId());
-            simpleMateriel.setMaterielType(materiel.getMaterielType().getName());
-            simpleMateriel.setName(materiel.getName());
-            simpleMateriel.setNote(materiel.getNote());
-            simpleMateriel.setSellPrice(materiel.getSellPrice());
-            simpleMateriel.setStock(materiel.getStock());
-            simpleMateriel.setUnit(materiel.getUnit());
-            simpleMateriel.setWarningStock(materiel.getWarningStock());
-            simpleMateriels.add(simpleMateriel);
+        for (Materiel materiel : materiels) {
+            simpleMateriels.add(materiel(materiel));
         }
         return simpleMateriels;
     }
 
-    public static List<SimpleInStock> inStockList(List<InStock> inStocks){
+    public static SimpleMateriel materiel(Materiel materiel){
+        SimpleMateriel simpleMateriel = new SimpleMateriel();
+        simpleMateriel.setBarcode(materiel.getBarcode());
+        simpleMateriel.setEntryDatetime(materiel.getEntryDatetime());
+        simpleMateriel.setEntryUser(materiel.getEntryUser().getRealName());
+        simpleMateriel.setId(materiel.getId());
+        simpleMateriel.setMaterielType(materiel.getMaterielType().getName());
+        simpleMateriel.setName(materiel.getName());
+        simpleMateriel.setNote(materiel.getNote());
+        simpleMateriel.setSellPrice(materiel.getSellPrice());
+        simpleMateriel.setStock(materiel.getStock());
+        simpleMateriel.setUnit(materiel.getUnit());
+        simpleMateriel.setWarningStock(materiel.getWarningStock());
+        return simpleMateriel;
+
+    }
+
+    public static List<SimpleInStock> inStockList(List<InStock> inStocks) {
         List<SimpleInStock> simpleInStocks = new ArrayList<SimpleInStock>();
-        for (InStock inStock : inStocks){
+        for (InStock inStock : inStocks) {
             SimpleInStock simpleInStock = new SimpleInStock();
             simpleInStock.setEntryDatetime(inStock.getEntryDatetime());
             simpleInStock.setEntryUser(inStock.getEntryUser().getRealName());
@@ -372,5 +378,26 @@ public class ChangeToSimple {
             simpleInStocks.add(simpleInStock);
         }
         return simpleInStocks;
+    }
+
+    public static List<SimpleOutStock> outStockList(List<OutStock> outStocks) {
+        List<SimpleOutStock> simpleOutStocks = new ArrayList<SimpleOutStock>();
+        for (OutStock outStock : outStocks) {
+            SimpleOutStock simpleOutStock = new SimpleOutStock();
+            if (outStock.getMateriel() != null){
+                simpleOutStock.setBarcode(outStock.getMateriel().getBarcode());
+                simpleOutStock.setMateriel(outStock.getMateriel().getName());
+            }
+            simpleOutStock.setEntryDatetime(outStock.getEntryDatetime());
+            simpleOutStock.setEntryUser(outStock.getEntryUser().getRealName());
+            simpleOutStock.setId(outStock.getId());
+            simpleOutStock.setNote(outStock.getNote());
+            simpleOutStock.setPayment(outStock.getPayment());
+            simpleOutStock.setPrice(outStock.getPrice());
+            simpleOutStock.setQuantity(outStock.getQuantity());
+            simpleOutStock.setType(outStock.getType());
+            simpleOutStocks.add(simpleOutStock);
+        }
+        return simpleOutStocks;
     }
 }

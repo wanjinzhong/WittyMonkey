@@ -264,3 +264,9 @@ var instock_price_wrong = "进价不正确";
 var instock_qty_wrong = "数量不正确";
 var instock_pay_wrong = "实付不正确";
 var instock_success = "入库成功";
+
+var outstock_type_damage = "损坏出库";
+var outstock_type_sell = "销售出库";
+var outstock_type_consume="消费出库";
+var outstock_materiel_null = "已删除";
+var outstock_add = "出库";

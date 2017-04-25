@@ -253,3 +253,9 @@ var instock_price_wrong = "Purchase Price Wrong";
 var instock_qty_wrong = "Qty wrong";
 var instock_pay_wrong = "Payment wrong";
 var instock_success = "In stock successfully";
+
+var outstock_type_damage = "Damage";
+var outstock_type_sell = "Sell";
+var outstock_type_consume = "Consume";
+var outstock_materiel_null = "Deleted";
+var outstock_add = "Out Stock";

@@ -112,7 +112,7 @@ public class MaterielController {
             return json.toJSONString();
         } else {
             json.put("status", 200);
-            json.put("name", materiel.getName());
+            json.put("materiel", ChangeToSimple.materiel(materiel));
             return json.toJSONString();
         }
     }
@@ -129,7 +129,7 @@ public class MaterielController {
             return json.toJSONString();
         } else {
             json.put("status", 200);
-            json.put("barcode", materiel.getBarcode());
+            json.put("materiel", ChangeToSimple.materiel(materiel));
             return json.toJSONString();
         }
     }

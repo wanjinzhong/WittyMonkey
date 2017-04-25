@@ -2,8 +2,10 @@
  * Created by neilw on 2017/4/25.
  */
 var layer;
-layui.use("layer", function () {
+var form;
+layui.use(["layer","form"], function () {
     layer = layui.layer;
+    form = layui.form();
 });
 
 function validateBarcode() {
@@ -22,8 +24,13 @@ function validateBarcode() {
             if (res["status"] == 400){
                 layer.tips(instock_barcode_not_exist, $("#barcode"), {tips: 2});
             } else if (res["status"] == 200){
-                $("#name").val(res["name"]);
+                $("#name").val(res["materiel"]["name"]);
+                var method = $("#method").val();
+                if (method == "out"){
+                    $("#sellPrice").val(res["materiel"]["sellPrice"]);
+                }
             }
+            calc();
         }
     });
 }
@@ -44,7 +51,7 @@ function validateName(){
             if (res["status"] == 400){
                 layer.tips(instock_name_not_exist, $("#name"), {tips: 2});
             } else if (res["status"] == 200){
-                $("#barcode").val(res["barcode"]);
+                $("#barcode").val(res["materiel"]["barcode"]);
             }
         }
     });
@@ -105,11 +112,21 @@ function save() {
 }
 
 function calc() {
-    var price = $("#price").val();
+    var method = $("#method").val();
     var qty = $("#qty").val();
-    if (price.length <= 0 || qty.length <= 0){
-        $("#pay").val(0);
-    } else {
-        $("#pay").val(Number(price) * Number(qty));
+    if (method == "in") {
+        var price = $("#price").val();
+        if (price.length <= 0 || qty.length <= 0) {
+            $("#pay").val(0);
+        } else {
+            $("#pay").val(Number(price) * Number(qty));
+        }
+    } else if (method == "out"){
+        var sellPrice = $("#sellPrice").val();
+        if (sellPrice.length <= 0 || qty.length <= 0) {
+            $("#pay").val(0);
+        } else {
+            $("#pay").val(Number(sellPrice) * Number(qty));
+        }
     }
 }
