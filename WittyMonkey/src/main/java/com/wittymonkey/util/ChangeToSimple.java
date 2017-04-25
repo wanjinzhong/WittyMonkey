@@ -354,4 +354,23 @@ public class ChangeToSimple {
         }
         return simpleMateriels;
     }
+
+    public static List<SimpleInStock> inStockList(List<InStock> inStocks){
+        List<SimpleInStock> simpleInStocks = new ArrayList<SimpleInStock>();
+        for (InStock inStock : inStocks){
+            SimpleInStock simpleInStock = new SimpleInStock();
+            simpleInStock.setEntryDatetime(inStock.getEntryDatetime());
+            simpleInStock.setEntryUser(inStock.getEntryUser().getRealName());
+            simpleInStock.setId(inStock.getId());
+            if (inStock.getMateriel() != null) {
+                simpleInStock.setMateriel(inStock.getMateriel().getName());
+            }
+            simpleInStock.setNote(inStock.getNote());
+            simpleInStock.setPayment(inStock.getPayment());
+            simpleInStock.setPurchasePrice(inStock.getPurchasePrice());
+            simpleInStock.setQuantity(inStock.getQuantity());
+            simpleInStocks.add(simpleInStock);
+        }
+        return simpleInStocks;
+    }
 }

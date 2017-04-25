@@ -34,9 +34,13 @@ public class InStock implements Serializable{
 	@Column
 	private Double quantity;
 	
-	// 进价
+	// 进价（单价）
 	@Column(name="purchase_price")
 	private Double purchasePrice;
+
+	// 总价
+	@Column
+	private Double payment;
 	
 	@Column(name="entry_datetime")
 	private Date entryDatetime;
@@ -102,6 +106,12 @@ public class InStock implements Serializable{
 	public void setEntryUser(User entryUser) {
 		this.entryUser = entryUser;
 	}
-	
-	
+
+	public Double getPayment() {
+		return payment;
+	}
+
+	public void setPayment(Double payment) {
+		this.payment = payment;
+	}
 }

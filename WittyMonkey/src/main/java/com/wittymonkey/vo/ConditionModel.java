@@ -7,7 +7,7 @@ import java.util.Map;
  * Created by neilw on 2017/4/20.
  */
 public class ConditionModel {
-    private String hql;
+    private String hql = "";
     private Map<String, Object> param = new HashMap<String, Object>();
 
     public String getHql() {

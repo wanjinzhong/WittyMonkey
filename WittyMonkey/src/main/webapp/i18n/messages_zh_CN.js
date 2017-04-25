@@ -251,3 +251,5 @@ var materiel_detele_not_null_hint = "该物料还有库存，删除后系统将�
 var materiel_delete_hint = "确定删除该物料？";
 var materiel_delete_not_exist = "物料不存在，可能已被删除";
 var materiel_delete_success = "物料删除成功";
+
+var instock_materiel_null = "已删除";

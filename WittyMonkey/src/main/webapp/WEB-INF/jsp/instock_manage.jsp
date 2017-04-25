@@ -15,7 +15,7 @@
 </head>
 <script type="text/javascript" src="js/common.js"></script>
 <link type="text/css" rel="stylesheet" href="style/finance.css"/>
-<script type="text/javascript" src="js/reimburse_manage.js"></script>
+<script type="text/javascript" src="js/instock_manage.js"></script>
 <!-- 根据设置动态加载js语言 -->
 <script type="text/javascript" src="i18n/messages_${loginUser.setting.lang }.js"></script>
 <fmt:setBundle basename="i18n/messages_${loginUser.setting.lang }"/>
@@ -31,13 +31,14 @@
         <form class="layui-form">
             <div style="min-width: 800px">
                 <div class="searchTypeDiv">
-                    <select name="type" id="type" lay-filter="type" >
-                        <option value="0" selected><fmt:message key="reimburse.status.all"/></option>
-                        <option value="1"><fmt:message key="reimburse.status.pending"/></option>
-                        <option value="2"><fmt:message key="reimburse.status.approved"/></option>
-                        <option value="3"><fmt:message key="reimburse.status.rejected"/></option>
+                    <select name="searchType" id="searchType" lay-filter="searchType" >
+                        <option value="0" selected><fmt:message key="instock.search.all"/></option>
+                        <option value="1"><fmt:message key="instock.search.type"/></option>
+                        <option value="2"><fmt:message key="instock.search.barcode"/></option>
+                        <option value="3"><fmt:message key="instock.search.name"/></option>
                     </select>
                 </div>
+                <div id="searchContent" style="display:inline-block;max-width:200px"></div>
                 <input class="layui-input date" id="from" placeholder="<fmt:message key="start_date_hint"/>" style="display: inline-block;"/>
                 -
                 <input class="layui-input date" id="to" placeholder="<fmt:message key="end_date_hint"/>" style="display: inline-block;"/>
@@ -49,16 +50,16 @@
         <table class="layui-table" lay-skin="line" style="min-width: 800px">
             <thead>
             <tr>
-                <th width="100px"><fmt:message key="reimburse.apply_user"/></th>
-                <th width="150px"><fmt:message key="reimburse.apply_date"/></th>
-                <th width="50px"><fmt:message key="reimburse.money"/></th>
-                <th width="50px"><fmt:message key="reimburse.status"/></th>
-                <th width="100px"><fmt:message key="reimburse.opt_user"/></th>
-                <th width="150px"><fmt:message key="reimburse.opt_date"/></th>
-                <th width="100px"><fmt:message key="operation"/></th>
+                <th width="100px"><fmt:message key="instock.materiel"/></th>
+                <th width="150px"><fmt:message key="instock.price"/></th>
+                <th width="50px"><fmt:message key="instock.qty"/></th>
+                <th width="50px"><fmt:message key="instock.pay"/></th>
+                <th><fmt:message key="note"/></th>
+                <th width="100px"><fmt:message key="entry_user"/></th>
+                <th width="150px"><fmt:message key="entry_date"/></th>
             </tr>
             </thead>
-            <tbody id="dataTabel">
+            <tbody id="dataTable">
             </tbody>
         </table>
         <div id="page"></div>

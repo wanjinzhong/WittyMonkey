@@ -241,3 +241,5 @@ var materiel_detele_not_null_hint = "The material is still in stock, the system 
 var materiel_delete_hint = "Are you sure to delete the material?";
 var materiel_delete_not_exist = "Material does not exist, may have been deleted";
 var materiel_delete_success = "Delete materiel successfully";
+
+var instock_materiel_null = "Deleted";

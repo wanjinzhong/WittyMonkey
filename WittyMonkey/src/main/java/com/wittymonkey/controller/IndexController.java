@@ -275,7 +275,7 @@ public class IndexController {
 
     @RequestMapping(value = "toInventoryIn", method = RequestMethod.GET)
     public String toInventoryIn(HttpServletRequest request) {
-        return "inventory_in";
+        return "instock_manage";
     }
 
     @RequestMapping(value = "toInventoryOut", method = RequestMethod.GET)
