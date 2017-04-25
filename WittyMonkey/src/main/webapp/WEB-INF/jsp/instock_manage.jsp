@@ -26,8 +26,8 @@
         <i class="refreshBtn layui-icon layui-btn layui-btn-small" onclick="reload();">&#x1002;</i>
     </nav>
     <div id="main">
-        <i class="newBtn layui-icon layui-btn layui-btn-radius layui-btn-normal" onclick="showAddReimburse()">&#xe61f;
-            <fmt:message key="reimburse.add"/></i>
+        <i class="newBtn layui-icon layui-btn layui-btn-radius layui-btn-normal" onclick="showInStock()">&#xe61f;
+            <fmt:message key="instock.add"/></i>
         <form class="layui-form">
             <div style="min-width: 800px">
                 <div class="searchTypeDiv">

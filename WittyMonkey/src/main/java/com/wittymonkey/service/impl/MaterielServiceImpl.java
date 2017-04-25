@@ -38,6 +38,11 @@ public class MaterielServiceImpl implements IMaterielService{
     }
 
     @Override
+    public Materiel getMaterielByName(Integer hotelId, String name) {
+        return materielDao.getMaterielByName(hotelId, name);
+    }
+
+    @Override
     public void saveMateriel(Materiel materiel) {
         materielDao.save(materiel);
     }

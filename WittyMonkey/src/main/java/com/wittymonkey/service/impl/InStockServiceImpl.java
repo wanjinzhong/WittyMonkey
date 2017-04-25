@@ -31,4 +31,9 @@ public class InStockServiceImpl implements IInStockService{
         }
         return inStockDao.getInStockByCondition(param, start, total);
     }
+
+    @Override
+    public void save(InStock inStock) {
+        inStockDao.save(inStock);
+    }
 }

@@ -107,3 +107,14 @@ function search() {
     }
     page("getInstockByPage.do", undefined, condition);
 }
+
+function showInStock() {
+    layer.open({
+        type: 2,
+        area: ['800px', '350px'],
+        maxmin: false,
+        shade: 0.4,
+        title: instock_add,
+        content: "toInStock.do"
+    });
+}

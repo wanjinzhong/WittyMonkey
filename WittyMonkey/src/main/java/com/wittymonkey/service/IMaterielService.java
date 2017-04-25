@@ -13,6 +13,8 @@ public interface IMaterielService {
 
     Materiel getMaterielByBarcode(Integer hotelId, String barcode);
 
+    Materiel getMaterielByName(Integer hotelId, String name);
+
     void saveMateriel(Materiel materiel);
 
     Materiel getMaterielById(Integer id);

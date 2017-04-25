@@ -252,4 +252,15 @@ var materiel_delete_hint = "确定删除该物料？";
 var materiel_delete_not_exist = "物料不存在，可能已被删除";
 var materiel_delete_success = "物料删除成功";
 
+var instock_price = "进价";
+var instock_qty = "数量";
+var instock_pay = "实付";
 var instock_materiel_null = "已删除";
+var instock_add = "添加入库";
+var instock_barcode_not_exist = "条码号不存在";
+var instock_name_not_exist = "名称不存在";
+var instock_materiel_not_exist = "物料不存在";
+var instock_price_wrong = "进价不正确";
+var instock_qty_wrong = "数量不正确";
+var instock_pay_wrong = "实付不正确";
+var instock_success = "入库成功";

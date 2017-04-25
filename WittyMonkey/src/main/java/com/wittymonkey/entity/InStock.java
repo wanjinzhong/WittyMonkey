@@ -20,7 +20,7 @@ public class InStock implements Serializable{
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Integer id;
 	
-	@ManyToOne(targetEntity=Materiel.class)
+	@ManyToOne(targetEntity=Materiel.class, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
 	@JoinColumn(name="materiel_id",referencedColumnName="id")
 	private Materiel materiel;
 	

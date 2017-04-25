@@ -242,4 +242,14 @@ var materiel_delete_hint = "Are you sure to delete the material?";
 var materiel_delete_not_exist = "Material does not exist, may have been deleted";
 var materiel_delete_success = "Delete materiel successfully";
 
+var instock_price = "Purchase Price";
+var instock_qty = "Qty";
+var instock_pay = "Payment";
 var instock_materiel_null = "Deleted";
+var instock_add = "In Stock";
+var instock_barcode_not_exist = "Barcode is not exist";
+var instock_name_not_exist = "Name is not exist";
+var instock_price_wrong = "Purchase Price Wrong";
+var instock_qty_wrong = "Qty wrong";
+var instock_pay_wrong = "Payment wrong";
+var instock_success = "In stock successfully";

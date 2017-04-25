@@ -15,5 +15,7 @@ public interface IMaterielDao extends IGenericDao<Materiel, Serializable>{
 
     Materiel getMaterielByBarcode(Integer hotelId, String barcode);
 
+    Materiel getMaterielByName(Integer hotelId, String name);
+
     Materiel getMaterielById(Integer id);
 }

@@ -31,7 +31,7 @@ public class InStockDaoImpl extends GenericDaoImpl<InStock> implements IInStockD
     public List<InStock> getInStockByCondition(Map<Integer, Object> param, Integer start, Integer total) {
         String hql = "from InStock";
         ConditionModel condition = assymblyCondition(param);
-        hql += condition.getHql();
+        hql += condition.getHql() + " order by entryDatetime desc";
         return queryListHQL(hql, condition.getParam());
     }
 

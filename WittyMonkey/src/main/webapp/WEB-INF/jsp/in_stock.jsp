@@ -11,54 +11,56 @@
 <%@include file="common/iconfont.jsp" %>
 <html>
 <head>
-    <title><fmt:message key="room.add.title"/></title>
     <link rel="stylesheet" type="text/css" href="style/common.css"/>
     <script type="text/javascript" src="js/common.js"></script>
-    <script type="text/javascript" src="js/materiel_add&update.js"></script>
+    <script type="text/javascript" src="js/in_stock.js"></script>
     <!-- 根据设置动态加载js语言 -->
     <script type="text/javascript" src="i18n/messages_${loginUser.setting.lang }.js"></script>
     <fmt:setBundle basename="i18n/messages_${loginUser.setting.lang }"/>
 </head>
 <body>
-    <form id="materiel_form" class="layui-form">
-        <!-- java端处理方式 -->
-        <input type="hidden" id="method" name="method" value="add"/>
+    <form id="instock_form" class="layui-form">
         <table class="form_table">
             <tr>
                 <td><label class="layui-form-label"><fmt:message key="materiel.barcode"/></label></td>
                 <td style="width: 200px">
-                    <div class="input"><input type="text" class="layui-input" id="barcode" name="barcode" onblur="validateBarcode('add',this)"/></div>
+                    <div class="input">
+                        <input class="layui-input" id="barcode" name="barcode" list="barcodeList" onblur="validateBarcode()"/>
+                        <datalist id="barcodeList">
+                            <c:forEach items="${materiels}" var="materiel" >
+                                <option>${materiel.barcode}</option>
+                            </c:forEach>
+                        </datalist>
+                    </div>
                 </td>
                 <td><label class="layui-form-label"><fmt:message key="materiel.name"/></label></td>
                 <td>
-                    <div class="input"><input type="text" class="layui-input" id="name" name="name" onblur="validateLength(this, '<fmt:message key="materiel.name"/>', 50)"/></div>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <label class="layui-form-label"><fmt:message key="materiel.unit"/></label></td>
-                <td>
-                    <div class="input inner"><input type="text" class="layui-input" id="unit" name="unit" onblur="validateLength(this, '<fmt:message key="materiel.unit"/>', 10)"/></div>
-                </td>
-                <td><label class="layui-form-label"><fmt:message key="materiel.type"/></label></td>
-                <td>
-                    <div class="input inner"><select name="typeId" id="typeId">
-                        <c:forEach items="${types}" var="type">
-                            <option value="${type.id}">${type.name}</option>
-                        </c:forEach>
-                    </select>
+                    <div class="input">
+                        <input type="text" class="layui-input" id="name" name="name" list="nameList" onblur="validateName()"/>
+                        <datalist id="nameList">
+                            <c:forEach items="${materiels}" var="materiel">
+                                <option>${materiel.name}</option>
+                            </c:forEach>
+                        </datalist>
                     </div>
                 </td>
             </tr>
             <tr>
-                <td><label class="layui-form-label"><fmt:message key="materiel.warn_stock"/></label></td>
                 <td>
-                    <div class="input inner"><input type="number" class="layui-input" id="warnStock" name="warnStock"/></div>
+                    <label class="layui-form-label"><fmt:message key="instock.price"/></label></td>
+                <td>
+                    <div class="input inner"><input type="number" class="layui-input" id="price" name="price" value="0" onblur="calc()"/></div>
                 </td>
-                <td><label class="layui-form-label"><fmt:message key="materiel.sell_price"/></label></td>
                 <td>
-                    <div class="input inner"><input type="number" class="layui-input" id="sellPrice" name="sellPrice"
-                        placeholder="<fmt:message key="materiel.sell_price.hint"/>"/></div>
+                    <label class="layui-form-label"><fmt:message key="instock.qty"/></label></td>
+                <td>
+                    <div class="input inner"><input type="number" class="layui-input" id="qty" name="qty" value="0" onblur="calc()"/></div>
+                </td>
+            </tr>
+            <tr>
+                <td><label class="layui-form-label"><fmt:message key="instock.pay"/></label></td>
+                <td>
+                    <div class="input inner"><input type="number" class="layui-input" id="pay" name="pay" value="0"/></div>
                 </td>
             </tr>
             <tr>

@@ -47,6 +47,15 @@ public class MaterielDaoImpl extends GenericDaoImpl<Materiel> implements IMateri
     }
 
     @Override
+    public Materiel getMaterielByName(Integer hotelId, String name) {
+        String hql = "from Materiel where name = :name and materielType.hotel.id = :hotelId";
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("hotelId", hotelId);
+        map.put("name", name);
+        return queryOneHql(hql, map);
+    }
+
+    @Override
     public Materiel getMaterielById(Integer id) {
         String hql = "from Materiel where id = ?";
         return queryOneHql(hql, id);
