@@ -42,7 +42,7 @@ public class InventoryController {
         Hotel hotel = (Hotel) request.getSession().getAttribute("hotel");
         Integer searchType = Integer.parseInt(request.getParameter("searchType"));
         Map<Integer, Object> param = new HashMap<Integer, Object>();
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         try {
             String dateFrom = request.getParameter("from");
             if (StringUtils.isNotBlank(dateFrom)) {

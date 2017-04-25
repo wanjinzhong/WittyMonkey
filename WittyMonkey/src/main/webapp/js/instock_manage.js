@@ -14,6 +14,30 @@ layui.use(['layer', 'form', 'laypage'], function () {
         page("getInstockByPage.do", undefined, {"searchType": 0});
     }
 );
+$(document).ready(function () {
+    $('#from').dateRangePicker({
+        language: $("#lang").val(),
+        showShortcuts: false,
+        singleMonth: true,
+        autoClose: true,
+        singleDate: true,
+        showShortcuts: false,
+        setValue: function (s) {
+            $(this).val(s);
+        }
+    });
+    $('#to').dateRangePicker({
+        language: $("#lang").val(),
+        showShortcuts: false,
+        singleMonth: true,
+        autoClose: true,
+        singleDate: true,
+        showShortcuts: false,
+        setValue: function (s) {
+            $(this).val(s);
+        }
+    });
+});
 
 function changeType() {
     var type = $("#searchType").val();
