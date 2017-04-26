@@ -235,7 +235,7 @@ public class ReimburseController {
         updateReimburse.setEntryUser(userService.getUserById(loginUser.getId()));
         updateReimburse.setEntryDatetime(new Date());
         updateReimburse.setEntryUserNote(note);
-        updateReimburse.setStatus((Constraint.REIMBURSE_OPT_PASSE.equals(method) ? Constraint.REIMBURSE_STATUS_PASSED : Constraint.REIMBURSE_STATUS_REJECTED));
+        updateReimburse.setStatus((Constraint.REIMBURSE_OPT_PASSE.equals(method) ? Constraint.REIMBURSE_STATUS_APPROVED : Constraint.REIMBURSE_STATUS_REJECTED));
         reimburseService.save(updateReimburse);
         json.put("status", 200 + method);
         return json.toJSONString();

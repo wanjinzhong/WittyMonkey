@@ -22,17 +22,17 @@ public class Reimburse implements Serializable{
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Integer id;
 	
-	@ManyToOne(targetEntity=User.class)
-	@JoinColumn(name="apply_user_id", referencedColumnName="id")
-	private User applyUser;
-	
 	@Column
 	private Double money;
-	
+
 	// 申请状态（待审批/通过/驳回）
 	@Column
 	private Integer status;
-	
+
+	@ManyToOne(targetEntity=User.class)
+	@JoinColumn(name="apply_user_id", referencedColumnName="id")
+	private User applyUser;
+
 	@Column(name="apply_user_note",length=1024)
 	private String applyUserNote;
 

@@ -5,7 +5,6 @@ import java.util.List;
 
 import com.wittymonkey.dao.ILeaveDao;
 import com.wittymonkey.entity.Leave;
-import com.wittymonkey.service.ILeaveService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -54,7 +53,7 @@ public class LeaveTypeServiceImpl implements ILeaveTypeService{
 
 	@Override
 	public void delete(LeaveType leaveType) throws SQLException {
-		List<Leave> leaves = leaveDao.getLeaveByType(leaveType.getId());
+		List<Leave> leaves = leaveDao.getLeaveByLeaveType(leaveType.getId());
 		for (Leave leave : leaves){
 			leave.setLeaveType(null);
 			leaveDao.save(leave);

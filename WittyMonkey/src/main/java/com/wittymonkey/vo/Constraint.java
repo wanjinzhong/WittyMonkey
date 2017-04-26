@@ -29,7 +29,7 @@ public class Constraint {
     public static final Integer FINANCE_OUT = 0;
 
     public static final Integer REIMBURSE_STATUS_PENDING = 1;
-    public static final Integer REIMBURSE_STATUS_PASSED = 2;
+    public static final Integer REIMBURSE_STATUS_APPROVED = 2;
     public static final Integer REIMBURSE_STATUS_REJECTED = 3;
     public static final Integer REIMBURSE_OPT_PASSE = 1;
     public static final Integer REIMBURSE_OPT_REJECTE = 0;
@@ -79,6 +79,11 @@ public class Constraint {
     // 消费出库类型
     public static final Integer OUTSTOCK_TYPE_CONSUME = 2;
     public static final Integer OUTSTOCK_TYPE_DAMAGE = 3;
+
+    public static final Integer LEAVE_SEARCHTYPE_ALL = 0;
+    public static final Integer LEAVE_SEARCHTYPE_PENDING = 1;
+    public static final Integer LEAVE_SEARCHTYPE_APPROVED = 2;
+    public static final Integer LEAVE_SEARCHTYPE_REJECTED = 3;
 
     public static final String LANG_ZH_CN = "zh_CN";
     public static final String LANG_EN_US = "en_US";

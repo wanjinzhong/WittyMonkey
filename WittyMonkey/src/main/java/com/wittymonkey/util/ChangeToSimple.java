@@ -416,4 +416,26 @@ public class ChangeToSimple {
         }
         return simpleLeaveTypes;
     }
+
+    public static List<SimpleLeave> leaveList(List<Leave> leaves){
+        List<SimpleLeave> simpleLeaves = new ArrayList<SimpleLeave>();
+        for (Leave leave : leaves){
+            SimpleLeave simpleLeave = new SimpleLeave();
+            simpleLeave.setApplyDatetime(leave.getApplyDatetime());
+            simpleLeave.setApplyUser(leave.getEntryUser().getRealName());
+            simpleLeave.setApplyUserNote(leave.getApplyUserNote());
+            simpleLeave.setDays(leave.getDays());
+            simpleLeave.setDeduct(leave.getDeduct());
+            simpleLeave.setEntryDatetime(leave.getEntryDatetime());
+            simpleLeave.setEntryUser(leave.getEntryUser().getRealName());
+            simpleLeave.setEntryUserNote(leave.getEntryUserNote());
+            simpleLeave.setFrom(leave.getFrom());
+            simpleLeave.setTo(leave.getTo());
+            simpleLeave.setId(leave.getId());
+            simpleLeave.setLeaveType(leave.getLeaveType().getName());
+            simpleLeave.setStatus(leave.getStatus());
+            simpleLeaves.add(simpleLeave);
+        }
+        return simpleLeaves;
+    }
 }
