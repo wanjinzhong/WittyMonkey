@@ -102,7 +102,7 @@ function dimissionStaff(id) {
 function editStaff(id) {
     layer.open({
         type: 2,
-        area: ['720px', '450px'],
+        area: ['720px', '400px'],
         maxmin: false,
         shade: 0.4,
         title: staff_edit,
@@ -112,7 +112,7 @@ function editStaff(id) {
 function showAddStaff() {
     layer.open({
         type: 2,
-        area: ['720px', '450px'],
+        area: ['720px', '400px'],
         maxmin: false,
         shade: 0.4,
         title: staff_add,

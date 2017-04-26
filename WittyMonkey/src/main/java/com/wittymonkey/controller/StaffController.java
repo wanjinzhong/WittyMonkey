@@ -38,7 +38,7 @@ public class StaffController {
 
     @RequestMapping(value = "getStaffByPage", method = RequestMethod.GET)
     @ResponseBody
-    public String getStaffByPage(HttpServletRequest request){
+    public String getStaffByPage(HttpServletRequest request) {
         JSONObject json = new JSONObject();
         Integer curr = Integer.parseInt(request.getParameter("curr"));
         Integer type = Integer.parseInt(request.getParameter("type"));
@@ -46,7 +46,7 @@ public class StaffController {
         Integer pageSize = loginUser.getSetting().getPageSize();
         Hotel hotel = (Hotel) request.getSession().getAttribute("hotel");
         Integer count = userService.getTotalByHotel(hotel.getId(), type);
-        List<User> users = userService.getUserByPage(hotel.getId(), type,(curr - 1) * pageSize, pageSize);
+        List<User> users = userService.getUserByPage(hotel.getId(), type, (curr - 1) * pageSize, pageSize);
         List<SimpleUser> simpleUsers = ChangeToSimple.userList(users);
         json.put("count", count);
         json.put("pageSize", pageSize);
@@ -57,7 +57,7 @@ public class StaffController {
     }
 
     @RequestMapping(value = "toAddStaff", method = RequestMethod.GET)
-    public String toAddStaff(HttpServletRequest request){
+    public String toAddStaff(HttpServletRequest request) {
         Hotel hotel = (Hotel) request.getSession().getAttribute("hotel");
         List<Role> roles = roleService.getRoleByPage(hotel.getId(), null, null);
         request.setAttribute("roles", roles);
@@ -66,6 +66,7 @@ public class StaffController {
 
     /**
      * 添加员工
+     *
      * @param request
      * @return<table border="1" cellspacing="0">
      * <tr>
@@ -99,35 +100,36 @@ public class StaffController {
      */
     @RequestMapping(value = "saveStaff", method = RequestMethod.POST)
     @ResponseBody
-    public String saveStaff(HttpServletRequest request){
+    public String saveStaff(HttpServletRequest request) {
         JSONObject json = new JSONObject();
         User loginUser = (User) request.getSession().getAttribute("loginUser");
         Hotel hotel = (Hotel) request.getSession().getAttribute("hotel");
-        String realName = request.getParameter("realName");
-        String idcard = request.getParameter("idcard");
-        String tel = request.getParameter("tel");
-        String email = request.getParameter("email");
+        String realName = request.getParameter("realName").trim();
+        String idcard = request.getParameter("idcard").trim();
+        String tel = request.getParameter("tel").trim();
+        String email = request.getParameter("email").trim();
+        String workDays = request.getParameter("workDays").trim();
         String[] rolesStr = request.getParameterValues("roles");
-        Integer staffVali = validateStaff(realName,idcard,tel,email);
-        if (staffVali != 200){
+        Integer staffVali = validateStaff(realName, idcard, tel, email, workDays);
+        if (staffVali != 200) {
             json.put("status", staffVali);
             return json.toJSONString();
         }
         List<Role> roles = new ArrayList<Role>();
-        if (rolesStr != null){
-            for(String str : rolesStr){
-                try{
+        if (rolesStr != null) {
+            for (String str : rolesStr) {
+                try {
                     Integer id = Integer.parseInt(str);
                     Role role = roleService.getRoleById(id);
-                    if (role != null){
+                    if (role != null) {
                         roles.add(role);
                     }
-                } catch (NumberFormatException e){
+                } catch (NumberFormatException e) {
                     continue;
                 }
             }
         }
-
+        Double work = Double.parseDouble(workDays);
         User user = new User();
         String initPassword = "000000";
         String secritePwd = MD5Util.encrypt(initPassword);
@@ -140,6 +142,7 @@ public class StaffController {
         user.setTel(tel);
         user.setEmail(email);
         user.setRoles(roles);
+        user.setWorkDays(work);
         String staffNo = userService.getNextStaffNoByHotel(hotel.getId());
         user.setStaffNo(staffNo);
         Setting setting = new Setting();
@@ -159,46 +162,57 @@ public class StaffController {
     }
 
 
-    public Integer validateStaff(String realName, String idcard, String tel, String email){
-        if (StringUtils.isBlank(realName)){
+    public Integer validateStaff(String realName, String idcard, String tel, String email, String workDays) {
+        if (StringUtils.isBlank(realName)) {
             return 400;
         }
-        if (realName.length() > 20){
+        if (realName.length() > 20) {
             return 401;
         }
-        if (!IDCardValidate.validate(idcard)){
+        if (!IDCardValidate.validate(idcard)) {
             return 410;
         }
-        if (StringUtils.isNotBlank(tel) && tel.trim().length()> 15){
+        if (StringUtils.isNotBlank(tel) && tel.trim().length() > 15) {
             return 420;
         }
-        if (StringUtils.isNotBlank(email) && email.trim().length() > 50){
+        if (StringUtils.isNotBlank(email) && email.trim().length() > 50) {
             return 430;
+        }
+        if (StringUtils.isBlank(workDays)){
+            return 440;
+        }
+        try {
+            Double work = Double.parseDouble(workDays);
+            if (work <= 0 || work > 31){
+                return 441;
+            }
+        } catch (NumberFormatException e){
+            return 441;
         }
         return 200;
     }
 
     @RequestMapping(value = "toEditStaff", method = RequestMethod.GET)
-    public String toEditStaff(HttpServletRequest request){
+    public String toEditStaff(HttpServletRequest request) {
         String idStr = request.getParameter("id");
-        try{
+        try {
             Integer id = Integer.parseInt(idStr);
             User staff = userService.getUserById(id);
             request.getSession().setAttribute("editStaff", staff);
             Hotel hotel = (Hotel) request.getSession().getAttribute("hotel");
             User loginUser = (User) request.getSession().getAttribute("loginUser");
             List<Role> roles = roleService.getRoleByPage(hotel.getId(), null, null);
-            List<SimpleRole> simpleRoles = ChangeToSimple.roleList(loginUser.getSetting().getLang(),roles);
-            for (SimpleRole role : simpleRoles){
+            List<SimpleRole> simpleRoles = ChangeToSimple.roleList(loginUser.getSetting().getLang(), roles);
+            for (SimpleRole role : simpleRoles) {
                 role.setSelected(false);
-                for(Role myRole : staff.getRoles()){
-                    if (myRole.getId().equals(role.getId())){
+                for (Role myRole : staff.getRoles()) {
+                    if (myRole.getId().equals(role.getId())) {
                         role.setSelected(true);
                     }
                 }
             }
             request.setAttribute("roles", simpleRoles);
-        } catch (NumberFormatException e){
+        } catch (NumberFormatException e) {
             e.printStackTrace();
         }
         return "staff_edit";
@@ -206,39 +220,42 @@ public class StaffController {
 
     @RequestMapping(value = "updateStaff", method = RequestMethod.POST)
     @ResponseBody
-    public String updateStaff(HttpServletRequest request){
-        User editStaff = (User)request.getSession().getAttribute("editStaff");
+    public String updateStaff(HttpServletRequest request) {
+        User editStaff = (User) request.getSession().getAttribute("editStaff");
         JSONObject json = new JSONObject();
         User loginUser = (User) request.getSession().getAttribute("loginUser");
-        String realName = request.getParameter("realName");
-        String idcard = request.getParameter("idcard");
-        String tel = request.getParameter("tel");
-        String email = request.getParameter("email");
+        String realName = request.getParameter("realName").trim();
+        String idcard = request.getParameter("idcard").trim();
+        String tel = request.getParameter("tel").trim();
+        String email = request.getParameter("email").trim();
+        String workDays = request.getParameter("workDays").trim();
         String[] rolesStr = request.getParameterValues("roles");
-        Integer staffVali = validateStaff(realName,idcard,tel,email);
-        if (staffVali != 200){
+        Integer staffVali = validateStaff(realName, idcard, tel, email, workDays);
+        if (staffVali != 200) {
             json.put("status", staffVali);
             return json.toJSONString();
         }
         List<Role> roles = new ArrayList<Role>();
-        if (rolesStr != null){
-            for(String str : rolesStr){
-                try{
+        if (rolesStr != null) {
+            for (String str : rolesStr) {
+                try {
                     Integer id = Integer.parseInt(str);
                     Role role = roleService.getRoleById(id);
-                    if (role != null){
+                    if (role != null) {
                         roles.add(role);
                     }
-                } catch (NumberFormatException e){
+                } catch (NumberFormatException e) {
                     continue;
                 }
             }
         }
+        Double work = Double.parseDouble(workDays);
         User staff = userService.getUserById(editStaff.getId());
         staff.setRealName(realName);
         staff.setIdCardNo(idcard);
         staff.setTel(tel);
         staff.setEmail(email);
+        staff.setWorkDays(work);
         staff.setRoles(roles);
         staff.setEntryUser(userService.getUserById(loginUser.getId()));
         staff.setEntryDatetime(new Date());
@@ -248,7 +265,7 @@ public class StaffController {
     }
 
     @RequestMapping(value = "toDimission", method = RequestMethod.POST)
-    public String toDimission(HttpServletRequest request){
+    public String toDimission(HttpServletRequest request) {
         Integer id = Integer.parseInt((String) request.getParameter("id"));
         User user = userService.getUserById(id);
         request.getSession().setAttribute("dimissionUser", user);

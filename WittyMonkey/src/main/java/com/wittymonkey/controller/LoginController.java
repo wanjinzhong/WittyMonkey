@@ -660,6 +660,7 @@ public class LoginController {
         user.setHotel(hotel);
         user.getRoles().add(role);
         user.setRegistDate(now);
+        user.setWorkDays(30.0);
         user.setEntryDatetime(now);
         user.setEntryUser(system);
         user.setSetting(setting);

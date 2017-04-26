@@ -49,6 +49,10 @@ public class User implements Serializable {
 	@Column(name = "idcard_no", length=18)
 	private String idCardNo;
 
+	// 月工作天数
+	@Column(name = "work_days")
+	private Double workDays;
+
 	@ManyToOne(targetEntity = Hotel.class, fetch = FetchType.EAGER,cascade={CascadeType.PERSIST,CascadeType.MERGE})
 	@JoinColumn(name = "hotel_id", referencedColumnName = "id")
 	private Hotel hotel;
@@ -215,5 +219,13 @@ public class User implements Serializable {
 
 	public void setSalary(Salary salary) {
 		this.salary = salary;
+	}
+
+	public Double getWorkDays() {
+		return workDays;
+	}
+
+	public void setWorkDays(Double workDays) {
+		this.workDays = workDays;
 	}
 }

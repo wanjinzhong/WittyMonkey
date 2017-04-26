@@ -27,25 +27,26 @@
         <table class="form_table">
             <tr>
                 <td><label class="layui-form-label"><fmt:message key="staff.real_name"/></label></td>
-                <td width="400px"><input type="text" class="layui-input" name="realName"
+                <td><input type="text" class="layui-input" name="realName"
                            id="realName" value="${editStaff.realName}" onblur="validateRealName(this)"></td>
-            </tr>
-            <tr>
                 <td><label class="layui-form-label"><fmt:message key="staff.idcard"/></label></td>
-                <td width="400px"><input type="text" class="layui-input" name="idcard"
+                <td><input type="text" class="layui-input" name="idcard"
                            id="idcard" value="${editStaff.idCardNo}" onblur="validateIdCard(this)"></td>
             </tr>
             <tr><td><label class="layui-form-label"><fmt:message key="staff.tel"/></label></td>
-                <td width="400px"><input type="text" class="layui-input" name="tel"
-                           id="tel" onblur="validateTel(this)" value="${editStaff.tel}"></td></tr>
-            <tr>
+                <td><input type="text" class="layui-input" name="tel"
+                           id="tel" onblur="validateTel(this)" value="${editStaff.tel}"></td>
                 <td><label class="layui-form-label"><fmt:message key="staff.email"/></label></td>
-                <td width="400px"><input type="text" class="layui-input" name="email" value="${editStaff.email}"
+                <td><input type="text" class="layui-input" name="email" value="${editStaff.email}"
                            id="email" onblur="validateEmailFormat(this)"></td>
             </tr>
             <tr>
+                <td><label class="layui-form-label"><fmt:message key="staff.workdays"/></label></td>
+                <td><input type="number" class="layui-input" id="workDays" name="workDays" value="${editStaff.workDays}"/></td>
+            </tr>
+            <tr>
                 <td><label class="layui-form-label"><fmt:message key="staff.roles"/></label></td>
-                <td width="400px">
+                <td colspan="3">
                     <div class="role_choose">
                         <c:forEach items="${roles}" var="role">
                             <input type="checkbox" name="roles" value="${role.id}" title="${role.name}"
