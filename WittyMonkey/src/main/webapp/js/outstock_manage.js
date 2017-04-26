@@ -70,7 +70,7 @@ function refreshTable(obj) {
     var html = "";
     if (obj.length == 0) {
         html = '<tr class="text-c">' +
-            '<td colspan="7">' + no_data + '</td>' +
+            '<td colspan="9">' + no_data + '</td>' +
             '</tr>"';
     } else {
         for (var i in obj) {

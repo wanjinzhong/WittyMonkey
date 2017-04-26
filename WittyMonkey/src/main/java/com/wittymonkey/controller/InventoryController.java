@@ -145,7 +145,7 @@ public class InventoryController {
     }
 
     @RequestMapping(value = "toInStock", method = RequestMethod.GET)
-    public String toInStock(HttpServletRequest request){
+    public String toInStock(HttpServletRequest request) {
         Hotel hotel = (Hotel) request.getSession().getAttribute("hotel");
         Map<Integer, Object> map = new HashMap<Integer, Object>();
         map.put(Constraint.MATERIEL_SEARCH_CONDITION_HOTEL_ID, hotel.getId());
@@ -153,8 +153,9 @@ public class InventoryController {
         request.setAttribute("materiels", materiels);
         return "in_stock";
     }
+
     @RequestMapping(value = "toOutStock", method = RequestMethod.GET)
-    public String toIOutStock(HttpServletRequest request){
+    public String toIOutStock(HttpServletRequest request) {
         Hotel hotel = (Hotel) request.getSession().getAttribute("hotel");
         Map<Integer, Object> map = new HashMap<Integer, Object>();
         map.put(Constraint.MATERIEL_SEARCH_CONDITION_HOTEL_ID, hotel.getId());
@@ -165,9 +166,9 @@ public class InventoryController {
 
     /**
      * 入库
+     *
      * @param request
-     * @return
-     * <table border="1" cellspacing="0">
+     * @return <table border="1" cellspacing="0">
      * <tr>
      * <th>代码</th>
      * <th>说明</th>
@@ -211,60 +212,60 @@ public class InventoryController {
      */
     @RequestMapping(value = "saveInStock", method = RequestMethod.POST)
     @ResponseBody
-    public String saveInStock(HttpServletRequest request){
+    public String saveInStock(HttpServletRequest request) {
         JSONObject json = new JSONObject();
         Hotel hotel = (Hotel) request.getSession().getAttribute("hotel");
         User user = (User) request.getSession().getAttribute("loginUser");
         String barcode = request.getParameter("barcode").trim();
         Materiel materiel = materielService.getMaterielByBarcode(hotel.getId(), barcode);
-        if (materiel == null){
+        if (materiel == null) {
             json.put("status", 400);
             return json.toJSONString();
         }
         Double price = null;
-        try{
+        try {
             price = Double.parseDouble(request.getParameter("price"));
-        } catch (NullPointerException e){
-          json.put("status", 410);
-          return json.toJSONString();
-        } catch (NumberFormatException e){
+        } catch (NullPointerException e) {
+            json.put("status", 410);
+            return json.toJSONString();
+        } catch (NumberFormatException e) {
             json.put("status", 411);
             return json.toJSONString();
         }
-        if (price < 0){
+        if (price < 0) {
             json.put("status", 411);
             return json.toJSONString();
         }
         Double qty = null;
-        try{
+        try {
             qty = Double.parseDouble(request.getParameter("qty"));
-        } catch (NullPointerException e){
+        } catch (NullPointerException e) {
             json.put("status", 420);
             return json.toJSONString();
-        } catch (NumberFormatException e){
+        } catch (NumberFormatException e) {
             json.put("status", 421);
             return json.toJSONString();
         }
-        if (qty <= 0){
+        if (qty <= 0) {
             json.put("status", 421);
             return json.toJSONString();
         }
         Double pay = null;
-        try{
+        try {
             pay = Double.parseDouble(request.getParameter("pay"));
-        } catch (NullPointerException e){
+        } catch (NullPointerException e) {
             json.put("status", 430);
             return json.toJSONString();
-        } catch (NumberFormatException e){
+        } catch (NumberFormatException e) {
             json.put("status", 431);
             return json.toJSONString();
         }
-        if (pay < 0){
+        if (pay < 0) {
             json.put("status", 431);
             return json.toJSONString();
         }
         String note = request.getParameter("note");
-        if (StringUtils.isNotBlank(note) && note.length() > 1024){
+        if (StringUtils.isNotBlank(note) && note.length() > 1024) {
             json.put("status", 440);
             return json.toJSONString();
         }
@@ -285,9 +286,87 @@ public class InventoryController {
 
     @RequestMapping(value = "saveOutStock")
     @ResponseBody
-    public String saveOutStock(HttpServletRequest request){
+    public String saveOutStock(HttpServletRequest request) {
         JSONObject json = new JSONObject();
+        Hotel hotel = (Hotel) request.getSession().getAttribute("hotel");
+        User user = (User) request.getSession().getAttribute("loginUser");
+        String barcode = request.getParameter("barcode").trim();
+        Materiel materiel = materielService.getMaterielByBarcode(hotel.getId(), barcode);
+        if (materiel == null) {
+            json.put("status", 400);
+            return json.toJSONString();
+        }
+        Integer type = Integer.parseInt(request.getParameter("type"));
+        Double price = null;
+        Double qty = null;
+        Double pay = null;
+        if (Constraint.OUTSTOCK_TYPE_SELL.equals(type)) {
+            try {
+                price = Double.parseDouble(request.getParameter("sellPrice"));
+            } catch (NullPointerException e) {
+                json.put("status", 410);
+                return json.toJSONString();
+            } catch (NumberFormatException e) {
+                json.put("status", 411);
+                return json.toJSONString();
+            }
+            if (price < 0) {
+                json.put("status", 411);
+                return json.toJSONString();
+            }
+            try {
+                pay = Double.parseDouble(request.getParameter("pay"));
+            } catch (NullPointerException e) {
+                json.put("status", 430);
+                return json.toJSONString();
+            } catch (NumberFormatException e) {
+                json.put("status", 431);
+                return json.toJSONString();
+            }
+            if (pay < 0) {
+                json.put("status", 431);
+                return json.toJSONString();
+            }
+        } else {
+            price = 0.0;
+            pay = 0.0;
+        }
+        try {
+            qty = Double.parseDouble(request.getParameter("qty"));
+        } catch (NullPointerException e) {
+            json.put("status", 420);
+            return json.toJSONString();
+        } catch (NumberFormatException e) {
+            json.put("status", 421);
+            return json.toJSONString();
+        }
+        if (qty <= 0) {
+            json.put("status", 421);
+            return json.toJSONString();
+        }
+        if (qty > materiel.getStock()) {
+            json.put("status", 422);
+            json.put("stock", materiel.getStock());
+            return json.toJSONString();
+        }
+        String note = request.getParameter("note");
+        if (StringUtils.isNotBlank(note) && note.length() > 1024) {
+            json.put("status", 440);
+            return json.toJSONString();
+        }
+        materiel.setStock(materiel.getStock() - qty);
+        OutStock outStock = new OutStock();
+        outStock.setEntryDatetime(new Date());
+        outStock.setEntryUser(userService.getUserById(user.getId()));
+        outStock.setMateriel(materiel);
+        outStock.setType(type);
+        outStock.setHotel(hotelService.findHotelById(hotel.getId()));
+        outStock.setNote(note);
+        outStock.setPayment(pay);
+        outStock.setPrice(price);
+        outStock.setQuantity(qty);
+        outStockService.save(outStock);
+        json.put("status", 200);
         return json.toJSONString();
-
     }
 }

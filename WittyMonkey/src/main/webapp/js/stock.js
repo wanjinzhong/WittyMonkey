@@ -6,6 +6,18 @@ var form;
 layui.use(["layer","form"], function () {
     layer = layui.layer;
     form = layui.form();
+    form.on('select(type)', function (data) {
+        var type = $("#type").val();
+        if (type == 1){
+            $("#sellPrice").attr("disabled", false);
+            $("#pay").attr("disabled", false);
+        } else {
+            $("#sellPrice").val(0);
+            $("#pay").val(0);
+            $("#sellPrice").attr("disabled", true);
+            $("#pay").attr("disabled", true);
+        }
+    })
 });
 
 function validateBarcode() {
@@ -27,7 +39,10 @@ function validateBarcode() {
                 $("#name").val(res["materiel"]["name"]);
                 var method = $("#method").val();
                 if (method == "out"){
-                    $("#sellPrice").val(res["materiel"]["sellPrice"]);
+                    var type = $("#type").val();
+                    if (type == 1) {
+                        $("#sellPrice").val(res["materiel"]["sellPrice"]);
+                    }
                 }
             }
             calc();
@@ -61,10 +76,23 @@ function save() {
     if (!validateNote($("#note"))){
         return false;
     }
+    var method = $("#method").val();
+    var url;
+    var data;
+    var success_hint;
+    if (method == "out"){
+        url = "saveOutStock.do";
+        data = $("#outstock_form").serialize();
+        success_hint = outstock_success;
+    } else if (method == "in"){
+        url = "saveInStock.do";
+        data = $("#instock_form").serialize();
+        success_hint = inststock_success;
+    }
     var load = layer.load();
     $.ajax({
-        url: "saveInStock.do",
-        data: $("#instock_form").serialize(),
+        url: url,
+        data: data,
         dataType: "JSON",
         type: "POST",
         success: function (data) {
@@ -88,6 +116,9 @@ function save() {
                 case 421:
                     layer.tips(instock_qty_wrong, $("#qty"), {tips: 2});
                     break;
+                case 422:
+                    layer.tips(outstock_qty_ecceed + res["stock"], $("#qty"), {tips: 2});
+                    break;
                 case 430:
                     layer.tips(messageOfValidateNull(instock_pay), $("#pay"), {tips: 2});
                     break;
@@ -98,7 +129,7 @@ function save() {
                     layer.tips(messageOfValidateLength(message_note, 1024), $("#note"), {tips: 2});
                     break;
                 case 200:
-                    layer.msg(instock_success, {
+                    layer.msg(success_hint, {
                     icon: 1,
                     time: 2000
                 }, function () {

@@ -47,12 +47,12 @@
                 </div>
             </div>
         </form>
-        <table class="layui-table" lay-skin="line" style="min-width: 800px">
+        <table class="layui-table" lay-skin="line" style="min-width: 950px">
             <thead>
             <tr>
                 <th width="100px"><fmt:message key="materiel.barcode"/></th>
                 <th width="150px"><fmt:message key="materiel.name"/></th>
-                <th width="50px"><fmt:message key="outstock.type"/></th>
+                <th width="60px"><fmt:message key="outstock.type"/></th>
                 <th width="50px"><fmt:message key="outstock.sell_price"/></th>
                 <th width="50px"><fmt:message key="outstock.qty"/></th>
                 <th width="50px"><fmt:message key="outstock.pay"/></th>

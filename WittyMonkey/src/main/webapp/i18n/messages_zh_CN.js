@@ -270,3 +270,5 @@ var outstock_type_sell = "销售出库";
 var outstock_type_consume="消费出库";
 var outstock_materiel_null = "已删除";
 var outstock_add = "出库";
+var outstock_qty_ecceed = "最大库存：";
+var outstock_success = "出库成功";

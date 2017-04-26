@@ -52,7 +52,7 @@
             <td><label class="layui-form-label"><fmt:message key="outstock.type"/></label></td>
             <td>
                 <div>
-                    <select id="type" name="type">
+                    <select id="type" name="type" lay-filter="type">
                         <option value="1"><fmt:message key="outstock.type.sell"/></option>
                         <option value="2"><fmt:message key="outstock.type.consume"/></option>
                         <option value="3"><fmt:message key="outstock.type.damage"/></option>

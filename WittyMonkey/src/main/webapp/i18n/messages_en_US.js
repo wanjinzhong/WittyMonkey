@@ -259,3 +259,5 @@ var outstock_type_sell = "Sell";
 var outstock_type_consume = "Consume";
 var outstock_materiel_null = "Deleted";
 var outstock_add = "Out Stock";
+var outstock_qty_ecceed = "Max Stock：";
+var outstock_success = "Out stock successfully";

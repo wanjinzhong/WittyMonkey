@@ -123,4 +123,12 @@ public class OutStock implements Serializable{
 	public void setPayment(Double payment) {
 		this.payment = payment;
 	}
+
+	public Hotel getHotel() {
+		return hotel;
+	}
+
+	public void setHotel(Hotel hotel) {
+		this.hotel = hotel;
+	}
 }
