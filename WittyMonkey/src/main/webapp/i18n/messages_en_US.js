@@ -270,3 +270,7 @@ var leave_type_name_exist = "Type name already exists";
 var leave_type_deduct_wrong = "0-100";
 var leave_type_add_success = "Add leave type successfully";
 var leave_type_edit_success = "Update leave type successfully";
+var leave_type_delete_title = "Delete leave tyoe";
+var leave_type_delete_hint = "Are you sure to delete this leave type?";
+var leave_type_delete_success = "Delete leave type successfully";
+var leave_type_not_exist = "Leave type does not exist";

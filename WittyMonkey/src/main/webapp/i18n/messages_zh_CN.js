@@ -281,3 +281,7 @@ var leave_type_name_exist = "类型名已存在";
 var leave_type_deduct_wrong = "0-100";
 var leave_type_add_success = "请假类型添加成功";
 var leave_type_edit_success = "请假类型修改成功";
+var leave_type_delete_title = "删除请假类型";
+var leave_type_delete_hint = "确定要删除这个请假类型吗？";
+var leave_type_delete_success = "请假类型删除成功";
+var leave_type_not_exist = "请假类型不存在";

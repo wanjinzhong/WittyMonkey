@@ -2,6 +2,7 @@ package com.wittymonkey.service;
 
 import com.wittymonkey.entity.LeaveType;
 
+import java.sql.SQLException;
 import java.util.List;
 
 public interface ILeaveTypeService {
@@ -17,4 +18,6 @@ public interface ILeaveTypeService {
 	List<LeaveType> getLeaveTypes(Integer hotelId, Integer start, Integer total);
 
 	LeaveType getLeaveTypeByName(Integer hotelId, String name);
+
+	void delete(LeaveType leaveType) throws SQLException;
 }

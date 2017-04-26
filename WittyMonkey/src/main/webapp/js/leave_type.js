@@ -33,21 +33,21 @@ function refreshTable(obj) {
     }
     $("#dataTabel").html(html);
 }
-function deleteLeaveType(floorNo) {
-    /*layer.confirm(floor_manage_delete_hint, {icon: 7, title: floor_manage_delete_title},
+function deleteLeaveType(id) {
+    layer.confirm(leave_type_delete_hint, {icon: 7, title: leave_type_delete_title},
         function (index) {
             var load = layer.load();
             $.ajax({
-                url: "deleteFloor.do",
-                data: {"floorNo": floorNo},
+                url: "deleteLeaveType.do",
+                data: {"id": id},
                 dataType: "json",
-                type: "GET",
+                type: "POST",
                 success: function (data) {
                     layer.close(load);
                     var result = eval("(" + data + ")");
                     switch (result.status) {
                         case 400:
-                            layer.msg(floor_manage_delete_not_exist, {
+                            layer.msg(leave_type_not_exist, {
                                 icon: 2, time: 2000
                             }, function () {
                                 parent.location.reload();
@@ -63,7 +63,7 @@ function deleteLeaveType(floorNo) {
                             });
                             break;
                         case 200:
-                            layer.msg(floor_manage_delete_success, {
+                            layer.msg(leave_type_delete_success, {
                                 icon: 6,
                                 time: 2000
                             }, function () {
@@ -75,7 +75,7 @@ function deleteLeaveType(floorNo) {
                 }
             });
             layer.close(index);
-        });*/
+        });
 }
 function editLeaveType(id) {
     layer.open({

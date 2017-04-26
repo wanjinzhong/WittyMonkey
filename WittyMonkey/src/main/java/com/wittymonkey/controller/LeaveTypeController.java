@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
+import java.sql.SQLException;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
@@ -325,6 +326,26 @@ public class LeaveTypeController {
         editLeaveType.setName(name);
         editLeaveType.setNote(note);
         leaveTypeService.saveLeaveType(editLeaveType);
+        json.put("status", 200);
+        return json.toJSONString();
+    }
+
+    @RequestMapping(value = "deleteLeaveType", method = RequestMethod.POST)
+    @ResponseBody
+    public String deleteLeaveType(HttpServletRequest request){
+        JSONObject json = new JSONObject();
+        Integer id = Integer.parseInt(request.getParameter("id"));
+        LeaveType leaveType = leaveTypeService.getLeaveTypeById(id);
+        if (leaveType == null){
+            json.put("status",400);
+            return json.toJSONString();
+        }
+        try {
+            leaveTypeService.delete(leaveType);
+        } catch (SQLException e) {
+            json.put("status", 500);
+            return json.toJSONString();
+        }
         json.put("status", 200);
         return json.toJSONString();
     }

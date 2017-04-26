@@ -1,5 +1,6 @@
 package com.wittymonkey.service.impl;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,6 +43,11 @@ public class LeaveTypeServiceImpl implements ILeaveTypeService{
 	@Override
 	public LeaveType getLeaveTypeByName(Integer hotelId, String name) {
 		return leaveTypeDao.getLeaveTypeByName(hotelId, name);
+	}
+
+	@Override
+	public void delete(LeaveType leaveType) throws SQLException {
+		leaveTypeDao.delete(leaveType);
 	}
 
 }
