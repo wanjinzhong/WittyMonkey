@@ -488,51 +488,51 @@ public class LoginController {
         // 添加初始化请假类型
         // 事假
         LeaveType affair = new LeaveType();
-        affair.setDeduct(0.0);
-        affair.setName("affair");
+        affair.setDeduct(100.0);
+        affair.setName("Affair(事假)");
         affair.setEntryDatetime(now);
         affair.setEntryUser(system);
-        affair.setEditable(false);
+        affair.setDeletable(false);
         affair.setHotel(hotel);
         // 年假
         LeaveType year = new LeaveType();
         year.setDeduct(0.0);
-        year.setName("year");
+        year.setName("Year(年假)");
         year.setEntryDatetime(now);
         year.setEntryUser(system);
-        year.setEditable(false);
+        year.setDeletable(false);
         year.setHotel(hotel);
         // 婚假
         LeaveType marry = new LeaveType();
         marry.setDeduct(0.0);
-        marry.setName("marry");
+        marry.setName("Marry(婚假)");
         marry.setEntryDatetime(now);
         marry.setEntryUser(system);
-        marry.setEditable(false);
+        marry.setDeletable(false);
         marry.setHotel(hotel);
         // 丧假
         LeaveType funeral = new LeaveType();
         funeral.setDeduct(0.0);
-        funeral.setName("funeral");
+        funeral.setName("Funeral(丧假)");
         funeral.setEntryDatetime(now);
         funeral.setEntryUser(system);
-        funeral.setEditable(false);
+        funeral.setDeletable(false);
         funeral.setHotel(hotel);
         // 病假
         LeaveType sick = new LeaveType();
-        sick.setDeduct(0.0);
-        sick.setName("sick");
+        sick.setDeduct(50.0);
+        sick.setName("Sick(病假)");
         sick.setEntryDatetime(now);
         sick.setEntryUser(system);
-        sick.setEditable(false);
+        sick.setDeletable(false);
         sick.setHotel(hotel);
         // 产假
         LeaveType maternity = new LeaveType();
         maternity.setDeduct(0.0);
-        maternity.setName("maternity");
+        maternity.setName("Maternity(产假)");
         maternity.setEntryDatetime(now);
         maternity.setEntryUser(system);
-        maternity.setEditable(false);
+        maternity.setDeletable(false);
         maternity.setHotel(hotel);
 
         List<LeaveType> leaveTypes = new ArrayList<LeaveType>();

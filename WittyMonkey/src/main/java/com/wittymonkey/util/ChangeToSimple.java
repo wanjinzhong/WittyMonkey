@@ -400,4 +400,20 @@ public class ChangeToSimple {
         }
         return simpleOutStocks;
     }
+
+    public static List<SimpleLeaveType> leaveTypeList(List<LeaveType> leaveTypes){
+        List<SimpleLeaveType> simpleLeaveTypes = new ArrayList<SimpleLeaveType>();
+        for (LeaveType leaveType : leaveTypes){
+            SimpleLeaveType simpleLeaveType = new SimpleLeaveType();
+            simpleLeaveType.setDeduct(leaveType.getDeduct());
+            simpleLeaveType.setDeletable(leaveType.getDeletable());
+            simpleLeaveType.setEntryDatetime(leaveType.getEntryDatetime());
+            simpleLeaveType.setEntryUser(leaveType.getEntryUser().getRealName());
+            simpleLeaveType.setId(leaveType.getId());
+            simpleLeaveType.setName(leaveType.getName());
+            simpleLeaveType.setNote(leaveType.getNote());
+            simpleLeaveTypes.add(simpleLeaveType);
+        }
+        return simpleLeaveTypes;
+    }
 }

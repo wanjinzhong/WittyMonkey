@@ -272,3 +272,12 @@ var outstock_materiel_null = "已删除";
 var outstock_add = "出库";
 var outstock_qty_ecceed = "最大库存：";
 var outstock_success = "出库成功";
+
+var leave_type_name = "类型名";
+var leave_type_deduct = "日扣薪比";
+var leave_type_add_title = "添加请假类型";
+var leave_type_edit_title = "修改请假类型";
+var leave_type_name_exist = "类型名已存在";
+var leave_type_deduct_wrong = "0-100";
+var leave_type_add_success = "请假类型添加成功";
+var leave_type_edit_success = "请假类型修改成功";

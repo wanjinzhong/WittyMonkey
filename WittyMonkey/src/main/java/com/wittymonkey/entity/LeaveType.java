@@ -31,9 +31,6 @@ public class LeaveType implements Serializable{
 	@Column(length=20)
 	private String name;
 	
-	@Column(name="total_time")
-	private Double totalTime;
-	
 	@ManyToOne(targetEntity=Hotel.class, cascade={CascadeType.PERSIST,CascadeType.MERGE})
 	@JoinColumn(name="hotel_id", referencedColumnName="id")
 	private Hotel hotel;
@@ -46,8 +43,15 @@ public class LeaveType implements Serializable{
 	private String note;
 
 	@Column
-	private Boolean editable;
-	
+	private Boolean deletable;
+
+	@Column(name="entry_datetime")
+	private Date entryDatetime;
+
+	@ManyToOne(targetEntity=User.class, fetch=FetchType.EAGER, cascade={CascadeType.PERSIST,CascadeType.MERGE})
+	@JoinColumn(name="entry_id", referencedColumnName="id")
+	private User entryUser;
+
 	public Date getEntryDatetime() {
 		return entryDatetime;
 	}
@@ -64,13 +68,6 @@ public class LeaveType implements Serializable{
 		this.entryUser = entryUser;
 	}
 
-	@Column(name="entry_datetime")
-	private Date entryDatetime;
-	
-	@ManyToOne(targetEntity=User.class, fetch=FetchType.EAGER, cascade={CascadeType.PERSIST,CascadeType.MERGE})
-	@JoinColumn(name="entry_id", referencedColumnName="id")
-	private User entryUser;
-	
 	public Integer getId() {
 		return id;
 	}
@@ -85,14 +82,6 @@ public class LeaveType implements Serializable{
 
 	public void setName(String name) {
 		this.name = name;
-	}
-
-	public Double getTotalTime() {
-		return totalTime;
-	}
-
-	public void setTotalTime(Double totalTime) {
-		this.totalTime = totalTime;
 	}
 
 	public Hotel getHotel() {
@@ -119,11 +108,11 @@ public class LeaveType implements Serializable{
 		this.note = note;
 	}
 
-	public Boolean getEditable() {
-		return editable;
+	public Boolean getDeletable() {
+		return deletable;
 	}
 
-	public void setEditable(Boolean editable) {
-		this.editable = editable;
+	public void setDeletable(Boolean deletable) {
+		this.deletable = deletable;
 	}
 }

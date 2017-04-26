@@ -261,3 +261,12 @@ var outstock_materiel_null = "Deleted";
 var outstock_add = "Out Stock";
 var outstock_qty_ecceed = "Max Stock：";
 var outstock_success = "Out stock successfully";
+
+var leave_type_name = "Type Name";
+var leave_type_deduct = "Deduction Ratio";
+var leave_type_add_title = "Add Leave Type";
+var leave_type_edit_title = "Edit Leave Type";
+var leave_type_name_exist = "Type name already exists";
+var leave_type_deduct_wrong = "0-100";
+var leave_type_add_success = "Add leave type successfully";
+var leave_type_edit_success = "Update leave type successfully";
