@@ -12,4 +12,6 @@ public interface ISalaryService {
     List<Salary> getSalaryByPage(Map<Integer, Object> condition, Integer start, Integer total);
 
     Salary getSalaryById(Integer id);
+
+    Salary getSalaryByStaffId(Integer staffId);
 }

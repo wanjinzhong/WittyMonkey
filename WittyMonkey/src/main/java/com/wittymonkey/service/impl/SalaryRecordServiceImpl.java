@@ -34,6 +34,11 @@ public class SalaryRecordServiceImpl implements ISalaryRecordService{
     }
 
     @Override
+    public SalaryRecord getSalaryRecordAtDate(Integer salaryId, Date date) {
+        return salaryRecordDao.getSalaryRecordAtDate(salaryId, date);
+    }
+
+    @Override
     public void save(SalaryRecord salaryRecord) {
         salaryRecordDao.save(salaryRecord);
     }
@@ -41,6 +46,11 @@ public class SalaryRecordServiceImpl implements ISalaryRecordService{
     @Override
     public SalaryRecord getSalaryRecordById(Integer id) {
         return salaryRecordDao.getSalaryRecordById(id);
+    }
+
+    @Override
+    public List<SalaryRecord> getSalaryRecordByDateRange(Integer salaryId, Date startDate, Date endDate) {
+        return salaryRecordDao.getSalaryRecordByDateRange(salaryId, startDate, endDate);
     }
 
     @Override

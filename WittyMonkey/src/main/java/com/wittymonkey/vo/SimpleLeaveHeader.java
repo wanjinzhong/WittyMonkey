@@ -5,7 +5,7 @@ import java.util.Date;
 /**
  * Created by neilw on 2017/4/26.
  */
-public class SimpleLeave {
+public class SimpleLeaveHeader {
     private Integer id;
 
     private Double deduct;

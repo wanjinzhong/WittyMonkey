@@ -14,9 +14,13 @@ public interface ISalaryRecordService {
 
     SalaryRecord getSalaryRecordByStartDate(Integer salaryId, Date startDate);
 
+    SalaryRecord getSalaryRecordAtDate(Integer salaryId, Date date);
+
     void save(SalaryRecord salaryRecord);
 
     SalaryRecord getSalaryRecordById(Integer id);
+
+    List<SalaryRecord> getSalaryRecordByDateRange(Integer salaryId, Date startDate, Date endDate);
 
     void delete(SalaryRecord salaryRecord) throws SQLException;
 }

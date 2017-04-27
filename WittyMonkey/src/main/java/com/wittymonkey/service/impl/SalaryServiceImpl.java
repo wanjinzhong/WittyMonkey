@@ -30,4 +30,9 @@ public class SalaryServiceImpl implements ISalaryService{
     public Salary getSalaryById(Integer id) {
         return salaryDao.getSalaryById(id);
     }
+
+    @Override
+    public Salary getSalaryByStaffId(Integer staffId) {
+        return salaryDao.getSalaryByStaffId(staffId);
+    }
 }

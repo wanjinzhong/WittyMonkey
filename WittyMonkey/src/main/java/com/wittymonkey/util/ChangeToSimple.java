@@ -1,9 +1,11 @@
 package com.wittymonkey.util;
 
 import com.wittymonkey.controller.IndexController;
+import com.wittymonkey.controller.LeaveController;
 import com.wittymonkey.entity.*;
 import com.wittymonkey.vo.*;
 
+import javax.xml.soap.Detail;
 import java.io.IOException;
 import java.util.*;
 
@@ -344,7 +346,7 @@ public class ChangeToSimple {
         return simpleMateriels;
     }
 
-    public static SimpleMateriel materiel(Materiel materiel){
+    public static SimpleMateriel materiel(Materiel materiel) {
         SimpleMateriel simpleMateriel = new SimpleMateriel();
         simpleMateriel.setBarcode(materiel.getBarcode());
         simpleMateriel.setEntryDatetime(materiel.getEntryDatetime());
@@ -384,7 +386,7 @@ public class ChangeToSimple {
         List<SimpleOutStock> simpleOutStocks = new ArrayList<SimpleOutStock>();
         for (OutStock outStock : outStocks) {
             SimpleOutStock simpleOutStock = new SimpleOutStock();
-            if (outStock.getMateriel() != null){
+            if (outStock.getMateriel() != null) {
                 simpleOutStock.setBarcode(outStock.getMateriel().getBarcode());
                 simpleOutStock.setMateriel(outStock.getMateriel().getName());
             }
@@ -401,9 +403,9 @@ public class ChangeToSimple {
         return simpleOutStocks;
     }
 
-    public static List<SimpleLeaveType> leaveTypeList(List<LeaveType> leaveTypes){
+    public static List<SimpleLeaveType> leaveTypeList(List<LeaveType> leaveTypes) {
         List<SimpleLeaveType> simpleLeaveTypes = new ArrayList<SimpleLeaveType>();
-        for (LeaveType leaveType : leaveTypes){
+        for (LeaveType leaveType : leaveTypes) {
             SimpleLeaveType simpleLeaveType = new SimpleLeaveType();
             simpleLeaveType.setDeduct(leaveType.getDeduct());
             simpleLeaveType.setDeletable(leaveType.getDeletable());
@@ -417,25 +419,62 @@ public class ChangeToSimple {
         return simpleLeaveTypes;
     }
 
-    public static List<SimpleLeave> leaveList(List<Leave> leaves){
-        List<SimpleLeave> simpleLeaves = new ArrayList<SimpleLeave>();
-        for (Leave leave : leaves){
-            SimpleLeave simpleLeave = new SimpleLeave();
+    public static List<SimpleLeaveHeader> leaveHeaderList(List<LeaveHeader> leaves) {
+        List<SimpleLeaveHeader> simpleLeaves = new ArrayList<SimpleLeaveHeader>();
+        for (LeaveHeader leave : leaves) {
+            SimpleLeaveHeader simpleLeave = new SimpleLeaveHeader();
             simpleLeave.setApplyDatetime(leave.getApplyDatetime());
             simpleLeave.setApplyUser(leave.getEntryUser().getRealName());
             simpleLeave.setApplyUserNote(leave.getApplyUserNote());
-            simpleLeave.setDays(leave.getDays());
-            simpleLeave.setDeduct(leave.getDeduct());
             simpleLeave.setEntryDatetime(leave.getEntryDatetime());
             simpleLeave.setEntryUser(leave.getEntryUser().getRealName());
             simpleLeave.setEntryUserNote(leave.getEntryUserNote());
-            simpleLeave.setFrom(leave.getFrom());
-            simpleLeave.setTo(leave.getTo());
             simpleLeave.setId(leave.getId());
             simpleLeave.setLeaveType(leave.getLeaveType().getName());
             simpleLeave.setStatus(leave.getStatus());
             simpleLeaves.add(simpleLeave);
         }
         return simpleLeaves;
+    }
+
+    public static List<LeaveVO> assymblyLeaveVOs(List<LeaveHeader> leaveHeaders) {
+        List<LeaveVO> leaveVOS = new ArrayList<LeaveVO>();
+        for (LeaveHeader header : leaveHeaders) {
+            LeaveVO leaveVO = new LeaveVO();
+            leaveVO.setApplyDatetime(header.getApplyDatetime());
+            leaveVO.setApplyUser(header.getApplyUser().getRealName());
+            leaveVO.setApplyUserNote(header.getApplyUserNote());
+            if (header.getEntryUser() != null) {
+                leaveVO.setEntryDatetime(header.getEntryDatetime());
+                leaveVO.setEntryUser(header.getEntryUser().getRealName());
+                leaveVO.setEntryUserNote(header.getEntryUserNote());
+            }
+            leaveVO.setId(header.getId());
+            if (header.getLeaveType() != null) {
+                leaveVO.setLeaveType(header.getLeaveType().getName());
+            }
+            leaveVO.setStatus(header.getStatus());
+            Collections.sort(header.getLeaveDetails(), new Comparator<LeaveDetail>() {
+                @Override
+                public int compare(LeaveDetail o1, LeaveDetail o2) {
+                    return (int) (o1.getFrom().getTime() - o2.getTo().getTime());
+                }
+            });
+            List<LeaveDetail> details = header.getLeaveDetails();
+            if (details != null || details.size() > 0) {
+                leaveVO.setFrom(details.get(0).getFrom());
+                leaveVO.setTo(details.get(details.size() - 1).getTo());
+            }
+            Double days = 0.0;
+            Double deduct = 0.0;
+            for (LeaveDetail detail : details) {
+                days += detail.getDays();
+                deduct += detail.getDeduct();
+            }
+            leaveVO.setDays(days);
+            leaveVO.setDeduct(deduct);
+            leaveVOS.add(leaveVO);
+        }
+        return leaveVOS;
     }
 }

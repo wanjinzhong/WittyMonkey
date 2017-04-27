@@ -35,8 +35,27 @@ public class SalaryRecordDaoImpl extends GenericDaoImpl<SalaryRecord> implements
     }
 
     @Override
+    public SalaryRecord getSalaryRecordAtDate(Integer salaryId, Date date) {
+        String hql = "from SalaryRecord where startDate <= :date and salary.id = :salaryId order by startDate desc";
+        Map<String, Object> param = new HashMap<String, Object>();
+        param.put("date", date);
+        param.put("salaryId", salaryId);
+        return queryOneHql(hql, param);
+    }
+
+    @Override
     public SalaryRecord getSalaryRecordById(Integer id) {
         String hql = "from SalaryRecord where id = ?";
         return queryOneHql(hql, id);
+    }
+
+    @Override
+    public List<SalaryRecord> getSalaryRecordByDateRange(Integer salaryId, Date startDate, Date endDate) {
+        String hql = "from SalaryRecord where salary.id = :salaryId and startDate > :startDate and startDate < :endDate";
+        Map<String, Object> param = new HashMap<String, Object>();
+        param.put("salaryId", salaryId);
+        param.put("startDate", startDate);
+        param.put("endDate", endDate);
+        return queryListHQL(hql, param);
     }
 }

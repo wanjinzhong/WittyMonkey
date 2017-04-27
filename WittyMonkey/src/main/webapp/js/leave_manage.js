@@ -23,7 +23,7 @@ function refreshTable(obj) {
         for (var i in obj) {
             html += '<tr class="text-c">' +
                 '<td>' + obj[i]['applyUser'] + '</td>' +
-                '<td>' + formatDay(obj[i]['from']) + " - " + formatDate(obj[i]['to']) + '</td>' +
+                '<td>' + formatDay(obj[i]['from']) + " - " + formatDay(obj[i]['to']) + '</td>' +
                 '<td>' + obj[i]['days'] + '</td>' +
                 '<td>' + obj[i]['deduct'] + '</td>';
                 switch (obj[i]['status']) {
@@ -54,13 +54,13 @@ function search() {
     page("getLeaveByPage.do", undefined, condition);
 }
 
-function showAddReimburse() {
+function showAddLeave() {
     layer.open({
         type: 2,
-        area: ['780px', '420px'],
+        area: ['780px', '450px'],
         maxmin: false,
         shade: 0.4,
-        title: reimburse_add,
+        title: leave_add_title,
         content: "toAddLeave.do"
     });
 }
@@ -71,7 +71,7 @@ function showDetail(id) {
         area: ['780px', '450px'],
         maxmin: false,
         shade: 0.4,
-        title: reimburse_detail,
+        title: leave_detail_title,
         content: "toShowLeave.do?id=" + id
     });
 }

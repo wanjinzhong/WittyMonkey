@@ -285,3 +285,7 @@ var leave_type_delete_title = "删除请假类型";
 var leave_type_delete_hint = "确定要删除这个请假类型吗？";
 var leave_type_delete_success = "请假类型删除成功";
 var leave_type_not_exist = "请假类型不存在";
+
+var leave_add_title = "请假登记";
+var leave_detail_title = "请假详情";
+var leave_deduct = "扣薪";

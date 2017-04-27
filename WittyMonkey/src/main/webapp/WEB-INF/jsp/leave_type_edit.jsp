@@ -31,7 +31,7 @@
                            <c:if test="${!editLeaveType.deletable}">
                                disabled
                            </c:if>
-                    />%</td>
+                    /></td>
                 <td><label class="layui-form-label"><fmt:message key="leave_type.deduct"/></label></td>
                 <td>
                     <input type="number" class="layui-input" name="deduct" value="${editLeaveType.deduct}"

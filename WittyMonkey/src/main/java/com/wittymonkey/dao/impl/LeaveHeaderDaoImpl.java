@@ -1,27 +1,26 @@
 package com.wittymonkey.dao.impl;
 
+import com.wittymonkey.dao.ILeaveHeaderDao;
+import com.wittymonkey.entity.LeaveHeader;
 import com.wittymonkey.vo.Constraint;
 import org.springframework.stereotype.Repository;
-
-import com.wittymonkey.dao.ILeaveDao;
-import com.wittymonkey.entity.Leave;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@Repository(value="leaveDao")
-public class LeaveDaoImpl extends GenericDaoImpl<Leave> implements ILeaveDao{
+@Repository(value="leaveHeaderDao")
+public class LeaveHeaderDaoImpl extends GenericDaoImpl<LeaveHeader> implements ILeaveHeaderDao {
 
     @Override
-    public List<Leave> getLeaveByLeaveType(Integer typeId) {
-        String hql = "from Leave where leaveType.id = ?";
+    public List<LeaveHeader> getLeaveHeaderByLeaveType(Integer typeId) {
+        String hql = "from LeaveHeader where leaveType.id = ?";
         return queryListHQL(hql, typeId);
     }
 
     @Override
     public Integer getTotalByStatus(Integer hotelId, Integer status) {
-        String hql = "select count(1) from Leave where leaveType.hotel.id = :hotelId";
+        String hql = "select count(1) from LeaveHeader where leaveType.hotel.id = :hotelId";
         Map<String, Object> map = new HashMap<String, Object>();
         map.put("hotelId", hotelId);
         if (Constraint.LEAVE_SEARCHTYPE_PENDING.equals(status) ||
@@ -34,8 +33,8 @@ public class LeaveDaoImpl extends GenericDaoImpl<Leave> implements ILeaveDao{
     }
 
     @Override
-    public List<Leave> getLeaveByStatus(Integer hotelId, Integer status, Integer start, Integer total) {
-        String hql = "from Leave where leaveType.hotel.id = :hotelId";
+    public List<LeaveHeader> getLeaveHeaderByStatus(Integer hotelId, Integer status, Integer start, Integer total) {
+        String hql = "from LeaveHeader where leaveType.hotel.id = :hotelId";
         Map<String, Object> map = new HashMap<String, Object>();
         map.put("hotelId", hotelId);
         if (Constraint.LEAVE_SEARCHTYPE_PENDING.equals(status) ||

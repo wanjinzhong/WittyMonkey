@@ -1,16 +1,15 @@
 package com.wittymonkey.service.impl;
 
-import java.sql.SQLException;
-import java.util.List;
-
-import com.wittymonkey.dao.ILeaveDao;
-import com.wittymonkey.entity.Leave;
+import com.wittymonkey.dao.ILeaveHeaderDao;
+import com.wittymonkey.dao.ILeaveTypeDao;
+import com.wittymonkey.entity.LeaveHeader;
+import com.wittymonkey.entity.LeaveType;
+import com.wittymonkey.service.ILeaveTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.wittymonkey.dao.ILeaveTypeDao;
-import com.wittymonkey.entity.LeaveType;
-import com.wittymonkey.service.ILeaveTypeService;
+import java.sql.SQLException;
+import java.util.List;
 
 @Service(value="leaveTypeService")
 public class LeaveTypeServiceImpl implements ILeaveTypeService{
@@ -19,7 +18,7 @@ public class LeaveTypeServiceImpl implements ILeaveTypeService{
 	private ILeaveTypeDao leaveTypeDao;
 
 	@Autowired
-	private ILeaveDao leaveDao;
+	private ILeaveHeaderDao leaveHeaderDao;
 
 	@Override
 	public void saveList(List<LeaveType> leaveTypes) {
@@ -53,10 +52,10 @@ public class LeaveTypeServiceImpl implements ILeaveTypeService{
 
 	@Override
 	public void delete(LeaveType leaveType) throws SQLException {
-		List<Leave> leaves = leaveDao.getLeaveByLeaveType(leaveType.getId());
-		for (Leave leave : leaves){
+		List<LeaveHeader> leaves = leaveHeaderDao.getLeaveHeaderByLeaveType(leaveType.getId());
+		for (LeaveHeader leave : leaves){
 			leave.setLeaveType(null);
-			leaveDao.save(leave);
+			leaveHeaderDao.save(leave);
 		}
 		leaveTypeDao.delete(leaveType);
 	}

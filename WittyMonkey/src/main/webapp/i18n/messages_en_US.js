@@ -274,3 +274,7 @@ var leave_type_delete_title = "Delete leave tyoe";
 var leave_type_delete_hint = "Are you sure to delete this leave type?";
 var leave_type_delete_success = "Delete leave type successfully";
 var leave_type_not_exist = "Leave type does not exist";
+
+var leave_add_title = "Add Leave";
+var leave_detail_title = "Leave Detail";
+var leave_deduct = "Deduct";

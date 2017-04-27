@@ -40,7 +40,7 @@
                 </div>
             </div>
         </form>
-        <table class="layui-table" lay-skin="line" style="min-width: 800px">
+        <table class="layui-table" lay-skin="line" style="min-width: 980px">
             <thead>
             <tr>
                 <th width="100px"><fmt:message key="leave.apply_user"/></th>

@@ -15,4 +15,8 @@ public interface ISalaryRecordDao extends IGenericDao<SalaryRecord, Serializable
     SalaryRecord getSalaryRecordByStartDate(Integer salaryId, Date startDate);
 
     SalaryRecord getSalaryRecordById(Integer id);
+
+    SalaryRecord getSalaryRecordAtDate(Integer salaryId, Date date);
+
+    List<SalaryRecord> getSalaryRecordByDateRange(Integer salaryId, Date startDate, Date endDate);
 }

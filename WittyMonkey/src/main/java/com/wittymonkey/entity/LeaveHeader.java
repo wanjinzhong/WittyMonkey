@@ -1,72 +1,58 @@
 package com.wittymonkey.entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
+
 /**
  * 请假申请和记录
  * @author neilw
  *
  */
 @Entity
-@Table(name = "leave_record")
-public class Leave implements Serializable{
+@Table(name = "leave_header")
+public class LeaveHeader implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
 
-	@Column
-	private Double deduct;
+	@OneToMany(targetEntity = LeaveDetail.class, mappedBy = "leaveHeader", cascade = {CascadeType.ALL})
+	private List<LeaveDetail> leaveDetails = new ArrayList<LeaveDetail>();
 
-	@Column(name="from_date")
-	private Date from;
-
-	@Column(name="to_date")
-	private Date to;
-
-	@Column
-	private Double days;
-
-	@ManyToOne(targetEntity=User.class)
-	@JoinColumn(name="apply_user_id", referencedColumnName="id")
+	@ManyToOne(targetEntity = User.class)
+	@JoinColumn(name = "apply_user_id", referencedColumnName = "id")
 	private User applyUser;
 
-	@Column(name="apply_datetime")
+	@Column(name = "apply_datetime")
 	private Date applyDatetime;
 
-	@Column(name="apply_user_note",length=1024)
+	@Column(name = "apply_user_note", length = 1024)
 	private String applyUserNote;
 
 	// 申请状态（待审批/通过/驳回）
 	@Column
 	private Integer status;
 
-	@ManyToOne(targetEntity=LeaveType.class)
-	@JoinColumn(name="leave_type_id", referencedColumnName="id")
+	@ManyToOne(targetEntity = LeaveType.class)
+	@JoinColumn(name = "leave_type_id", referencedColumnName = "id")
 	private LeaveType leaveType;
 
-	@Column(name="entry_datetime")
+	@Column(name = "entry_datetime")
 	private Date entryDatetime;
-	
-	@ManyToOne(targetEntity=User.class, fetch=FetchType.EAGER)
-	@JoinColumn(name="entry_id", referencedColumnName="id")
+
+	@ManyToOne(targetEntity = User.class, fetch = FetchType.EAGER)
+	@JoinColumn(name = "entry_id", referencedColumnName = "id")
 	private User entryUser;
-	
-	@Column(name="entry_user_note", length=1024)
+
+	@Column(name = "entry_user_note", length = 1024)
 	private String entryUserNote;
-	
+
 	public Integer getId() {
 		return id;
 	}
@@ -139,35 +125,11 @@ public class Leave implements Serializable{
 		this.applyDatetime = applyDatetime;
 	}
 
-	public Double getDeduct() {
-		return deduct;
+	public List<LeaveDetail> getLeaveDetails() {
+		return leaveDetails;
 	}
 
-	public void setDeduct(Double deduct) {
-		this.deduct = deduct;
-	}
-
-	public Double getDays() {
-		return days;
-	}
-
-	public void setDays(Double days) {
-		this.days = days;
-	}
-
-	public Date getFrom() {
-		return from;
-	}
-
-	public void setFrom(Date from) {
-		this.from = from;
-	}
-
-	public Date getTo() {
-		return to;
-	}
-
-	public void setTo(Date to) {
-		this.to = to;
+	public void setLeaveDetails(List<LeaveDetail> leaveDetails) {
+		this.leaveDetails = leaveDetails;
 	}
 }
