@@ -7,6 +7,7 @@ import com.wittymonkey.vo.*;
 
 import javax.xml.soap.Detail;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.*;
 
 /**
@@ -440,41 +441,49 @@ public class ChangeToSimple {
     public static List<LeaveVO> assymblyLeaveVOs(List<LeaveHeader> leaveHeaders) {
         List<LeaveVO> leaveVOS = new ArrayList<LeaveVO>();
         for (LeaveHeader header : leaveHeaders) {
-            LeaveVO leaveVO = new LeaveVO();
-            leaveVO.setApplyDatetime(header.getApplyDatetime());
-            leaveVO.setApplyUser(header.getApplyUser().getRealName());
-            leaveVO.setApplyUserNote(header.getApplyUserNote());
-            if (header.getEntryUser() != null) {
-                leaveVO.setEntryDatetime(header.getEntryDatetime());
-                leaveVO.setEntryUser(header.getEntryUser().getRealName());
-                leaveVO.setEntryUserNote(header.getEntryUserNote());
-            }
-            leaveVO.setId(header.getId());
-            if (header.getLeaveType() != null) {
-                leaveVO.setLeaveType(header.getLeaveType().getName());
-            }
-            leaveVO.setStatus(header.getStatus());
-            Collections.sort(header.getLeaveDetails(), new Comparator<LeaveDetail>() {
-                @Override
-                public int compare(LeaveDetail o1, LeaveDetail o2) {
-                    return (int) (o1.getFrom().getTime() - o2.getTo().getTime());
-                }
-            });
-            List<LeaveDetail> details = header.getLeaveDetails();
-            if (details != null || details.size() > 0) {
-                leaveVO.setFrom(details.get(0).getFrom());
-                leaveVO.setTo(details.get(details.size() - 1).getTo());
-            }
-            Double days = 0.0;
-            Double deduct = 0.0;
-            for (LeaveDetail detail : details) {
-                days += detail.getDays();
-                deduct += detail.getDeduct();
-            }
-            leaveVO.setDays(days);
-            leaveVO.setDeduct(deduct);
-            leaveVOS.add(leaveVO);
+            leaveVOS.add(assymblyLeaveVO(header));
         }
         return leaveVOS;
+    }
+
+    public static LeaveVO assymblyLeaveVO(LeaveHeader header){
+        LeaveVO leaveVO = new LeaveVO();
+        leaveVO.setApplyDatetime(header.getApplyDatetime());
+        leaveVO.setApplyUser(header.getApplyUser().getRealName());
+        leaveVO.setStaffNo(header.getApplyUser().getStaffNo());
+        leaveVO.setApplyUserNote(header.getApplyUserNote());
+        if (header.getEntryUser() != null) {
+            leaveVO.setEntryDatetime(header.getEntryDatetime());
+            leaveVO.setEntryUser(header.getEntryUser().getRealName());
+            leaveVO.setEntryUserNote(header.getEntryUserNote());
+        }
+        leaveVO.setId(header.getId());
+        if (header.getLeaveType() != null) {
+            leaveVO.setLeaveType(header.getLeaveType().getName());
+        }
+        leaveVO.setStatus(header.getStatus());
+        Collections.sort(header.getLeaveDetails(), new Comparator<LeaveDetail>() {
+            @Override
+            public int compare(LeaveDetail o1, LeaveDetail o2) {
+                return (int) (o1.getFrom().getTime() - o2.getTo().getTime());
+            }
+        });
+        List<LeaveDetail> details = header.getLeaveDetails();
+        if (details != null || details.size() > 0) {
+            leaveVO.setFrom(details.get(0).getFrom());
+            leaveVO.setTo(details.get(details.size() - 1).getTo());
+        }
+        Double days = 0.0;
+        Double deduct = 0.0;
+        for (LeaveDetail detail : details) {
+            days += detail.getDays();
+            deduct += detail.getDeduct();
+        }
+        leaveVO.setDays(days);
+        // 四舍五入保留两位小数
+        BigDecimal b = new BigDecimal(deduct);
+        deduct = b.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
+        leaveVO.setDeduct(deduct);
+        return leaveVO;
     }
 }

@@ -16,6 +16,8 @@ public class LeaveVO {
 
     private Double days;
 
+    private String staffNo;
+
     private String applyUser;
 
     private Date applyDatetime;
@@ -134,5 +136,13 @@ public class LeaveVO {
 
     public void setEntryUserNote(String entryUserNote) {
         this.entryUserNote = entryUserNote;
+    }
+
+    public String getStaffNo() {
+        return staffNo;
+    }
+
+    public void setStaffNo(String staffNo) {
+        this.staffNo = staffNo;
     }
 }

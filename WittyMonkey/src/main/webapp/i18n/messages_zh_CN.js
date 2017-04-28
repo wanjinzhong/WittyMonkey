@@ -292,3 +292,7 @@ var leave_deduct = "扣薪";
 var leave_date_choose = "请选择日期";
 var leave_date = "请假时间";
 var leave_add_success = "请假登记成功";
+var leave_not_exist = "请假申请不存在，可能已被删除";
+var leave_changed = "请假申请有变更，请重试";
+var leave_approve_success = "批准成功";
+var leave_reject_success = "驳回成功";

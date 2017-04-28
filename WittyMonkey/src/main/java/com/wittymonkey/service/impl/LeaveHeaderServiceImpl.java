@@ -28,4 +28,9 @@ public class LeaveHeaderServiceImpl implements ILeaveHeaderService {
     public void save(LeaveHeader header) {
         leaveHeaderDao.save(header);
     }
+
+    @Override
+    public LeaveHeader getLeaveHeaderById(Integer id) {
+        return leaveHeaderDao.getLeaveHeaderById(id);
+    }
 }

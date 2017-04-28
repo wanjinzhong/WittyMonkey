@@ -46,4 +46,10 @@ public class LeaveHeaderDaoImpl extends GenericDaoImpl<LeaveHeader> implements I
         hql += " order by id desc";
         return queryListHQL(hql,map);
     }
+
+    @Override
+    public LeaveHeader getLeaveHeaderById(Integer id) {
+        String hql = "from LeaveHeader where id = ?";
+        return queryOneHql(hql, id);
+    }
 }

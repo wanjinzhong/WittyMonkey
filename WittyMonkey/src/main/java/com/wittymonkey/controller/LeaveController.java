@@ -293,4 +293,79 @@ public class LeaveController {
         json.put("status", 200);
         return json.toJSONString();
     }
+
+    @RequestMapping(name = "toShowLeave", method = GET)
+    public String toShowLeave(HttpServletRequest request) {
+        Integer id = Integer.parseInt(request.getParameter("id").trim());
+        Hotel hotel = (Hotel) request.getSession().getAttribute("hotel");
+        LeaveHeader leaveHeader = leaveHeaderService.getLeaveHeaderById(id);
+        LeaveVO leaveVO = ChangeToSimple.assymblyLeaveVO(leaveHeader);
+        request.getSession().setAttribute("optLeaveHeader", leaveHeader);
+        request.setAttribute("leaveVO", leaveVO);
+        return "leave_detail";
+    }
+
+    /**
+     * 审批请假
+     *
+     * @param request
+     * @return <table border="1" cellspacing="0">
+     * <tr>
+     * <th>代码</th>
+     * <th>说明</th>
+     * </tr>
+     * <tr>
+     * <td>400</td>
+     * <td>请假申请不存在</td>
+     * </tr>
+     * <tr>
+     * <td>410</td>
+     * <td>请假申请有变更</td>
+     * </tr>
+     * <tr>
+     * <td>420</td>
+     * <td>备注过长</td>
+     * </tr>
+     * <tr>
+     * <td>200</td>
+     * <td>批准成功</td>
+     * </tr>
+     * <tr>
+     * <td>201</td>
+     * <td>驳回成功</td>
+     * </tr>
+     */
+    @RequestMapping(value = "leaveOperator", method = POST)
+    @ResponseBody
+    public String leaveOperator(HttpServletRequest request) {
+        JSONObject json = new JSONObject();
+        User user = (User) request.getSession().getAttribute("loginUser");
+        LeaveHeader edit = (LeaveHeader) request.getSession().getAttribute("optLeaveHeader");
+        LeaveHeader header = leaveHeaderService.getLeaveHeaderById(edit.getId());
+        if (header == null) {
+            json.put("status", 400);
+            return json.toJSONString();
+        }
+        if (!edit.getApplyDatetime().equals(header.getApplyDatetime())) {
+            json.put("status", 410);
+            return json.toJSONString();
+        }
+        String note = request.getParameter("optNote");
+        if (StringUtils.isNotBlank(note) && note.length() > 1024) {
+            json.put("status", 420);
+            json.toJSONString();
+        }
+        Integer status = Integer.parseInt(request.getParameter("status"));
+        header.setStatus(status);
+        header.setEntryUser(userService.getUserById(user.getId()));
+        header.setEntryDatetime(new Date());
+        header.setEntryUserNote(note);
+        leaveHeaderService.save(header);
+        if (Constraint.LEAVE_SEARCHTYPE_APPROVED.equals(status)) {
+            json.put("status", 200);
+        } else if (Constraint.LEAVE_SEARCHTYPE_REJECTED.equals(status)) {
+            json.put("status", 201);
+        }
+        return json.toJSONString();
+    }
 }

@@ -12,4 +12,6 @@ public interface ILeaveHeaderDao extends IGenericDao<LeaveHeader, Serializable>{
     Integer getTotalByStatus(Integer hotelId, Integer status);
 
     List<LeaveHeader> getLeaveHeaderByStatus(Integer hotelId, Integer type, Integer start, Integer total);
+
+    LeaveHeader getLeaveHeaderById(Integer id);
 }
