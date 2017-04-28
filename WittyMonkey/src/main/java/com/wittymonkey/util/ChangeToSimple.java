@@ -175,12 +175,14 @@ public class ChangeToSimple {
                 menu.setName(props.getProperty("index.menu.report"));
                 break;
             case 10:
+                menu.setName(props.getProperty("index.menu.personal"));
+            case 11:
                 menu.setName(props.getProperty("index.menu.notify"));
                 break;
-            case 11:
+            case 12:
                 menu.setName(props.getProperty("index.menu.hotel_info"));
                 break;
-            case 12:
+            case 13:
                 menu.setName(props.getProperty("index.menu.settting"));
                 break;
         }

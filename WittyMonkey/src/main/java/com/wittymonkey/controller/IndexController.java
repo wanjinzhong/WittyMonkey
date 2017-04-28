@@ -1,5 +1,6 @@
 package com.wittymonkey.controller;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.wittymonkey.dao.IUserDao;
@@ -8,6 +9,7 @@ import com.wittymonkey.entity.Role;
 import com.wittymonkey.entity.Setting;
 import com.wittymonkey.entity.User;
 import com.wittymonkey.service.IUserService;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -120,7 +122,7 @@ public class IndexController {
                 // 员工菜单
                 JSONObject staffMenu = new JSONObject();
                 staffMenu.put("title", props.getProperty("index.menu.staff"));
-                staffMenu.put("icon", "#icon-yuangong");
+                staffMenu.put("icon", "#icon-yuangongguanli");
                 staffMenu.put("spread", false);
                 staffMenu.put("href", "toStaffManage.do");
                 jsonArray.add(staffMenu);
@@ -187,6 +189,25 @@ public class IndexController {
                 reportMenu.put("href", "toReport.do");
                 jsonArray.add(reportMenu);
             }
+
+            // 个人中心
+            JSONObject peronalMenu = new JSONObject();
+            peronalMenu.put("title", props.getProperty("index.menu.personal"));
+            peronalMenu.put("icon", "#icon-gerenzhongxin");
+            peronalMenu.put("spread", false);
+            JSONArray personalChildren = new JSONArray();
+            //报销申请子菜单
+            JSONObject reimbursApplyChild = new JSONObject();
+            reimbursApplyChild.put("title", props.getProperty("index.menu.personal.reimburse"));
+            reimbursApplyChild.put("href", "toReimburseApply.do");
+            personalChildren.add(reimbursApplyChild);
+            //请假申请子菜单
+            JSONObject leaveApplyChild = new JSONObject();
+            leaveApplyChild.put("title", props.getProperty("index.menu.personal.leave"));
+            leaveApplyChild.put("href", "toLeaveApply.do");
+            personalChildren.add(leaveApplyChild);
+            peronalMenu.put("children", personalChildren);
+            jsonArray.add(peronalMenu);
 
             //通知
             JSONObject notifyMenu = new JSONObject();
@@ -338,5 +359,15 @@ public class IndexController {
     @RequestMapping(value = "toSetting", method = RequestMethod.GET)
     public String toSetting(HttpServletRequest request) {
         return "setting";
+    }
+
+    @RequestMapping(value = "toReimburseApply", method = RequestMethod.GET)
+    public String toReimburseApply(HttpServletRequest request){
+        return "reimburse_apply";
+    }
+
+    @RequestMapping(value = "toLeaveApply", method = RequestMethod.GET)
+    public String toLeaveApply(HttpServletRequest request){
+        return "leave_apply";
     }
 }
