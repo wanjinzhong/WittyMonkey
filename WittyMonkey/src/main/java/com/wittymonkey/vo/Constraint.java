@@ -84,6 +84,9 @@ public class Constraint {
     public static final Integer LEAVE_SEARCHTYPE_PENDING = 1;
     public static final Integer LEAVE_SEARCHTYPE_APPROVED = 2;
     public static final Integer LEAVE_SEARCHTYPE_REJECTED = 3;
+    public static final Integer LEAVE_STATUS_PENDING = 1;
+    public static final Integer LEAVE_STATUS_APPROVE = 2;
+    public static final Integer LEAVE_STATUS_REJECT = 3;
 
     public static final String LANG_ZH_CN = "zh_CN";
     public static final String LANG_EN_US = "en_US";

@@ -43,6 +43,7 @@ public class LeaveHeaderDaoImpl extends GenericDaoImpl<LeaveHeader> implements I
             hql += " and status = :status";
             map.put("status", status);
         }
+        hql += " order by id desc";
         return queryListHQL(hql,map);
     }
 }

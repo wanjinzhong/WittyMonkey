@@ -26,7 +26,7 @@ public class LeaveDetail implements Serializable{
     private Date to;
 
     @Column
-    private Double days;
+    private Integer days;
 
     @Column
     private Double deduct;
@@ -63,11 +63,11 @@ public class LeaveDetail implements Serializable{
         this.to = to;
     }
 
-    public Double getDays() {
+    public Integer getDays() {
         return days;
     }
 
-    public void setDays(Double days) {
+    public void setDays(Integer days) {
         this.days = days;
     }
 

@@ -23,4 +23,9 @@ public class LeaveHeaderServiceImpl implements ILeaveHeaderService {
     public List<LeaveHeader> getLeaveHeaderByStatus(Integer hotelId, Integer type, Integer start, Integer total) {
         return leaveHeaderDao.getLeaveHeaderByStatus(hotelId, type, start, total);
     }
+
+    @Override
+    public void save(LeaveHeader header) {
+        leaveHeaderDao.save(header);
+    }
 }

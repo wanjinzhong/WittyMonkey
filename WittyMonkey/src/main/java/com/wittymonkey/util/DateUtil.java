@@ -25,4 +25,28 @@ public class DateUtil {
         calendar.add(Calendar.DATE, 1);
         return calendar.getTime();
     }
+
+    /**
+     * 获取下月一号
+     * @return
+     */
+    public static Date nextMonthFirstDate(Date date) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        calendar.set(Calendar.DAY_OF_MONTH, 1);
+        calendar.add(Calendar.MONTH, 1);
+        return calendar.getTime();
+    }
+
+    /**
+     * 这个月的最后一天
+     * @param date
+     * @return
+     */
+    public static Date lastDayOfMonth(Date date){
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(nextMonthFirstDate(date));
+        calendar.set(Calendar.DATE, calendar.get(Calendar.DATE) - 1);
+        return calendar.getTime();
+    }
 }

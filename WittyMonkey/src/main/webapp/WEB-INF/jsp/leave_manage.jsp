@@ -46,10 +46,10 @@
                 <th width="100px"><fmt:message key="leave.apply_user"/></th>
                 <th width="150px"><fmt:message key="leave.date"/></th>
                 <th width="50px"><fmt:message key="leave.days"/></th>
-                <th width="50px"><fmt:message key="leave.deduct"/></th>
+                <th width="100px"><fmt:message key="leave.type"/></th>
                 <th width="50px"><fmt:message key="leave.status"/></th>
                 <th width="100px"><fmt:message key="leave.opt_user"/></th>
-                <th width="150px"><fmt:message key="leave.opt_date"/></th>
+                <th width="100px"><fmt:message key="leave.opt_date"/></th>
                 <th width="100px"><fmt:message key="operation"/></th>
             </tr>
             </thead>

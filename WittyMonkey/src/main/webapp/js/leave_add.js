@@ -7,13 +7,6 @@ layui.use(['layer', 'form'], function () {
     layer = layui.layer;
     form = layui.form();
     form.on('select(status)', function (data) {
-        if (data.value == 2) {
-            $("#deductLable").html('<label class="layui-form-label">' + leave_deduct + '</label>');
-            $("#deductInput").html('<input type="number" name="deduct" id="deduct" class="layui-input"/>');
-        } else {
-            $("#deductLable").html('');
-            $("#deductInput").html('');
-        }
         if (data.value == 1) {
             $("#optNote").val("");
             $("#optNote").attr("disabled", true);
@@ -21,7 +14,12 @@ layui.use(['layer', 'form'], function () {
             $("#optNote").attr("disabled", false);
         }
     });
-
+    form.on('select(applyUser)', function (data) {
+        calcDeduct();
+    })
+    ;form.on('select(type)', function (data) {
+        calcDeduct();
+    });
 });
 
 $(document).ready(function () {
@@ -32,46 +30,41 @@ $(document).ready(function () {
         autoClose: true,
         showShortcuts: false,
         singleMonth: true,
-        getValue: function () {
-            if ($("#from").val() && $("#to").val())
-                return $("#from").val() + ' to ' + $("#to").val();
-            else
-                return '';
-        },
         setValue: function (s, s1, s2) {
             $("#leaveDate").val(s1 + " - " + s2);
             $("#from").val(s1);
             $("#to").val(s2);
             $("#days").val(dateDiff(s1, s2) + 1);
+            calcDeduct();
         }
     });
 });
 
-// 验证时间和获取扣薪
-function validateDate() {
+// 获取扣薪
+function calcDeduct() {
     var from = $("#from").val();
     var to = $("#to").val();
-    var days = $("#days").val();
-    var dateDiff = leaveDays(from, to);
-    if (days < dateDiff - 1 || days > dateDiff) {
-        layer.tips(dateDiff - 1 + "-" + dateDiff, $("#days"), {tips: 2});
+    var status = $("#status").val();
+    if (from == undefined || from.length <= 0 || to == undefined || to.length <= 0) {
         return false;
     }
-    var status = $("#status").val();
-    if (status == 2) {
-        $.ajax({
-            url: "calcDeduct.do",
-            data: {"from": from, "to": to, "days": days, "applyUser": $("#applyUser").val()},
-            dataType: "JSON",
-            type: "GET",
-            success: function (data) {
-                var res = eval("(" + data + ")");
-                switch (res["status"]) {
-
-                }
+    $.ajax({
+        url: "calcDeduct.do",
+        data: {"from": from, "to": to, "applyUser": $("#applyUser").val(), 'type': $("#type").val()},
+        dataType: "JSON",
+        type: "GET",
+        success: function (data) {
+            var res = eval("(" + data + ")");
+            switch (res["status"]) {
+                case 401:
+                    layer.tips(date_wrong, $("#leaveDate"), {tips: 2});
+                    break;
+                case 200:
+                    $("#deduct").val(res["deduct"]);
+                    break;
             }
-        });
-    }
+        }
+    });
     return true;
 }
 /**
@@ -87,4 +80,53 @@ function leaveDays(from, to) {    //sDate1和sDate2是2006-12-18格式
     var fromDate = new Date(from.replace(/-/g, "/"));
     var toDate = new Date(to.replace(/-/g, "/"));
     return parseInt(Math.abs(toDate - fromDate) / 1000 / 60 / 60 / 24) + 1    //把相差的毫秒数转换为天数;
+}
+
+function save() {
+    var from = $("#from").val();
+    var to = $("#to").val();
+    if (from == undefined || to == undefined) {
+        layer.tips(leave_date_choose, $("leaveDate"), {tips: 2});
+        return false;
+    }
+    if (!validateNote($("#applyNote"))) {
+        return false;
+    }
+    if (!validateNote($("#optNote"))) {
+        return false;
+    }
+    var load = layer.load();
+    $.ajax({
+        url: "saveLeave.do",
+        data: $("#leave_form").serialize(),
+        dataType: "JSON",
+        type: "POST",
+        success: function (data) {
+            layer.close(load);
+            var res = eval("(" + data + ")");
+            switch (res["status"]) {
+                case 400:
+                    layer.tips(leave_date_choose, $("#leaveDate"), {tips: 2});
+                    break;
+                case 401:
+                    layer.tips(time_error, $("#leaveDate"), {tips: 2});
+                    break;
+                case 410:
+                    layer.tips(messageOfValidateLength(apply_note), $("#applyNote"), {tips: 2});
+                    break;
+                case 420:
+                    layer.tips(messageOfValidateLength(opt_note), $("#optNote"), {tips: 2});
+                    break;
+                case 200:
+                    layer.msg(leave_add_success, {
+                        icon: 1,
+                        time: 2000
+                    }, function () {
+                        parent.location.reload();
+                        closeMe();
+                    });
+                    break;
+            }
+        }
+    });
 }

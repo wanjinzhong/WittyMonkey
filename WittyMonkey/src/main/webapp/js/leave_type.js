@@ -19,7 +19,7 @@ function refreshTable(obj) {
         for (var i in obj) {
             html += "<tr class='text-c'>" +
                 "<td>" + obj[i]["name"] + "</td>" +
-                "<td>" + obj[i]["deduct"] + "%</td>" +
+                "<td>" + obj[i]["deduct"] * 100 + "%</td>" +
                 "<td>" + (obj[i]["note"] == undefined ? "" : obj[i].note) + "</td>" +
                 "<td>" + obj[i]["entryUser"] + "</td>" +
                 "<td>" + formatDate(obj[i]["entryDatetime"]) + "</td>" +

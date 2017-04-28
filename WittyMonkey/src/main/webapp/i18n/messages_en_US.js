@@ -278,3 +278,6 @@ var leave_type_not_exist = "Leave type does not exist";
 var leave_add_title = "Add Leave";
 var leave_detail_title = "Leave Detail";
 var leave_deduct = "Deduct";
+var leave_date_choose = "Please choose date";
+var leave_date = "Leave date";
+var leave_add_success = "Leave add successfully";

@@ -21,32 +21,32 @@
 <fmt:setBundle basename="i18n/messages_${loginUser.setting.lang }"/>
 <body>
 <input hidden value="${loginUser.setting.lang}" id="lang"/>
-<form id="add-form" class="layui-form">
+<form id="leave_form" class="layui-form">
     <table class="form_table">
         <tr>
             <td><label class="layui-form-label"><fmt:message key="leave.apply_user"/></label></td>
             <td>
-                <select name="applyUser" id="applyUser">
+                <select name="applyUser" id="applyUser" name="applyUser" lay-filter="applyUser">
                     <c:forEach items="${users}" var="user">
                         <option value="${user.id}">${user.staffNo} - ${user.realName}</option>
                     </c:forEach>
                 </select>
             </td>
             <td><label class="layui-form-label" style="margin-left: 10px"><fmt:message key="leave.type"/></label></td>
-            <td><select id="type" class="type" lay-filter="type">
+            <td><select id="type" class="type" name="type" lay-filter="type">
                 <c:forEach items="${leaveTypes}" var="type">
-                    <option id = '${type.id}'>${type.name}</option>
+                    <option value='${type.id}'>${type.name}</option>
                 </c:forEach>
             </select></td>
         </tr>
         <tr>
             <td><label class="layui-form-label"><fmt:message key="leave.date"/></label></td>
-            <td><input type="text" id="leaveDate" class="layui-input" onblur="getDate()"/>
+            <td><input type="text" id="leaveDate" class="layui-input" />
                 <input type="hidden" id="from" name="from"/>
                 <input type="hidden" id="to" name="to"/>
             </td>
             <td><label class="layui-form-label"><fmt:message key="leave.days"/></label></td>
-            <td><input type="number" id="days" name="days" class="layui-input" onblur="validateDate()"/></td>
+            <td><input type="number" id="days" name="days" class="layui-input" disabled/></td>
         </tr>
         <tr>
             <td><label class="layui-form-label"><fmt:message key="leave.status"/></label></td>
@@ -57,8 +57,8 @@
                     <option value="3"><fmt:message key="leave.opt.rejected"/></option>
                 </select>
             </td>
-            <td id="deductLable"></td>
-            <td id="deductInput"></td>
+            <td><label class="layui-form-label"><fmt:message key="leave.deduct"/></label></td>
+            <td><input type="number" name="deduct" id="deduct" class="layui-input" disabled/></td>
         </tr>
         <tr>
             <td><label class="layui-form-label"><fmt:message key="leave.apply_note"/></label></td>
