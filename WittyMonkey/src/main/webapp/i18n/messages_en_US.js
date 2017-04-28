@@ -286,3 +286,7 @@ var leave_changed = "Leave application has changed, please try again";
 var leave_opt_successs = "Audit success";
 var leave_approve_success = "Approve successfully";
 var leave_reject_success = "Reject successfully";
+
+var setting_data = "Data per page";
+var setting_data_wrong = "Data per page wrong";
+var setting_save_success = "Save success, refresh the page to effect";

@@ -296,3 +296,7 @@ var leave_not_exist = "请假申请不存在，可能已被删除";
 var leave_changed = "请假申请有变更，请重试";
 var leave_approve_success = "批准成功";
 var leave_reject_success = "驳回成功";
+
+var setting_data = "每页数据数";
+var setiing_data_wrong = "每页数据数不正确";
+var setting_save_success = "保存成功，刷新页面生效";

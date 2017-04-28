@@ -5,7 +5,9 @@ import com.alibaba.fastjson.JSONObject;
 import com.wittymonkey.dao.IUserDao;
 import com.wittymonkey.entity.Menu;
 import com.wittymonkey.entity.Role;
+import com.wittymonkey.entity.Setting;
 import com.wittymonkey.entity.User;
+import com.wittymonkey.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,7 +27,7 @@ import java.util.Set;
 public class IndexController {
 
     @Autowired
-    private IUserDao userDao;
+    private IUserService userService;
 
     @RequestMapping(value = "getMenu", method = RequestMethod.GET)
     @ResponseBody

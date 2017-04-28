@@ -17,5 +17,10 @@ public class SettingServiceImpl implements ISettingService {
 	public void saveSetting(Setting setting) {
 		settingDao.save(setting);
 	}
-	
+
+	@Override
+	public Setting getSettingByUser(Integer userId) {
+		return settingDao.getSettingByUser(userId);
+	}
+
 }
