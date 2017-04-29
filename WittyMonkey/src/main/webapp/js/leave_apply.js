@@ -22,7 +22,6 @@ function refreshTable(obj) {
     } else {
         for (var i in obj) {
             html += '<tr class="text-c">' +
-                '<td>' + obj[i]['applyUser'] + '</td>' +
                 '<td>' + formatDay(obj[i]['from']) + "<br/>" + formatDay(obj[i]['to']) + '</td>' +
                 '<td>' + obj[i]['days'] + '</td>' +
                 '<td>' + obj[i]['leaveType'] + '</td>';
@@ -41,8 +40,13 @@ function refreshTable(obj) {
                 }
                 html += '<td>' + (obj[i]['entryUser'] != undefined?obj[i]['entryUser']:"") + '</td>' +
                     '<td>' + (obj[i]['entryDatetime'] != undefined?formatDate(obj[i]['entryDatetime']):"") + '</td>';
-                html += "<td><i class='showBtn layui-icon layui-btn layui-btn-primary layui-btn-small' onclick='showDetail(" + obj[i].id + ")'>&#xe60b; " + btn_detail + "</i></td>" +
-                    '</tr>';
+                if (obj[i]["status"] == 1){
+                    html += "<td><i class='editBtn layui-icon layui-btn layui-btn-primary layui-btn-small' onclick='editLeaveApply(" + obj[i]["id"] + ")'>&#xe642; " + btn_edit + "</i>" +
+                    "<i class='deleteBtn layui-icon layui-btn layui-btn-primary layui-btn-small' onclick='deleteLeaveApply(" + obj[i]["id"] + ")'>&#xe640; " + btn_delete + "</i></td>";
+                } else {
+                    html += "<td><i class='showBtn layui-icon layui-btn layui-btn-primary layui-btn-small' onclick='showDetail(" + obj[i]["id"] + ")'>&#xe60b; " + btn_detail + "</i></td>";
+                }
+                html += "</tr>";
             }
     }
     $("#dataTabel").html(html);
@@ -50,18 +54,18 @@ function refreshTable(obj) {
 
 function search() {
     var type = $("#type").val();
-    var condition = {"type": type, "justMe": false};
+    var condition = {"type": type, "justMe": true};
     page("getLeaveByPage.do", undefined, condition);
 }
 
-function showAddLeave() {
+function showAddLeaveApply() {
     layer.open({
         type: 2,
         area: ['780px', '450px'],
         maxmin: false,
         shade: 0.4,
         title: leave_add_title,
-        content: "toAddLeave.do"
+        content: "toAddLeaveApply.do"
     });
 }
 
@@ -74,4 +78,12 @@ function showDetail(id) {
         title: leave_detail_title,
         content: "toShowLeave.do?id=" + id
     });
+}
+
+function editLeaveApply(id){
+
+}
+
+function deleteLeaveApply(id) {
+
 }

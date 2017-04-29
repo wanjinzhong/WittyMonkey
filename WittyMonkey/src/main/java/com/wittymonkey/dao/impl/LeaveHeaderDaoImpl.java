@@ -33,10 +33,39 @@ public class LeaveHeaderDaoImpl extends GenericDaoImpl<LeaveHeader> implements I
     }
 
     @Override
+    public Integer getTotalByUserAndStatus(Integer userId, Integer status) {
+        String hql = "select count(1) from LeaveHeader where applyUser.id= :userId";
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("userId", userId);
+        if (Constraint.LEAVE_SEARCHTYPE_PENDING.equals(status) ||
+                Constraint.LEAVE_SEARCHTYPE_APPROVED.equals(status) ||
+                Constraint.LEAVE_SEARCHTYPE_REJECTED.equals(status)){
+            hql += " and status = :status";
+            map.put("status", status);
+        }
+        return countHQL(hql,map);
+    }
+
+    @Override
     public List<LeaveHeader> getLeaveHeaderByStatus(Integer hotelId, Integer status, Integer start, Integer total) {
         String hql = "from LeaveHeader where leaveType.hotel.id = :hotelId";
         Map<String, Object> map = new HashMap<String, Object>();
         map.put("hotelId", hotelId);
+        if (Constraint.LEAVE_SEARCHTYPE_PENDING.equals(status) ||
+                Constraint.LEAVE_SEARCHTYPE_APPROVED.equals(status) ||
+                Constraint.LEAVE_SEARCHTYPE_REJECTED.equals(status)){
+            hql += " and status = :status";
+            map.put("status", status);
+        }
+        hql += " order by id desc";
+        return queryListHQL(hql,map);
+    }
+
+    @Override
+    public List<LeaveHeader> getLeaveHeaderByUserAndStatus(Integer userId, Integer status, Integer start, Integer total) {
+        String hql = "from LeaveHeader where applyUser.id = :userId";
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("userId", userId);
         if (Constraint.LEAVE_SEARCHTYPE_PENDING.equals(status) ||
                 Constraint.LEAVE_SEARCHTYPE_APPROVED.equals(status) ||
                 Constraint.LEAVE_SEARCHTYPE_REJECTED.equals(status)){

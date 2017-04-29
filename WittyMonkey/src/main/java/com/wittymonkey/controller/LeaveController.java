@@ -52,11 +52,19 @@ public class LeaveController {
         JSONObject json = new JSONObject();
         Integer type = Integer.parseInt(request.getParameter("type"));
         Integer curr = Integer.parseInt(request.getParameter("curr"));
+        Boolean justMe = Boolean.parseBoolean(request.getParameter("justMe"));
         User loginUser = (User) request.getSession().getAttribute("loginUser");
         Integer pageSize = loginUser.getSetting().getPageSize();
         Hotel hotel = (Hotel) request.getSession().getAttribute("hotel");
-        Integer count = leaveHeaderService.getTotalByStatus(hotel.getId(), type);
-        List<LeaveHeader> leaves = leaveHeaderService.getLeaveHeaderByStatus(hotel.getId(), type, (curr - 1) * pageSize, pageSize);
+        Integer count = null;
+        List<LeaveHeader> leaves = null;
+        if (justMe) {
+            count = leaveHeaderService.getTotalByUserAndStatus(loginUser.getId(), type);
+            leaves = leaveHeaderService.getLeaveHeaderByUserAndStatus(loginUser.getId(), type, (curr - 1) * pageSize, pageSize);
+        } else {
+            count = leaveHeaderService.getTotalByStatus(hotel.getId(), type);
+            leaves = leaveHeaderService.getLeaveHeaderByStatus(hotel.getId(), type, (curr - 1) * pageSize, pageSize);
+        }
         List<LeaveVO> leaveVOS = ChangeToSimple.assymblyLeaveVOs(leaves);
         json.put("count", count);
         json.put("pageSize", pageSize);
