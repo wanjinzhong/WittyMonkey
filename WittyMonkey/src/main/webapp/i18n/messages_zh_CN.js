@@ -210,9 +210,10 @@ var reimburse_detail = "报销详情";
 var reimburse_add = "报销登记";
 var reimburse_approve_title = "批准";
 var reimburse_reject_title = "驳回";
-var reimburse_approve_hint = "确定批准该报销吗？该操作不可恢复。"
-var reimburse_reject_hint = "确定驳回该报销吗？该操作不可恢复。"
+var reimburse_approve_hint = "确定批准该报销吗？该操作不可恢复。";
+var reimburse_reject_hint = "确定驳回该报销吗？该操作不可恢复。";
 var reimburse_not_exist = "报销不存在";
+var reimburse_add_success = "报销添加成功";
 var reimburse_updated = "报销已更新，请刷新后重试";
 var reimburse_has_approved = "该报销已批准, 审核人：";
 var reimburse_has_reject = "该报销已驳回, 审核人：";
@@ -306,6 +307,8 @@ var apply_edit_success = "申请修改成功";
 var apply_delete_success = "申请删除成功";
 var apply_delete_hint = "确定要删除这条申请吗";
 var apply_delete_title = "删除申请";
+
+var reimburse_apply_add_success = "报销申请成功，请等待审核";
 
 var setting_data = "每页数据数";
 var setiing_data_wrong = "每页数据数不正确";

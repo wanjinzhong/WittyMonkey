@@ -13,4 +13,8 @@ public interface IReimburseDao extends IGenericDao<Reimburse, Serializable>{
     Integer getTotal(Integer hotelId, Integer status, Date from, Date to);
 
     List<Reimburse> getReimburseByPage(Integer hotelId, Integer status, Date from, Date to, Integer start, Integer total );
+
+    Integer getTotalByUser(Integer userId, Integer status, Date from, Date to);
+
+    List<Reimburse> getReimburseByUser(Integer userId, Integer status, Date from, Date to, Integer start, Integer total );
 }

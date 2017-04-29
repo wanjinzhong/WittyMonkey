@@ -2,40 +2,27 @@
  * Created by neilw on 2017/4/19.
  */
 var layer;
-var form;
-layui.use(['layer', 'form'], function () {
+layui.use(['layer'], function () {
     layer = layui.layer;
-    form = layui.form();
-    form.on("select(status)", function (data) {
-        changeStatus();
-    });
-    changeStatus();
 });
 
-function changeStatus() {
-    var status = $("#status").val();
-    if (status == 1) {
-        $("#optNote").val("");
-        $("#optNote").attr("disabled", true);
-    } else {
-        $("#optNote").attr("disabled", false);
-    }
-}
-
 function save() {
-    var status = $("#status").val();
+    var method = $("#method").val();
     if (!validateMoney($("#money"))) {
         return false;
     }
     if (!validateNote($("#applyNote"))) {
         return false;
     }
-    if (status != 1 && !validateNote($("#optNote"))) {
-        return false
+    var success_hint;
+    if (method == "add"){
+        success_hint = reimburse_apply_add_success;
+    } else if (method == "update"){
+        success_hint = apply_edit_success;
     }
     var load = layer.load();
     $.ajax({
-        url: "saveReimburse.do",
+        url: "saveReimburseApply.do",
         data: $("#add-form").serialize(),
         dataType: "json",
         type: "POST",
@@ -68,7 +55,23 @@ function save() {
                     });
                     break;
                 case 420:
-                    layer.msg(messageOfValidateLength(opt_note, 1024), {
+                    layer.msg(apply_approved, {
+                        icon: 2, time: 2000
+                    }, function () {
+                        parent.location.reload();
+                        closeMe();
+                    });
+                    break;
+                case 421:
+                    layer.msg(apply_rejected, {
+                        icon: 2, time: 2000
+                    }, function () {
+                        parent.location.reload();
+                        closeMe();
+                    });
+                    break;
+                case 500:
+                    layer.msg(error_500, {
                         icon: 2, time: 2000
                     }, function () {
                         parent.location.reload();
@@ -76,7 +79,7 @@ function save() {
                     });
                     break;
                 case 200:
-                    layer.msg(reimburse_add_success, {
+                    layer.msg(success_hint, {
                         icon: 1,
                         time: 2000
                     }, function () {

@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
+import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -46,6 +47,11 @@ public class ReimburseController {
         Integer status = Integer.parseInt(request.getParameter("type"));
         String fromStr = request.getParameter("from");
         String toStr = request.getParameter("to");
+        String me = request.getParameter("justMe");
+        Boolean justMe = false;
+        if (StringUtils.isNotBlank(me)){
+            justMe = Boolean.parseBoolean(me);
+        }
         Date from = null;
         Date to = null;
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -61,8 +67,15 @@ public class ReimburseController {
         User loginUser = (User) request.getSession().getAttribute("loginUser");
         Integer pageSize = loginUser.getSetting().getPageSize();
         Hotel hotel = (Hotel) request.getSession().getAttribute("hotel");
-        Integer count = reimburseService.getTotal(hotel.getId(), status, from, to);
-        List<Reimburse> reimburses = reimburseService.getReimburseByPage(hotel.getId(), status, from, to, (curr - 1) * pageSize, pageSize);
+        Integer count = 0;
+        List<Reimburse> reimburses = null;
+        if (justMe){
+            count = reimburseService.getTotalByUser(loginUser.getId(), status, from, to);
+            reimburses = reimburseService.getReimburseByUser(loginUser.getId(), status, from, to, (curr - 1) * pageSize, pageSize);
+        } else {
+            count = reimburseService.getTotal(hotel.getId(), status, from, to);
+            reimburses = reimburseService.getReimburseByPage(hotel.getId(), status, from, to, (curr - 1) * pageSize, pageSize);
+        }
         List<SimpleReimbuse> simpleReimbuses = ChangeToSimple.reimbuseList(reimburses);
         json.put("count", count);
         json.put("pageSize", pageSize);
@@ -238,6 +251,106 @@ public class ReimburseController {
         updateReimburse.setStatus((Constraint.REIMBURSE_OPT_PASSE.equals(method) ? Constraint.REIMBURSE_STATUS_APPROVED : Constraint.REIMBURSE_STATUS_REJECTED));
         reimburseService.save(updateReimburse);
         json.put("status", 200 + method);
+        return json.toJSONString();
+    }
+
+    @RequestMapping(value = "toAddReimburseApply", method = RequestMethod.GET)
+    public String toAddReimburseApply(HttpServletRequest request){
+        return "reimburse_apply_add";
+    }
+
+    @RequestMapping(value = "toShowReimburseApply", method = RequestMethod.GET)
+    public String toShowReimburseApply(HttpServletRequest request){
+        Integer id = Integer.parseInt(request.getParameter("id"));
+        Reimburse reimburse = reimburseService.getReimburseById(id);
+        request.setAttribute("reimburse", reimburse);
+        return "reimburse_apply_detail";
+    }
+
+    @RequestMapping(value = "toEditReimburseApply", method = RequestMethod.GET)
+    public String toEditReimburseApply(HttpServletRequest request){
+        Integer id = Integer.parseInt(request.getParameter("id"));
+        Reimburse reimburse = reimburseService.getReimburseById(id);
+        request.getSession().setAttribute("editReimburseApply", reimburse);
+        return "reimburse_apply_edit";
+    }
+
+    @RequestMapping(value = "saveReimburseApply", method = RequestMethod.POST)
+    @ResponseBody
+    public String saveReimburseApply(HttpServletRequest request){
+        JSONObject json = new JSONObject();
+        User loginUser = (User) request.getSession().getAttribute("loginUser");
+        Hotel hotel = (Hotel) request.getSession().getAttribute("hotel");
+        String moneyStr = request.getParameter("money");
+        String method = request.getParameter("method");
+        Double money = null;
+        String applyNote = request.getParameter("applyNote");
+        try {
+            money = Double.parseDouble(moneyStr);
+        } catch (NumberFormatException e) {
+            json.put("status", 400);
+            return json.toJSONString();
+        }
+        if (money <= 0) {
+            json.put("status", 401);
+            return json.toJSONString();
+        }
+        if (StringUtils.isNotBlank(applyNote) && applyNote.length() > 1024) {
+            json.put("status", 410);
+            return json.toJSONString();
+        }
+        Date now = new Date();
+        Reimburse reimburse = null;
+        if (Constraint.ADD.equals(method)){
+             reimburse = new Reimburse();
+        } else if (Constraint.UPDATE.equals(method)){
+            reimburse = reimburseService.getReimburseById(((Reimburse) request.getSession().getAttribute("editReimburseApply")).getId());
+            if (reimburse.getStatus().equals(Constraint.REIMBURSE_STATUS_APPROVED)){
+                json.put("status", 420);
+                return json.toJSONString();
+            } else if (reimburse.getStatus().equals(Constraint.REIMBURSE_STATUS_REJECTED)){
+                json.put("status", 421);
+                return json.toJSONString();
+            }
+        } else {
+            json.put("status", 500);
+            return json.toJSONString();
+        }
+        reimburse.setApplyDatetime(now);
+        reimburse.setApplyUser(userService.getUserById(loginUser.getId()));
+        reimburse.setApplyUserNote(applyNote);
+        reimburse.setStatus(Constraint.REIMBURSE_STATUS_PENDING);
+        reimburse.setHotel(hotelService.findHotelById(hotel.getId()));
+        reimburse.setMoney(money);
+        reimburseService.save(reimburse);
+        json.put("status", 200);
+        return json.toJSONString();
+    }
+
+    @RequestMapping(value = "deleteReimburseApply", method = RequestMethod.POST)
+    @ResponseBody
+    public String deleteReimburseApply(HttpServletRequest request){
+        JSONObject json = new JSONObject();
+        Integer id = Integer.parseInt(request.getParameter("id"));
+        Reimburse reimburse = reimburseService.getReimburseById(id);
+        if (reimburse == null){
+            json.put("status", 400);
+            return json.toJSONString();
+        }
+        if (reimburse.getStatus().equals(Constraint.REIMBURSE_STATUS_APPROVED)){
+            json.put("status", 410);
+            return json.toJSONString();
+        } else if (reimburse.getStatus().equals(Constraint.REIMBURSE_STATUS_REJECTED)){
+            json.put("status", 411);
+            return json.toJSONString();
+        }
+        try {
+            reimburseService.delete(reimburse);
+        } catch (SQLException e) {
+            json.put("status", 500);
+            return json.toJSONString();
+        }
+        json.put("status", 200);
         return json.toJSONString();
     }
 }

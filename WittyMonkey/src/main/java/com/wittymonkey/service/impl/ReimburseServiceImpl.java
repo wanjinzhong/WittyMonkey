@@ -7,6 +7,7 @@ import com.wittymonkey.util.DateUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
 
@@ -32,7 +33,22 @@ public class ReimburseServiceImpl implements IReimburseService{
     }
 
     @Override
+    public Integer getTotalByUser(Integer userId, Integer status, Date from, Date to) {
+        return reimburseDao.getTotalByUser(userId, status, from, to);
+    }
+
+    @Override
+    public List<Reimburse> getReimburseByUser(Integer userId, Integer status, Date from, Date to, Integer start, Integer total) {
+        return reimburseDao.getReimburseByUser(userId, status, from, to, start, total);
+    }
+
+    @Override
     public void save(Reimburse reimburse) {
         reimburseDao.save(reimburse);
+    }
+
+    @Override
+    public void delete(Reimburse reimburse) throws SQLException {
+        reimburseDao.delete(reimburse);
     }
 }

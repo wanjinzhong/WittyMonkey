@@ -55,6 +55,22 @@
             <td><input class="layui-input" value="<fmt:formatDate value="${leave.entryDatetime}" pattern="yyyy-MM-dd HH:mm:ss"/>" disabled/></td>
         </tr>
         <tr>
+            <td><label class="layui-form-label"><fmt:message key="leave.status"/></label></td>
+            <td>
+                <input class="layui-input" disabled
+                        <c:if test="${leave.status eq 1}">
+                            value='<fmt:message key="leave.status.pending"/>'
+                        </c:if>
+                        <c:if test="${leave.status eq 2}">
+                            value='<fmt:message key="leave.status.approved"/>'
+                        </c:if>
+                        <c:if test="${leave.status eq 3}">
+                            value='<fmt:message key="leave.status.rejected"/>'
+                        </c:if>
+                />
+            </td>
+        </tr>
+        <tr>
             <td><label class="layui-form-label"><fmt:message key="leave.apply_note"/></label></td>
             <td colspan="3"><textarea class="layui-textarea" disabled>${leave.entryUserNote}</textarea></td>
         </tr>

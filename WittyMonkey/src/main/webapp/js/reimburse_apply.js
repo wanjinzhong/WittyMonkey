@@ -8,23 +8,43 @@ layui.use(['layer', 'form', 'laypage'], function () {
     layer = layui.layer;
     form = layui.form();
     laypage = layui.laypage;
-    form.on("select(type)", function (data) {
-        search();
-    });
     search();
+});
+$(document).ready(function () {
+    $('#from').dateRangePicker({
+        language: $("#lang").val(),
+        showShortcuts: false,
+        singleMonth: true,
+        autoClose: true,
+        singleDate: true,
+        showShortcuts: false,
+        setValue: function (s) {
+            $(this).val(s);
+        }
+    });
+    $('#to').dateRangePicker({
+        language: $("#lang").val(),
+        showShortcuts: false,
+        singleMonth: true,
+        autoClose: true,
+        singleDate: true,
+        showShortcuts: false,
+        setValue: function (s) {
+            $(this).val(s);
+        }
+    });
 });
 function refreshTable(obj) {
     var html = "";
     if (obj.length == 0) {
         html = '<tr class="text-c">' +
-            '<td colspan="8">' + no_data + '</td>' +
+            '<td colspan="7">' + no_data + '</td>' +
             '</tr>"';
     } else {
         for (var i in obj) {
             html += '<tr class="text-c">' +
-                '<td>' + formatDay(obj[i]['from']) + "<br/>" + formatDay(obj[i]['to']) + '</td>' +
-                '<td>' + obj[i]['days'] + '</td>' +
-                '<td>' + obj[i]['leaveType'] + '</td>';
+                '<td>' + formatDate(obj[i]['applyDatetime']) + '</td>' +
+                '<td>' + obj[i]['money'] + '</td>';
             switch (obj[i]['status']) {
                 case 1:
                     html += '<td>' + reimburse_pending + '</td>';
@@ -41,8 +61,8 @@ function refreshTable(obj) {
             html += '<td>' + (obj[i]['entryUser'] != undefined ? obj[i]['entryUser'] : "") + '</td>' +
                 '<td>' + (obj[i]['entryDatetime'] != undefined ? formatDate(obj[i]['entryDatetime']) : "") + '</td>';
             if (obj[i]["status"] == 1) {
-                html += "<td><i class='editBtn layui-icon layui-btn layui-btn-primary layui-btn-small' onclick='editLeaveApply(" + obj[i]["id"] + ")'>&#xe642; " + btn_edit + "</i>" +
-                    "<i class='deleteBtn layui-icon layui-btn layui-btn-primary layui-btn-small' onclick='deleteLeaveApply(" + obj[i]["id"] + ")'>&#xe640; " + btn_delete + "</i></td>";
+                html += "<td><i class='editBtn layui-icon layui-btn layui-btn-primary layui-btn-small' onclick='editReimburseApply(" + obj[i]["id"] + ")'>&#xe642; " + btn_edit + "</i>" +
+                    "<i class='deleteBtn layui-icon layui-btn layui-btn-primary layui-btn-small' onclick='deleteReimburseApply(" + obj[i]["id"] + ")'>&#xe640; " + btn_delete + "</i></td>";
             } else {
                 html += "<td><i class='showBtn layui-icon layui-btn layui-btn-primary layui-btn-small' onclick='showDetail(" + obj[i]["id"] + ")'>&#xe60b; " + btn_detail + "</i></td>";
             }
@@ -54,38 +74,51 @@ function refreshTable(obj) {
 
 function search() {
     var type = $("#type").val();
-    var condition = {"type": type, "justMe": true};
-    page("getLeaveByPage.do", undefined, condition);
+    var from = $("#from").val();
+    var to = $("#to").val();
+    var condition = {"type": type, "from": from, "to": to, "justMe": true};
+    page("getReimburseByPage.do", undefined, condition);
 }
 
-function showAddLeaveApply() {
+function showAddReimburse() {
     layer.open({
         type: 2,
-        area: ['780px', '330px'],
+        area: ['550px', '280px'],
         maxmin: false,
         shade: 0.4,
-        title: leave_apply_title,
-        content: "toAddLeaveApply.do"
+        title: reimburse_add,
+        content: "toAddReimburseApply.do"
     });
 }
 
-function editLeaveApply(id) {
+function showDetail(id) {
     layer.open({
         type: 2,
-        area: ['780px', '330px'],
+        area: ['650px', '450px'],
         maxmin: false,
         shade: 0.4,
-        title: leave_apply_edit_title,
-        content: "toEditLeaveApply.do?id=" + id
+        title: reimburse_detail,
+        content: "toShowReimburseApply.do?id=" + id
     });
 }
 
-function deleteLeaveApply(id) {
+function editReimburseApply(id) {
+    layer.open({
+        type: 2,
+        area: ['550px', '280px'],
+        maxmin: false,
+        shade: 0.4,
+        title: reimburse_add,
+        content: "toEditReimburseApply.do?id=" + id
+    });
+}
+
+function deleteReimburseApply(id) {
     layer.confirm(apply_delete_hint, {icon: 7, title: apply_delete_title},
         function (index) {
             var load = layer.load();
             $.ajax({
-                url: "deleteLeaveApply.do",
+                url: "deleteReimburseApply.do",
                 data: {"id": id},
                 dataType: "JSON",
                 type: "POST",
@@ -139,16 +172,4 @@ function deleteLeaveApply(id) {
                 }
             });
         });
-}
-
-
-function showDetail(id) {
-    layer.open({
-        type: 2,
-        area: ['780px', '500px'],
-        maxmin: false,
-        shade: 0.4,
-        title: leave_detail_title,
-        content: "toShowLeaveApply.do?id=" + id
-    });
 }
