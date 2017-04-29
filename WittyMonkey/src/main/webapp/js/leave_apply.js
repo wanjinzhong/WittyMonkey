@@ -140,3 +140,15 @@ function deleteLeaveApply(id) {
             });
         });
 }
+
+
+function showDetail(id) {
+    layer.open({
+        type: 2,
+        area: ['780px', '450px'],
+        maxmin: false,
+        shade: 0.4,
+        title: leave_detail_title,
+        content: "toShowLeaveApply.do?id=" + id
+    });
+}

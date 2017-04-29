@@ -62,6 +62,15 @@
             <td colspan="3"><textarea id="applyNote" name="applyNote" class="layui-textarea" disabled
                                       onblur="validateNote(this)">${leaveVO.applyUserNote}</textarea></td>
         </tr>
+        <c:if test="${leaveVO.status ne 1}">
+            <tr>
+                <td><label class="layui-form-label"><fmt:message key="leave.opt_user"/></label></td>
+                <td><input class="layui-input" value="${leaveVO.entryUser}" disabled/>
+                </td>
+                <td><label class="layui-form-label"><fmt:message key="leave.opt_date"/></label></td>
+                <td><input class="layui-input" value="<fmt:formatDate value="${leaveVO.entryDatetime}" pattern="yyyy-MM-dd HH:mm:ss"/>" disabled/></td>
+            </tr>
+        </c:if>
         <tr>
             <td><label class="layui-form-label"><fmt:message key="leave.opt_note"/></label></td>
             <td colspan="3"><textarea id="optNote" name="optNote" class="layui-textarea"

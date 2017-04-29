@@ -57,7 +57,7 @@ function search() {
 function showAddLeave() {
     layer.open({
         type: 2,
-        area: ['780px', '450px'],
+        area: ['780px', '500px'],
         maxmin: false,
         shade: 0.4,
         title: leave_add_title,
@@ -68,7 +68,7 @@ function showAddLeave() {
 function showDetail(id) {
     layer.open({
         type: 2,
-        area: ['780px', '450px'],
+        area: ['780px', '500px'],
         maxmin: false,
         shade: 0.4,
         title: leave_detail_title,

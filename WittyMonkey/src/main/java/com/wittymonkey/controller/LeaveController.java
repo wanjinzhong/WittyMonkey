@@ -57,7 +57,11 @@ public class LeaveController {
         JSONObject json = new JSONObject();
         Integer type = Integer.parseInt(request.getParameter("type"));
         Integer curr = Integer.parseInt(request.getParameter("curr"));
-        Boolean justMe = Boolean.parseBoolean(request.getParameter("justMe"));
+        String me = request.getParameter("justMe");
+        Boolean justMe = false;
+        if (StringUtils.isNotBlank(me)){
+            justMe = Boolean.parseBoolean(me);
+        }
         User loginUser = (User) request.getSession().getAttribute("loginUser");
         Integer pageSize = loginUser.getSetting().getPageSize();
         Hotel hotel = (Hotel) request.getSession().getAttribute("hotel");
@@ -536,5 +540,14 @@ public class LeaveController {
         }
         json.put("status", 200);
         return json.toJSONString();
+    }
+
+    @RequestMapping(value = "toShowLeaveApply", method = GET)
+    public String toShowLeaveApply(HttpServletRequest request){
+        Integer id = Integer.parseInt(request.getParameter("id").trim());
+        LeaveHeader leaveHeader = leaveHeaderService.getLeaveHeaderById(id);
+        LeaveVO leaveVO = ChangeToSimple.assymblyLeaveVO(leaveHeader);
+        request.setAttribute("leave", leaveVO);
+        return "leave_apply_detail";
     }
 }
