@@ -26,6 +26,8 @@ public class LeaveVO {
 
     private Integer status;
 
+    private Integer typeId;
+
     private String leaveType;
 
     private Date entryDatetime;
@@ -144,5 +146,13 @@ public class LeaveVO {
 
     public void setStaffNo(String staffNo) {
         this.staffNo = staffNo;
+    }
+
+    public Integer getTypeId() {
+        return typeId;
+    }
+
+    public void setTypeId(Integer typeId) {
+        this.typeId = typeId;
     }
 }

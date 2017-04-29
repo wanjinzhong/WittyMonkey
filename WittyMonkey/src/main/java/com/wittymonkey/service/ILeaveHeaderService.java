@@ -2,6 +2,7 @@ package com.wittymonkey.service;
 
 import com.wittymonkey.entity.LeaveHeader;
 
+import java.sql.SQLException;
 import java.util.List;
 
 public interface ILeaveHeaderService {
@@ -16,4 +17,6 @@ public interface ILeaveHeaderService {
     void save(LeaveHeader header);
 
     LeaveHeader getLeaveHeaderById(Integer id);
+
+    void delete(LeaveHeader header) throws SQLException;
 }

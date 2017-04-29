@@ -6,6 +6,7 @@ import com.wittymonkey.service.ILeaveHeaderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.SQLException;
 import java.util.List;
 
 @Service(value="leaveHeaderService")
@@ -43,5 +44,10 @@ public class LeaveHeaderServiceImpl implements ILeaveHeaderService {
     @Override
     public LeaveHeader getLeaveHeaderById(Integer id) {
         return leaveHeaderDao.getLeaveHeaderById(id);
+    }
+
+    @Override
+    public void delete(LeaveHeader header) throws SQLException {
+        leaveHeaderDao.delete(header);
     }
 }

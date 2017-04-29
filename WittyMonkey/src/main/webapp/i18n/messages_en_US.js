@@ -287,6 +287,16 @@ var leave_opt_successs = "Audit success";
 var leave_approve_success = "Approve successfully";
 var leave_reject_success = "Reject successfully";
 
+var leave_apply_title = "Leave Apply";
+var leave_apply_success = "Apply leave successfully. Please wait for the application";
+var leave_apply_edit_title = "Edit Leave Apply";
+var leave_apply_approved = "Application has been approved";
+var leave_apply_rejected = "Application has been rejected";
+var apply_edit_success = "Application updated successfully";
+var apply_delete_success = "Application deleted successfully";
+var apply_delete_hint = "Are you sure to delete this application?";
+var apply_delete_title = "Delete application";
+
 var setting_data = "Data per page";
 var setting_data_wrong = "Data per page wrong";
-var setting_save_success = "Save success, refresh the page to effect";
+var setting_save_success = "Save successfully, refresh the page to effect";

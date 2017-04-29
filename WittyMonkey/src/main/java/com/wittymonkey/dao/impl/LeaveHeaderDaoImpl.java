@@ -58,7 +58,7 @@ public class LeaveHeaderDaoImpl extends GenericDaoImpl<LeaveHeader> implements I
             map.put("status", status);
         }
         hql += " order by id desc";
-        return queryListHQL(hql,map);
+        return queryListHQL(hql,map,start,total);
     }
 
     @Override
@@ -73,7 +73,7 @@ public class LeaveHeaderDaoImpl extends GenericDaoImpl<LeaveHeader> implements I
             map.put("status", status);
         }
         hql += " order by id desc";
-        return queryListHQL(hql,map);
+        return queryListHQL(hql,map, start, total);
     }
 
     @Override

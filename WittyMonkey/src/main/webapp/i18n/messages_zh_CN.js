@@ -297,6 +297,16 @@ var leave_changed = "请假申请有变更，请重试";
 var leave_approve_success = "批准成功";
 var leave_reject_success = "驳回成功";
 
+var leave_apply_title = "请假申请";
+var leave_apply_success = "请假申请成功，请等待审核";
+var leave_apply_edit_title = "请假申请修改";
+var apply_approved = "申请已被批准";
+var apply_rejected = "申请已被驳回";
+var apply_edit_success = "申请修改成功";
+var apply_delete_success = "申请删除成功";
+var apply_delete_hint = "确定要删除这条申请吗";
+var apply_delete_title = "删除申请";
+
 var setting_data = "每页数据数";
 var setiing_data_wrong = "每页数据数不正确";
 var setting_save_success = "保存成功，刷新页面生效";

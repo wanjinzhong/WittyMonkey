@@ -26,7 +26,7 @@
         <i class="refreshBtn layui-icon layui-btn layui-btn-small" onclick="reload();">&#x1002;</i>
     </nav>
     <div id="main">
-        <i class="newBtn layui-icon layui-btn layui-btn-radius layui-btn-normal" onclick="showAddLeave()">&#xe61f;
+        <i class="newBtn layui-icon layui-btn layui-btn-radius layui-btn-normal" onclick="showAddLeaveApply()">&#xe61f;
             <fmt:message key="leave.apply.add"/></i>
         <form class="layui-form">
             <div style="min-width: 800px">

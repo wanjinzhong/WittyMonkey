@@ -1,5 +1,6 @@
 package com.wittymonkey.controller;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.wittymonkey.entity.*;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import java.math.BigDecimal;
+import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -33,6 +35,9 @@ public class LeaveController {
 
     @Autowired
     private ILeaveHeaderService leaveHeaderService;
+
+    @Autowired
+    private ILeaveDetailService leaveDetailService;
 
     @Autowired
     private IUserService userService;
@@ -108,7 +113,11 @@ public class LeaveController {
         JSONObject json = new JSONObject();
         String fromDate = request.getParameter("from").trim();
         String toDate = request.getParameter("to").trim();
-        String applyUser = request.getParameter("applyUser").trim();
+        String applyUser = request.getParameter("applyUser");
+        User loginUser = (User) request.getSession().getAttribute("loginUser");
+        if (StringUtils.isBlank(applyUser)) {
+            applyUser = loginUser.getId().toString();
+        }
         Integer typeId = Integer.parseInt(request.getParameter("type").trim());
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         if (StringUtils.isBlank(fromDate) || StringUtils.isBlank(toDate)) {
@@ -374,6 +383,158 @@ public class LeaveController {
         } else if (Constraint.LEAVE_SEARCHTYPE_REJECTED.equals(status)) {
             json.put("status", 201);
         }
+        return json.toJSONString();
+    }
+
+    @RequestMapping(value = "toEditLeaveApply", method = GET)
+    public String toEditLeaveApply(HttpServletRequest request) {
+        Integer id = Integer.parseInt(request.getParameter("id"));
+        LeaveHeader leaveHeader = leaveHeaderService.getLeaveHeaderById(id);
+        LeaveVO leaveVO = ChangeToSimple.assymblyLeaveVO(leaveHeader);
+        request.getSession().setAttribute("leave", leaveVO);
+        request.getSession().setAttribute("editLeaveApply", leaveHeader);
+        Hotel hotel = (Hotel) request.getSession().getAttribute("hotel");
+        List<LeaveType> leaveTypes = leaveTypeService.getLeaveTypes(hotel.getId(), null, null);
+        request.setAttribute("leaveTypes", leaveTypes);
+        return "leave_apply_edit";
+    }
+
+    @RequestMapping(value = "toAddLeaveApply", method = GET)
+    public String toAddLeaveApply(HttpServletRequest request) {
+        Hotel hotel = (Hotel) request.getSession().getAttribute("hotel");
+        List<LeaveType> leaveTypes = leaveTypeService.getLeaveTypes(hotel.getId(), null, null);
+        request.setAttribute("leaveTypes", leaveTypes);
+        return "leave_apply_add";
+    }
+
+    @RequestMapping(value = "saveLeaveApply", method = POST)
+    @ResponseBody
+    public String saveLeaveApply(HttpServletRequest request) {
+        JSONObject json = new JSONObject();
+        User user = (User) request.getSession().getAttribute("loginUser");
+        Integer typeId = Integer.parseInt(request.getParameter("type").trim());
+        String fromDate = request.getParameter("from").trim();
+        String toDate = request.getParameter("to").trim();
+        String method = request.getParameter("method").trim();
+        String applyNote = request.getParameter("applyNote");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        if (StringUtils.isBlank(fromDate) || StringUtils.isBlank(toDate)) {
+            json.put("status", 400);
+            return json.toJSONString();
+        }
+        Date from = null;
+        Date to = null;
+        try {
+            from = dateFormat.parse(fromDate);
+            to = dateFormat.parse(toDate);
+        } catch (ParseException e) {
+            json.put("status", 401);
+            return json.toJSONString();
+        }
+        if (StringUtils.isNotBlank(applyNote) && applyNote.length() > 1024) {
+            json.put("status", 410);
+            return json.toJSONString();
+        }
+        LeaveHeader header =null;
+        if (Constraint.ADD.equals(method)){
+            header = new LeaveHeader();
+        } else if (Constraint.UPDATE.equals(method)){
+            header = leaveHeaderService.getLeaveHeaderById(((LeaveHeader) request.getSession().getAttribute("editLeaveApply")).getId());
+            leaveDetailService.deleteByLeaveHeader(header);
+            if (header.getStatus().equals(Constraint.LEAVE_STATUS_APPROVE)){
+                json.put("status", 420);
+                return json.toJSONString();
+            } else if (header.getStatus().equals(Constraint.LEAVE_STATUS_REJECT)){
+                json.put("status", 421);
+                return json.toJSONString();
+            }
+        } else {
+            json.put("status", 500);
+            return json.toJSONString();
+        }
+        Date now = new Date();
+        header.setApplyDatetime(now);
+        header.setApplyUser(userService.getUserById(user.getId()));
+        header.setApplyUserNote(applyNote);
+        header.setStatus(Constraint.LEAVE_STATUS_PENDING);
+        LeaveType type = leaveTypeService.getLeaveTypeById(typeId);
+        header.setLeaveType(type);
+        List<LeaveDetail> leaveDetails = new ArrayList<LeaveDetail>();
+
+        Salary salary = salaryService.getSalaryByStaffId(user.getId());
+        // 这个月开始请假时间
+        Date thisMonthFrom = from;
+        // 这个月请假结束时间
+        Date thisMonthTo = null;
+        while (!to.before(thisMonthFrom)) {
+            // 下月1号
+            Date nextFirstDayOfMonth = DateUtil.nextMonthFirstDate(thisMonthFrom);
+            // 当月工资
+            SalaryRecord salaryRecord = salaryRecordService.getSalaryRecordAtDate(salary.getId(), thisMonthFrom);
+            // 当月扣薪
+            Double thisMonthDeduct = 0.0;
+            // 如果这个月没有找到工资记录，则跳过扣薪
+            if (salaryRecord == null) {
+                thisMonthFrom = nextFirstDayOfMonth;
+                continue;
+            }
+            // 当月请假天数
+            Integer day;
+            // 如果结束时间小于下个月1号，说明请假这个月结束，计算结束
+            if (!nextFirstDayOfMonth.before(to)) {
+                day = DateUtil.dateDiffDays(thisMonthFrom, to) + 1;
+                thisMonthDeduct = day * (salaryRecord.getMoney() / user.getWorkDays() * type.getDeduct());
+                thisMonthTo = to;
+            }
+            // 如果结束时间大于等于下个月1号，说明这个月到月底均为请假
+            else {
+                day = DateUtil.dateDiffDays(thisMonthFrom, nextFirstDayOfMonth);
+                thisMonthDeduct = day * (salaryRecord.getMoney() / user.getWorkDays() * type.getDeduct());
+                thisMonthTo = DateUtil.lastDayOfMonth(thisMonthFrom);
+            }
+            // 防止扣薪到负数
+            if (thisMonthDeduct >= salaryRecord.getMoney()) {
+                thisMonthDeduct = salaryRecord.getMoney();
+            }
+            LeaveDetail detail = new LeaveDetail();
+            detail.setDays(day);
+            detail.setDeduct(thisMonthDeduct);
+            detail.setFrom(thisMonthFrom);
+            detail.setTo(thisMonthTo);
+            detail.setLeaveHeader(header);
+            leaveDetails.add(detail);
+            thisMonthFrom = nextFirstDayOfMonth;
+        }
+        header.setLeaveDetails(leaveDetails);
+        leaveHeaderService.save(header);
+        json.put("status", 200);
+        return json.toJSONString();
+    }
+
+    @RequestMapping(value = "deleteLeaveApply", method = POST)
+    @ResponseBody
+    public String deleteLeaveApply(HttpServletRequest request){
+        JSONObject json = new JSONObject();
+        Integer id = Integer.parseInt(request.getParameter("id"));
+        LeaveHeader header = leaveHeaderService.getLeaveHeaderById(id);
+        if (header == null){
+            json.put("status", 400);
+            return json.toJSONString();
+        }
+        if (header.getStatus().equals(Constraint.LEAVE_STATUS_APPROVE)){
+            json.put("status", 410);
+            return json.toJSONString();
+        } else if (header.getStatus().equals(Constraint.LEAVE_STATUS_REJECT)){
+            json.put("status", 411);
+            return json.toJSONString();
+        }
+        try {
+            leaveHeaderService.delete(header);
+        } catch (SQLException e) {
+            json.put("status", 500);
+            return json.toJSONString();
+        }
+        json.put("status", 200);
         return json.toJSONString();
     }
 }

@@ -461,6 +461,7 @@ public class ChangeToSimple {
         }
         leaveVO.setId(header.getId());
         if (header.getLeaveType() != null) {
+            leaveVO.setTypeId(header.getLeaveType().getId());
             leaveVO.setLeaveType(header.getLeaveType().getName());
         }
         leaveVO.setStatus(header.getStatus());
