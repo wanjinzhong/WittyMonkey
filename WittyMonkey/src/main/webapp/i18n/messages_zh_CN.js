@@ -234,6 +234,12 @@ var salary_delete_success = "删除成功";
 var to_back = "返回";
 var salary_history = "工资历史";
 var salary_legend = "工资";
+var salary_pay = "工资发放";
+var no_salary = "上月没有工资需要发放";
+var other_pay_wrong = "其它扣薪不正确";
+var bonus_wrong = "奖金不正确";
+var payroll_success_title = "发放成功";
+var payroll_success = "工资发放成功，发放总额：";
 
 var materiel_add_title = "添加物料";
 var materiel_add_barcode = "条码号";

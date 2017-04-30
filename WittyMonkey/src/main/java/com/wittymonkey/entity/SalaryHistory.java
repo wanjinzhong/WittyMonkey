@@ -18,7 +18,7 @@ public class SalaryHistory {
     @JoinColumn(name = "salary_id", referencedColumnName = "id")
     private Salary salary;
 
-    // 总共工资
+    // 基本工资
     @Column
     private double total;
 

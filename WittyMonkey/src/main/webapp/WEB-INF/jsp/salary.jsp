@@ -25,6 +25,7 @@
     <i class="refreshBtn layui-icon layui-btn layui-btn-small" onclick="reload();">&#x1002;</i>
 </nav>
 <div id="main">
+    <i class="newBtn layui-icon layui-btn layui-btn-radius layui-btn-normal" onclick="showPayroll()">&#xe61f; <fmt:message key="salary.pay"/></i>
     <form class="layui-form" style="min-width: 850px;">
         <div>
             <div class="searchTypeDiv">

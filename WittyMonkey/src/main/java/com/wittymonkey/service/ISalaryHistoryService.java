@@ -2,6 +2,7 @@ package com.wittymonkey.service;
 
 import com.wittymonkey.entity.SalaryHistory;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -9,4 +10,8 @@ import java.util.List;
  */
 public interface ISalaryHistoryService {
     List<SalaryHistory> getSalaryHistoryBySalaryId(Integer salaryId);
+
+    SalaryHistory getSalaryHistoryByUserIdAndSalaryDate(Integer userId, Date salaryDate);
+
+    void batchSave(List<SalaryHistory> salaryHistories);
 }

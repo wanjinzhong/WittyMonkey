@@ -6,6 +6,7 @@ import com.wittymonkey.entity.*;
 import com.wittymonkey.service.*;
 import com.wittymonkey.util.ChangeToSimple;
 import com.wittymonkey.util.DateUtil;
+import com.wittymonkey.util.NumberUtil;
 import com.wittymonkey.vo.Constraint;
 import com.wittymonkey.vo.LeaveVO;
 import org.apache.commons.lang.StringUtils;
@@ -179,10 +180,7 @@ public class LeaveController {
             deduct += thisMonthDeduct;
             thisMonthFrom = nextFirstDayOfMonth;
         }
-        // 四舍五入保留两位小数
-        BigDecimal b = new BigDecimal(deduct);
-        deduct = b.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
-        return deduct;
+        return NumberUtil.round(deduct, 2);
     }
 
     /**

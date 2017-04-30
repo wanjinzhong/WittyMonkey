@@ -99,3 +99,15 @@ function salaryHistory(id) {
         type: 2
     });
 }
+
+function showPayroll() {
+    layer.open({
+        title: salary_pay,
+        content: "toSalaryPayroll.do",
+        area: ['850px', '600px'],
+        maxmin: false,
+        shade: 0.4,
+        scrollbar: false,
+        type: 2
+    });
+}

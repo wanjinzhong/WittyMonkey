@@ -224,6 +224,12 @@ var salary_delete_success = "Delete Succesfully";
 var to_back = "Back";
 var salary_history = "Salary History";
 var salary_legend = "Salary";
+var salary_pay = "Payroll";
+var no_salary = "There was no need to pay last month";
+var other_pay_wrong = "Other payment wrong";
+var bonus_wrong = "Bonus wrong";
+var payroll_success_title = "Success";
+var payroll_success = "Payroll successfully, Total: ";
 
 var materiel_add_title = "Add Materiel";
 var materiel_add_barcode = "Barcode";

@@ -319,7 +319,7 @@ public class ChangeToSimple {
             }
         });
         for (SalaryRecord salaryRecord : salaryRecords) {
-            if (salaryRecord.getStartDate().before(date)) {
+            if (!date.before(salaryRecord.getStartDate())) {
                 salaryVO.setStartDate(salaryRecord.getStartDate());
                 salaryVO.setEntryDatetime(salaryRecord.getEntryDatetime());
                 salaryVO.setEntryUser(salaryRecord.getEntryUser().getRealName());

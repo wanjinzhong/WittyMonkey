@@ -42,6 +42,22 @@ public class DateUtil {
     }
 
     /**
+     * 获取上月一号
+     *
+     * @return
+     */
+    public static Date lastMonthFirstDate(Date date) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        calendar.set(Calendar.DAY_OF_MONTH, 1);
+        calendar.add(Calendar.MONTH, -1);
+        calendar.set(Calendar.HOUR_OF_DAY, 0);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+        return calendar.getTime();
+    }
+
+    /**
      * 这个月的最后一天
      *
      * @param date
