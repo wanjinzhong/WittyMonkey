@@ -57,12 +57,14 @@ function calcAmount(id) {
 }
 
 function payroll() {
+    var load = layer.load();
     $.ajax({
         url: "batchPayroll.do",
         data: $("#payroll-form").serialize(),
         dataType: "JSON",
         type: "POST",
         success: function (data) {
+            layer.close(load);
             var res = eval("(" + data + ")");
             switch (res["status"]) {
                 case 400:
