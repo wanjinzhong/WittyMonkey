@@ -4,7 +4,7 @@ import com.wittymonkey.entity.Setting;
 
 public interface ISettingService {
 
-	void saveSetting(Setting setting);
+    void saveSetting(Setting setting);
 
-	Setting getSettingByUser(Integer userId);
+    Setting getSettingByUser(Integer userId);
 }

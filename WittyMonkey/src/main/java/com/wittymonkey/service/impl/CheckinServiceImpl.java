@@ -2,15 +2,14 @@ package com.wittymonkey.service.impl;
 
 import com.wittymonkey.dao.ICheckinDao;
 import com.wittymonkey.entity.Checkin;
+import com.wittymonkey.service.ICheckinService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.wittymonkey.service.ICheckinService;
-
 import java.sql.SQLException;
 
-@Service(value="checkinService")
-public class CheckinServiceImpl implements ICheckinService{
+@Service(value = "checkinService")
+public class CheckinServiceImpl implements ICheckinService {
 
     @Autowired
     private ICheckinDao checkinDao;

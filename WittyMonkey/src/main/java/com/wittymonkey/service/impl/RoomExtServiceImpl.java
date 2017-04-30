@@ -1,10 +1,9 @@
 package com.wittymonkey.service.impl;
 
+import com.wittymonkey.service.IRoomExtService;
 import org.springframework.stereotype.Service;
 
-import com.wittymonkey.service.IRoomExtService;
-
-@Service(value="roomExtService")
-public class RoomExtServiceImpl implements IRoomExtService{
+@Service(value = "roomExtService")
+public class RoomExtServiceImpl implements IRoomExtService {
 
 }

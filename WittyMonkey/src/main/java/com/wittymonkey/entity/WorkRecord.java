@@ -1,139 +1,127 @@
 package com.wittymonkey.entity;
 
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-
 /**
  * 工作记录。记录员工离职信息
- * 
- * @author neilw
  *
+ * @author neilw
  */
 @Entity
-@Table(name="work_record")
-public class WorkRecord implements Serializable{
+@Table(name = "work_record")
+public class WorkRecord implements Serializable {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Integer id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Integer id;
 
-	@Column(name = "real_name", length = 20)
-	private String realName;
+    @Column(name = "real_name", length = 20)
+    private String realName;
 
-	@Column(name = "idcard_no", length = 20)
-	private String idCardNo;
+    @Column(name = "idcard_no", length = 20)
+    private String idCardNo;
 
-	@ManyToOne(targetEntity = Hotel.class, fetch = FetchType.EAGER)
-	@JoinColumn(name = "hotel_id", referencedColumnName = "id")
-	private Hotel hotel;
+    @ManyToOne(targetEntity = Hotel.class, fetch = FetchType.EAGER)
+    @JoinColumn(name = "hotel_id", referencedColumnName = "id")
+    private Hotel hotel;
 
-	// 离职原因或说明
-	@Column(name = "dimission_desc", length=1024)
-	private String dimissionDesc;
+    // 离职原因或说明
+    @Column(name = "dimission_desc", length = 1024)
+    private String dimissionDesc;
 
-	// 离职日期
-	@Column(name = "dimission_datetime")
-	private Date dimissionDatetime;
-	
-	@Column(name = "entry_datetime")
-	private Date entryDatetime;
+    // 离职日期
+    @Column(name = "dimission_datetime")
+    private Date dimissionDatetime;
 
-	@ManyToOne(targetEntity = User.class, fetch = FetchType.EAGER)
-	@JoinColumn(name = "entry_id", referencedColumnName = "id")
-	private User entryUser;
-	
-	@ManyToMany(targetEntity=Role.class)
-	@JoinTable(name = "workrecord_role",
-	joinColumns = { @JoinColumn(name = "user_id", referencedColumnName = "id") },
-	inverseJoinColumns={@JoinColumn(name = "role_id", referencedColumnName = "id")})
-	private List<Role> roles = new ArrayList<Role>();
+    @Column(name = "entry_datetime")
+    private Date entryDatetime;
 
-	public Integer getId() {
-		return id;
-	}
+    @ManyToOne(targetEntity = User.class, fetch = FetchType.EAGER)
+    @JoinColumn(name = "entry_id", referencedColumnName = "id")
+    private User entryUser;
 
-	public void setId(Integer id) {
-		this.id = id;
-	}
+    @ManyToMany(targetEntity = Role.class)
+    @JoinTable(name = "workrecord_role",
+            joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")},
+            inverseJoinColumns = {@JoinColumn(name = "role_id", referencedColumnName = "id")})
+    private List<Role> roles = new ArrayList<Role>();
 
-	public String getRealName() {
-		return realName;
-	}
+    public Integer getId() {
+        return id;
+    }
 
-	public void setRealName(String realName) {
-		this.realName = realName;
-	}
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
-	public String getIdCardNo() {
-		return idCardNo;
-	}
+    public String getRealName() {
+        return realName;
+    }
 
-	public void setIdCardNo(String idCardNo) {
-		this.idCardNo = idCardNo;
-	}
+    public void setRealName(String realName) {
+        this.realName = realName;
+    }
 
-	public Hotel getHotel() {
-		return hotel;
-	}
+    public String getIdCardNo() {
+        return idCardNo;
+    }
 
-	public void setHotel(Hotel hotel) {
-		this.hotel = hotel;
-	}
+    public void setIdCardNo(String idCardNo) {
+        this.idCardNo = idCardNo;
+    }
 
-	public String getDimissionDesc() {
-		return dimissionDesc;
-	}
+    public Hotel getHotel() {
+        return hotel;
+    }
 
-	public void setDimissionDesc(String dimissionDesc) {
-		this.dimissionDesc = dimissionDesc;
-	}
+    public void setHotel(Hotel hotel) {
+        this.hotel = hotel;
+    }
 
-	public Date getDimissionDatetime() {
-		return dimissionDatetime;
-	}
+    public String getDimissionDesc() {
+        return dimissionDesc;
+    }
 
-	public void setDimissionDatetime(Date dimissionDatetime) {
-		this.dimissionDatetime = dimissionDatetime;
-	}
+    public void setDimissionDesc(String dimissionDesc) {
+        this.dimissionDesc = dimissionDesc;
+    }
 
-	public Date getEntryDatetime() {
-		return entryDatetime;
-	}
+    public Date getDimissionDatetime() {
+        return dimissionDatetime;
+    }
 
-	public void setEntryDatetime(Date entryDatetime) {
-		this.entryDatetime = entryDatetime;
-	}
+    public void setDimissionDatetime(Date dimissionDatetime) {
+        this.dimissionDatetime = dimissionDatetime;
+    }
 
-	public User getEntryUser() {
-		return entryUser;
-	}
+    public Date getEntryDatetime() {
+        return entryDatetime;
+    }
 
-	public void setEntryUser(User entryUser) {
-		this.entryUser = entryUser;
-	}
+    public void setEntryDatetime(Date entryDatetime) {
+        this.entryDatetime = entryDatetime;
+    }
 
-	public List<Role> getRoles() {
-		return roles;
-	}
+    public User getEntryUser() {
+        return entryUser;
+    }
 
-	public void setRoles(List<Role> roles) {
-		this.roles = roles;
-	}
-	
+    public void setEntryUser(User entryUser) {
+        this.entryUser = entryUser;
+    }
+
+    public List<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<Role> roles) {
+        this.roles = roles;
+    }
+
 }

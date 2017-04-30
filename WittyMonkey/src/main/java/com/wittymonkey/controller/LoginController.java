@@ -1,13 +1,9 @@
 package com.wittymonkey.controller;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-
-import javax.servlet.http.HttpServletRequest;
-
 import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.wittymonkey.entity.*;
+import com.wittymonkey.service.*;
 import com.wittymonkey.util.*;
 import com.wittymonkey.vo.SimplePlace;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,17 +12,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.alibaba.fastjson.JSONObject;
-import com.wittymonkey.service.IAreaService;
-import com.wittymonkey.service.ICityService;
-import com.wittymonkey.service.IHotelService;
-import com.wittymonkey.service.ILeaveTypeService;
-import com.wittymonkey.service.IMaterielTypeService;
-import com.wittymonkey.service.IMenuService;
-import com.wittymonkey.service.IProvinceService;
-import com.wittymonkey.service.IRoleService;
-import com.wittymonkey.service.ISettingService;
-import com.wittymonkey.service.IUserService;
+import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 @Controller
 public class LoginController {
@@ -243,28 +232,29 @@ public class LoginController {
 
     @RequestMapping(value = "getIndexInfo", method = RequestMethod.GET)
     @ResponseBody
-    public String getUserInfo(HttpServletRequest request){
+    public String getUserInfo(HttpServletRequest request) {
         JSONObject jsonObject = new JSONObject();
         User user = (User) request.getSession().getAttribute("loginUser");
         Hotel hotel = (Hotel) request.getSession().getAttribute("hotel");
         jsonObject.put("realName", user.getRealName());
         List<Role> roles = user.getRoles();
         List<String> rolesName = new ArrayList<String>();
-        for(Role role : roles){
+        for (Role role : roles) {
             rolesName.add(role.getName());
         }
         JSONArray jsonArray = new JSONArray();
         jsonArray.addAll(rolesName);
         jsonObject.put("roles", rolesName);
-        jsonObject.put("hotelName",hotel.getName());
+        jsonObject.put("hotelName", hotel.getName());
         return jsonObject.toJSONString();
     }
+
     @RequestMapping(value = "index", method = RequestMethod.GET)
     public String index(HttpServletRequest request) {
         // 测试数据
         User user = userService.getUserByStaffNo("10001");
-        request.getSession().setAttribute("loginUser",user);
-        request.getSession().setAttribute("hotel",user.getHotel());
+        request.getSession().setAttribute("loginUser", user);
+        request.getSession().setAttribute("hotel", user.getHotel());
         return "index";
     }
 
@@ -428,7 +418,7 @@ public class LoginController {
         } else {
             // 注册酒店
             Hotel hotel = (Hotel) request.getSession().getAttribute("registHotel");
-            User newUser = registToDatabase(hotel, password,realName, email);
+            User newUser = registToDatabase(hotel, password, realName, email);
             request.getSession().setAttribute("staffNo", newUser.getStaffNo());
             json.put("status", 200);
             json.put("url", "toComplete.do");
@@ -767,7 +757,6 @@ public class LoginController {
             return false;
         }
     }
-
 
 
     /**

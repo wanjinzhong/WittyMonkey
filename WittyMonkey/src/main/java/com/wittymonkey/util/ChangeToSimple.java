@@ -1,11 +1,9 @@
 package com.wittymonkey.util;
 
 import com.wittymonkey.controller.IndexController;
-import com.wittymonkey.controller.LeaveController;
 import com.wittymonkey.entity.*;
 import com.wittymonkey.vo.*;
 
-import javax.xml.soap.Detail;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.*;
@@ -448,7 +446,7 @@ public class ChangeToSimple {
         return leaveVOS;
     }
 
-    public static LeaveVO assymblyLeaveVO(LeaveHeader header){
+    public static LeaveVO assymblyLeaveVO(LeaveHeader header) {
         LeaveVO leaveVO = new LeaveVO();
         leaveVO.setApplyDatetime(header.getApplyDatetime());
         leaveVO.setApplyUser(header.getApplyUser().getRealName());

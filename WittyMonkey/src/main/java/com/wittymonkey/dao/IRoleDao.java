@@ -1,11 +1,11 @@
 package com.wittymonkey.dao;
 
+import com.wittymonkey.entity.Role;
+
 import java.io.Serializable;
 import java.util.List;
 
-import com.wittymonkey.entity.Role;
-
-public interface IRoleDao extends IGenericDao<Role, Serializable>{
+public interface IRoleDao extends IGenericDao<Role, Serializable> {
 
     Role getRoleById(Integer id);
 

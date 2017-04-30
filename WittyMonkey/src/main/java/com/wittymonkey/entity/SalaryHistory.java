@@ -43,11 +43,11 @@ public class SalaryHistory {
     private Date salaryDate;
 
     // 发放工资日期
-    @Column(name="entry_datetime")
+    @Column(name = "entry_datetime")
     private Date entryDatetime;
 
-    @ManyToOne(targetEntity=User.class, fetch=FetchType.EAGER)
-    @JoinColumn(name="entry_id", referencedColumnName="id")
+    @ManyToOne(targetEntity = User.class, fetch = FetchType.EAGER)
+    @JoinColumn(name = "entry_id", referencedColumnName = "id")
     private User entryUser;
 
     @Column

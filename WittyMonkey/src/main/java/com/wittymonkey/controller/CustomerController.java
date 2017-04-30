@@ -22,13 +22,13 @@ public class CustomerController {
 
     @RequestMapping(value = "findCustomer", method = RequestMethod.GET)
     @ResponseBody
-    public String findCustomer(HttpServletRequest request){
+    public String findCustomer(HttpServletRequest request) {
         JSONObject jsonObject = new JSONObject();
         String idCard = request.getParameter("idCard");
         Customer customer = customerService.getCustomerByIdCard(idCard);
-        if (customer != null){
+        if (customer != null) {
             jsonObject.put("status", 200);
-            jsonObject.put("id",customer.getId());
+            jsonObject.put("id", customer.getId());
             jsonObject.put("name", customer.getName());
             jsonObject.put("tel", customer.getTel());
         } else {

@@ -1,11 +1,5 @@
 package com.wittymonkey.vo;
 
-import com.wittymonkey.entity.Floor;
-import com.wittymonkey.entity.RoomExt;
-import com.wittymonkey.entity.RoomMaster;
-import com.wittymonkey.entity.User;
-
-import javax.persistence.*;
 import java.util.Date;
 
 /**

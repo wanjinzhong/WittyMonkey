@@ -6,17 +6,16 @@ import com.wittymonkey.dao.IOutStockDao;
 import com.wittymonkey.entity.InStock;
 import com.wittymonkey.entity.Materiel;
 import com.wittymonkey.entity.OutStock;
+import com.wittymonkey.service.IMaterielService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import com.wittymonkey.service.IMaterielService;
 
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 
-@Service(value="materielService")
-public class MaterielServiceImpl implements IMaterielService{
+@Service(value = "materielService")
+public class MaterielServiceImpl implements IMaterielService {
 
     @Autowired
     private IMaterielDao materielDao;
@@ -61,11 +60,11 @@ public class MaterielServiceImpl implements IMaterielService{
     public void deleteMateriel(Materiel materiel) throws SQLException {
         List<InStock> inStocks = inStockDao.getInStockByMateriel(materiel.getId());
         List<OutStock> outStocks = outStockDao.getOutStockByMateriel(materiel.getId());
-        for (InStock inStock : inStocks){
+        for (InStock inStock : inStocks) {
             inStock.setMateriel(null);
             inStockDao.save(inStock);
         }
-        for (OutStock outStock : outStocks){
+        for (OutStock outStock : outStocks) {
             outStock.setMateriel(null);
             outStockDao.save(outStock);
         }

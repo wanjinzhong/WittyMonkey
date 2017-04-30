@@ -2,7 +2,10 @@ package com.wittymonkey.controller;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.wittymonkey.entity.*;
+import com.wittymonkey.entity.Finance;
+import com.wittymonkey.entity.FinanceType;
+import com.wittymonkey.entity.Hotel;
+import com.wittymonkey.entity.User;
 import com.wittymonkey.service.IFinanceService;
 import com.wittymonkey.service.IFinanceTypeService;
 import com.wittymonkey.service.IHotelService;
@@ -21,7 +24,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.servlet.http.HttpServletRequest;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 /**
  * Created by neilw on 2017/4/17.
@@ -53,13 +58,13 @@ public class FinanceController {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         String fromStr = request.getParameter("from");
         String toStr = request.getParameter("to");
-        if (StringUtils.isNotBlank(fromStr)){
+        if (StringUtils.isNotBlank(fromStr)) {
             try {
                 from = dateFormat.parse(fromStr);
             } catch (ParseException e) {
             }
         }
-        if (StringUtils.isNotBlank(toStr)){
+        if (StringUtils.isNotBlank(toStr)) {
             try {
                 to = dateFormat.parse(toStr);
             } catch (ParseException e) {

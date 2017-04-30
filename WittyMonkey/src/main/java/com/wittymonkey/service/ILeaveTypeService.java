@@ -7,17 +7,17 @@ import java.util.List;
 
 public interface ILeaveTypeService {
 
-	void saveList(List<LeaveType> leaveTypes);
+    void saveList(List<LeaveType> leaveTypes);
 
-	void saveLeaveType(LeaveType leaveType);
+    void saveLeaveType(LeaveType leaveType);
 
-	LeaveType getLeaveTypeById(Integer id);
+    LeaveType getLeaveTypeById(Integer id);
 
-	Integer getTotal(Integer hotelId);
+    Integer getTotal(Integer hotelId);
 
-	List<LeaveType> getLeaveTypes(Integer hotelId, Integer start, Integer total);
+    List<LeaveType> getLeaveTypes(Integer hotelId, Integer start, Integer total);
 
-	LeaveType getLeaveTypeByName(Integer hotelId, String name);
+    LeaveType getLeaveTypeByName(Integer hotelId, String name);
 
-	void delete(LeaveType leaveType) throws SQLException;
+    void delete(LeaveType leaveType) throws SQLException;
 }

@@ -1,49 +1,42 @@
 package com.wittymonkey.entity;
 
+import javax.persistence.*;
 import java.io.Serializable;
-
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
 
 /**
  * 销售
- * @author neilw
  *
+ * @author neilw
  */
 @Entity
 @Table(name = "sell")
-public class Sell implements Serializable{
+public class Sell implements Serializable {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
-	private Integer id;
-	
-	@OneToOne(targetEntity=OutStock.class)
-	@JoinColumn(name="out_stock_id", referencedColumnName="id")
-	private OutStock outStock;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Integer id;
 
-	public Integer getId() {
-		return id;
-	}
+    @OneToOne(targetEntity = OutStock.class)
+    @JoinColumn(name = "out_stock_id", referencedColumnName = "id")
+    private OutStock outStock;
 
-	public void setId(Integer id) {
-		this.id = id;
-	}
+    public Integer getId() {
+        return id;
+    }
 
-	public OutStock getOutStock() {
-		return outStock;
-	}
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
-	public void setOutStock(OutStock outStock) {
-		this.outStock = outStock;
-	}
-	
-	
+    public OutStock getOutStock() {
+        return outStock;
+    }
+
+    public void setOutStock(OutStock outStock) {
+        this.outStock = outStock;
+    }
+
+
 }

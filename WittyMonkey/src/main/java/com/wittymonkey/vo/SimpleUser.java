@@ -1,11 +1,5 @@
 package com.wittymonkey.vo;
 
-import com.wittymonkey.entity.Hotel;
-import com.wittymonkey.entity.Role;
-import com.wittymonkey.entity.Setting;
-import com.wittymonkey.entity.User;
-
-import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;

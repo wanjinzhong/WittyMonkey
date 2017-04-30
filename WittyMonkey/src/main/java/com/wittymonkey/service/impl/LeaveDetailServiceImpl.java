@@ -7,19 +7,16 @@ import com.wittymonkey.service.ILeaveDetailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * Created by neilw on 2017/4/29.
  */
 @Service(value = "leaveDetailService")
-public class LeaveDetailServiceImpl implements ILeaveDetailService{
+public class LeaveDetailServiceImpl implements ILeaveDetailService {
     @Autowired
     private ILeaveDetailDao leaveDetailDao;
+
     @Override
-    public void deleteByLeaveHeader(LeaveHeader header){
+    public void deleteByLeaveHeader(LeaveHeader header) {
         for (LeaveDetail detail : header.getLeaveDetails()) {
             leaveDetailDao.delete(detail.getId());
         }

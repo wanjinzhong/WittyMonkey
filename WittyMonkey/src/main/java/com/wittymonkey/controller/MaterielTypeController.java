@@ -3,14 +3,13 @@ package com.wittymonkey.controller;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.wittymonkey.entity.Hotel;
-import com.wittymonkey.entity.Materiel;
 import com.wittymonkey.entity.MaterielType;
 import com.wittymonkey.entity.User;
-import com.wittymonkey.vo.Constraint;
 import com.wittymonkey.service.IHotelService;
 import com.wittymonkey.service.IMaterielTypeService;
 import com.wittymonkey.service.IUserService;
 import com.wittymonkey.util.ChangeToSimple;
+import com.wittymonkey.vo.Constraint;
 import com.wittymonkey.vo.SimpleMaterielType;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -75,7 +74,7 @@ public class MaterielTypeController {
 
     @RequestMapping(value = "getAllMaterielTypeByHotel", method = GET)
     @ResponseBody
-    public String getAllMaterielTypeByHotel(HttpServletRequest request){
+    public String getAllMaterielTypeByHotel(HttpServletRequest request) {
         JSONObject json = new JSONObject();
         Hotel hotel = (Hotel) request.getSession().getAttribute("hotel");
         List<MaterielType> materielTypes = materielTypeService.getMaterielTypeByHotelId(hotel.getId(), null, null);
@@ -92,7 +91,7 @@ public class MaterielTypeController {
         JSONObject json = new JSONObject();
         Integer id = Integer.parseInt(request.getParameter("typeId"));
         MaterielType materielType = materielTypeService.getMaterielTypeById(id);
-        if (materielType == null){
+        if (materielType == null) {
             json.put("status", 400);
             return json.toJSONString();
         }
@@ -252,9 +251,9 @@ public class MaterielTypeController {
 
     /**
      * 更新物料类型
+     *
      * @param request
-     * @return
-     * <table border="1" cellspacing="0">
+     * @return <table border="1" cellspacing="0">
      * <tr>
      * <th>代码</th>
      * <th>说明</th>
@@ -282,7 +281,7 @@ public class MaterielTypeController {
      */
     @RequestMapping(value = "updateMaterielType", method = POST)
     @ResponseBody
-    public String updateMaterielType(HttpServletRequest request){
+    public String updateMaterielType(HttpServletRequest request) {
         JSONObject json = new JSONObject();
         User user = (User) request.getSession().getAttribute("loginUser");
         MaterielType materielType = (MaterielType) request.getSession().getAttribute("editMaterielType");

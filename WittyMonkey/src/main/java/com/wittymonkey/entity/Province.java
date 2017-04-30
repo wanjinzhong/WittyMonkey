@@ -1,73 +1,66 @@
 package com.wittymonkey.entity;
 
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-
 /**
  * 省
+ *
  * @author neilw
- * 
  */
-@Table(name="province")
+@Table(name = "province")
 @Entity
-public class Province implements Serializable{
+public class Province implements Serializable {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
-	private Integer id;
-	
-	//省的代码
-	@Column
-	private Integer code;
-	
-	//省的名字
-	@Column(length=50)
-	private String name;
-	
-	@OneToMany(targetEntity=City.class,mappedBy="province")
-	private List<City> cities = new ArrayList<City>();
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Integer id;
 
-	public Integer getId() {
-		return id;
-	}
+    //省的代码
+    @Column
+    private Integer code;
 
-	public void setId(Integer id) {
-		this.id = id;
-	}
+    //省的名字
+    @Column(length = 50)
+    private String name;
 
-	public Integer getCode() {
-		return code;
-	}
+    @OneToMany(targetEntity = City.class, mappedBy = "province")
+    private List<City> cities = new ArrayList<City>();
 
-	public void setCode(Integer code) {
-		this.code = code;
-	}
+    public Integer getId() {
+        return id;
+    }
 
-	public String getName() {
-		return name;
-	}
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public Integer getCode() {
+        return code;
+    }
 
-	public List<City> getCities() {
-		return cities;
-	}
+    public void setCode(Integer code) {
+        this.code = code;
+    }
 
-	public void setCities(List<City> cities) {
-		this.cities = cities;
-	}
-	
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public List<City> getCities() {
+        return cities;
+    }
+
+    public void setCities(List<City> cities) {
+        this.cities = cities;
+    }
+
 }

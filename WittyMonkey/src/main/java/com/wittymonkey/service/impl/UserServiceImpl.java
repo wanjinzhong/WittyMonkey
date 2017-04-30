@@ -1,12 +1,11 @@
 package com.wittymonkey.service.impl;
 
-import com.wittymonkey.util.MD5Util;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import com.wittymonkey.dao.IUserDao;
 import com.wittymonkey.entity.User;
 import com.wittymonkey.service.IUserService;
+import com.wittymonkey.util.MD5Util;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 

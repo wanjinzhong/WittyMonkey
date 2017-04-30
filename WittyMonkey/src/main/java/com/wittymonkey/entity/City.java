@@ -1,92 +1,80 @@
 package com.wittymonkey.entity;
 
-import com.alibaba.fastjson.annotation.JSONField;
-
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
 /**
  * 城市
- * @author neilw
  *
+ * @author neilw
  */
-@Table(name="city")
+@Table(name = "city")
 @Entity
-public class City implements Serializable{
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
+public class City implements Serializable {
+    /**
+     *
+     */
+    private static final long serialVersionUID = 1L;
 
-	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
-	private Integer id;
-	
-	//市的代码
-	@Column
-	private Integer code;
-	
-	@Column(length=50)
-	private String name;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Integer id;
 
-	@ManyToOne(targetEntity=Province.class)
-	@JoinColumn(name="province_code", referencedColumnName="code")
-	private Province province;
+    //市的代码
+    @Column
+    private Integer code;
 
-	@OneToMany(targetEntity=Area.class,mappedBy="city")
-	private List<Area> areas = new ArrayList<Area>();
+    @Column(length = 50)
+    private String name;
 
-	public Integer getId() {
-		return id;
-	}
+    @ManyToOne(targetEntity = Province.class)
+    @JoinColumn(name = "province_code", referencedColumnName = "code")
+    private Province province;
 
-	public void setId(Integer id) {
-		this.id = id;
-	}
+    @OneToMany(targetEntity = Area.class, mappedBy = "city")
+    private List<Area> areas = new ArrayList<Area>();
 
-	public Integer getCode() {
-		return code;
-	}
+    public Integer getId() {
+        return id;
+    }
 
-	public void setCode(Integer code) {
-		this.code = code;
-	}
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
-	public String getName() {
-		return name;
-	}
+    public Integer getCode() {
+        return code;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public void setCode(Integer code) {
+        this.code = code;
+    }
 
-	public Province getProvince() {
-		return province;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public void setProvince(Province province) {
-		this.province = province;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public List<Area> getAreas() {
-		return areas;
-	}
+    public Province getProvince() {
+        return province;
+    }
 
-	public void setAreas(List<Area> areas) {
-		this.areas = areas;
-	}
+    public void setProvince(Province province) {
+        this.province = province;
+    }
 
-	
+    public List<Area> getAreas() {
+        return areas;
+    }
+
+    public void setAreas(List<Area> areas) {
+        this.areas = areas;
+    }
 
 
 }

@@ -3,18 +3,19 @@ package com.wittymonkey.entity;
 import javax.persistence.*;
 import java.io.Serializable;
 
-/** 保存每个酒店当前员工号
+/**
+ * 保存每个酒店当前员工号
  * Created by neilw on 2017/4/11.
  */
-@Table(name="odom")
+@Table(name = "odom")
 @Entity
-public class Odom implements Serializable{
+public class Odom implements Serializable {
 
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
-    @OneToOne(targetEntity = Hotel.class, cascade={CascadeType.ALL})
+    @OneToOne(targetEntity = Hotel.class, cascade = {CascadeType.ALL})
     @JoinColumn(name = "hotel_id", referencedColumnName = "id")
     private Hotel hotel;
 

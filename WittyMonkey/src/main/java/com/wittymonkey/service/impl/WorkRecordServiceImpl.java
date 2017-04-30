@@ -1,10 +1,9 @@
 package com.wittymonkey.service.impl;
 
+import com.wittymonkey.service.IWorkRecordService;
 import org.springframework.stereotype.Service;
 
-import com.wittymonkey.service.IWorkRecordService;
-
-@Service(value="workRecordService")
-public class WorkRecordServiceImpl implements IWorkRecordService{
+@Service(value = "workRecordService")
+public class WorkRecordServiceImpl implements IWorkRecordService {
 
 }

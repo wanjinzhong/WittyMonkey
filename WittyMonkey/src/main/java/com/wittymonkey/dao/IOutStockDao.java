@@ -6,7 +6,7 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 
-public interface IOutStockDao extends IGenericDao<OutStock, Serializable>{
+public interface IOutStockDao extends IGenericDao<OutStock, Serializable> {
 
     List<OutStock> getOutStockByMateriel(Integer materielId);
 

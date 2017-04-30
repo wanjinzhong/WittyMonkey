@@ -1,12 +1,12 @@
 package com.wittymonkey.dao;
 
+import com.wittymonkey.entity.InStock;
+
 import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 
-import com.wittymonkey.entity.InStock;
-
-public interface IInStockDao extends IGenericDao<InStock, Serializable>{
+public interface IInStockDao extends IGenericDao<InStock, Serializable> {
 
     List<InStock> getInStockByMateriel(Integer materielId);
 

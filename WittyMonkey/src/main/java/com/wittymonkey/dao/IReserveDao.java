@@ -1,10 +1,10 @@
 package com.wittymonkey.dao;
 
+import com.wittymonkey.entity.Reserve;
+
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
-
-import com.wittymonkey.entity.Reserve;
 
 public interface IReserveDao extends IGenericDao<Reserve, Serializable> {
 

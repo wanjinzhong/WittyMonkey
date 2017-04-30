@@ -5,7 +5,7 @@ import com.wittymonkey.entity.LeaveHeader;
 import java.io.Serializable;
 import java.util.List;
 
-public interface ILeaveHeaderDao extends IGenericDao<LeaveHeader, Serializable>{
+public interface ILeaveHeaderDao extends IGenericDao<LeaveHeader, Serializable> {
 
     List<LeaveHeader> getLeaveHeaderByLeaveType(Integer typeId);
 
@@ -15,7 +15,7 @@ public interface ILeaveHeaderDao extends IGenericDao<LeaveHeader, Serializable>{
 
     Integer getTotalByUserAndStatus(Integer userId, Integer status);
 
-    List<LeaveHeader> getLeaveHeaderByUserAndStatus(Integer userId,Integer type, Integer start, Integer total);
+    List<LeaveHeader> getLeaveHeaderByUserAndStatus(Integer userId, Integer type, Integer start, Integer total);
 
     LeaveHeader getLeaveHeaderById(Integer id);
 }

@@ -10,7 +10,7 @@ import java.security.NoSuchAlgorithmException;
  * Created by neilw on 2017/2/14.
  */
 public class MD5Util {
-    public static String encrypt(String str){
+    public static String encrypt(String str) {
         String result = null;
         MessageDigest digest = null;
         try {

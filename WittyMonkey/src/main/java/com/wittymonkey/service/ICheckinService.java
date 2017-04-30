@@ -8,6 +8,7 @@ public interface ICheckinService {
 
     /**
      * 查询当前没有退房的入住信息
+     *
      * @param roomId
      * @return
      */
@@ -15,6 +16,7 @@ public interface ICheckinService {
 
     /**
      * 根据id查询入住
+     *
      * @param id
      * @return
      */

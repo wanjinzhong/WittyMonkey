@@ -1,11 +1,10 @@
 package com.wittymonkey.dao;
 
+import org.hibernate.Session;
+
 import java.io.Serializable;
 import java.sql.SQLException;
 import java.util.List;
-import java.util.Map;
-
-import org.hibernate.Session;
 
 public interface IGenericDao<T, PK extends Serializable> {
     /**

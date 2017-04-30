@@ -1,9 +1,9 @@
 package com.wittymonkey.dao;
 
-import java.io.Serializable;
-
 import com.wittymonkey.entity.Sell;
 
-public interface ISellDao extends IGenericDao<Sell, Serializable>{
+import java.io.Serializable;
+
+public interface ISellDao extends IGenericDao<Sell, Serializable> {
 
 }

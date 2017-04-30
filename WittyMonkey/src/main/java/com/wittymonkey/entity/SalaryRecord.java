@@ -1,106 +1,97 @@
 package com.wittymonkey.entity;
 
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-
 /**
  * 工资变动记录
- * @author neilw
  *
+ * @author neilw
  */
 @Entity
-@Table(name="salary_record")
-public class SalaryRecord implements Serializable{
-	
-	private static final long serialVersionUID = 1L;
+@Table(name = "salary_record")
+public class SalaryRecord implements Serializable {
 
-	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
-	private Integer id;
-	
-	@ManyToOne(targetEntity=Salary.class)
-	@JoinColumn(name="salary_id", referencedColumnName="id")
-	private Salary salary;
-	
-	@Column
-	private Double money;
+    private static final long serialVersionUID = 1L;
 
-	@Column
-	private Date startDate;
-	
-	@Column(name="entry_datetime")
-	private Date entryDatetime;
-	
-	@ManyToOne(targetEntity=User.class, fetch=FetchType.EAGER)
-	@JoinColumn(name="entry_id", referencedColumnName="id")
-	private User entryUser;
-	
-	@Column(length=1024)
-	private String note;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Integer id;
 
-	public Integer getId() {
-		return id;
-	}
+    @ManyToOne(targetEntity = Salary.class)
+    @JoinColumn(name = "salary_id", referencedColumnName = "id")
+    private Salary salary;
 
-	public void setId(Integer id) {
-		this.id = id;
-	}
+    @Column
+    private Double money;
 
-	public Salary getSalary() {
-		return salary;
-	}
+    @Column
+    private Date startDate;
 
-	public void setSalary(Salary salary) {
-		this.salary = salary;
-	}
+    @Column(name = "entry_datetime")
+    private Date entryDatetime;
 
-	public Double getMoney() {
-		return money;
-	}
+    @ManyToOne(targetEntity = User.class, fetch = FetchType.EAGER)
+    @JoinColumn(name = "entry_id", referencedColumnName = "id")
+    private User entryUser;
 
-	public void setMoney(Double money) {
-		this.money = money;
-	}
+    @Column(length = 1024)
+    private String note;
 
-	public Date getStartDate() {
-		return startDate;
-	}
+    public Integer getId() {
+        return id;
+    }
 
-	public void setStartDate(Date startDate) {
-		this.startDate = startDate;
-	}
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
-	public Date getEntryDatetime() {
-		return entryDatetime;
-	}
+    public Salary getSalary() {
+        return salary;
+    }
 
-	public void setEntryDatetime(Date entryDatetime) {
-		this.entryDatetime = entryDatetime;
-	}
+    public void setSalary(Salary salary) {
+        this.salary = salary;
+    }
 
-	public User getEntryUser() {
-		return entryUser;
-	}
+    public Double getMoney() {
+        return money;
+    }
 
-	public void setEntryUser(User entryUser) {
-		this.entryUser = entryUser;
-	}
+    public void setMoney(Double money) {
+        this.money = money;
+    }
 
-	public String getNote() {
-		return note;
-	}
+    public Date getStartDate() {
+        return startDate;
+    }
 
-	public void setNote(String note) {
-		this.note = note;
-	}
+    public void setStartDate(Date startDate) {
+        this.startDate = startDate;
+    }
+
+    public Date getEntryDatetime() {
+        return entryDatetime;
+    }
+
+    public void setEntryDatetime(Date entryDatetime) {
+        this.entryDatetime = entryDatetime;
+    }
+
+    public User getEntryUser() {
+        return entryUser;
+    }
+
+    public void setEntryUser(User entryUser) {
+        this.entryUser = entryUser;
+    }
+
+    public String getNote() {
+        return note;
+    }
+
+    public void setNote(String note) {
+        this.note = note;
+    }
 }

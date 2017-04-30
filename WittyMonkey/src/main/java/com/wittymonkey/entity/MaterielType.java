@@ -1,122 +1,122 @@
 package com.wittymonkey.entity;
 
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import javax.persistence.*;
-
 
 /**
  * 物料类型
- * @author neilw
  *
+ * @author neilw
  */
 @Entity
-@Table(name="materiel_type")
-public class MaterielType implements Serializable{
+@Table(name = "materiel_type")
+public class MaterielType implements Serializable {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
-	private Integer id;
-	
-	@ManyToOne(targetEntity=Hotel.class, cascade={CascadeType.PERSIST,CascadeType.MERGE})
-	@JoinColumn(name="hotel_id", referencedColumnName="id")
-	private Hotel hotel;
-	
-	@Column(length=10)
-	private String name;
-	
-	@OneToMany(targetEntity=Materiel.class, mappedBy="materielType")
-	private List<Materiel> materiels = new ArrayList<Materiel>();
-	
-	@Column(length=1024)
-	private String note;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Integer id;
 
-	@Column(name="entry_datetime")
-	private Date entryDatetime;
+    @ManyToOne(targetEntity = Hotel.class, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinColumn(name = "hotel_id", referencedColumnName = "id")
+    private Hotel hotel;
 
-	@ManyToOne(targetEntity=User.class, fetch= FetchType.EAGER)
-	@JoinColumn(name="entry_id", referencedColumnName="id")
-	private User entryUser;
+    @Column(length = 10)
+    private String name;
 
-	@Column
-	private Boolean editable;
+    @OneToMany(targetEntity = Materiel.class, mappedBy = "materielType")
+    private List<Materiel> materiels = new ArrayList<Materiel>();
 
-	@Column
-	private Boolean isDefault;
+    @Column(length = 1024)
+    private String note;
 
-	public Date getEntryDatetime() {
-		return entryDatetime;
-	}
+    @Column(name = "entry_datetime")
+    private Date entryDatetime;
 
-	public void setEntryDatetime(Date entryDatetime) {
-		this.entryDatetime = entryDatetime;
-	}
+    @ManyToOne(targetEntity = User.class, fetch = FetchType.EAGER)
+    @JoinColumn(name = "entry_id", referencedColumnName = "id")
+    private User entryUser;
 
-	public User getEntryUser() {
-		return entryUser;
-	}
+    @Column
+    private Boolean editable;
 
-	public void setEntryUser(User entryUser) {
-		this.entryUser = entryUser;
-	}
+    @Column
+    private Boolean isDefault;
 
-	public String getNote() {
-		return note;
-	}
+    public Date getEntryDatetime() {
+        return entryDatetime;
+    }
 
-	public void setNote(String note) {
-		this.note = note;
-	}
-	public Integer getId() {
-		return id;
-	}
+    public void setEntryDatetime(Date entryDatetime) {
+        this.entryDatetime = entryDatetime;
+    }
 
-	public void setId(Integer id) {
-		this.id = id;
-	}
+    public User getEntryUser() {
+        return entryUser;
+    }
 
-	public Hotel getHotel() {
-		return hotel;
-	}
+    public void setEntryUser(User entryUser) {
+        this.entryUser = entryUser;
+    }
 
-	public void setHotel(Hotel hotel) {
-		this.hotel = hotel;
-	}
+    public String getNote() {
+        return note;
+    }
 
-	public String getName() {
-		return name;
-	}
+    public void setNote(String note) {
+        this.note = note;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public Integer getId() {
+        return id;
+    }
 
-	public List<Materiel> getMateriels() {
-		return materiels;
-	}
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
-	public void setMateriels(List<Materiel> materiels) {
-		this.materiels = materiels;
-	}
+    public Hotel getHotel() {
+        return hotel;
+    }
 
-	public Boolean getEditable() {
-		return editable;
-	}
+    public void setHotel(Hotel hotel) {
+        this.hotel = hotel;
+    }
 
-	public void setEditable(Boolean editable) {
-		this.editable = editable;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public Boolean getDefault() {
-		return isDefault;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public void setDefault(Boolean aDefault) {
-		isDefault = aDefault;
-	}
+    public List<Materiel> getMateriels() {
+        return materiels;
+    }
+
+    public void setMateriels(List<Materiel> materiels) {
+        this.materiels = materiels;
+    }
+
+    public Boolean getEditable() {
+        return editable;
+    }
+
+    public void setEditable(Boolean editable) {
+        this.editable = editable;
+    }
+
+    public Boolean getDefault() {
+        return isDefault;
+    }
+
+    public void setDefault(Boolean aDefault) {
+        isDefault = aDefault;
+    }
 }

@@ -1,78 +1,75 @@
 package com.wittymonkey.entity;
 
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
 
-import javax.persistence.*;
-
 /**
  * 预定
- * @author neilw
  *
+ * @author neilw
  */
 @Entity
 @Table(name = "reserve")
-public class Reserve implements Serializable{
+public class Reserve implements Serializable {
 
-	private static final long serialVersionUID = 1L;
-
-	// 已预定，待入住
-	public static final Integer RESERVED = 0;
-	// 已入住
+    // 已预定，待入住
+    public static final Integer RESERVED = 0;
+    // 已入住
     public static final Integer CHECKEDIN = 1;
-	// 已退定
+    // 已退定
     public static final Integer UNSUBSCRIBE = 2;
+    private static final long serialVersionUID = 1L;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Integer id;
 
-	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
-	private Integer id;
-
-	@ManyToOne(targetEntity = Customer.class, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-	@JoinColumn(name = "customer_id", referencedColumnName = "id")
-	private Customer customer;
+    @ManyToOne(targetEntity = Customer.class, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinColumn(name = "customer_id", referencedColumnName = "id")
+    private Customer customer;
 
 
-	@ManyToOne(targetEntity=RoomMaster.class, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-	@JoinColumn(name="room_id", referencedColumnName="id")
-	private RoomMaster room;
+    @ManyToOne(targetEntity = RoomMaster.class, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinColumn(name = "room_id", referencedColumnName = "id")
+    private RoomMaster room;
 
-	// 预定时间
-	@Column(name="reserve_date")
-	private Date reserveDate;
+    // 预定时间
+    @Column(name = "reserve_date")
+    private Date reserveDate;
 
-	// 预计入住时间
-	@Column(name="est_checkin_date")
-	private Date estCheckinDate;
+    // 预计入住时间
+    @Column(name = "est_checkin_date")
+    private Date estCheckinDate;
 
-	//预计退房时间
-	@Column(name="est_checkout_date")
-	private Date estCheckoutDate;
+    //预计退房时间
+    @Column(name = "est_checkout_date")
+    private Date estCheckoutDate;
 
-	//定金
-	@Column
-	private Double deposit;
+    //定金
+    @Column
+    private Double deposit;
 
-	// 状态（0 - 待入住/1 - 已入住/2 - 已取消）
-	@Column
-	private Integer status;
+    // 状态（0 - 待入住/1 - 已入住/2 - 已取消）
+    @Column
+    private Integer status;
 
-	// 退还定金
-	@Column
+    // 退还定金
+    @Column
     private Double refund;
 
-	// 车牌号
-	@Column(length = 100, name="plate_no")
+    // 车牌号
+    @Column(length = 100, name = "plate_no")
     private String plateNo;
 
-    @Column(name="entry_datetime")
-	private Date entryDatetime;
+    @Column(name = "entry_datetime")
+    private Date entryDatetime;
 
-	@ManyToOne(targetEntity=User.class, fetch=FetchType.EAGER)
-	@JoinColumn(name="entry_id", referencedColumnName="id")
-	private User entryUser;
+    @ManyToOne(targetEntity = User.class, fetch = FetchType.EAGER)
+    @JoinColumn(name = "entry_id", referencedColumnName = "id")
+    private User entryUser;
 
-	@Column(length=1024)
-	private String note;
+    @Column(length = 1024)
+    private String note;
 
     public Integer getId() {
         return id;

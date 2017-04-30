@@ -12,7 +12,7 @@ public interface ILeaveHeaderService {
 
     Integer getTotalByUserAndStatus(Integer userId, Integer status);
 
-    List<LeaveHeader> getLeaveHeaderByUserAndStatus(Integer userId,Integer type, Integer start, Integer total);
+    List<LeaveHeader> getLeaveHeaderByUserAndStatus(Integer userId, Integer type, Integer start, Integer total);
 
     void save(LeaveHeader header);
 

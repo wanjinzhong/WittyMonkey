@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import java.sql.SQLException;
 import java.util.List;
 
-@Service(value="leaveHeaderService")
+@Service(value = "leaveHeaderService")
 public class LeaveHeaderServiceImpl implements ILeaveHeaderService {
 
     @Autowired

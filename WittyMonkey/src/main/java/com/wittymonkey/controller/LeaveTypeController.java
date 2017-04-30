@@ -1,16 +1,15 @@
 package com.wittymonkey.controller;
 
-import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.alibaba.fastjson.JSONPath;
-import com.wittymonkey.entity.*;
+import com.wittymonkey.entity.Hotel;
+import com.wittymonkey.entity.LeaveType;
+import com.wittymonkey.entity.User;
 import com.wittymonkey.service.IHotelService;
 import com.wittymonkey.service.ILeaveTypeService;
 import com.wittymonkey.service.IUserService;
 import com.wittymonkey.util.ChangeToSimple;
 import com.wittymonkey.vo.Constraint;
-import com.wittymonkey.vo.SimpleFloor;
 import com.wittymonkey.vo.SimpleLeaveType;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,8 +20,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import java.sql.SQLException;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
@@ -332,12 +329,12 @@ public class LeaveTypeController {
 
     @RequestMapping(value = "deleteLeaveType", method = RequestMethod.POST)
     @ResponseBody
-    public String deleteLeaveType(HttpServletRequest request){
+    public String deleteLeaveType(HttpServletRequest request) {
         JSONObject json = new JSONObject();
         Integer id = Integer.parseInt(request.getParameter("id"));
         LeaveType leaveType = leaveTypeService.getLeaveTypeById(id);
-        if (leaveType == null){
-            json.put("status",400);
+        if (leaveType == null) {
+            json.put("status", 400);
             return json.toJSONString();
         }
         try {

@@ -2,7 +2,6 @@ package com.wittymonkey.controller;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.wittymonkey.dao.ISalaryHistoryDao;
 import com.wittymonkey.entity.*;
 import com.wittymonkey.service.ISalaryHistoryService;
 import com.wittymonkey.service.ISalaryRecordService;
@@ -251,7 +250,7 @@ public class SalaryController {
     }
 
     @RequestMapping(value = "toEditSalary", method = RequestMethod.GET)
-    public String toEditSalary(HttpServletRequest request){
+    public String toEditSalary(HttpServletRequest request) {
         Integer salaryId = Integer.parseInt(request.getParameter("salaryId"));
         Integer id = Integer.parseInt(request.getParameter("recordId"));
         SalaryRecord salaryRecord = salaryRecordService.getSalaryRecordById(id);
@@ -262,39 +261,39 @@ public class SalaryController {
 
     @RequestMapping(value = "updateSalary", method = POST)
     @ResponseBody
-    public String updateSalary(HttpServletRequest request){
+    public String updateSalary(HttpServletRequest request) {
         JSONObject json = new JSONObject();
         Integer salaryId = Integer.parseInt(request.getParameter("salaryId"));
         Integer recordId = Integer.parseInt(request.getParameter("id"));
         User loginUser = (User) request.getSession().getAttribute("loginUser");
         Double money = null;
-        try{
+        try {
             money = Double.parseDouble(request.getParameter("salary"));
-        } catch (NumberFormatException e){
+        } catch (NumberFormatException e) {
             json.put("status", 400);
             return json.toJSONString();
         }
         Date startDate = null;
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM");
-        try{
+        try {
             startDate = dateFormat.parse(request.getParameter("startDate"));
-        } catch (ParseException e){
+        } catch (ParseException e) {
             json.put("status", 410);
             return json.toJSONString();
         }
         String note = request.getParameter("note");
-        if (StringUtils.isNotBlank(note) && note.length() > 1024){
+        if (StringUtils.isNotBlank(note) && note.length() > 1024) {
             json.put("status", 420);
             return json.toJSONString();
         }
         SalaryRecord record = salaryRecordService.getSalaryRecordById(recordId);
-        if (record == null){
+        if (record == null) {
             json.put("status", 403);
             return json.toJSONString();
         }
         // 查重（开始时间）
         SalaryRecord queryRecord = salaryRecordService.getSalaryRecordByStartDate(salaryId, startDate);
-        if (queryRecord != null && !queryRecord.getId().equals(recordId)){
+        if (queryRecord != null && !queryRecord.getId().equals(recordId)) {
             json.put("status", 411);
             return json.toJSONString();
         }
@@ -309,21 +308,21 @@ public class SalaryController {
     }
 
     @RequestMapping(value = "toSalaryHistory", method = GET)
-    public String toSalaryHistory(HttpServletRequest request){
+    public String toSalaryHistory(HttpServletRequest request) {
         request.setAttribute("id", request.getParameter("id"));
         return "salary_history";
     }
 
     /**
      * 获取工资历史
+     *
      * @param request
-     * @return
-     * JSONArray
+     * @return JSONArray
      * 单个JSON： {"time": 工资时间, "salary": 当月实际工资, "tip":{"total": 工资, "leave": 请假扣薪, "other": 其它扣薪, "bonus":奖金}}
      */
     @RequestMapping(value = "getSalaryHistory", method = GET)
     @ResponseBody
-    public String getSalaryHistory(HttpServletRequest request){
+    public String getSalaryHistory(HttpServletRequest request) {
         JSONObject json = new JSONObject();
         Integer salaryId = Integer.parseInt(request.getParameter("id"));
         List<SalaryHistory> salaryHistories = salaryHistoryService.getSalaryHistoryBySalaryId(salaryId);
@@ -331,15 +330,15 @@ public class SalaryController {
         JSONArray salary = new JSONArray();
         JSONArray tips = new JSONArray();
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM");
-        for (SalaryHistory salaryHistory : salaryHistories){
+        for (SalaryHistory salaryHistory : salaryHistories) {
             time.add(dateFormat.format(salaryHistory.getSalaryDate()));
             salary.add(salaryHistory.getAmount());
-            JSONObject tipContent =  new JSONObject();
+            JSONObject tipContent = new JSONObject();
             tipContent.put("total", salaryHistory.getTotal());
             tipContent.put("leave", salaryHistory.getLeavePay());
             tipContent.put("other", salaryHistory.getOtherPay());
             tipContent.put("bonus", salaryHistory.getBonus());
-            tipContent.put("date",dateFormat.format(salaryHistory.getSalaryDate()));
+            tipContent.put("date", dateFormat.format(salaryHistory.getSalaryDate()));
             tips.add(tipContent);
         }
         json.put("time", time);

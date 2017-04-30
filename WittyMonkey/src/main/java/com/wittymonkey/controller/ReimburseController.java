@@ -49,7 +49,7 @@ public class ReimburseController {
         String toStr = request.getParameter("to");
         String me = request.getParameter("justMe");
         Boolean justMe = false;
-        if (StringUtils.isNotBlank(me)){
+        if (StringUtils.isNotBlank(me)) {
             justMe = Boolean.parseBoolean(me);
         }
         Date from = null;
@@ -69,7 +69,7 @@ public class ReimburseController {
         Hotel hotel = (Hotel) request.getSession().getAttribute("hotel");
         Integer count = 0;
         List<Reimburse> reimburses = null;
-        if (justMe){
+        if (justMe) {
             count = reimburseService.getTotalByUser(loginUser.getId(), status, from, to);
             reimburses = reimburseService.getReimburseByUser(loginUser.getId(), status, from, to, (curr - 1) * pageSize, pageSize);
         } else {
@@ -255,12 +255,12 @@ public class ReimburseController {
     }
 
     @RequestMapping(value = "toAddReimburseApply", method = RequestMethod.GET)
-    public String toAddReimburseApply(HttpServletRequest request){
+    public String toAddReimburseApply(HttpServletRequest request) {
         return "reimburse_apply_add";
     }
 
     @RequestMapping(value = "toShowReimburseApply", method = RequestMethod.GET)
-    public String toShowReimburseApply(HttpServletRequest request){
+    public String toShowReimburseApply(HttpServletRequest request) {
         Integer id = Integer.parseInt(request.getParameter("id"));
         Reimburse reimburse = reimburseService.getReimburseById(id);
         request.setAttribute("reimburse", reimburse);
@@ -268,7 +268,7 @@ public class ReimburseController {
     }
 
     @RequestMapping(value = "toEditReimburseApply", method = RequestMethod.GET)
-    public String toEditReimburseApply(HttpServletRequest request){
+    public String toEditReimburseApply(HttpServletRequest request) {
         Integer id = Integer.parseInt(request.getParameter("id"));
         Reimburse reimburse = reimburseService.getReimburseById(id);
         request.getSession().setAttribute("editReimburseApply", reimburse);
@@ -277,7 +277,7 @@ public class ReimburseController {
 
     @RequestMapping(value = "saveReimburseApply", method = RequestMethod.POST)
     @ResponseBody
-    public String saveReimburseApply(HttpServletRequest request){
+    public String saveReimburseApply(HttpServletRequest request) {
         JSONObject json = new JSONObject();
         User loginUser = (User) request.getSession().getAttribute("loginUser");
         Hotel hotel = (Hotel) request.getSession().getAttribute("hotel");
@@ -301,14 +301,14 @@ public class ReimburseController {
         }
         Date now = new Date();
         Reimburse reimburse = null;
-        if (Constraint.ADD.equals(method)){
-             reimburse = new Reimburse();
-        } else if (Constraint.UPDATE.equals(method)){
+        if (Constraint.ADD.equals(method)) {
+            reimburse = new Reimburse();
+        } else if (Constraint.UPDATE.equals(method)) {
             reimburse = reimburseService.getReimburseById(((Reimburse) request.getSession().getAttribute("editReimburseApply")).getId());
-            if (reimburse.getStatus().equals(Constraint.REIMBURSE_STATUS_APPROVED)){
+            if (reimburse.getStatus().equals(Constraint.REIMBURSE_STATUS_APPROVED)) {
                 json.put("status", 420);
                 return json.toJSONString();
-            } else if (reimburse.getStatus().equals(Constraint.REIMBURSE_STATUS_REJECTED)){
+            } else if (reimburse.getStatus().equals(Constraint.REIMBURSE_STATUS_REJECTED)) {
                 json.put("status", 421);
                 return json.toJSONString();
             }
@@ -329,18 +329,18 @@ public class ReimburseController {
 
     @RequestMapping(value = "deleteReimburseApply", method = RequestMethod.POST)
     @ResponseBody
-    public String deleteReimburseApply(HttpServletRequest request){
+    public String deleteReimburseApply(HttpServletRequest request) {
         JSONObject json = new JSONObject();
         Integer id = Integer.parseInt(request.getParameter("id"));
         Reimburse reimburse = reimburseService.getReimburseById(id);
-        if (reimburse == null){
+        if (reimburse == null) {
             json.put("status", 400);
             return json.toJSONString();
         }
-        if (reimburse.getStatus().equals(Constraint.REIMBURSE_STATUS_APPROVED)){
+        if (reimburse.getStatus().equals(Constraint.REIMBURSE_STATUS_APPROVED)) {
             json.put("status", 410);
             return json.toJSONString();
-        } else if (reimburse.getStatus().equals(Constraint.REIMBURSE_STATUS_REJECTED)){
+        } else if (reimburse.getStatus().equals(Constraint.REIMBURSE_STATUS_REJECTED)) {
             json.put("status", 411);
             return json.toJSONString();
         }

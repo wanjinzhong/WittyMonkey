@@ -1,6 +1,5 @@
 package com.wittymonkey.service;
 
-import com.wittymonkey.entity.InStock;
 import com.wittymonkey.entity.OutStock;
 
 import java.util.List;

@@ -1,7 +1,5 @@
 package com.wittymonkey.vo;
 
-import com.wittymonkey.entity.User;
-
 import java.util.ArrayList;
 import java.util.List;
 

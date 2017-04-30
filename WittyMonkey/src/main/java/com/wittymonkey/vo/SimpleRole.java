@@ -1,7 +1,5 @@
 package com.wittymonkey.vo;
 
-import com.wittymonkey.entity.User;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
@@ -10,7 +8,7 @@ import java.util.List;
 /**
  * Created by neilw on 2017/4/12.
  */
-public class SimpleRole implements Serializable{
+public class SimpleRole implements Serializable {
     private Integer id;
 
     private String name;

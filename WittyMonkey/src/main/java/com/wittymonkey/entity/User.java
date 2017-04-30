@@ -1,231 +1,214 @@
 package com.wittymonkey.entity;
 
-import com.alibaba.fastjson.annotation.JSONField;
-
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
-
 /**
  * 用户实体，用于保存用户信息
- * 
- * @author Neil
  *
+ * @author Neil
  */
 @Entity
 @Table(name = "user")
 public class User implements Serializable {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Integer id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Integer id;
 
-	@Column(name = "real_name", length=20)
-	private String realName;
+    @Column(name = "real_name", length = 20)
+    private String realName;
 
-	@Column(name = "staff_no", length=20)
-	private String staffNo;
+    @Column(name = "staff_no", length = 20)
+    private String staffNo;
 
-	@Column(name = "password", length=24)
-	private String password;
+    @Column(name = "password", length = 24)
+    private String password;
 
-	@Column(name = "idcard_no", length=18)
-	private String idCardNo;
+    @Column(name = "idcard_no", length = 18)
+    private String idCardNo;
 
-	// 月工作天数
-	@Column(name = "work_days")
-	private Double workDays;
+    // 月工作天数
+    @Column(name = "work_days")
+    private Double workDays;
 
-	@ManyToOne(targetEntity = Hotel.class, fetch = FetchType.EAGER,cascade={CascadeType.PERSIST,CascadeType.MERGE})
-	@JoinColumn(name = "hotel_id", referencedColumnName = "id")
-	private Hotel hotel;
+    @ManyToOne(targetEntity = Hotel.class, fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinColumn(name = "hotel_id", referencedColumnName = "id")
+    private Hotel hotel;
 
-	@Column(name = "entry_datetime")
-	private Date entryDatetime;
+    @Column(name = "entry_datetime")
+    private Date entryDatetime;
 
-	@ManyToOne(targetEntity = User.class, fetch = FetchType.EAGER)
-	@JoinColumn(name = "entry_id", referencedColumnName = "id")
-	private User entryUser;
+    @ManyToOne(targetEntity = User.class, fetch = FetchType.EAGER)
+    @JoinColumn(name = "entry_id", referencedColumnName = "id")
+    private User entryUser;
 
-	@ManyToMany(targetEntity=Role.class, fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-	@JoinTable(name = "user_role",
-	joinColumns = { @JoinColumn(name = "user_id", referencedColumnName = "id") },
-	inverseJoinColumns={@JoinColumn(name = "role_id", referencedColumnName = "id")})
-	private List<Role> roles = new ArrayList<Role>();
+    @ManyToMany(targetEntity = Role.class, fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinTable(name = "user_role",
+            joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")},
+            inverseJoinColumns = {@JoinColumn(name = "role_id", referencedColumnName = "id")})
+    private List<Role> roles = new ArrayList<Role>();
 
-	@OneToOne(targetEntity=Setting.class, mappedBy = "user",cascade={CascadeType.PERSIST,CascadeType.MERGE})
-	private Setting setting;
+    @OneToOne(targetEntity = Setting.class, mappedBy = "user", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    private Setting setting;
 
-	@OneToOne(targetEntity = Salary.class, mappedBy = "staff", cascade = {CascadeType.ALL})
-	private Salary salary;
-	
-	
-	@Column(length=15)
-	private String tel;
+    @OneToOne(targetEntity = Salary.class, mappedBy = "staff", cascade = {CascadeType.ALL})
+    private Salary salary;
 
-	@Column(length=50)
-	private String email;
 
-	@Column(name = "regist_date")
-	private Date registDate;
+    @Column(length = 15)
+    private String tel;
 
-	@Column(name = "dimission_date")
-	private Date dimissionDate;
+    @Column(length = 50)
+    private String email;
 
-	@Column(length=1024, name = "dimission_note")
-	private String dimissionNote;
+    @Column(name = "regist_date")
+    private Date registDate;
 
-	public Date getDimissionDate() {
-		return dimissionDate;
-	}
+    @Column(name = "dimission_date")
+    private Date dimissionDate;
 
-	public void setDimissionDate(Date dimissionDate) {
-		this.dimissionDate = dimissionDate;
-	}
+    @Column(length = 1024, name = "dimission_note")
+    private String dimissionNote;
 
-	public String getDimissionNote() {
-		return dimissionNote;
-	}
+    public Date getDimissionDate() {
+        return dimissionDate;
+    }
 
-	public void setDimissionNote(String dimissionNote) {
-		this.dimissionNote = dimissionNote;
-	}
+    public void setDimissionDate(Date dimissionDate) {
+        this.dimissionDate = dimissionDate;
+    }
 
-	public Integer getId() {
-		return id;
-	}
+    public String getDimissionNote() {
+        return dimissionNote;
+    }
 
-	public String getRealName() {
-		return realName;
-	}
+    public void setDimissionNote(String dimissionNote) {
+        this.dimissionNote = dimissionNote;
+    }
 
-	public void setRealName(String realName) {
-		this.realName = realName;
-	}
+    public Integer getId() {
+        return id;
+    }
 
-	public String getStaffNo() {
-		return staffNo;
-	}
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
-	public void setStaffNo(String staffNo) {
-		this.staffNo = staffNo;
-	}
+    public String getRealName() {
+        return realName;
+    }
 
-	public String getPassword() {
-		return password;
-	}
+    public void setRealName(String realName) {
+        this.realName = realName;
+    }
 
-	public void setPassword(String password) {
-		this.password = password;
-	}
+    public String getStaffNo() {
+        return staffNo;
+    }
 
-	public String getIdCardNo() {
-		return idCardNo;
-	}
+    public void setStaffNo(String staffNo) {
+        this.staffNo = staffNo;
+    }
 
-	public void setIdCardNo(String idCardNo) {
-		this.idCardNo = idCardNo;
-	}
+    public String getPassword() {
+        return password;
+    }
 
-	public Hotel getHotel() {
-		return hotel;
-	}
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
-	public void setHotel(Hotel hotel) {
-		this.hotel = hotel;
-	}
+    public String getIdCardNo() {
+        return idCardNo;
+    }
 
-	
-	public void setId(Integer id) {
-		this.id = id;
-	}
+    public void setIdCardNo(String idCardNo) {
+        this.idCardNo = idCardNo;
+    }
 
-	public Date getEntryDatetime() {
-		return entryDatetime;
-	}
+    public Hotel getHotel() {
+        return hotel;
+    }
 
-	public void setEntryDatetime(Date entryDatetime) {
-		this.entryDatetime = entryDatetime;
-	}
+    public void setHotel(Hotel hotel) {
+        this.hotel = hotel;
+    }
 
-	public User getEntryUser() {
-		return entryUser;
-	}
+    public Date getEntryDatetime() {
+        return entryDatetime;
+    }
 
-	public void setEntryUser(User entryUser) {
-		this.entryUser = entryUser;
-	}
+    public void setEntryDatetime(Date entryDatetime) {
+        this.entryDatetime = entryDatetime;
+    }
 
-	public String getTel() {
-		return tel;
-	}
+    public User getEntryUser() {
+        return entryUser;
+    }
 
-	public void setTel(String tel) {
-		this.tel = tel;
-	}
+    public void setEntryUser(User entryUser) {
+        this.entryUser = entryUser;
+    }
 
-	public String getEmail() {
-		return email;
-	}
+    public String getTel() {
+        return tel;
+    }
 
-	public void setEmail(String email) {
-		this.email = email;
-	}
+    public void setTel(String tel) {
+        this.tel = tel;
+    }
 
-	public Date getRegistDate() {
-		return registDate;
-	}
+    public String getEmail() {
+        return email;
+    }
 
-	public void setRegistDate(Date registDate) {
-		this.registDate = registDate;
-	}
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
-	public List<Role> getRoles() {
-		return roles;
-	}
+    public Date getRegistDate() {
+        return registDate;
+    }
 
-	public void setRoles(List<Role> roles) {
-		this.roles = roles;
-	}
+    public void setRegistDate(Date registDate) {
+        this.registDate = registDate;
+    }
 
-	public Setting getSetting() {
-		return setting;
-	}
+    public List<Role> getRoles() {
+        return roles;
+    }
 
-	public void setSetting(Setting setting) {
-		this.setting = setting;
-	}
+    public void setRoles(List<Role> roles) {
+        this.roles = roles;
+    }
 
-	public Salary getSalary() {
-		return salary;
-	}
+    public Setting getSetting() {
+        return setting;
+    }
 
-	public void setSalary(Salary salary) {
-		this.salary = salary;
-	}
+    public void setSetting(Setting setting) {
+        this.setting = setting;
+    }
 
-	public Double getWorkDays() {
-		return workDays;
-	}
+    public Salary getSalary() {
+        return salary;
+    }
 
-	public void setWorkDays(Double workDays) {
-		this.workDays = workDays;
-	}
+    public void setSalary(Salary salary) {
+        this.salary = salary;
+    }
+
+    public Double getWorkDays() {
+        return workDays;
+    }
+
+    public void setWorkDays(Double workDays) {
+        this.workDays = workDays;
+    }
 }

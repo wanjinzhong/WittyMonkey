@@ -69,11 +69,11 @@ public class RoomMasterServiceImpl implements IRoomMasterService {
 
     @Override
     public List<RoomMaster> getFreeByDate(Integer hotel, Integer status, Date from, Date to, Integer first, Integer total) {
-        if (first == null || total == null){
+        if (first == null || total == null) {
             return getAllFreeByDate(hotel, status, from, to);
         } else {
             List<RoomMaster> rooms = getAllFreeByDate(hotel, status, from, to);
-            return rooms.subList(first, (first + total) > rooms.size()?rooms.size():first + total);
+            return rooms.subList(first, (first + total) > rooms.size() ? rooms.size() : first + total);
         }
     }
 
@@ -88,7 +88,7 @@ public class RoomMasterServiceImpl implements IRoomMasterService {
         List<RoomMaster> rooms = roomMasterDao.getFreeAndReservedByDate(hotel, status, from, to);
         Iterator<RoomMaster> iterator = rooms.iterator();
         // 移除其中已预定的房间
-        while (iterator.hasNext()){
+        while (iterator.hasNext()) {
             RoomMaster room = iterator.next();
             List<Reserve> reserves = reserveDao.getReserveByRoomId(room.getId(), Reserve.RESERVED, null, null);
             for (int i = 0; i < reserves.size(); i++) {

@@ -1,11 +1,11 @@
 package com.wittymonkey.dao;
 
+import com.wittymonkey.entity.FinanceType;
+
 import java.io.Serializable;
 import java.util.List;
 
-import com.wittymonkey.entity.FinanceType;
-
-public interface IFinanceTypeDao extends IGenericDao<FinanceType, Serializable>{
+public interface IFinanceTypeDao extends IGenericDao<FinanceType, Serializable> {
 
     FinanceType getFinanceTypeById(Integer id);
 

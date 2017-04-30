@@ -1,19 +1,17 @@
 package com.wittymonkey.service.impl;
 
-import com.wittymonkey.dao.ISalaryDao;
 import com.wittymonkey.dao.ISalaryRecordDao;
 import com.wittymonkey.entity.SalaryRecord;
+import com.wittymonkey.service.ISalaryRecordService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import com.wittymonkey.service.ISalaryRecordService;
 
 import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
 
-@Service(value="salaryRecordService")
-public class SalaryRecordServiceImpl implements ISalaryRecordService{
+@Service(value = "salaryRecordService")
+public class SalaryRecordServiceImpl implements ISalaryRecordService {
 
     @Autowired
     private ISalaryRecordDao salaryRecordDao;

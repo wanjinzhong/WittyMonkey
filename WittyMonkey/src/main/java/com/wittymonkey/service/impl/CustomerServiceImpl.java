@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
  * Created by neilw on 2017/2/23.
  */
 @Service
-public class CustomerServiceImpl implements ICustomerService{
+public class CustomerServiceImpl implements ICustomerService {
     @Autowired
     private ICustomerDao customerDao;
 

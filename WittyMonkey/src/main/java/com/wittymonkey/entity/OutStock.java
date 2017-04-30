@@ -1,134 +1,134 @@
 package com.wittymonkey.entity;
 
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
 
-import javax.persistence.*;
-
 /**
  * 出库
- * @author neilw
  *
+ * @author neilw
  */
 @Entity
-@Table(name="out_stock")
-public class OutStock implements Serializable{
+@Table(name = "out_stock")
+public class OutStock implements Serializable {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
-	private Integer id;
-	
-	// 出库类型（销售出库/损坏出库/消费出库）
-	@Column
-	private Integer type;
-	
-	@Column
-	private Double quantity;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Integer id;
 
-	// 单价
-	@Column(name="price")
-	private Double price;
+    // 出库类型（销售出库/损坏出库/消费出库）
+    @Column
+    private Integer type;
 
-	// 总价
-	@Column
-	private Double payment;
+    @Column
+    private Double quantity;
 
-	@ManyToOne(targetEntity=Materiel.class)
-	@JoinColumn(name="materiel_id", referencedColumnName="id")
-	private Materiel materiel;
+    // 单价
+    @Column(name = "price")
+    private Double price;
 
-	@ManyToOne(targetEntity = Hotel.class, fetch = FetchType.EAGER,cascade={CascadeType.PERSIST,CascadeType.MERGE})
-	@JoinColumn(name = "hotel_id", referencedColumnName = "id")
-	private Hotel hotel;
+    // 总价
+    @Column
+    private Double payment;
 
-	@Column(name="entry_datetime")
-	private Date entryDatetime;
-	
-	@ManyToOne(targetEntity=User.class, fetch=FetchType.EAGER)
-	@JoinColumn(name="entry_id", referencedColumnName="id")
-	private User entryUser;
-	
-	@Column(length=1024)
-	private String note;
-	
-	public String getNote() {
-		return note;
-	}
+    @ManyToOne(targetEntity = Materiel.class)
+    @JoinColumn(name = "materiel_id", referencedColumnName = "id")
+    private Materiel materiel;
 
-	public void setNote(String note) {
-		this.note = note;
-	}
-	public Integer getId() {
-		return id;
-	}
+    @ManyToOne(targetEntity = Hotel.class, fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinColumn(name = "hotel_id", referencedColumnName = "id")
+    private Hotel hotel;
 
-	public void setId(Integer id) {
-		this.id = id;
-	}
+    @Column(name = "entry_datetime")
+    private Date entryDatetime;
 
-	public Integer getType() {
-		return type;
-	}
+    @ManyToOne(targetEntity = User.class, fetch = FetchType.EAGER)
+    @JoinColumn(name = "entry_id", referencedColumnName = "id")
+    private User entryUser;
 
-	public void setType(Integer type) {
-		this.type = type;
-	}
+    @Column(length = 1024)
+    private String note;
 
-	public Double getQuantity() {
-		return quantity;
-	}
+    public String getNote() {
+        return note;
+    }
 
-	public void setQuantity(Double quantity) {
-		this.quantity = quantity;
-	}
+    public void setNote(String note) {
+        this.note = note;
+    }
 
-	public Materiel getMateriel() {
-		return materiel;
-	}
+    public Integer getId() {
+        return id;
+    }
 
-	public void setMateriel(Materiel materiel) {
-		this.materiel = materiel;
-	}
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
-	public Date getEntryDatetime() {
-		return entryDatetime;
-	}
+    public Integer getType() {
+        return type;
+    }
 
-	public void setEntryDatetime(Date entryDatetime) {
-		this.entryDatetime = entryDatetime;
-	}
+    public void setType(Integer type) {
+        this.type = type;
+    }
 
-	public User getEntryUser() {
-		return entryUser;
-	}
+    public Double getQuantity() {
+        return quantity;
+    }
 
-	public void setEntryUser(User entryUser) {
-		this.entryUser = entryUser;
-	}
+    public void setQuantity(Double quantity) {
+        this.quantity = quantity;
+    }
 
-	public Double getPrice() {
-		return price;
-	}
+    public Materiel getMateriel() {
+        return materiel;
+    }
 
-	public void setPrice(Double price) {
-		this.price = price;
-	}
+    public void setMateriel(Materiel materiel) {
+        this.materiel = materiel;
+    }
 
-	public Double getPayment() {
-		return payment;
-	}
+    public Date getEntryDatetime() {
+        return entryDatetime;
+    }
 
-	public void setPayment(Double payment) {
-		this.payment = payment;
-	}
+    public void setEntryDatetime(Date entryDatetime) {
+        this.entryDatetime = entryDatetime;
+    }
 
-	public Hotel getHotel() {
-		return hotel;
-	}
+    public User getEntryUser() {
+        return entryUser;
+    }
 
-	public void setHotel(Hotel hotel) {
-		this.hotel = hotel;
-	}
+    public void setEntryUser(User entryUser) {
+        this.entryUser = entryUser;
+    }
+
+    public Double getPrice() {
+        return price;
+    }
+
+    public void setPrice(Double price) {
+        this.price = price;
+    }
+
+    public Double getPayment() {
+        return payment;
+    }
+
+    public void setPayment(Double payment) {
+        this.payment = payment;
+    }
+
+    public Hotel getHotel() {
+        return hotel;
+    }
+
+    public void setHotel(Hotel hotel) {
+        this.hotel = hotel;
+    }
 }

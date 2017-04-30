@@ -7,19 +7,20 @@ import java.util.List;
 
 public interface IMaterielTypeService {
 
-	/**
-	 * 保存物料类型
-	 * @param materielType
-	 */
-	void saveMaterielType(MaterielType materielType);
+    /**
+     * 保存物料类型
+     *
+     * @param materielType
+     */
+    void saveMaterielType(MaterielType materielType);
 
-	Integer getTotalByHotelId(Integer hotelId);
+    Integer getTotalByHotelId(Integer hotelId);
 
-	List<MaterielType> getMaterielTypeByHotelId(Integer hotelId, Integer start, Integer pageSize);
+    List<MaterielType> getMaterielTypeByHotelId(Integer hotelId, Integer start, Integer pageSize);
 
-	MaterielType getMaterielTypeByName(Integer hotelId, String name);
+    MaterielType getMaterielTypeByName(Integer hotelId, String name);
 
-	MaterielType getMaterielTypeById(Integer id);
+    MaterielType getMaterielTypeById(Integer id);
 
-	void deleteMaterielType(MaterielType materielType) throws SQLException;
+    void deleteMaterielType(MaterielType materielType) throws SQLException;
 }

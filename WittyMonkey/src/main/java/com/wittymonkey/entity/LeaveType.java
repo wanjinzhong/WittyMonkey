@@ -1,118 +1,109 @@
 package com.wittymonkey.entity;
 
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
 /**
  * 请假类型
- * @author neilw
  *
+ * @author neilw
  */
 @Entity
-@Table(name="leave_type")
-public class LeaveType implements Serializable{
+@Table(name = "leave_type")
+public class LeaveType implements Serializable {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
-	private Integer id;
-	
-	@Column(length=20)
-	private String name;
-	
-	@ManyToOne(targetEntity=Hotel.class, cascade={CascadeType.PERSIST,CascadeType.MERGE})
-	@JoinColumn(name="hotel_id", referencedColumnName="id")
-	private Hotel hotel;
-	
-	// 扣薪额度（按一天工资的百分比）
-	@Column
-	private Double deduct;
-	
-	@Column(length=1024)
-	private String note;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Integer id;
 
-	@Column
-	private Boolean deletable;
+    @Column(length = 20)
+    private String name;
 
-	@Column(name="entry_datetime")
-	private Date entryDatetime;
+    @ManyToOne(targetEntity = Hotel.class, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinColumn(name = "hotel_id", referencedColumnName = "id")
+    private Hotel hotel;
 
-	@ManyToOne(targetEntity=User.class, fetch=FetchType.EAGER, cascade={CascadeType.PERSIST,CascadeType.MERGE})
-	@JoinColumn(name="entry_id", referencedColumnName="id")
-	private User entryUser;
+    // 扣薪额度（按一天工资的百分比）
+    @Column
+    private Double deduct;
 
-	public Date getEntryDatetime() {
-		return entryDatetime;
-	}
+    @Column(length = 1024)
+    private String note;
 
-	public void setEntryDatetime(Date entryDatetime) {
-		this.entryDatetime = entryDatetime;
-	}
+    @Column
+    private Boolean deletable;
 
-	public User getEntryUser() {
-		return entryUser;
-	}
+    @Column(name = "entry_datetime")
+    private Date entryDatetime;
 
-	public void setEntryUser(User entryUser) {
-		this.entryUser = entryUser;
-	}
+    @ManyToOne(targetEntity = User.class, fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinColumn(name = "entry_id", referencedColumnName = "id")
+    private User entryUser;
 
-	public Integer getId() {
-		return id;
-	}
+    public Date getEntryDatetime() {
+        return entryDatetime;
+    }
 
-	public void setId(Integer id) {
-		this.id = id;
-	}
+    public void setEntryDatetime(Date entryDatetime) {
+        this.entryDatetime = entryDatetime;
+    }
 
-	public String getName() {
-		return name;
-	}
+    public User getEntryUser() {
+        return entryUser;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public void setEntryUser(User entryUser) {
+        this.entryUser = entryUser;
+    }
 
-	public Hotel getHotel() {
-		return hotel;
-	}
+    public Integer getId() {
+        return id;
+    }
 
-	public void setHotel(Hotel hotel) {
-		this.hotel = hotel;
-	}
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
-	public Double getDeduct() {
-		return deduct;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public void setDeduct(Double deduct) {
-		this.deduct = deduct;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public String getNote() {
-		return note;
-	}
+    public Hotel getHotel() {
+        return hotel;
+    }
 
-	public void setNote(String note) {
-		this.note = note;
-	}
+    public void setHotel(Hotel hotel) {
+        this.hotel = hotel;
+    }
 
-	public Boolean getDeletable() {
-		return deletable;
-	}
+    public Double getDeduct() {
+        return deduct;
+    }
 
-	public void setDeletable(Boolean deletable) {
-		this.deletable = deletable;
-	}
+    public void setDeduct(Double deduct) {
+        this.deduct = deduct;
+    }
+
+    public String getNote() {
+        return note;
+    }
+
+    public void setNote(String note) {
+        this.note = note;
+    }
+
+    public Boolean getDeletable() {
+        return deletable;
+    }
+
+    public void setDeletable(Boolean deletable) {
+        this.deletable = deletable;
+    }
 }

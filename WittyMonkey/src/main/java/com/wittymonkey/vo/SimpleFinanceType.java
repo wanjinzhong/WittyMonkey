@@ -1,14 +1,7 @@
 package com.wittymonkey.vo;
 
-import com.wittymonkey.entity.Finance;
-import com.wittymonkey.entity.Hotel;
-import com.wittymonkey.entity.User;
-
-import javax.persistence.*;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 /**
  * Created by neilw on 2017/4/14.

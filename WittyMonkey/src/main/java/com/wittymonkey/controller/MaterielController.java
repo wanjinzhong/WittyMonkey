@@ -1,28 +1,30 @@
 package com.wittymonkey.controller;
 
-import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.wittymonkey.entity.*;
+import com.wittymonkey.entity.Hotel;
+import com.wittymonkey.entity.Materiel;
+import com.wittymonkey.entity.MaterielType;
+import com.wittymonkey.entity.User;
 import com.wittymonkey.service.IMaterielService;
 import com.wittymonkey.service.IMaterielTypeService;
 import com.wittymonkey.service.IUserService;
 import com.wittymonkey.util.ChangeToSimple;
 import com.wittymonkey.vo.Constraint;
-import com.wittymonkey.vo.SimpleFloor;
 import com.wittymonkey.vo.SimpleMateriel;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.HttpRequestHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.context.annotation.RequestScope;
 
 import javax.servlet.http.HttpServletRequest;
 import java.sql.SQLException;
-import java.util.*;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
@@ -91,9 +93,9 @@ public class MaterielController {
         Hotel hotel = (Hotel) request.getSession().getAttribute("hotel");
         String barcode = request.getParameter("barcode");
         String method = request.getParameter("method");
-        if (Constraint.ADD.equals(method)){
+        if (Constraint.ADD.equals(method)) {
             json.put("status", validateBarcode(hotel.getId(), method, barcode, null));
-        } else if (Constraint.UPDATE.equals(method)){
+        } else if (Constraint.UPDATE.equals(method)) {
             Materiel editMateriel = (Materiel) request.getSession().getAttribute("editMateriel");
             json.put("status", validateBarcode(hotel.getId(), method, barcode, editMateriel));
         }
@@ -102,12 +104,12 @@ public class MaterielController {
 
     @RequestMapping(value = "getNameByBarCode", method = GET)
     @ResponseBody
-    public String getNameByBarCode(HttpServletRequest request){
+    public String getNameByBarCode(HttpServletRequest request) {
         JSONObject json = new JSONObject();
         Hotel hotel = (Hotel) request.getSession().getAttribute("hotel");
         String barcode = request.getParameter("barcode").trim();
         Materiel materiel = materielService.getMaterielByBarcode(hotel.getId(), barcode);
-        if (materiel == null){
+        if (materiel == null) {
             json.put("status", 400);
             return json.toJSONString();
         } else {
@@ -119,12 +121,12 @@ public class MaterielController {
 
     @RequestMapping(value = "getBarcodeByName", method = GET)
     @ResponseBody
-    public String getBarcodeByName(HttpServletRequest request){
+    public String getBarcodeByName(HttpServletRequest request) {
         JSONObject json = new JSONObject();
         Hotel hotel = (Hotel) request.getSession().getAttribute("hotel");
         String name = request.getParameter("name").trim();
         Materiel materiel = materielService.getMaterielByName(hotel.getId(), name);
-        if (materiel == null){
+        if (materiel == null) {
             json.put("status", 400);
             return json.toJSONString();
         } else {
@@ -248,7 +250,7 @@ public class MaterielController {
     public String saveMateriel(HttpServletRequest request) {
         JSONObject json = new JSONObject();
         Integer valiMateriel = validateMateriel(request);
-        if (!new Integer(200).equals(valiMateriel)){
+        if (!new Integer(200).equals(valiMateriel)) {
             json.put("status", valiMateriel);
             return json.toJSONString();
         }
@@ -277,12 +279,12 @@ public class MaterielController {
         return json.toJSONString();
     }
 
-    @RequestMapping(value = "updateMateriel" ,method = POST)
+    @RequestMapping(value = "updateMateriel", method = POST)
     @ResponseBody
-    public String updateMateriel(HttpServletRequest request){
+    public String updateMateriel(HttpServletRequest request) {
         JSONObject json = new JSONObject();
         Integer valiMateriel = validateMateriel(request);
-        if (!new Integer(200).equals(valiMateriel)){
+        if (!new Integer(200).equals(valiMateriel)) {
             json.put("status", valiMateriel);
             return json.toJSONString();
         }
@@ -311,7 +313,7 @@ public class MaterielController {
     }
 
     @RequestMapping(value = "toMaterielDetail", method = RequestMethod.GET)
-    public String toMaterielDetail(HttpServletRequest request){
+    public String toMaterielDetail(HttpServletRequest request) {
         Integer id = Integer.parseInt(request.getParameter("id"));
         Hotel hotel = (Hotel) request.getSession().getAttribute("hotel");
         List<MaterielType> materielTypes = materielTypeService.getMaterielTypeByHotelId(hotel.getId(), null, null);
@@ -321,7 +323,7 @@ public class MaterielController {
         return "materiel_detail";
     }
 
-    private Integer validateMateriel(HttpServletRequest request){
+    private Integer validateMateriel(HttpServletRequest request) {
         String barcode = request.getParameter("barcode").trim();
         String name = request.getParameter("name").trim();
         String unit = request.getParameter("unit").trim();
@@ -331,9 +333,9 @@ public class MaterielController {
         String method = request.getParameter("method").trim();
         Hotel hotel = (Hotel) request.getSession().getAttribute("hotel");
         Integer valiBarcode = null;
-        if (Constraint.ADD.equals(method) || Constraint.DELETE.equals(method)){
+        if (Constraint.ADD.equals(method) || Constraint.DELETE.equals(method)) {
             valiBarcode = validateBarcode(hotel.getId(), method, barcode, null);
-        } else if (Constraint.UPDATE.equals(method)){
+        } else if (Constraint.UPDATE.equals(method)) {
             valiBarcode = validateBarcode(hotel.getId(), method, barcode, (Materiel) request.getSession().getAttribute("editMateriel"));
         }
         if (!new Integer(200).equals(valiBarcode)) {
@@ -343,7 +345,7 @@ public class MaterielController {
             return valiBarcode;
         }
         if (StringUtils.isBlank(name)) {
-           return 410;
+            return 410;
         } else if (name.length() > 50) {
             return 411;
         }
@@ -380,11 +382,11 @@ public class MaterielController {
 
     @RequestMapping(value = "deleteMateriel", method = POST)
     @ResponseBody
-    public String deleteMateriel(HttpServletRequest request){
+    public String deleteMateriel(HttpServletRequest request) {
         JSONObject json = new JSONObject();
         Integer id = Integer.parseInt(request.getParameter("id"));
         Materiel materiel = materielService.getMaterielById(id);
-        if (materiel == null){
+        if (materiel == null) {
             json.put("status", 400);
             return json.toJSONString();
         }

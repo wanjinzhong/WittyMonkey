@@ -8,16 +8,18 @@ import java.util.GregorianCalendar;
  * Created by neilw on 2017/3/9.
  */
 public class DateUtil {
-    public static Integer dateDiffDays(Date d1, Date d2){
-        return (int) Math.ceil((d2.getTime() - d1.getTime())*1.0/(1000*60*60*24));
+    public static Integer dateDiffDays(Date d1, Date d2) {
+        return (int) Math.ceil((d2.getTime() - d1.getTime()) * 1.0 / (1000 * 60 * 60 * 24));
     }
+
     /**
      * 在当前日期上加一天
+     *
      * @param date
      * @return
      */
-    public static Date addOneDay(Date date){
-        if (date == null){
+    public static Date addOneDay(Date date) {
+        if (date == null) {
             return null;
         }
         Calendar calendar = new GregorianCalendar();
@@ -28,6 +30,7 @@ public class DateUtil {
 
     /**
      * 获取下月一号
+     *
      * @return
      */
     public static Date nextMonthFirstDate(Date date) {
@@ -40,10 +43,11 @@ public class DateUtil {
 
     /**
      * 这个月的最后一天
+     *
      * @param date
      * @return
      */
-    public static Date lastDayOfMonth(Date date){
+    public static Date lastDayOfMonth(Date date) {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(nextMonthFirstDate(date));
         calendar.set(Calendar.DATE, calendar.get(Calendar.DATE) - 1);

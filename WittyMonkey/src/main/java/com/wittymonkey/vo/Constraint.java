@@ -1,8 +1,5 @@
 package com.wittymonkey.vo;
 
-import java.util.HashMap;
-import java.util.Map;
-
 /**
  * Created by neilw on 2017/4/14.
  */

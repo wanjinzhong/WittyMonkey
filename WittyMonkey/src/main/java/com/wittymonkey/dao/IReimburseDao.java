@@ -6,15 +6,15 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
-public interface IReimburseDao extends IGenericDao<Reimburse, Serializable>{
+public interface IReimburseDao extends IGenericDao<Reimburse, Serializable> {
 
     Reimburse getReimburseById(Integer id);
 
     Integer getTotal(Integer hotelId, Integer status, Date from, Date to);
 
-    List<Reimburse> getReimburseByPage(Integer hotelId, Integer status, Date from, Date to, Integer start, Integer total );
+    List<Reimburse> getReimburseByPage(Integer hotelId, Integer status, Date from, Date to, Integer start, Integer total);
 
     Integer getTotalByUser(Integer userId, Integer status, Date from, Date to);
 
-    List<Reimburse> getReimburseByUser(Integer userId, Integer status, Date from, Date to, Integer start, Integer total );
+    List<Reimburse> getReimburseByUser(Integer userId, Integer status, Date from, Date to, Integer start, Integer total);
 }

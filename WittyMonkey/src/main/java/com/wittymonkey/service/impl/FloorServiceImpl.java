@@ -3,16 +3,15 @@ package com.wittymonkey.service.impl;
 import com.wittymonkey.dao.IFloorDao;
 import com.wittymonkey.dao.IRoomMasterDao;
 import com.wittymonkey.entity.Floor;
+import com.wittymonkey.service.IFloorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import com.wittymonkey.service.IFloorService;
 
 import java.sql.SQLException;
 import java.util.List;
 
-@Service(value="floorService")
-public class FloorServiceImpl implements IFloorService{
+@Service(value = "floorService")
+public class FloorServiceImpl implements IFloorService {
 
     @Autowired
     private IFloorDao floorDao;
@@ -27,7 +26,7 @@ public class FloorServiceImpl implements IFloorService{
 
     @Override
     public Floor getFloorByNo(Integer hotelId, Integer floorNo) {
-        return floorDao.getFloorByNo(hotelId,floorNo);
+        return floorDao.getFloorByNo(hotelId, floorNo);
     }
 
     @Override
@@ -55,7 +54,7 @@ public class FloorServiceImpl implements IFloorService{
 
     @Override
     public List<Floor> getFloorByHotel(Integer hotelId, Integer start, Integer total) {
-        return floorDao.getFloorByPage(hotelId,start,total);
+        return floorDao.getFloorByPage(hotelId, start, total);
     }
 
     @Override

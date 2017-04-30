@@ -1,12 +1,12 @@
 package com.wittymonkey.dao;
 
+import com.wittymonkey.entity.Salary;
+
 import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 
-import com.wittymonkey.entity.Salary;
-
-public interface ISalaryDao extends IGenericDao<Salary, Serializable>{
+public interface ISalaryDao extends IGenericDao<Salary, Serializable> {
 
     Integer getTotal(Map<Integer, Object> condition);
 

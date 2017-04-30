@@ -1,110 +1,99 @@
 package com.wittymonkey.entity;
 
-import com.alibaba.fastjson.annotation.JSONField;
-
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
 /**
  * 楼层
- * @author neilw
  *
+ * @author neilw
  */
 @Entity
 @Table(name = "floor")
-public class Floor implements Serializable{
+public class Floor implements Serializable {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
-	private Integer id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Integer id;
 
-	@ManyToOne(targetEntity=Hotel.class,fetch=FetchType.EAGER)
-	@JoinColumn(name="hotel_id", referencedColumnName="id")
-	private Hotel hotel;
-	
-	@Column(name="floor_no")
-	private Integer floorNo;
+    @ManyToOne(targetEntity = Hotel.class, fetch = FetchType.EAGER)
+    @JoinColumn(name = "hotel_id", referencedColumnName = "id")
+    private Hotel hotel;
 
-	@OneToMany(targetEntity=RoomMaster.class,mappedBy="floor", fetch = FetchType.EAGER)
-	private List<RoomMaster> roomMasters = new ArrayList<RoomMaster>();
+    @Column(name = "floor_no")
+    private Integer floorNo;
 
-	@Column(name="entry_datetime")
-	private Date entryDatetime;
+    @OneToMany(targetEntity = RoomMaster.class, mappedBy = "floor", fetch = FetchType.EAGER)
+    private List<RoomMaster> roomMasters = new ArrayList<RoomMaster>();
 
-	@ManyToOne(targetEntity=User.class, fetch=FetchType.EAGER)
-	@JoinColumn(name="entry_id", referencedColumnName="id")
-	private User entryUser;
-	
-	@Column(length=1024)
-	private String note;
-	
-	public String getNote() {
-		return note;
-	}
+    @Column(name = "entry_datetime")
+    private Date entryDatetime;
 
-	public void setNote(String note) {
-		this.note = note;
-	}
+    @ManyToOne(targetEntity = User.class, fetch = FetchType.EAGER)
+    @JoinColumn(name = "entry_id", referencedColumnName = "id")
+    private User entryUser;
 
-	public Date getEntryDatetime() {
-		return entryDatetime;
-	}
+    @Column(length = 1024)
+    private String note;
 
-	public void setEntryDatetime(Date entryDatetime) {
-		this.entryDatetime = entryDatetime;
-	}
+    public String getNote() {
+        return note;
+    }
 
-	public User getEntryUser() {
-		return entryUser;
-	}
+    public void setNote(String note) {
+        this.note = note;
+    }
 
-	public void setEntryUser(User entryUser) {
-		this.entryUser = entryUser;
-	}
+    public Date getEntryDatetime() {
+        return entryDatetime;
+    }
 
-	public Integer getId() {
-		return id;
-	}
+    public void setEntryDatetime(Date entryDatetime) {
+        this.entryDatetime = entryDatetime;
+    }
 
-	public void setId(Integer id) {
-		this.id = id;
-	}
+    public User getEntryUser() {
+        return entryUser;
+    }
 
-	public Hotel getHotel() {
-		return hotel;
-	}
+    public void setEntryUser(User entryUser) {
+        this.entryUser = entryUser;
+    }
 
-	public void setHotel(Hotel hotel) {
-		this.hotel = hotel;
-	}
+    public Integer getId() {
+        return id;
+    }
 
-	public List<RoomMaster> getRoomMasters() {
-		return roomMasters;
-	}
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
-	public void setRoomMasters(List<RoomMaster> roomMasters) {
-		this.roomMasters = roomMasters;
-	}
+    public Hotel getHotel() {
+        return hotel;
+    }
 
-	public Integer getFloorNo() {
-		return floorNo;
-	}
+    public void setHotel(Hotel hotel) {
+        this.hotel = hotel;
+    }
 
-	public void setFloorNo(Integer floorNo) {
-		this.floorNo = floorNo;
-	}
+    public List<RoomMaster> getRoomMasters() {
+        return roomMasters;
+    }
+
+    public void setRoomMasters(List<RoomMaster> roomMasters) {
+        this.roomMasters = roomMasters;
+    }
+
+    public Integer getFloorNo() {
+        return floorNo;
+    }
+
+    public void setFloorNo(Integer floorNo) {
+        this.floorNo = floorNo;
+    }
 }

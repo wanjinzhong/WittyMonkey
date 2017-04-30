@@ -1,162 +1,155 @@
 package com.wittymonkey.entity;
 
+import javax.persistence.*;
 import java.io.Serializable;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
 /**
  * 房间扩展信息
- * @author Neil
  *
+ * @author Neil
  */
 @Entity
-@Table(name="room_ext")
-public class RoomExt implements Serializable{
-	
-	private static final long serialVersionUID = 1L;
+@Table(name = "room_ext")
+public class RoomExt implements Serializable {
 
-	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
-	private Integer id;
-	
-	@OneToOne(targetEntity=RoomMaster.class)
-	@JoinColumn(name = "room_id", referencedColumnName = "id")
-	private RoomMaster roomMaster;
-	
-	@Column(name="has_window")
-	private Boolean hasWindow;
-	
-	@Column(name="has_wifi")
-	private Boolean hasWifi;
-	
-	// 是否 有线网
-	@Column(name="has_reticle")
-	private Boolean hasReticle;
-	
-	@Column(name="has_tv")
-	private Boolean hasTV;
-	
-	@Column(name="has_phone")
-	private Boolean hasPhone;
-	
-	@Column(name="has_air_condition")
-	private Boolean hasAirCondition;
-	
-	// 是否有热水壶
-	@Column(name="has_kettle")
-	private Boolean hasKettle;
-	
-	// 是否可加床
-	@Column(name="extra_bed")
-	private Boolean extraBed;
-	
-	// 其它设施
-	@Column(name="other_facility", length=1024)
-	private String otherFacility;
-	
-	@Column(length=1024)
-	private String note;
+    private static final long serialVersionUID = 1L;
 
-	public Integer getId(){
-		return id;
-	}
-	
-	public void setId(Integer id){
-		this.id = id;
-	}
-	
-	public RoomMaster getRoomMaster() {
-		return roomMaster;
-	}
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Integer id;
 
-	public void setRoomMaster(RoomMaster roomMaster) {
-		this.roomMaster = roomMaster;
-	}
+    @OneToOne(targetEntity = RoomMaster.class)
+    @JoinColumn(name = "room_id", referencedColumnName = "id")
+    private RoomMaster roomMaster;
 
-	public Boolean getHasWindow() {
-		return hasWindow;
-	}
+    @Column(name = "has_window")
+    private Boolean hasWindow;
 
-	public void setHasWindow(Boolean hasWindow) {
-		this.hasWindow = hasWindow;
-	}
+    @Column(name = "has_wifi")
+    private Boolean hasWifi;
 
-	public Boolean getHasWifi() {
-		return hasWifi;
-	}
+    // 是否 有线网
+    @Column(name = "has_reticle")
+    private Boolean hasReticle;
 
-	public void setHasWifi(Boolean hasWifi) {
-		this.hasWifi = hasWifi;
-	}
+    @Column(name = "has_tv")
+    private Boolean hasTV;
 
-	public Boolean getHasReticle() {
-		return hasReticle;
-	}
+    @Column(name = "has_phone")
+    private Boolean hasPhone;
 
-	public void setHasReticle(Boolean hasReticle) {
-		this.hasReticle = hasReticle;
-	}
+    @Column(name = "has_air_condition")
+    private Boolean hasAirCondition;
 
-	public Boolean getHasTV() {
-		return hasTV;
-	}
+    // 是否有热水壶
+    @Column(name = "has_kettle")
+    private Boolean hasKettle;
 
-	public void setHasTV(Boolean hasTV) {
-		this.hasTV = hasTV;
-	}
+    // 是否可加床
+    @Column(name = "extra_bed")
+    private Boolean extraBed;
 
-	public Boolean getHasPhone() {
-		return hasPhone;
-	}
+    // 其它设施
+    @Column(name = "other_facility", length = 1024)
+    private String otherFacility;
 
-	public void setHasPhone(Boolean hasPhone) {
-		this.hasPhone = hasPhone;
-	}
+    @Column(length = 1024)
+    private String note;
 
-	public Boolean getHasAirCondition() {
-		return hasAirCondition;
-	}
+    public Integer getId() {
+        return id;
+    }
 
-	public void setHasAirCondition(Boolean hasAirCondition) {
-		this.hasAirCondition = hasAirCondition;
-	}
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
-	public Boolean getHasKettle() {
-		return hasKettle;
-	}
+    public RoomMaster getRoomMaster() {
+        return roomMaster;
+    }
 
-	public void setHasKettle(Boolean hasKettle) {
-		this.hasKettle = hasKettle;
-	}
+    public void setRoomMaster(RoomMaster roomMaster) {
+        this.roomMaster = roomMaster;
+    }
 
-	public Boolean getExtraBed() {
-		return extraBed;
-	}
+    public Boolean getHasWindow() {
+        return hasWindow;
+    }
 
-	public void setExtraBed(Boolean extraBed) {
-		this.extraBed = extraBed;
-	}
+    public void setHasWindow(Boolean hasWindow) {
+        this.hasWindow = hasWindow;
+    }
 
-	public String getOtherFacility() {
-		return otherFacility;
-	}
+    public Boolean getHasWifi() {
+        return hasWifi;
+    }
 
-	public void setOtherFacility(String otherFacility) {
-		this.otherFacility = otherFacility;
-	}
+    public void setHasWifi(Boolean hasWifi) {
+        this.hasWifi = hasWifi;
+    }
 
-	public String getNote() {
-		return note;
-	}
+    public Boolean getHasReticle() {
+        return hasReticle;
+    }
 
-	public void setNote(String note) {
-		this.note = note;
-	}
-	
+    public void setHasReticle(Boolean hasReticle) {
+        this.hasReticle = hasReticle;
+    }
+
+    public Boolean getHasTV() {
+        return hasTV;
+    }
+
+    public void setHasTV(Boolean hasTV) {
+        this.hasTV = hasTV;
+    }
+
+    public Boolean getHasPhone() {
+        return hasPhone;
+    }
+
+    public void setHasPhone(Boolean hasPhone) {
+        this.hasPhone = hasPhone;
+    }
+
+    public Boolean getHasAirCondition() {
+        return hasAirCondition;
+    }
+
+    public void setHasAirCondition(Boolean hasAirCondition) {
+        this.hasAirCondition = hasAirCondition;
+    }
+
+    public Boolean getHasKettle() {
+        return hasKettle;
+    }
+
+    public void setHasKettle(Boolean hasKettle) {
+        this.hasKettle = hasKettle;
+    }
+
+    public Boolean getExtraBed() {
+        return extraBed;
+    }
+
+    public void setExtraBed(Boolean extraBed) {
+        this.extraBed = extraBed;
+    }
+
+    public String getOtherFacility() {
+        return otherFacility;
+    }
+
+    public void setOtherFacility(String otherFacility) {
+        this.otherFacility = otherFacility;
+    }
+
+    public String getNote() {
+        return note;
+    }
+
+    public void setNote(String note) {
+        this.note = note;
+    }
+
 }

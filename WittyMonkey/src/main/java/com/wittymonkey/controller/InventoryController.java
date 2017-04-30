@@ -6,7 +6,6 @@ import com.wittymonkey.entity.*;
 import com.wittymonkey.service.*;
 import com.wittymonkey.util.ChangeToSimple;
 import com.wittymonkey.vo.Constraint;
-import com.wittymonkey.vo.SimpleFloor;
 import com.wittymonkey.vo.SimpleInStock;
 import com.wittymonkey.vo.SimpleOutStock;
 import org.apache.commons.lang.StringUtils;
@@ -19,7 +18,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.servlet.http.HttpServletRequest;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Created by neilw on 2017/4/25.

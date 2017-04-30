@@ -9,6 +9,7 @@ public interface IFloorService {
 
     /**
      * 根据id查找楼层
+     *
      * @param id
      * @return
      */
@@ -16,6 +17,7 @@ public interface IFloorService {
 
     /**
      * 根据楼层号查找楼层
+     *
      * @param hotelId
      * @param floorNo
      * @return
@@ -24,6 +26,7 @@ public interface IFloorService {
 
     /**
      * 判断楼层是否存在
+     *
      * @param hotelId
      * @param floorNo
      * @return
@@ -36,6 +39,7 @@ public interface IFloorService {
 
     /**
      * 删除楼层，移到楼层下的所有房间到未定义楼层
+     *
      * @param floor
      * @throws SQLException
      */

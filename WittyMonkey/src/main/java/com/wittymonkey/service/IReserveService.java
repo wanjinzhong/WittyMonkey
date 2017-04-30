@@ -16,6 +16,7 @@ public interface IReserveService {
 
     /**
      * 根据时间获取该时间点所处的预定情况
+     *
      * @param roomId
      * @param date
      * @return
@@ -24,5 +25,5 @@ public interface IReserveService {
 
     Integer getTotalByRoomIdReserved(Integer roomId, Integer status);
 
-    void update (Reserve reserve) throws SQLException;
+    void update(Reserve reserve) throws SQLException;
 }

@@ -1,65 +1,64 @@
 package com.wittymonkey.entity;
 
-import java.io.Serializable;
-
 import javax.persistence.*;
+import java.io.Serializable;
 
 /**
  * 设置
- * @author neilw
  *
+ * @author neilw
  */
 @Entity
 @Table(name = "setting")
-public class Setting implements Serializable{
-	
-	private static final long serialVersionUID = 1L;
+public class Setting implements Serializable {
 
-	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
-	private Integer id;
+    private static final long serialVersionUID = 1L;
 
-	@OneToOne(targetEntity = User.class, cascade={CascadeType.ALL})
-	@JoinColumn(name = "user_id", referencedColumnName = "id")
-	private User user;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Integer id;
 
-	// 语言
-	@Column(columnDefinition="VARCHAR(10) default 'zh_CN'")
-	private String lang;
+    @OneToOne(targetEntity = User.class, cascade = {CascadeType.ALL})
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    private User user;
 
-	// 每页数据条数
-	@Column(columnDefinition = "int default 10")
-	private Integer pageSize;
+    // 语言
+    @Column(columnDefinition = "VARCHAR(10) default 'zh_CN'")
+    private String lang;
 
-	public Integer getId() {
-		return id;
-	}
+    // 每页数据条数
+    @Column(columnDefinition = "int default 10")
+    private Integer pageSize;
 
-	public void setId(Integer id) {
-		this.id = id;
-	}
+    public Integer getId() {
+        return id;
+    }
 
-	public String getLang() {
-		return lang;
-	}
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
-	public void setLang(String lang) {
-		this.lang = lang;
-	}
+    public String getLang() {
+        return lang;
+    }
 
-	public Integer getPageSize() {
-		return pageSize;
-	}
+    public void setLang(String lang) {
+        this.lang = lang;
+    }
 
-	public void setPageSize(Integer pageSize) {
-		this.pageSize = pageSize;
-	}
+    public Integer getPageSize() {
+        return pageSize;
+    }
 
-	public User getUser() {
-		return user;
-	}
+    public void setPageSize(Integer pageSize) {
+        this.pageSize = pageSize;
+    }
 
-	public void setUser(User user) {
-		this.user = user;
-	}
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
 }

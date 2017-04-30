@@ -9,7 +9,7 @@ import java.util.Date;
  */
 @Entity
 @Table(name = "leave_detail")
-public class LeaveDetail implements Serializable{
+public class LeaveDetail implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

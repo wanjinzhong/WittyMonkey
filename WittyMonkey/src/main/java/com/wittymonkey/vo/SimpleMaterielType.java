@@ -1,14 +1,7 @@
 package com.wittymonkey.vo;
 
-import com.wittymonkey.entity.Hotel;
-import com.wittymonkey.entity.Materiel;
-import com.wittymonkey.entity.User;
-
-import javax.persistence.*;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 /**
  * Created by neilw on 2017/3/25.
@@ -29,44 +22,44 @@ public class SimpleMaterielType implements Serializable {
         return id;
     }
 
-    public Integer getMaterielNum() {
-        return materielNum;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public String getNote() {
-        return note;
-    }
-
-    public Date getEntryDatetime() {
-        return entryDatetime;
-    }
-
-    public String getEntryUser() {
-        return entryUser;
-    }
-
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public Integer getMaterielNum() {
+        return materielNum;
     }
 
     public void setMaterielNum(Integer materielNum) {
         this.materielNum = materielNum;
     }
 
+    public String getName() {
+        return name;
+    }
+
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getNote() {
+        return note;
     }
 
     public void setNote(String note) {
         this.note = note;
     }
 
+    public Date getEntryDatetime() {
+        return entryDatetime;
+    }
+
     public void setEntryDatetime(Date entryDatetime) {
         this.entryDatetime = entryDatetime;
+    }
+
+    public String getEntryUser() {
+        return entryUser;
     }
 
     public void setEntryUser(String entryUser) {

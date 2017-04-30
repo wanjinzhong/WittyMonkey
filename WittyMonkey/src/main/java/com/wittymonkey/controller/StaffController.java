@@ -2,7 +2,6 @@ package com.wittymonkey.controller;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.wittymonkey.dao.IHotelDao;
 import com.wittymonkey.entity.*;
 import com.wittymonkey.service.IHotelService;
 import com.wittymonkey.service.IRoleService;
@@ -10,7 +9,9 @@ import com.wittymonkey.service.IUserService;
 import com.wittymonkey.util.ChangeToSimple;
 import com.wittymonkey.util.IDCardValidate;
 import com.wittymonkey.util.MD5Util;
-import com.wittymonkey.vo.*;
+import com.wittymonkey.vo.Constraint;
+import com.wittymonkey.vo.SimpleRole;
+import com.wittymonkey.vo.SimpleUser;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,7 +20,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 /**
  * Created by neilw on 2017/4/7.
@@ -178,15 +181,15 @@ public class StaffController {
         if (StringUtils.isNotBlank(email) && email.trim().length() > 50) {
             return 430;
         }
-        if (StringUtils.isBlank(workDays)){
+        if (StringUtils.isBlank(workDays)) {
             return 440;
         }
         try {
             Double work = Double.parseDouble(workDays);
-            if (work <= 0 || work > 31){
+            if (work <= 0 || work > 31) {
                 return 441;
             }
-        } catch (NumberFormatException e){
+        } catch (NumberFormatException e) {
             return 441;
         }
         return 200;

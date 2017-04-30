@@ -2,8 +2,14 @@ package com.wittymonkey.controller;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.wittymonkey.entity.*;
-import com.wittymonkey.service.*;
+import com.wittymonkey.entity.Hotel;
+import com.wittymonkey.entity.Menu;
+import com.wittymonkey.entity.Role;
+import com.wittymonkey.entity.User;
+import com.wittymonkey.service.IHotelService;
+import com.wittymonkey.service.IMenuService;
+import com.wittymonkey.service.IRoleService;
+import com.wittymonkey.service.IUserService;
 import com.wittymonkey.util.ChangeToSimple;
 import com.wittymonkey.vo.Constraint;
 import com.wittymonkey.vo.SimpleMenu;
@@ -17,7 +23,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import java.sql.SQLException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.Iterator;
+import java.util.List;
 
 /**
  * Created by neilw on 2017/4/12.
@@ -211,8 +220,8 @@ public class RoleController {
         String note = request.getParameter("note");
         String[] menusIdStr = request.getParameterValues("menu");
         List<Integer> menusId = changeToInteger(menusIdStr);
-        Integer roleVali = validateRole(request, Constraint.ADD,roleName,note,menusId);
-        if (!new Integer(200).equals(roleVali)){
+        Integer roleVali = validateRole(request, Constraint.ADD, roleName, note, menusId);
+        if (!new Integer(200).equals(roleVali)) {
             json.put("status", roleVali);
             return json.toJSONString();
         }
@@ -283,7 +292,7 @@ public class RoleController {
         }
         try {
             Role role = roleService.getRoleById(id);
-            if (!role.getEditable()){
+            if (!role.getEditable()) {
                 jsonObject.put("status", 410);
                 return jsonObject.toJSONString();
             }
@@ -298,9 +307,9 @@ public class RoleController {
 
     /**
      * 更新角色
+     *
      * @param request
-     * @return
-     * <table border="1" cellspacing="0">
+     * @return <table border="1" cellspacing="0">
      * <tr>
      * <th>代码</th>
      * <th>说明</th>
@@ -346,8 +355,8 @@ public class RoleController {
         String[] menusIdStr = request.getParameterValues("menu");
         List<Integer> menusId = changeToInteger(menusIdStr);
 
-        Integer roleVali = validateRole(request, Constraint.UPDATE,roleName,note,menusId);
-        if (!new Integer(200).equals(roleVali)){
+        Integer roleVali = validateRole(request, Constraint.UPDATE, roleName, note, menusId);
+        if (!new Integer(200).equals(roleVali)) {
             json.put("status", roleVali);
             return json.toJSONString();
         }
@@ -379,9 +388,9 @@ public class RoleController {
         return json.toJSONString();
     }
 
-    private List<Integer> changeToInteger(String[] menusIdStr){
+    private List<Integer> changeToInteger(String[] menusIdStr) {
         List<Integer> menusId = new ArrayList<Integer>();
-        if (menusIdStr == null){
+        if (menusIdStr == null) {
             return new ArrayList<Integer>();
         }
         for (String id : menusIdStr) {
@@ -398,13 +407,13 @@ public class RoleController {
 
     /**
      * 验证角色表单
+     *
      * @param request
      * @param type
      * @param roleName
      * @param note
      * @param menusId
-     * @return
-     * <table border="1" cellspacing="0">
+     * @return <table border="1" cellspacing="0">
      * <tr>
      * <th>代码</th>
      * <th>说明</th>
@@ -434,7 +443,7 @@ public class RoleController {
      * <td>验证通过</td>
      * </tr>
      */
-    public Integer validateRole(HttpServletRequest request, String type, String roleName, String note, List<Integer> menusId){
+    public Integer validateRole(HttpServletRequest request, String type, String roleName, String note, List<Integer> menusId) {
         Integer roleNameVali = validateRoleName(request, type, roleName);
         if (!new Integer(201).equals(roleNameVali)) {
             if (new Integer(200).equals(roleNameVali)) {
@@ -447,7 +456,7 @@ public class RoleController {
             return 410;
         }
         if (menusId.size() <= 0) {
-            return  420;
+            return 420;
         }
         return 200;
     }

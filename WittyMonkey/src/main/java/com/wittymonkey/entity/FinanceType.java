@@ -1,144 +1,133 @@
 package com.wittymonkey.entity;
 
-import com.alibaba.fastjson.annotation.JSONField;
-
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
 /**
  * 财务类型
- * @author neilw
  *
+ * @author neilw
  */
 @Entity
-@Table(name="finance_type")
-public class FinanceType implements Serializable{
+@Table(name = "finance_type")
+public class FinanceType implements Serializable {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
-	private Integer id;
-	
-	// 是否是收入
-	@Column
-	private Boolean income;
-	
-	@Column(length=30)
-	private String name;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Integer id;
 
-	@ManyToOne(targetEntity=Hotel.class)
-	@JoinColumn(name="hotel_id", referencedColumnName="id")
-	private Hotel hotel;
-	
-	@OneToMany(targetEntity= Finance.class, mappedBy="financeType")
-	private List<Finance> finances = new ArrayList<Finance>();
+    // 是否是收入
+    @Column
+    private Boolean income;
 
-	@Column(length=1024)
-	private String note;
-	
-	@Column(name="entry_datetime")
-	private Date entryDatetime;
-	
-	@ManyToOne(targetEntity=User.class, fetch=FetchType.EAGER)
-	@JoinColumn(name="entry_id", referencedColumnName="id")
-	private User entryUser;
+    @Column(length = 30)
+    private String name;
 
-	@Column
-	private Boolean editable;
+    @ManyToOne(targetEntity = Hotel.class)
+    @JoinColumn(name = "hotel_id", referencedColumnName = "id")
+    private Hotel hotel;
 
-	@Column
-	private Boolean isDefault;
+    @OneToMany(targetEntity = Finance.class, mappedBy = "financeType")
+    private List<Finance> finances = new ArrayList<Finance>();
 
-	public Date getEntryDatetime() {
-		return entryDatetime;
-	}
+    @Column(length = 1024)
+    private String note;
 
-	public void setEntryDatetime(Date entryDatetime) {
-		this.entryDatetime = entryDatetime;
-	}
+    @Column(name = "entry_datetime")
+    private Date entryDatetime;
 
-	public User getEntryUser() {
-		return entryUser;
-	}
+    @ManyToOne(targetEntity = User.class, fetch = FetchType.EAGER)
+    @JoinColumn(name = "entry_id", referencedColumnName = "id")
+    private User entryUser;
 
-	public void setEntryUser(User entryUser) {
-		this.entryUser = entryUser;
-	}
+    @Column
+    private Boolean editable;
 
-	public String getNote() {
-		return note;
-	}
+    @Column
+    private Boolean isDefault;
 
-	public void setNote(String note) {
-		this.note = note;
-	}
+    public Date getEntryDatetime() {
+        return entryDatetime;
+    }
 
-	public Integer getId() {
-		return id;
-	}
+    public void setEntryDatetime(Date entryDatetime) {
+        this.entryDatetime = entryDatetime;
+    }
 
-	public void setId(Integer id) {
-		this.id = id;
-	}
+    public User getEntryUser() {
+        return entryUser;
+    }
 
-	public Boolean getIncome() {
-		return income;
-	}
+    public void setEntryUser(User entryUser) {
+        this.entryUser = entryUser;
+    }
 
-	public void setIncome(Boolean income) {
-		this.income = income;
-	}
+    public String getNote() {
+        return note;
+    }
 
-	public String getName() {
-		return name;
-	}
+    public void setNote(String note) {
+        this.note = note;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public Integer getId() {
+        return id;
+    }
 
-	public Hotel getHotel() {
-		return hotel;
-	}
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
-	public void setHotel(Hotel hotel) {
-		this.hotel = hotel;
-	}
+    public Boolean getIncome() {
+        return income;
+    }
 
-	public List<Finance> getFinances() {
-		return finances;
-	}
+    public void setIncome(Boolean income) {
+        this.income = income;
+    }
 
-	public void setFinances(List<Finance> finances) {
-		this.finances = finances;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public Boolean getEditable() {
-		return editable;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public void setEditable(Boolean editable) {
-		this.editable = editable;
-	}
+    public Hotel getHotel() {
+        return hotel;
+    }
 
-	public Boolean getDefault() {
-		return isDefault;
-	}
+    public void setHotel(Hotel hotel) {
+        this.hotel = hotel;
+    }
 
-	public void setDefault(Boolean aDefault) {
-		isDefault = aDefault;
-	}
+    public List<Finance> getFinances() {
+        return finances;
+    }
+
+    public void setFinances(List<Finance> finances) {
+        this.finances = finances;
+    }
+
+    public Boolean getEditable() {
+        return editable;
+    }
+
+    public void setEditable(Boolean editable) {
+        this.editable = editable;
+    }
+
+    public Boolean getDefault() {
+        return isDefault;
+    }
+
+    public void setDefault(Boolean aDefault) {
+        isDefault = aDefault;
+    }
 }

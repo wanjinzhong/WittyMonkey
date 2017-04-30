@@ -1,11 +1,11 @@
 package com.wittymonkey.dao;
 
+import com.wittymonkey.entity.Floor;
+
 import java.io.Serializable;
 import java.util.List;
 
-import com.wittymonkey.entity.Floor;
-
-public interface IFloorDao extends IGenericDao<Floor, Serializable>{
+public interface IFloorDao extends IGenericDao<Floor, Serializable> {
 
     Floor getFloorById(Integer id);
 

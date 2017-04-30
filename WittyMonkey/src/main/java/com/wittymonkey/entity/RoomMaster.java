@@ -13,8 +13,6 @@ import java.util.Date;
 @Table(name = "room_master")
 public class RoomMaster implements Serializable {
 
-    private static final long serialVersionUID = 1L;
-
     // 空闲
     public static final Integer FREE = 0;
     // 已预定
@@ -23,6 +21,7 @@ public class RoomMaster implements Serializable {
     public static final Integer CHECKED_IN = 2;
     // 待打扫
     public static final Integer CLEAN = 3;
+    private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
@@ -198,14 +197,14 @@ public class RoomMaster implements Serializable {
 
     @Override
     public boolean equals(Object obj) {
-        if (obj == this){
+        if (obj == this) {
             return true;
         }
-        if (!(obj instanceof RoomMaster)){
+        if (!(obj instanceof RoomMaster)) {
             return false;
         }
         RoomMaster room = (RoomMaster) obj;
-        if (((RoomMaster) obj).id == id){
+        if (((RoomMaster) obj).id == id) {
             return true;
         } else {
             return false;

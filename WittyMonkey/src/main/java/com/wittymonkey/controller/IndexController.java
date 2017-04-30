@@ -255,11 +255,6 @@ public class IndexController {
         return "my_desk";
     }
 
-    @RequestMapping(value = "toFloorSummary", method = RequestMethod.GET)
-    public String toFloorSummary(HttpServletRequest request) {
-        return "floor_summary";
-    }
-
     @RequestMapping(value = "toFloorManage", method = RequestMethod.GET)
     public String toFloorManage(HttpServletRequest request) {
 //        User user = userDao.getUserByLoginName("lyf");

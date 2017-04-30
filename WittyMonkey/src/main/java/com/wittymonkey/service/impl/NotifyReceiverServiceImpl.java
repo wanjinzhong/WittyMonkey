@@ -1,10 +1,9 @@
 package com.wittymonkey.service.impl;
 
+import com.wittymonkey.service.INotifyReceiverService;
 import org.springframework.stereotype.Service;
 
-import com.wittymonkey.service.INotifyReceiverService;
-
-@Service(value="notifyReceiverService")
-public class NotifyReceiverServiceImpl implements INotifyReceiverService{
+@Service(value = "notifyReceiverService")
+public class NotifyReceiverServiceImpl implements INotifyReceiverService {
 
 }

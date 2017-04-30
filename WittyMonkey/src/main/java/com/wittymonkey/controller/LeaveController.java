@@ -1,6 +1,5 @@
 package com.wittymonkey.controller;
 
-import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.wittymonkey.entity.*;
@@ -59,7 +58,7 @@ public class LeaveController {
         Integer curr = Integer.parseInt(request.getParameter("curr"));
         String me = request.getParameter("justMe");
         Boolean justMe = false;
-        if (StringUtils.isNotBlank(me)){
+        if (StringUtils.isNotBlank(me)) {
             justMe = Boolean.parseBoolean(me);
         }
         User loginUser = (User) request.getSession().getAttribute("loginUser");
@@ -439,16 +438,16 @@ public class LeaveController {
             json.put("status", 410);
             return json.toJSONString();
         }
-        LeaveHeader header =null;
-        if (Constraint.ADD.equals(method)){
+        LeaveHeader header = null;
+        if (Constraint.ADD.equals(method)) {
             header = new LeaveHeader();
-        } else if (Constraint.UPDATE.equals(method)){
+        } else if (Constraint.UPDATE.equals(method)) {
             header = leaveHeaderService.getLeaveHeaderById(((LeaveHeader) request.getSession().getAttribute("editLeaveApply")).getId());
             leaveDetailService.deleteByLeaveHeader(header);
-            if (header.getStatus().equals(Constraint.LEAVE_STATUS_APPROVE)){
+            if (header.getStatus().equals(Constraint.LEAVE_STATUS_APPROVE)) {
                 json.put("status", 420);
                 return json.toJSONString();
-            } else if (header.getStatus().equals(Constraint.LEAVE_STATUS_REJECT)){
+            } else if (header.getStatus().equals(Constraint.LEAVE_STATUS_REJECT)) {
                 json.put("status", 421);
                 return json.toJSONString();
             }
@@ -517,18 +516,18 @@ public class LeaveController {
 
     @RequestMapping(value = "deleteLeaveApply", method = POST)
     @ResponseBody
-    public String deleteLeaveApply(HttpServletRequest request){
+    public String deleteLeaveApply(HttpServletRequest request) {
         JSONObject json = new JSONObject();
         Integer id = Integer.parseInt(request.getParameter("id"));
         LeaveHeader header = leaveHeaderService.getLeaveHeaderById(id);
-        if (header == null){
+        if (header == null) {
             json.put("status", 400);
             return json.toJSONString();
         }
-        if (header.getStatus().equals(Constraint.LEAVE_STATUS_APPROVE)){
+        if (header.getStatus().equals(Constraint.LEAVE_STATUS_APPROVE)) {
             json.put("status", 410);
             return json.toJSONString();
-        } else if (header.getStatus().equals(Constraint.LEAVE_STATUS_REJECT)){
+        } else if (header.getStatus().equals(Constraint.LEAVE_STATUS_REJECT)) {
             json.put("status", 411);
             return json.toJSONString();
         }
@@ -543,7 +542,7 @@ public class LeaveController {
     }
 
     @RequestMapping(value = "toShowLeaveApply", method = GET)
-    public String toShowLeaveApply(HttpServletRequest request){
+    public String toShowLeaveApply(HttpServletRequest request) {
         Integer id = Integer.parseInt(request.getParameter("id").trim());
         LeaveHeader leaveHeader = leaveHeaderService.getLeaveHeaderById(id);
         LeaveVO leaveVO = ChangeToSimple.assymblyLeaveVO(leaveHeader);

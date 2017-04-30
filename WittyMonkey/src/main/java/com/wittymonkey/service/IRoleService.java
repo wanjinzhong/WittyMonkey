@@ -7,15 +7,15 @@ import java.util.List;
 
 public interface IRoleService {
 
-	Role getRoleById(Integer id);
+    Role getRoleById(Integer id);
 
-	void saveRole(Role role);
+    void saveRole(Role role);
 
-	Integer getTotal(Integer hotelId);
+    Integer getTotal(Integer hotelId);
 
-	List<Role> getRoleByPage(Integer hotelId, Integer start, Integer pageSize);
+    List<Role> getRoleByPage(Integer hotelId, Integer start, Integer pageSize);
 
-	Role getRoleByRoleName(Integer hotelId, String roleName);
+    Role getRoleByRoleName(Integer hotelId, String roleName);
 
-	void deleteRole(Role role) throws SQLException;
+    void deleteRole(Role role) throws SQLException;
 }

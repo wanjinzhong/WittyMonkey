@@ -1,14 +1,11 @@
 package com.wittymonkey.dao;
 
-import java.io.Serializable;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import com.wittymonkey.entity.Materiel;
 import com.wittymonkey.entity.MaterielType;
 
-public interface IMaterielTypeDao extends IGenericDao<MaterielType, Serializable>{
+import java.io.Serializable;
+import java.util.List;
+
+public interface IMaterielTypeDao extends IGenericDao<MaterielType, Serializable> {
 
     List<MaterielType> getMaterielTypeByHotelId(Integer hotelId, Integer start, Integer pageSize);
 

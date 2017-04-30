@@ -1,87 +1,76 @@
 package com.wittymonkey.entity;
 
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
 
 /**
  * 菜单实体，并不保存任何菜单功能及详细内容。
  * 只是为了为权限赋予操作这些菜单的权力
- * @author Neil
  *
+ * @author Neil
  */
 @Entity
-@Table(name="menu")
-public class Menu implements Serializable{
-	
-	private static final long serialVersionUID = 1L;
+@Table(name = "menu")
+public class Menu implements Serializable {
 
-	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
-	private Integer id;
-	
-	@Column(length=20)
-	private String name;
-	
-	@Column
-	private String description;
-	
-	@ManyToMany(targetEntity= Role.class, mappedBy="menus")
-	private List<Role> roles = new ArrayList<Role>();
+    private static final long serialVersionUID = 1L;
 
-	// 是否可配置该菜单
-	@Column
-	private Boolean configurable;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Integer id;
 
-	public Integer getId() {
-		return id;
-	}
+    @Column(length = 20)
+    private String name;
 
-	public void setId(Integer id) {
-		this.id = id;
-	}
+    @Column
+    private String description;
 
-	public String getName() {
-		return name;
-	}
+    @ManyToMany(targetEntity = Role.class, mappedBy = "menus")
+    private List<Role> roles = new ArrayList<Role>();
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    // 是否可配置该菜单
+    @Column
+    private Boolean configurable;
 
-	public String getDescription() {
-		return description;
-	}
+    public Integer getId() {
+        return id;
+    }
 
-	public void setDescription(String description) {
-		this.description = description;
-	}
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
-	public List<Role> getRoles() {
-		return roles;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public void setRoles(List<Role> roles) {
-		this.roles = roles;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public Boolean getConfigurable() {
-		return configurable;
-	}
+    public String getDescription() {
+        return description;
+    }
 
-	public void setConfigurable(Boolean configurable) {
-		this.configurable = configurable;
-	}
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public List<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<Role> roles) {
+        this.roles = roles;
+    }
+
+    public Boolean getConfigurable() {
+        return configurable;
+    }
+
+    public void setConfigurable(Boolean configurable) {
+        this.configurable = configurable;
+    }
 }
