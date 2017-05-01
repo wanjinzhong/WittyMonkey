@@ -25,6 +25,7 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
+import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
 /**
  * Created by neilw on 2017/2/20.
@@ -61,6 +62,12 @@ public class RoomController {
 
     @Autowired
     private IChangeRoomService changeRoomService;
+
+    @Autowired
+    private IFinanceTypeService financeTypeService;
+
+    @Autowired
+    private IFinanceService financeService;
 
     @RequestMapping(value = "toAddRoom", method = GET)
     public String toAddRoom(HttpServletRequest request) {
@@ -173,6 +180,25 @@ public class RoomController {
         request.getSession().setAttribute("checkin", checkin);
         request.getSession().setAttribute("checkinDate", sdf.format(checkin.getCheckinDate()));
         request.getSession().setAttribute("estCheckoutDate", sdf.format(checkin.getEstCheckoutDate()));
+        Date now = new Date();
+        Calendar estOut = Calendar.getInstance();
+        estOut.setTime(checkin.getEstCheckoutDate());
+        estOut.set(Calendar.HOUR_OF_DAY, 0);
+        estOut.set(Calendar.MINUTE, 0);
+        estOut.set(Calendar.SECOND, 0);
+        estOut.set(Calendar.MILLISECOND, 0);
+        Calendar out = Calendar.getInstance();
+        out.setTime(now);
+        if (out.get(Calendar.HOUR_OF_DAY) >= 12) {
+            out.add(Calendar.DAY_OF_MONTH, 1);
+        }
+        out.set(Calendar.HOUR_OF_DAY, 0);
+        out.set(Calendar.MINUTE, 0);
+        out.set(Calendar.SECOND, 0);
+        out.set(Calendar.MILLISECOND, 0);
+        Integer dateDiff = DateUtil.dateDiffDays(out.getTime(), estOut.getTime());
+        Double refund = dateDiff * checkin.getPrice() + checkin.getForegift();
+        request.getSession().setAttribute("checkoutRefund", refund);
         return "checkout";
     }
 
@@ -210,10 +236,11 @@ public class RoomController {
      * <td>服务器错误</td>
      * </tr>
      */
-    @RequestMapping(value = "checkout", method = GET)
+    @RequestMapping(value = "checkout", method = POST)
     @ResponseBody
     public String checkout(HttpServletRequest request) {
         JSONObject json = new JSONObject();
+        Hotel hotel = (Hotel) request.getSession().getAttribute("hotel");
         Integer checkinId = null;
         try {
             checkinId = Integer.parseInt(request.getParameter("id"));
@@ -230,6 +257,21 @@ public class RoomController {
             json.put("status", 410);
             return json.toJSONString();
         }
+        Double refund = 0.0;
+        Double rangeFrom = checkin.getForegift();
+        Double rangeTo = checkin.getForegift() + checkin.getFinance().getMoney();
+        try {
+            refund = Double.parseDouble(request.getParameter("refund"));
+        } catch (Exception e){
+            json.put("status", 420);
+            json.put("range", rangeFrom + "-" + rangeTo);
+            return json.toJSONString();
+        }
+        if (refund - checkin.getForegift() < 0 || refund - checkin.getForegift() > checkin.getFinance().getMoney()){
+            json.put("status", 420);
+            json.put("range", rangeFrom + "-" + rangeTo);
+            return json.toJSONString();
+        }
         User operator = getLoginUserPersistence(request);
         checkin.setActCheckoutDate(new Date());
         checkin.setEntryUser(operator);
@@ -237,6 +279,8 @@ public class RoomController {
         checkin.getRoom().setStatus(RoomMaster.CLEAN);
         checkin.getRoom().setEntryUser(operator);
         checkin.getRoom().setEntryDatetime(new Date());
+        Double orign = checkin.getFinance().getMoney();
+        checkin.getFinance().setMoney(orign - (refund - checkin.getForegift()));
         try {
             checkinService.update(checkin);
             json.put("status", 200);
@@ -920,7 +964,7 @@ public class RoomController {
      * <td>押金为负数</td>
      * </tr>
      */
-    @RequestMapping(value = "checkin", method = RequestMethod.POST)
+    @RequestMapping(value = "checkin", method = POST)
     @ResponseBody
     public String checkin(HttpServletRequest request) {
         JSONObject json = new JSONObject();
@@ -929,6 +973,7 @@ public class RoomController {
         Integer roomId = Integer.parseInt(request.getParameter("roomId"));
         String note = request.getParameter("note");
         Double foregift = 0.0;
+        Integer days = 0;
         try {
             foregift = Double.parseDouble(request.getParameter("foregift"));
             if (foregift < 0) {
@@ -953,6 +998,7 @@ public class RoomController {
             reserve.setStatus(Reserve.CHECKEDIN);
             checkin.setEstCheckoutDate(reserve.getEstCheckoutDate());
             checkin.setReserve(reserve);
+            days = DateUtil.dateDiffDays(reserve.getEstCheckinDate(), reserve.getEstCheckoutDate());
         }
         // 未预定的情况
         else {
@@ -961,6 +1007,7 @@ public class RoomController {
             Date toDate = null;
             try {
                 toDate = sdf.parse(to + " 12:00:00");
+                days = DateUtil.dateDiffDays(new Date(), toDate);
             } catch (ParseException e) {
                 json.put("status", 440);
                 return json.toJSONString();
@@ -992,16 +1039,26 @@ public class RoomController {
             json.put("status", 410);
             return json.toJSONString();
         }
+        User entryUser = userService.getUserById(((User) request.getSession().getAttribute("loginUser")).getId());
+        Hotel hotel = (Hotel) request.getSession().getAttribute("hotel");
+        Date now = new Date();
         RoomMaster roomMaster = roomMasterService.getRoomById(roomId);
         roomMaster.setStatus(RoomMaster.CHECKED_IN);
         checkin.setCustomers(customers);
         checkin.setRoom(roomMaster);
         checkin.setPrice(roomMaster.getPrice());
         checkin.setForegift(foregift);
-        checkin.setCheckinDate(new Date());
-        checkin.setEntryDatetime(new Date());
-        checkin.setEntryUser(userService.getUserById(((User) request.getSession().getAttribute("loginUser")).getId()));
+        checkin.setCheckinDate(now);
+        checkin.setEntryDatetime(now);
+        checkin.setEntryUser(entryUser);
         checkin.setNote(note);
+        FinanceType financeType = financeTypeService.getFinanceTypeByName(hotel.getId(), "Room In(住房收入)");
+        Finance finance = new Finance();
+        finance.setEntryDatetime(now);
+        finance.setEntryUser(entryUser);
+        finance.setMoney(roomMaster.getPrice() * days);
+        finance.setFinanceType(financeType);
+        checkin.setFinance(finance);
         checkinService.checkin(checkin);
         json.put("status", 200);
         return json.toJSONString();
@@ -1116,13 +1173,15 @@ public class RoomController {
         checkin.setEntryDatetime(new Date());
         checkin.setEntryUser(user);
         checkin.setRoom(toRoom);
+        Double diff = (toRoom.getPrice() - fromRoom.getPrice()) * DateUtil.dateDiffDays(new Date(), checkin.getEstCheckoutDate());
+        checkin.getFinance().setMoney(checkin.getFinance().getMoney() + diff);
+        checkinService.checkin(checkin);
         ChangeRoom changeRoom = new ChangeRoom();
         changeRoom.setFromRoom(fromRoom);
         changeRoom.setToRoom(toRoom);
         changeRoom.setReason(reason);
         changeRoom.setEntryDatetime(new Date());
         changeRoom.setEntryUser(user);
-        Double diff = (toRoom.getPrice() - fromRoom.getPrice()) * DateUtil.dateDiffDays(new Date(), checkin.getEstCheckoutDate());
         changeRoom.setPriceDifference(diff);
         changeRoom.setCheckin(checkin);
         changeRoomService.save(changeRoom);

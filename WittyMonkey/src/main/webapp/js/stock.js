@@ -87,7 +87,7 @@ function save() {
     } else if (method == "in"){
         url = "saveInStock.do";
         data = $("#instock_form").serialize();
-        success_hint = inststock_success;
+        success_hint = instock_success;
     }
     var load = layer.load();
     $.ajax({

@@ -104,6 +104,7 @@ public class FinanceTypeController {
         financeType.setEntryUser(userService.getUserById(loginUser.getId()));
         financeType.setIncome(type == 1);
         financeType.setEditable(true);
+        financeType.setDefault(false);
         financeTypeService.save(financeType);
         json.put("status", 200);
         return json.toJSONString();

@@ -145,6 +145,8 @@ var choose_room_not_exist = "房间不存在";
 var choose_checkin_not_exist = "入住信息不存在";
 var reason = "原因";
 var change_success = "换房成功";
+var checkout_payback = "退款(含押金)";
+var checkout_refund_wrong = "金额不正确, 范围：";
 
 var btn_dimission = "离职";
 var dimission_title = "员工离职";

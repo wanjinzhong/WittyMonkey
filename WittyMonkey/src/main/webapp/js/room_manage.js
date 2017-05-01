@@ -191,7 +191,7 @@ function showRoomDetail(id){
         shade: 0.4,
         content: "showRoomDetail.do?roomId=" + id,
         scrollbar: false,
-        type: 2,
+        type: 2
     });
 }
 function toReserve(id) {
@@ -202,7 +202,7 @@ function toReserve(id) {
         maxmin: false,
         shade: 0.4,
         scrollbar: false,
-        type: 2,
+        type: 2
     });
     event.cancelBubble = true;
 }
@@ -214,7 +214,7 @@ function toUnsubscribe(id) {
         maxmin: false,
         shade: 0.4,
         scrollbar: false,
-        type: 2,
+        type: 2
     });
     event.cancelBubble = true;
 }
@@ -222,11 +222,11 @@ function toCheckin(id) {
     layer.open({
         title: room_checkin_title,
         content: "toCheckin.do?id=" + id,
-        area: ['900px', '550px'],
+        area: ['900px', '650px'],
         maxmin: false,
         shade: 0.4,
         scrollbar: false,
-        type: 2,
+        type: 2
     });
     event.cancelBubble = true;
 }
@@ -250,7 +250,7 @@ function toChange(id) {
         maxmin: false,
         shade: 0.4,
         scrollbar: false,
-        type: 2,
+        type: 2
     });
     event.cancelBubble = true;
 }

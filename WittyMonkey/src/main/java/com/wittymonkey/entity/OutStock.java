@@ -34,6 +34,10 @@ public class OutStock implements Serializable {
     @Column
     private Double payment;
 
+    @OneToOne(targetEntity = Finance.class, cascade = {CascadeType.ALL})
+    @JoinColumn(name = "finance_id", referencedColumnName = "id")
+    private Finance finance;
+
     @ManyToOne(targetEntity = Materiel.class)
     @JoinColumn(name = "materiel_id", referencedColumnName = "id")
     private Materiel materiel;
@@ -130,5 +134,13 @@ public class OutStock implements Serializable {
 
     public void setHotel(Hotel hotel) {
         this.hotel = hotel;
+    }
+
+    public Finance getFinance() {
+        return finance;
+    }
+
+    public void setFinance(Finance finance) {
+        this.finance = finance;
     }
 }

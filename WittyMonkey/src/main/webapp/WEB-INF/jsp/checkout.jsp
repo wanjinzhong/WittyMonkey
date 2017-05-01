@@ -24,8 +24,9 @@
 <fmt:setBundle basename="i18n/messages_${loginUser.setting.lang }"/>
 <body>
     <form id="checkout-form" method="post">
+        <input type="hidden" disabled value="${checkoutRefund}" id="checkoutRefund"/>
         <input type="hidden" disabled value="${checkin.id}" id="checkinId">
-        <table class="form-table">
+        <table class="form_table">
             <tr>
                 <td class="td_title"><label class="layui-form-label"><fmt:message key="room.add.number"/></label></td>
                 <td style="width: 300px">
@@ -48,12 +49,12 @@
                         </thead>
                     </table>
                     <div class="table-div">
-                        <table class="customers layui-table table-content">
+                        <table class="customers layui-table table-content" >
                             <tbody id="tbody" class="tbody">
                             <c:forEach items="${checkin.customers}" var="customer">
                                 <tr>
-                                    <td width="200px">${customer.idCard}</td>
-                                    <td width="150px">${customer.name}</td>
+                                    <td width="200px" style="text-align: center">${customer.idCard}</td>
+                                    <td width="150px" style="text-align: center">${customer.name}</td>
                                 </tr>
                             </c:forEach>
                             </tbody>

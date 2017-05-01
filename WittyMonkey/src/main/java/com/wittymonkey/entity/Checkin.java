@@ -44,6 +44,10 @@ public class Checkin implements Serializable {
     @Column(name = "price")
     private Double price;
 
+    @OneToOne(targetEntity = Finance.class, cascade = {CascadeType.ALL})
+    @JoinColumn(name = "finance_id", referencedColumnName = "id")
+    private Finance finance;
+
     // 押金
     @Column(name = "foregift")
     private Double foregift;
@@ -180,5 +184,13 @@ public class Checkin implements Serializable {
 
     public void setPlateNo(String plateNo) {
         this.plateNo = plateNo;
+    }
+
+    public Finance getFinance() {
+        return finance;
+    }
+
+    public void setFinance(Finance finance) {
+        this.finance = finance;
     }
 }

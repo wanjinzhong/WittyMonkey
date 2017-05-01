@@ -43,9 +43,6 @@ public class FinanceController {
     @Autowired
     private IUserService userService;
 
-    @Autowired
-    private IHotelService hotelService;
-
     @RequestMapping(value = "getFinanceByPage", method = RequestMethod.GET)
     @ResponseBody
     public String getFinanceByPage(HttpServletRequest request) {
@@ -119,9 +116,9 @@ public class FinanceController {
      * <td>备注过长</td>
      * </tr>
      */
-    @RequestMapping(value = "saveFinanceType", method = RequestMethod.POST)
+    @RequestMapping(value = "saveFinance", method = RequestMethod.POST)
     @ResponseBody
-    public String saveFinanceType(HttpServletRequest request) {
+    public String saveFinance(HttpServletRequest request) {
         JSONObject json = new JSONObject();
         Integer type = null;
         Double money = null;

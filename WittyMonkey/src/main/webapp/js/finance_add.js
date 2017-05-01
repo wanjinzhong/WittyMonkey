@@ -48,7 +48,7 @@ function save() {
         type: "POST",
         dataType: "json",
         data: {"money": $("#money").val(), "note": $("#note").val(), "type": $("#financeType select").val()},
-        url: "saveFinanceType.do",
+        url: "saveFinance.do",
         success: function (data) {
             layer.close(load);
             var res = eval("(" + data + ")");

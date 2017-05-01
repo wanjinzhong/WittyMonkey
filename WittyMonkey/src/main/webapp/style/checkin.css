@@ -27,7 +27,7 @@ td{
     color: grey;
 }
 .table-div{
-    height: 130px;
+    height: 100px;
     overflow: auto;
     border-bottom: solid #ebebeb 1px;
 }

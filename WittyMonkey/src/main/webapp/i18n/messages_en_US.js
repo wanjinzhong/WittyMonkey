@@ -146,6 +146,8 @@ var choose_room_not_exist = "Room does not exist";
 var choose_checkin_not_exist = "Checkin does not exist";
 var reason = "Reason";
 var change_success = "Change room success";
+var checkout_payback = "Refund(including deposit)";
+var checkout_refund_wrong = "Incorrect amount, range:";
 
 var btn_dimission = "Dimission";
 var dimission_title = "Staff Dimission";

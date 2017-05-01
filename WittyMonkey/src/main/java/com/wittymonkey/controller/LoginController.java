@@ -597,27 +597,27 @@ public class LoginController {
         purchase.setHotel(hotel);
         financeTypes.add(purchase);
 
+        FinanceType sell = new FinanceType();
+        sell.setName("Sell In(销售收入)");
+        sell.setIncome(true);
+        sell.setNote("Sell In(销售收入)");
+        sell.setEntryUser(system);
+        sell.setEntryDatetime(now);
+        sell.setEditable(false);
+        sell.setDefault(false);
+        sell.setHotel(hotel);
+        financeTypes.add(sell);
+
         FinanceType catering = new FinanceType();
-        catering.setName("Catering Out(餐饮收入)");
-        catering.setIncome(false);
-        catering.setNote("Catering Out(餐饮收入)");
+        catering.setName("Catering In(餐饮收入)");
+        catering.setIncome(true);
+        catering.setNote("Catering In(餐饮收入)");
         catering.setEntryUser(system);
         catering.setEntryDatetime(now);
         catering.setEditable(false);
         catering.setDefault(false);
         catering.setHotel(hotel);
         financeTypes.add(catering);
-
-        FinanceType salary = new FinanceType();
-        salary.setName("Salary Out(工资支出)");
-        salary.setIncome(false);
-        salary.setNote("Salary Out(工资支出)");
-        salary.setEntryUser(system);
-        salary.setEntryDatetime(now);
-        salary.setEditable(false);
-        salary.setDefault(false);
-        salary.setHotel(hotel);
-        financeTypes.add(salary);
 
         // 添加酒店员工ID配置
         Odom odom = new Odom();

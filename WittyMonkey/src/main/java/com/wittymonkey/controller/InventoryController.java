@@ -44,6 +44,8 @@ public class InventoryController {
     @Autowired
     private IHotelService hotelService;
 
+    @Autowired IFinanceTypeService financeTypeService;
+
     @RequestMapping(value = "getInstockByPage", method = RequestMethod.GET)
     @ResponseBody
     public String getInstockByPage(HttpServletRequest request) {
@@ -281,6 +283,13 @@ public class InventoryController {
         inStock.setPayment(pay);
         inStock.setPurchasePrice(price);
         inStock.setQuantity(qty);
+        FinanceType type = financeTypeService.getFinanceTypeByName(hotel.getId(),"Purchase Out(进货支出)");
+        Finance finance = new Finance();
+        finance.setFinanceType(type);
+        finance.setMoney(pay);
+        finance.setEntryUser(userService.getUserById(user.getId()));
+        finance.setEntryDatetime(new Date());
+        inStock.setFinance(finance);
         inStockService.save(inStock);
         json.put("status", 200);
         return json.toJSONString();
@@ -302,6 +311,7 @@ public class InventoryController {
         Double price = null;
         Double qty = null;
         Double pay = null;
+        Finance finance = new Finance();
         if (Constraint.OUTSTOCK_TYPE_SELL.equals(type)) {
             try {
                 price = Double.parseDouble(request.getParameter("sellPrice"));
@@ -329,9 +339,15 @@ public class InventoryController {
                 json.put("status", 431);
                 return json.toJSONString();
             }
+            FinanceType financeType = financeTypeService.getFinanceTypeByName(hotel.getId(),"Sell In(销售收入)");
+            finance.setEntryDatetime(new Date());
+            finance.setEntryUser(userService.getUserById(user.getId()));
+            finance.setMoney(pay);
+            finance.setFinanceType(financeType);
         } else {
             price = 0.0;
             pay = 0.0;
+            finance = null;
         }
         try {
             qty = Double.parseDouble(request.getParameter("qty"));
@@ -367,6 +383,9 @@ public class InventoryController {
         outStock.setPayment(pay);
         outStock.setPrice(price);
         outStock.setQuantity(qty);
+        if (finance != null){
+            outStock.setFinance(finance);
+        }
         outStockService.save(outStock);
         json.put("status", 200);
         return json.toJSONString();
