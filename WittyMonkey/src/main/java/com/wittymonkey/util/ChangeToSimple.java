@@ -466,13 +466,13 @@ public class ChangeToSimple {
         Collections.sort(header.getLeaveDetails(), new Comparator<LeaveDetail>() {
             @Override
             public int compare(LeaveDetail o1, LeaveDetail o2) {
-                return (int) (o1.getFrom().getTime() - o2.getTo().getTime());
+                return (int) (o1.getFromDate().getTime() - o2.getToDate().getTime());
             }
         });
         List<LeaveDetail> details = header.getLeaveDetails();
         if (details != null || details.size() > 0) {
-            leaveVO.setFrom(details.get(0).getFrom());
-            leaveVO.setTo(details.get(details.size() - 1).getTo());
+            leaveVO.setFrom(details.get(0).getFromDate());
+            leaveVO.setTo(details.get(details.size() - 1).getToDate());
         }
         Double days = 0.0;
         Double deduct = 0.0;

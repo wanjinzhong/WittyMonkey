@@ -20,10 +20,10 @@ public class LeaveDetail implements Serializable {
     private LeaveHeader leaveHeader;
 
     @Column(name = "from_date")
-    private Date from;
+    private Date fromDate;
 
     @Column(name = "to_date")
-    private Date to;
+    private Date toDate;
 
     @Column
     private Integer days;
@@ -47,20 +47,20 @@ public class LeaveDetail implements Serializable {
         this.leaveHeader = leaveHeader;
     }
 
-    public Date getFrom() {
-        return from;
+    public Date getFromDate() {
+        return fromDate;
     }
 
-    public void setFrom(Date from) {
-        this.from = from;
+    public void setFromDate(Date fromDate) {
+        this.fromDate = fromDate;
     }
 
-    public Date getTo() {
-        return to;
+    public Date getToDate() {
+        return toDate;
     }
 
-    public void setTo(Date to) {
-        this.to = to;
+    public void setToDate(Date toDAte) {
+        this.toDate = toDate;
     }
 
     public Integer getDays() {

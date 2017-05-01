@@ -300,8 +300,8 @@ public class LeaveController {
             LeaveDetail detail = new LeaveDetail();
             detail.setDays(day);
             detail.setDeduct(thisMonthDeduct);
-            detail.setFrom(thisMonthFrom);
-            detail.setTo(thisMonthTo);
+            detail.setFromDate(thisMonthFrom);
+            detail.setToDate(thisMonthTo);
             detail.setLeaveHeader(header);
             leaveDetails.add(detail);
             thisMonthFrom = nextFirstDayOfMonth;
@@ -500,8 +500,8 @@ public class LeaveController {
             LeaveDetail detail = new LeaveDetail();
             detail.setDays(day);
             detail.setDeduct(thisMonthDeduct);
-            detail.setFrom(thisMonthFrom);
-            detail.setTo(thisMonthTo);
+            detail.setFromDate(thisMonthFrom);
+            detail.setToDate(thisMonthTo);
             detail.setLeaveHeader(header);
             leaveDetails.add(detail);
             thisMonthFrom = nextFirstDayOfMonth;

@@ -46,7 +46,7 @@ public class SalaryController {
     private IUserService userService;
 
     @Autowired
-    private ILeaveHeaderService leaveHeaderService;
+    private ILeaveDetailService leaveDetailService;
 
     @RequestMapping(value = "getSalaryByPage", method = RequestMethod.GET)
     @ResponseBody
@@ -372,19 +372,19 @@ public class SalaryController {
                     salaryPayroll.setStaffName(user.getRealName());
                     salaryPayroll.setBasic(salaryVO.getMoney());
                     salaryPayroll.setSalaryDate(lastMonth);
-                    List<LeaveHeader> leaveHeader = leaveHeaderService.getLeaveHeaderByUserAndStatus(user.getId(), Constraint.LEAVE_STATUS_APPROVE, null, null);
+                    List<LeaveDetail> leaveDetails = leaveDetailService.getLeaveDetailByUserAndMonth(user.getId(), lastMonth);
                     Double leavePay = 0.0;
-                    for (LeaveHeader header : leaveHeader) {
-                        for (LeaveDetail detail : header.getLeaveDetails()) {
-                            leavePay += detail.getDeduct();
-                        }
+                    for (LeaveDetail detail : leaveDetails) {
+                        leavePay += detail.getDeduct();
                     }
                     salaryPayroll.setLeave(NumberUtil.round(leavePay, 2));
                     salaryPayrolls.add(salaryPayroll);
                 }
             }
         }
-        request.getSession().setAttribute("payroll", salaryPayrolls);
+        request.getSession().
+
+                setAttribute("payroll", salaryPayrolls);
         json.put("data", salaryPayrolls);
         json.put("date", lastMonth);
         return json.toJSONString();
@@ -392,24 +392,24 @@ public class SalaryController {
 
     /**
      * 发放工资
+     *
      * @param request
-     * @return
-     * <table border="1" cellspacing="0">
+     * @return <table border="1" cellspacing="0">
      * <tr>
      * <th>代码</th>
      * <th>说明</th>
      * </tr>
      * <tr>
-     *     <td>400</td>
-     *     <td>其它扣薪有错</td>
+     * <td>400</td>
+     * <td>其它扣薪有错</td>
      * </tr>
      * <tr>
-     *     <td>401</td>
-     *     <td>奖金有错</td>
+     * <td>401</td>
+     * <td>奖金有错</td>
      * </tr>
      * <tr>
-     *     <td>200</td>
-     *     <td>发放完成</td>
+     * <td>200</td>
+     * <td>发放完成</td>
      * </tr>
      */
     @RequestMapping(value = "batchPayroll", method = POST)
@@ -451,7 +451,7 @@ public class SalaryController {
         List<SalaryHistory> histories = assymblyByPayRoll(salaryPayrolls, user);
         salaryHistoryService.batchSave(histories);
         Double total = 0.0;
-        for (SalaryHistory history : histories){
+        for (SalaryHistory history : histories) {
             total += history.getAmount();
         }
         json.put("status", 200);
@@ -459,10 +459,10 @@ public class SalaryController {
         return json.toJSONString();
     }
 
-    public List<SalaryHistory> assymblyByPayRoll(List<SalaryPayroll> payrolls, User entryUser){
+    public List<SalaryHistory> assymblyByPayRoll(List<SalaryPayroll> payrolls, User entryUser) {
         List<SalaryHistory> histories = new ArrayList<SalaryHistory>();
         Date now = new Date();
-        for (SalaryPayroll payroll : payrolls){
+        for (SalaryPayroll payroll : payrolls) {
             SalaryHistory history = new SalaryHistory();
             history.setEntryUser(userService.getUserById(entryUser.getId()));
             history.setEntryDatetime(now);
@@ -473,7 +473,7 @@ public class SalaryController {
             history.setSalaryDate(payroll.getSalaryDate());
             history.setTotal(payroll.getBasic());
             Double amount = payroll.getBasic() - payroll.getLeave() - payroll.getOther() + payroll.getBonus();
-            if (amount < 0){
+            if (amount < 0) {
                 amount = 0.0;
             }
             history.setAmount(amount);
