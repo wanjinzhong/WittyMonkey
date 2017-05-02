@@ -3,6 +3,13 @@
  */
 $(document).ready(function () {
     var chart = echarts.init(document.getElementById('main'));
+    var message_date = salary_history_date;
+    var message_basic = salary_history_basic;
+    var message_leave = salary_history_leave;
+    var message_other = salary_history_Other;
+    var message_bonus = salary_history_bonus;
+    var message_amount = salary_history_Amount;
+    var message_legend = salary_history_legend;
     $.ajax({
         url: "getSalaryHistory.do",
         data: {"id": $("#id").val()},
@@ -21,26 +28,26 @@ $(document).ready(function () {
                         var key = d[0]["axisValue"];
                         for (var i = 0; i < tips.length; i++) {
                             if (tips[i]["date"] == key) {
-                                var content = "时间：" + key + "<br/>" +
-                                    "基本工资：" + tips[i]["total"] + "<br/>" +
-                                    "请假扣薪: -" + tips[i]["leave"] + "<br/>" +
-                                    "其它扣薪: -" + tips[i]["other"] + "<br/>" +
-                                    "奖金: +" + tips[i]["bonus"] + "<br/>" +
-                                    "实际工资：" + d[0]["data"];
+                                var content = message_date + key + "<br/>" +
+                                    message_basic + tips[i]["total"] + "<br/>" +
+                                    message_leave + "-" + tips[i]["leave"] + "<br/>" +
+                                    message_other + "-" + tips[i]["other"] + "<br/>" +
+                                    message_bonus + "+" + tips[i]["bonus"] + "<br/>" +
+                                    message_amount + d[0]["data"];
                                 return content;
                             }
                         }
                     }
                 },
                 legend: {
-                    data: ["工资"]//[salary_legend]
+                    data: [message_legend]
                 },
                 xAxis: {
                     data: res["time"]
                 },
                 yAxis: {},
                 series: [{
-                    name: "工资",//salary_legend,
+                    name: message_legend,
                     type: "line",
                     data: res["salary"]
                 }],

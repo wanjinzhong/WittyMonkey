@@ -318,7 +318,6 @@ public class SalaryController {
      *
      * @param request
      * @return JSONArray
-     * 单个JSON： {"time": 工资时间, "salary": 当月实际工资, "tip":{"total": 工资, "leave": 请假扣薪, "other": 其它扣薪, "bonus":奖金}}
      */
     @RequestMapping(value = "getSalaryHistory", method = GET)
     @ResponseBody

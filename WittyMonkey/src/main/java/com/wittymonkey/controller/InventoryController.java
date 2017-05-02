@@ -289,7 +289,6 @@ public class InventoryController {
         finance.setMoney(pay);
         finance.setEntryUser(userService.getUserById(user.getId()));
         finance.setEntryDatetime(new Date());
-        inStock.setFinance(finance);
         inStockService.save(inStock);
         json.put("status", 200);
         return json.toJSONString();

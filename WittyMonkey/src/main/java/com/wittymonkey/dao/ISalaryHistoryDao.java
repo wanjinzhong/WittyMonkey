@@ -14,4 +14,7 @@ public interface ISalaryHistoryDao extends IGenericDao<SalaryHistory, Serializab
     List<SalaryHistory> getSalaryHistoryBySalaryId(Integer salaryId);
 
     SalaryHistory getSalaryHistoryByUserIdAndSalaryDate(Integer userId, Date salaryDate);
+
+    List<SalaryHistory> getSalaryByDateRange(Date from, Date to);
+
 }

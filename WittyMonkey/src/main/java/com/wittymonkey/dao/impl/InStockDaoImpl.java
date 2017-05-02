@@ -1,5 +1,6 @@
 package com.wittymonkey.dao.impl;
 
+import com.wittymonkey.entity.Salary;
 import com.wittymonkey.vo.ConditionModel;
 import com.wittymonkey.vo.Constraint;
 import org.springframework.stereotype.Repository;
@@ -7,6 +8,8 @@ import org.springframework.stereotype.Repository;
 import com.wittymonkey.dao.IInStockDao;
 import com.wittymonkey.entity.InStock;
 
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -33,6 +36,15 @@ public class InStockDaoImpl extends GenericDaoImpl<InStock> implements IInStockD
         ConditionModel condition = assymblyCondition(param);
         hql += condition.getHql() + " order by entryDatetime desc";
         return queryListHQL(hql, condition.getParam());
+    }
+
+    @Override
+    public List<InStock> getInStockByDateRange(Integer hotelId, Date from, Date to) {
+        String hql = "from InStock where entryDatetime >= :from and entryDatetime < :to";
+        Map<String, Object> param = new HashMap<String, Object>();
+        param.put("from", from);
+        param.put("to", to);
+        return queryListHQL(hql,param);
     }
 
     public ConditionModel assymblyCondition(Map<Integer, Object> param) {

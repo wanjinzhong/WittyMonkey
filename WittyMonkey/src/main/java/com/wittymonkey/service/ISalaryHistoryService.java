@@ -13,6 +13,8 @@ public interface ISalaryHistoryService {
 
     SalaryHistory getSalaryHistoryByUserIdAndSalaryDate(Integer userId, Date salaryDate);
 
+    List<SalaryHistory> getSalaryByDateRange(Date from, Date to);
+
     void batchSave(List<SalaryHistory> salaryHistories);
 
     void save(SalaryHistory salaryHistory);

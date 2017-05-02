@@ -35,4 +35,9 @@ public class InStockServiceImpl implements IInStockService {
     public void save(InStock inStock) {
         inStockDao.save(inStock);
     }
+
+    @Override
+    public List<InStock> getInStockByDateRange(Integer hotelId, Date start, Date to) {
+        return inStockDao.getInStockByDateRange(hotelId, start, to);
+    }
 }

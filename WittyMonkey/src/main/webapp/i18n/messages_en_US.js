@@ -149,13 +149,21 @@ var change_success = "Change room success";
 var checkout_payback = "Refund(including deposit)";
 var checkout_refund_wrong = "Incorrect amount, range:";
 
-var btn_dimission = "Dimission";
+var btn_dimission = "Dimiss";
 var dimission_title = "Staff Dimission";
 var staff_add = "Add Staff";
 var staff_add_success = "Add Staff successfully";
-var staff_no = "staff no/login name";
+var staff_no = "staff no";
+var staff_real_name = "Real Name";
+var staff_roles = "Roles";
 var staff_initpassword = "init password";
+var staff_tel = "Tel";
+var staff_email = "Email";
 var staff_edit = "Edit Staff";
+var staff_dimission_date = "Dimission Date";
+var staff_dimission_note = "Dimission Note";
+var staff_induction_date = "Induction Date";
+var operation = "Operation";
 var staff_edit_success = "Edit staff successfully";
 var dimission_benefits_wrong = "Benefits wrong";
 var dimission_success = "Staff dimiss successfully";
@@ -166,11 +174,15 @@ var role_delete_not_exist = "The role does not exist and may have been deleted";
 var role_delete_success = "Delete role successfully";
 var role_edit_title = "Edit role";
 var role_add_title = "Add role";
+var role_name = "Role Name";
+var role_exist = "Role exist";
 var no_menu_chosen = "No permission chosen";
 var menu_duplicate = "Permissions duplicate whith a role :";
 var role_add_success = "Add role successfully";
 var role_edit_success = "Role modification success";
 var role_can_not_delete = "This role is not allowed to be deleted";
+var role_incumbency = "Incumbency";
+var role_dimission = "Dimissed";
 
 var finance_type_in = "IN";
 var finance_type_out = "OUT";
@@ -215,7 +227,7 @@ var reimburse_approve_success = "Approve successfully";
 var reimburse_reject_success = "Reject successfully";
 
 var btn_change = "Change";
-var btn_history = "History";
+var btn_history = "His";
 var change_title = "Salary Change";
 var history_title = "Salary History";
 var time_error = "Time Error";
@@ -260,6 +272,7 @@ var instock_materiel_null = "Deleted";
 var instock_add = "In Stock";
 var instock_barcode_not_exist = "Barcode is not exist";
 var instock_name_not_exist = "Name is not exist";
+var instock_materiel_not_exist = "Materiel is not exist";
 var instock_price_wrong = "Purchase Price Wrong";
 var instock_qty_wrong = "Qty wrong";
 var instock_pay_wrong = "Payment wrong";
@@ -294,7 +307,6 @@ var leave_date = "Leave date";
 var leave_add_success = "Leave add successfully";
 var leave_not_exist = "Leave application does not exist, may have been deleted";
 var leave_changed = "Leave application has changed, please try again";
-var leave_opt_successs = "Audit success";
 var leave_approve_success = "Approve successfully";
 var leave_reject_success = "Reject successfully";
 
@@ -308,6 +320,24 @@ var apply_delete_success = "Application deleted successfully";
 var apply_delete_hint = "Are you sure to delete this application?";
 var apply_delete_title = "Delete application";
 
+var reimburse_apply_add_success = "Apply Reimbursement successfully, please wait for the application";
+
 var setting_data = "Data per page";
 var setting_data_wrong = "Data per page wrong";
 var setting_save_success = "Save successfully, refresh the page to effect";
+
+var report_date_null = "Please select a date range";
+var date_wrong = "Date wrong";
+
+// report
+var total_in_out_title = "Total In/Out";
+var in_title = "In";
+var out_title = "Out";
+var net_margin = "Net margin: ";
+var salary_history_date = "Date: ";
+var salary_history_basic = "Basic: ";
+var salary_history_leave = "Leave: ";
+var salary_history_Other = "Other: ";
+var salary_history_bonus = "Bonus: ";
+var salary_history_Amount = "Amount: ";
+var salary_history_legend = "Salary";

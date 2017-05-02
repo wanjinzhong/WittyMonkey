@@ -85,6 +85,13 @@ public class Constraint {
     public static final Integer LEAVE_STATUS_APPROVE = 2;
     public static final Integer LEAVE_STATUS_REJECT = 3;
 
+    public static final Integer FINANCE_IN_ALL = -2;
+    public static final Integer FINANCE_OUT_ALL = -1;
+
+    public static final Integer REPORT_LAST_MONTH = 1;
+    public static final Integer REPORT_LAST_YEAR = 2;
+    public static final Integer REPORT_CUSTOM = 3;
+
     public static final String LANG_ZH_CN = "zh_CN";
     public static final String LANG_EN_US = "en_US";
 }

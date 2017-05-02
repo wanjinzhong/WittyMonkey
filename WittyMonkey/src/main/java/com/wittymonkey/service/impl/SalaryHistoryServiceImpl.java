@@ -29,6 +29,11 @@ public class SalaryHistoryServiceImpl implements ISalaryHistoryService {
     }
 
     @Override
+    public List<SalaryHistory> getSalaryByDateRange(Date from, Date to) {
+        return salaryHistoryDao.getSalaryByDateRange(from, to);
+    }
+
+    @Override
     public void batchSave(List<SalaryHistory> salaryHistories) {
         for (SalaryHistory history : salaryHistories){
             salaryHistoryDao.save(history);

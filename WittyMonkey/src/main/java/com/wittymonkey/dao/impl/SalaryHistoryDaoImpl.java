@@ -29,4 +29,13 @@ public class SalaryHistoryDaoImpl extends GenericDaoImpl<SalaryHistory> implemen
         param.put("salaryDate", salaryDate);
         return queryOneHql(hql, param);
     }
+
+    @Override
+    public List<SalaryHistory> getSalaryByDateRange(Date from, Date to) {
+        String hql = "from SalaryHistory where salaryDate >= :from and salaryDate <= :to";
+        Map<String, Object> param = new HashMap<String, Object>();
+        param.put("from", from);
+        param.put("to", to);
+        return queryListHQL(hql, param);
+    }
 }

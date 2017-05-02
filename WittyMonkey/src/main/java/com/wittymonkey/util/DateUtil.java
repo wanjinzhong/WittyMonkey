@@ -76,6 +76,18 @@ public class DateUtil {
     }
 
     /**
+     * 上个月最后一天
+     *
+     * @return
+     */
+    public static Date lastMonthLastDate(Date date) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(thisMonthFirstDate(date));
+        calendar.add(Calendar.MILLISECOND, -1);
+        return calendar.getTime();
+    }
+
+    /**
      * 这个月一号
      *
      * @return
@@ -90,4 +102,55 @@ public class DateUtil {
         calendar.set(Calendar.MILLISECOND, 0);
         return calendar.getTime();
     }
+
+    /**
+     * 今年第一天
+     *
+     * @param date
+     * @return
+     */
+    public static Date thisYearFirstDate(Date date) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        calendar.set(Calendar.MONTH, 1);
+        calendar.set(Calendar.DAY_OF_MONTH, 1);
+        calendar.set(Calendar.HOUR_OF_DAY, 0);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+        calendar.set(Calendar.MILLISECOND, 0);
+        return calendar.getTime();
+    }
+
+    /**
+     * 去年第一天
+     *
+     * @param date
+     * @return
+     */
+    public static Date lastYearFirstDate(Date date) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        calendar.set(Calendar.MONTH, 1);
+        calendar.set(Calendar.DAY_OF_MONTH, 1);
+        calendar.set(Calendar.HOUR_OF_DAY, 0);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+        calendar.set(Calendar.MILLISECOND, 0);
+        calendar.add(Calendar.YEAR, -1);
+        return calendar.getTime();
+    }
+
+    /**
+     * 去年最后一天
+     *
+     * @param date
+     * @return
+     */
+    public static Date lastYearLastDate(Date date) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(thisYearFirstDate(date));
+        calendar.add(Calendar.MILLISECOND, -1);
+        return calendar.getTime();
+    }
+
 }

@@ -34,10 +34,6 @@ public class InStock implements Serializable {
     @Column
     private Double payment;
 
-    @OneToOne(targetEntity = Finance.class, cascade = {CascadeType.ALL})
-    @JoinColumn(name = "finance_id", referencedColumnName = "id")
-    private Finance finance;
-
     @ManyToOne(targetEntity = Hotel.class, fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(name = "hotel_id", referencedColumnName = "id")
     private Hotel hotel;
@@ -122,13 +118,5 @@ public class InStock implements Serializable {
 
     public void setHotel(Hotel hotel) {
         this.hotel = hotel;
-    }
-
-    public Finance getFinance() {
-        return finance;
-    }
-
-    public void setFinance(Finance finance) {
-        this.finance = finance;
     }
 }
