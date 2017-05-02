@@ -163,6 +163,9 @@ function search() {
                         ]
                     });
                     inReport.setOption({
+                        title: {
+                            text: message_in
+                        },
                         color: ['#5FB878'],
                         tooltip: {
                             trigger: 'axis',
@@ -206,6 +209,9 @@ function search() {
                         ]
                     });
                     outReport.setOption({
+                        title: {
+                            text: message_out
+                        },
                         tooltip: {
                             trigger: 'axis',
                             axisPointer: {            // 坐标轴指示器，坐标轴触发有效
@@ -228,7 +234,7 @@ function search() {
                         ],
                         series: [
                             {
-                                name: messafe_out,
+                                name: message_out,
                                 type: 'bar',
                                 barWidth: '60%',
                                 data: res["outValue"]

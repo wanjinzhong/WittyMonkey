@@ -44,7 +44,7 @@
         <div style="width: 300px; height:300px;" id="totalInOut"></div>
         <div id="totalHint" style="text-align: center; margin-top:  -30px; font-size: 18px; font-weight: bold;"></div>
     </div>
-    <div style="margin-top: -10px">
+    <div>
         <div style="width: 45%; height:400px; display: inline-block;" id="inReport"></div>
         <div style="width: 45%; height:400px;display: inline-block;" id="outReport"></div>
     </div>
