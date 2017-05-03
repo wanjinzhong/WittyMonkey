@@ -15,7 +15,6 @@ import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
@@ -1014,7 +1013,7 @@ public class RoomController {
             }
             checkin.setEstCheckoutDate(toDate);
         }
-        Set<Customer> customers = new HashSet<Customer>();
+        List<Customer> customers = new ArrayList<Customer>();
         for (int i = 0; i < idcards.length; i++) {
             if (idcards[i] == null || idcards[i].trim().equals("")) {
                 continue;

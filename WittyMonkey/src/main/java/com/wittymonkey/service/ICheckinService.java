@@ -3,6 +3,8 @@ package com.wittymonkey.service;
 import com.wittymonkey.entity.Checkin;
 
 import java.sql.SQLException;
+import java.util.Date;
+import java.util.List;
 
 public interface ICheckinService {
 
@@ -25,4 +27,6 @@ public interface ICheckinService {
     void update(Checkin checkin) throws SQLException;
 
     void checkin(Checkin checkin);
+
+    List<Checkin> getCheckinViaEstCheckoutDate(Integer hotelId, Date date);
 }

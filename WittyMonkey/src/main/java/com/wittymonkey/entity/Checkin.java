@@ -23,7 +23,7 @@ public class Checkin implements Serializable {
     @JoinTable(name = "customer_checkin",
             joinColumns = {@JoinColumn(name = "checkin_id", referencedColumnName = "id")},
             inverseJoinColumns = {@JoinColumn(name = "customer_id", referencedColumnName = "id")})
-    private Set<Customer> customers = new HashSet<Customer>();
+    private List<Customer> customers = new ArrayList<Customer>();
 
     @ManyToOne(targetEntity = RoomMaster.class, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JoinColumn(name = "room_id", referencedColumnName = "id")
@@ -82,11 +82,11 @@ public class Checkin implements Serializable {
         this.id = id;
     }
 
-    public Set<Customer> getCustomers() {
+    public List<Customer> getCustomers() {
         return customers;
     }
 
-    public void setCustomers(Set<Customer> customers) {
+    public void setCustomers(List<Customer> customers) {
         this.customers = customers;
     }
 

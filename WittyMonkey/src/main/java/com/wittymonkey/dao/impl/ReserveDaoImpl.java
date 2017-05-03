@@ -6,10 +6,7 @@ import com.wittymonkey.dao.IReserveDao;
 import com.wittymonkey.entity.Reserve;
 
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Repository(value="reserveDao")
 public class  ReserveDaoImpl extends GenericDaoImpl<Reserve> implements IReserveDao{
@@ -57,6 +54,17 @@ public class  ReserveDaoImpl extends GenericDaoImpl<Reserve> implements IReserve
         param.put("roomId", roomId);
         param.put("status", status);
         return countHQL(hql, param);
+    }
+
+    @Override
+    public List<Reserve> getReservesViaEstCheckIn(Integer hotelId, Date from, Date to) {
+        String hql = "from Reserve where room.floor.hotel.id = :hotelId and estCheckinDate >= :from and estCheckinDate <= :to  and status = 0";
+        Map<String, Object> param = new HashMap<String, Object>();
+        param.put("hotelId", hotelId);
+        param.put("from", from);
+        param.put("to", to);
+        List<Reserve> list = queryListHQL(hql, param);
+        return list;
     }
 
 

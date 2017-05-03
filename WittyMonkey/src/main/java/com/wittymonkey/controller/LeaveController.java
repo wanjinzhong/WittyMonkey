@@ -312,8 +312,8 @@ public class LeaveController {
         return json.toJSONString();
     }
 
-    @RequestMapping(name = "toShowLeave", method = GET)
-    public String toShowLeave(HttpServletRequest request) {
+    @RequestMapping(name = "toShowLeaveDetail", method = GET)
+    public String toShowLeaveDetail(HttpServletRequest request) {
         Integer id = Integer.parseInt(request.getParameter("id").trim());
         Hotel hotel = (Hotel) request.getSession().getAttribute("hotel");
         LeaveHeader leaveHeader = leaveHeaderService.getLeaveHeaderById(id);

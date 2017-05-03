@@ -61,6 +61,12 @@ public class MaterielDaoImpl extends GenericDaoImpl<Materiel> implements IMateri
         return queryOneHql(hql, id);
     }
 
+    @Override
+    public List<Materiel> getMaterielLowInventory(Integer hotelId) {
+        String hql = "from Materiel where warningStock > stock";
+        return queryListHQL(hql, new Object());
+    }
+
     private ConditionModel assymblyCondition(Map<Integer, Object> condition){
         ConditionModel model = new ConditionModel();
         StringBuilder builder = new StringBuilder(" where");

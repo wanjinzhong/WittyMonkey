@@ -365,4 +365,9 @@ public class IndexController {
     public String toLeaveApply(HttpServletRequest request){
         return "leave_apply";
     }
+
+    @RequestMapping(value = "toDashboard", method = RequestMethod.GET)
+    public String toDashboard(HttpServletRequest request){
+        return "dashboard";
+    }
 }

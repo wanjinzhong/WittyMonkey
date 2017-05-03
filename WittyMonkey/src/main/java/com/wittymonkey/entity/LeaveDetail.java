@@ -59,7 +59,7 @@ public class LeaveDetail implements Serializable {
         return toDate;
     }
 
-    public void setToDate(Date toDAte) {
+    public void setToDate(Date toDate) {
         this.toDate = toDate;
     }
 

@@ -70,4 +70,9 @@ public class MaterielServiceImpl implements IMaterielService {
         }
         materielDao.delete(materiel);
     }
+
+    @Override
+    public List<Materiel> getMaterielLowInventory(Integer hotelId) {
+        return materielDao.getMaterielLowInventory(hotelId);
+    }
 }

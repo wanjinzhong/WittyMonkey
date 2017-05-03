@@ -269,14 +269,14 @@ function toClean(id) {
                     layer.msg(operation_success, {
                         icon: 6, time: 2000
                     }, function () {
-                        parent.location.reload();
+                        location.reload();
                         closeMe();
                     });
                 }else if(res["status"] == 400){
                     layer.msg(operation_failure, {
                         icon: 2, time: 2000
                     }, function () {
-                        parent.location.reload();
+                        location.reload();
                         closeMe();
                     });
                 }

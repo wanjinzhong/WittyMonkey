@@ -72,6 +72,6 @@ function showDetail(id) {
         maxmin: false,
         shade: 0.4,
         title: leave_detail_title,
-        content: "toShowLeave.do?id=" + id
+        content: "toShowLeaveDetail.do?id=" + id
     });
 }

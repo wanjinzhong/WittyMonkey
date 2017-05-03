@@ -26,8 +26,6 @@ function refreshTable(obj) {
                 '<td>' + new Date(obj[i]["estCheckoutDate"]).format("yyyy-MM-dd") + '</td>'+
                 '<td>' + obj[i]["deposit"] + '</td>'+
                 '<td>' +
-                '<i class="editBtn layui-icon layui-btn layui-btn-primary layui-btn-small" onclick="reserveDetail(' + obj[i]["id"] + ')">&#xe60b; ' + btn_detail + '</i>' +
-                '<i class="editBtn layui-icon layui-btn layui-btn-primary layui-btn-small" onclick="editReserve(' + obj[i]["id"] + ')">&#xe642; ' + btn_edit + '</i>' +
                 '<i class="deleteBtn layui-icon layui-btn layui-btn-primary layui-btn-small" onclick="unsubscribe(' + obj[i]["id"] + ',' + obj[i]["deposit"] + ')">' +
                 '<svg class="icon">' +
                 '<use xlink:href="#icon-tuiding"></use>' +

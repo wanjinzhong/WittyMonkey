@@ -20,4 +20,6 @@ public interface IMaterielService {
     Materiel getMaterielById(Integer id);
 
     void deleteMateriel(Materiel materiel) throws SQLException;
+
+    List<Materiel> getMaterielLowInventory(Integer hotelId);
 }

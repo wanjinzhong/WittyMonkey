@@ -381,9 +381,7 @@ public class SalaryController {
                 }
             }
         }
-        request.getSession().
-
-                setAttribute("payroll", salaryPayrolls);
+        request.getSession().setAttribute("payroll", salaryPayrolls);
         json.put("data", salaryPayrolls);
         json.put("date", lastMonth);
         return json.toJSONString();

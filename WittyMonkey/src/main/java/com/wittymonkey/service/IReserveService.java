@@ -26,4 +26,6 @@ public interface IReserveService {
     Integer getTotalByRoomIdReserved(Integer roomId, Integer status);
 
     void update(Reserve reserve) throws SQLException;
+
+    List<Reserve> getReservesViaEstCheckIn(Integer hotelId, Date date);
 }

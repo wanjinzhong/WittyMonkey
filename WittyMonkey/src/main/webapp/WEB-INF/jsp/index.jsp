@@ -79,12 +79,12 @@
             <ul class="layui-tab-title">
                 <li class="layui-this">
                     <i class="fa fa-dashboard" aria-hidden="true"></i>
-                    <cite>控制面板</cite>
+                    <cite><fmt:message key="dashboard"/></cite>
                 </li>
             </ul>
             <div class="layui-tab-content">
                 <div class="layui-tab-item layui-show">
-                    <iframe src="toRoomManage.do" class="frame-content"></iframe>
+                    <iframe src="toDashboard.do" class="frame-content"></iframe>
                 </div>
             </div>
         </div>
