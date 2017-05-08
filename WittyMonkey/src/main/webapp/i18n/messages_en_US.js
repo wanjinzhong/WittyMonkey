@@ -341,3 +341,10 @@ var salary_history_Other = "Other: ";
 var salary_history_bonus = "Bonus: ";
 var salary_history_Amount = "Amount: ";
 var salary_history_legend = "Salary";
+
+// notify
+var notify_no_receiver = "Please choose receiver";
+var send_success = "Send notify successfully";
+var inbox_null = "Inbox is empty";
+var outbox_null = "Outbox is empty";
+var trashbin_null = "Trash bin is empty";

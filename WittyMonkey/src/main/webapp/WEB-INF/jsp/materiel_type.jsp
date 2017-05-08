@@ -12,10 +12,10 @@
 <%@ include file="common/laypage.jsp" %>
 <html>
 <head>
-    <title><fmt:message key="materiel.manage.title"/></title>
     <!-- 根据设置动态加载js语言 -->
     <script type="text/javascript" src="i18n/messages_${loginUser.setting.lang }.js"></script>
     <link href="style/common.css" rel="stylesheet" type="text/css"/>
+    <script type="text/javascript" src="js/common.js"></script>
     <script type="text/javascript" src="js/materiel_type.js"></script>
     <fmt:setBundle basename="i18n/messages_${loginUser.setting.lang }"/>
 </head>

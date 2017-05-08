@@ -5,7 +5,7 @@
     box-shadow: 5px 5px 10px #d2d2d2;
     display: none;
 }
-#room{
+.panes{
     margin-top: 35px;
 }
 .title{

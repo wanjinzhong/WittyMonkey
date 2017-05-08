@@ -22,16 +22,16 @@ public class Notify implements Serializable {
     private Integer id;
 
     @ManyToOne(targetEntity = User.class)
-    @JoinColumn(name = "from_user_id")
-    private User fromUser;
+    @JoinColumn(name = "sender")
+    private User sender;
 
-    @OneToMany(targetEntity = NotifyReceiver.class, mappedBy = "notify")
+    @OneToMany(targetEntity = NotifyReceiver.class, mappedBy = "notify", cascade = {CascadeType.ALL})
     private List<NotifyReceiver> receivers = new ArrayList<NotifyReceiver>();
 
     @Column(name = "send_date")
     private Date sendDate;
 
-    @OneToMany(targetEntity = NotifyFile.class, mappedBy = "notify")
+    @OneToMany(targetEntity = NotifyFile.class, mappedBy = "notify", cascade = {CascadeType.ALL})
     private List<NotifyFile> files = new ArrayList<NotifyFile>();
 
     // 紧急级别
@@ -41,6 +41,14 @@ public class Notify implements Serializable {
     // 主题
     @Column
     private String subject;
+
+    // 是否放在垃圾箱里
+    @Column
+    private Boolean isInTrash;
+
+    // 是否已删除（对发件人而言，收件人仍能看到）
+    @Column
+    private Boolean isDeleted;
 
     @Column(columnDefinition = "TEXT")
     private String content;
@@ -53,12 +61,12 @@ public class Notify implements Serializable {
         this.id = id;
     }
 
-    public User getFromUser() {
-        return fromUser;
+    public User getSender() {
+        return sender;
     }
 
-    public void setFromUser(User fromUser) {
-        this.fromUser = fromUser;
+    public void setSender(User sender) {
+        this.sender = sender;
     }
 
     public List<NotifyReceiver> getReceivers() {
@@ -109,4 +117,19 @@ public class Notify implements Serializable {
         this.content = content;
     }
 
+    public Boolean getInTrash() {
+        return isInTrash;
+    }
+
+    public void setInTrash(Boolean inTrash) {
+        isInTrash = inTrash;
+    }
+
+    public Boolean getDeleted() {
+        return isDeleted;
+    }
+
+    public void setDeleted(Boolean deleted) {
+        isDeleted = deleted;
+    }
 }

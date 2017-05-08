@@ -280,10 +280,10 @@ public class StaffController {
         Salary salary = salaryService.getSalaryByStaffId(user.getId());
         SalaryVO salaryVO = ChangeToSimple.convertSalaryByTime(salary, thisMonth);
         SalaryPayroll salaryPayroll = new SalaryPayroll();
+        salaryPayroll.setStaffId(user.getId());
+        salaryPayroll.setStaffNo(user.getStaffNo());
+        salaryPayroll.setStaffName(user.getRealName());
         if (salaryVO != null && salaryVO.getMoney() != null) {
-            salaryPayroll.setStaffId(user.getId());
-            salaryPayroll.setStaffNo(user.getStaffNo());
-            salaryPayroll.setStaffName(user.getRealName());
             salaryPayroll.setBasic(salaryVO.getMoney() * dateDiff / user.getWorkDays());
             salaryPayroll.setSalaryDate(thisMonth);
             List<LeaveDetail> leaveDetails = leaveDetailService.getLeaveDateilByUserInRange(user.getId(), thisMonth, new Date());
@@ -351,12 +351,19 @@ public class StaffController {
         history.setEntryUser(userService.getUserById(entryUser.getId()));
         history.setEntryDatetime(now);
         history.setBonus(payroll.getBonus());
-        history.setLeavePay(payroll.getLeave());
+        Double amount = 0.0;
+        if (payroll.getLeave() != null) {
+            history.setLeavePay(payroll.getLeave());
+            amount -= payroll.getLeave();
+        }
         history.setOtherPay(payroll.getOther());
         history.setSalary(salaryService.getSalaryByStaffId(payroll.getStaffId()));
         history.setSalaryDate(payroll.getSalaryDate());
-        history.setTotal(payroll.getBasic());
-        Double amount = payroll.getBasic() - payroll.getLeave() - payroll.getOther() + payroll.getBonus();
+        if (payroll.getBasic() !=null) {
+            history.setTotal(payroll.getBasic());
+            amount += payroll.getBasic();
+        }
+        amount = amount - payroll.getOther() + payroll.getBonus();
         if (amount < 0) {
             amount = 0.0;
         }

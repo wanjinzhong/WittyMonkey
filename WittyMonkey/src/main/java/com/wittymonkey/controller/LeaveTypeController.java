@@ -236,7 +236,7 @@ public class LeaveTypeController {
             json.put("status", 420);
             return json.toJSONString();
         }
-        Double deductVal = Double.parseDouble(deduct);
+        Double deductVal = Double.parseDouble(deduct)/100;
         LeaveType leaveType = new LeaveType();
         leaveType.setDeletable(true);
         leaveType.setHotel(hotelService.findHotelById(hotel.getId()));
@@ -315,7 +315,7 @@ public class LeaveTypeController {
             json.put("status", 420);
             return json.toJSONString();
         }
-        Double deductVal = Double.parseDouble(deduct);
+        Double deductVal = Double.parseDouble(deduct)/100;
         LeaveType editLeaveType = leaveTypeService.getLeaveTypeById(leaveType.getId());
         editLeaveType.setDeduct(deductVal);
         editLeaveType.setEntryDatetime(new Date());

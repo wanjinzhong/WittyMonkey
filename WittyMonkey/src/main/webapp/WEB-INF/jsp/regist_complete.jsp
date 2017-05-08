@@ -23,6 +23,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title><fmt:message key="name"/></title>
     <link href="style/common.css" rel="stylesheet" type="text/css"/>
+    <script type="text/javascript" src="js/common.js"></script>
     <script type="text/javascript" src="i18n/messages_<%=lang%>.js"></script>
     <fmt:setBundle basename="i18n/messages"/>
 </head>

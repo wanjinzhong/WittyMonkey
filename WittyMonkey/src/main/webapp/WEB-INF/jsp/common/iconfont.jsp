@@ -1,2 +1,2 @@
 <%--alibaba iconfont字体图标--%>
-<script type="text/javascript" src="//at.alicdn.com/t/font_qlmz18c4lwlpiudi.js"></script>
+<script type="text/javascript" src="//at.alicdn.com/t/font_qj5z7ibj192g9zfr.js"></script>

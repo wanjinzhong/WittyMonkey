@@ -1,0 +1,38 @@
+.isNull{
+    text-align: center;
+    font-size: 30px;
+    color: #c2c2c2;
+}
+.notify{
+    height: 60px;
+    background-color:#ecf5ff;
+    box-shadow: 5px 5px 5px #c2c2c2;
+    padding: 10px;
+    margin: 10px;
+    cursor: pointer;
+}
+.content{
+    margin: 10px;
+}
+.sender, .receiver{
+    float: left;
+    display: inline-block;
+}
+.time {
+    float: right;
+    display: inline-block;
+}
+.subject{
+    margin-left: 20px;
+    padding-top: 10px;
+    clear: both;
+}
+.unread{
+    font-weight:bold;
+    font-style: italic;
+}
+.optBtn{
+    float: right;
+    font-size: 20px;
+    font-weight:normal;
+}

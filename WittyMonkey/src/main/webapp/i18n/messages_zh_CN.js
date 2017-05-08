@@ -341,3 +341,10 @@ var salary_history_Other = "其它扣薪: ";
 var salary_history_bonus = "奖金: ";
 var salary_history_Amount = "实际工资: ";
 var salary_history_legend = "工资";
+
+// notify
+var notify_no_receiver = "请选择收件人";
+var send_success = "发送成功";
+var inbox_null = "收件箱为空";
+var outbox_null = "发件箱为空";
+var trashbin_null = "垃圾箱为空";

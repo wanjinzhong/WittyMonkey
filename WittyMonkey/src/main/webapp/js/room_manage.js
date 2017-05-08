@@ -198,7 +198,7 @@ function toReserve(id) {
     layer.open({
         title: room_reserve_title,
         content: "toReserve.do?id=" + id,
-        area: ['650px', '470px'],
+        area: ['650px', '480px'],
         maxmin: false,
         shade: 0.4,
         scrollbar: false,

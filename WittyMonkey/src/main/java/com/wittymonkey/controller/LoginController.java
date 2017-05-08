@@ -252,9 +252,15 @@ public class LoginController {
     @RequestMapping(value = "index", method = RequestMethod.GET)
     public String index(HttpServletRequest request) {
         // 测试数据
-        User user = userService.getUserByStaffNo("10001");
+        /*User user = userService.getUserByStaffNo("10001");
         request.getSession().setAttribute("loginUser", user);
         request.getSession().setAttribute("hotel", user.getHotel());
+        */
+        User user = (User) request.getSession().getAttribute("loginUser");
+        if (user != null){
+            request.getSession().setAttribute("loginUser", userService.getUserById(user.getId()));
+            request.getSession().setAttribute("hotel", hotelService.findHotelById(user.getHotel().getId()));
+        }
         return "index";
     }
 
@@ -478,7 +484,7 @@ public class LoginController {
         // 添加初始化请假类型
         // 事假
         LeaveType affair = new LeaveType();
-        affair.setDeduct(100.0);
+        affair.setDeduct(1.0);
         affair.setName("Affair(事假)");
         affair.setEntryDatetime(now);
         affair.setEntryUser(system);
@@ -510,7 +516,7 @@ public class LoginController {
         funeral.setHotel(hotel);
         // 病假
         LeaveType sick = new LeaveType();
-        sick.setDeduct(50.0);
+        sick.setDeduct(0.5);
         sick.setName("Sick(病假)");
         sick.setEntryDatetime(now);
         sick.setEntryUser(system);

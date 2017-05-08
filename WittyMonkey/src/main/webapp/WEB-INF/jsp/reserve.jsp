@@ -11,6 +11,7 @@
     <title><fmt:message key="name"/></title>
     <%--alibaba iconfont字体图标--%>
     <link href="style/common.css" rel="stylesheet" type="text/css"/>
+    <script type="text/javascript" src="js/common.js"></script>
     <script type="text/javascript" src="i18n/messages_${loginUser.setting.lang }.js"></script>
     <script type="text/javascript" src="js/reserve.js"></script>
     <link rel="stylesheet" href="style/reserve.css"/>

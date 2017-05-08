@@ -487,4 +487,46 @@ public class ChangeToSimple {
         leaveVO.setDeduct(deduct);
         return leaveVO;
     }
+
+    public static List<SimpleNotify> notifyReceiverList(List<NotifyReceiver> notifyReceivers){
+        List<SimpleNotify> notifies = new ArrayList<SimpleNotify>();
+        for (NotifyReceiver receiver : notifyReceivers){
+            SimpleNotify notify = new SimpleNotify();
+            notify.setNotifyId(receiver.getNotify().getId());
+            notify.setRecieverId(receiver.getId());
+            notify.setContent(receiver.getNotify().getContent());
+            notify.setDelete(receiver.getIsDelete());
+            notify.setSender(receiver.getNotify().getSender().getRealName());
+            notify.setLevel(receiver.getNotify().getLevel());
+            notify.setReaded(receiver.getIsReaded());
+            notify.setSendDate(receiver.getNotify().getSendDate());
+            notify.setSubject(receiver.getNotify().getSubject());
+            for (NotifyReceiver rec : receiver.getNotify().getReceivers()){
+                notify.getReceivers().add(rec.getReceiver().getRealName());
+            }
+            notifies.add(notify);
+        }
+        return notifies;
+    }
+    public static List<SimpleNotify> notifyList(List<Notify> notifies){
+        List<SimpleNotify>  simpleNotifies = new ArrayList<SimpleNotify>();
+        for (Notify notify : notifies){
+            simpleNotifies.add(notify(notify));
+        }
+        return simpleNotifies;
+    }
+
+    public static SimpleNotify notify(Notify notify){
+        SimpleNotify simpleNotify = new SimpleNotify();
+        simpleNotify.setNotifyId(notify.getId());
+        simpleNotify.setContent(notify.getContent());
+        simpleNotify.setSender(notify.getSender().getRealName());
+        simpleNotify.setLevel(notify.getLevel());
+        simpleNotify.setSendDate(notify.getSendDate());
+        simpleNotify.setSubject(notify.getSubject());
+        for (NotifyReceiver rec : notify.getReceivers()){
+            simpleNotify.getReceivers().add(rec.getReceiver().getRealName());
+        }
+        return simpleNotify;
+    }
 }

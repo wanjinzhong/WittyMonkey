@@ -85,6 +85,8 @@ function search() {
         condition = {"searchType": type, "barcode": $("#barcode").val()};
     } else if (type == 5){
         condition = {"searchType": type, "name": $("#name").val()};
+    } else if (type == 2){
+        condition = {"searchType": type, "typeId": $("#type").val()};
     }
     page("getMaterielByPage.do", 1, condition);
 }

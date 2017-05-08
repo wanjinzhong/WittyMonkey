@@ -12,9 +12,6 @@
 <%@ include file="common/iconfont.jsp" %>
 <html>
 <head>
-    <title><fmt:message key="checkin.change_room.title"/></title>
-    <link href="style/common.css" rel="stylesheet"
-          type="text/css"/>
     <link href="style/common.css" rel="stylesheet" type="text/css"/>
     <link href="style/change_room.css" rel="stylesheet" type="text/css"/>
     <script type="text/javascript" src="js/change_room.js"></script>
@@ -49,7 +46,7 @@
         <tr>
             <td class="td_title"><label class="layui-form-label"><fmt:message key="change.price"/></label></td>
             <td><input class="layui-input" type="text" disabled value="${checkin.price}" id="fromPrice"/></td>
-            <td><input class="layui-input" type="text" disabled id="toPrice"/></td>
+            <td><input class="layui-input" type="text" disabled id="toPrice" onchange="calcDiff()"/></td>
         </tr>
         <tr>
             <td class="td_title"><label class="layui-form-label"><fmt:message key="change.date"/></label></td>

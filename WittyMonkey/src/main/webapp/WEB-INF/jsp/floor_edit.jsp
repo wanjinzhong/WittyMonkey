@@ -12,15 +12,11 @@
 <%@ include file="common/iconfont.jsp" %>
 <html>
 <head>
-    <title><fmt:message key="index.menu.floor.add"/></title>
-    <link href="style/common.css" rel="stylesheet"
-          type="text/css"/>
     <link href="style/common.css" rel="stylesheet" type="text/css"/>
     <link href="style/floor_add.css" rel="stylesheet" type="text/css">
     <script type="text/javascript" src="js/floor_edit.js"></script>
 </head>
 <script type="text/javascript" src="js/common.js"></script>
-<!-- 根据设置动态加载js语言 -->
 <!-- 根据设置动态加载js语言 -->
 <script type="text/javascript" src="i18n/messages_${loginUser.setting.lang }.js"></script>
 <fmt:setBundle basename="i18n/messages_${loginUser.setting.lang }"/>
@@ -28,7 +24,7 @@
     <form id="add_form">
         <!-- java端处理方式 -->
         <input type="hidden" name="method" value="update"/>
-        <table class="form_table">
+        <table class="form_table" style="margin: 15px auto">
             <tr>
                 <td class="table-header"><label class="layui-form-label"><fmt:message key="floor.manage.floor_no"/></label></td>
                 <td><input type="text" class="layui-input" name="floorNo"

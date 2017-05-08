@@ -40,6 +40,6 @@ function choose(obj) {
     parent.$("#toNumber").val($(obj).parent().parent().find("#number").html());
     parent.$("#toName").val($(obj).parent().parent().find("#name").html());
     parent.$("#toPrice").val($(obj).parent().parent().find("#price").html());
-    parent.calcDiff();
+    window.parent.calcDiff();
     closeMe();
 }

@@ -8,7 +8,8 @@
 <head>
     <title><fmt:message key="name"/></title>
 </head>
-
+<script type="text/javascript" src="js/common.js"></script>
+<link href="style/common.css" rel="stylesheet" type="text/css"/>
 <link rel="stylesheet" href="style/index.css"/>
 <script src="js/index.js"></script>
 <script type="text/javascript" src="i18n/messages_${loginUser.setting.lang }.js"></script>

@@ -54,12 +54,12 @@ function save() {
                         break;
                     case 200 :
                         layer.msg(floor_manage_add_success, {
-                            icon: 1,
-                            time: 2000
-                        }, function () {
-                            parent.location.reload();
-                            closeMe();
-                        });
+                        icon: 1,
+                        time: 2000
+                    }, function () {
+                        parent.location.reload();
+                        closeMe();
+                    });
                         break;
                 }
             }
