@@ -48,7 +48,7 @@ public class LeaveHeaderDaoImpl extends GenericDaoImpl<LeaveHeader> implements I
 
     @Override
     public List<LeaveHeader> getLeaveHeaderByStatus(Integer hotelId, Integer status, Integer start, Integer total) {
-        String hql = "from LeaveHeader where leaveType.hotel.id = :hotelId";
+        String hql = "from LeaveHeader where applyUser.hotel.id = :hotelId";
         Map<String, Object> map = new HashMap<String, Object>();
         map.put("hotelId", hotelId);
         if (Constraint.LEAVE_SEARCHTYPE_PENDING.equals(status) ||

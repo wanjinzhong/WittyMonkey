@@ -25,7 +25,7 @@ function refreshTable(obj) {
                 '<td>' + obj[i]['applyUser'] + '</td>' +
                 '<td>' + formatDay(obj[i]['from']) + "<br/>" + formatDay(obj[i]['to']) + '</td>' +
                 '<td>' + obj[i]['days'] + '</td>' +
-                '<td>' + obj[i]['leaveType'] + '</td>';
+                '<td>' + (obj[i]['leaveType'] == undefined? leave_type_null:obj[i]['leaveType']) + '</td>';
                 switch (obj[i]['status']) {
                     case 1:
                         html += '<td>' + reimburse_pending + '</td>';

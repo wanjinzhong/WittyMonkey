@@ -35,9 +35,9 @@ function refreshTable(obj) {
     $("#dataTabel").html(html);
 }
 function deleteRole(id) {
-    var load = layer.load();
     layer.confirm(role_delete_hint, {icon: 7, title: role_delete_title},
         function (index) {
+            var load = layer.load();
             $.ajax({
                 url: "deleteRole.do",
                 data: {"id": id},

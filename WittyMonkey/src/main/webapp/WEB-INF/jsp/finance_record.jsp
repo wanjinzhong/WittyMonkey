@@ -57,7 +57,6 @@
                 <th width="50px"><fmt:message key="finance.money"/></th>
                 <th width="200px"><fmt:message key="note"/></th>
                 <th width="50px"><fmt:message key="floor.manage.entry_user"/></th>
-                <%--<th width="150px"><fmt:message key="operation"/></th>--%>
             </tr>
             </thead>
             <tbody id="dataTabel">

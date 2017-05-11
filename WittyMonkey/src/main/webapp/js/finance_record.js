@@ -108,7 +108,7 @@ function showAddFinance() {
         area: ['770px', '350px'],
         maxmin: false,
         shade: 0.4,
-        title: finance_type_add_title,
+        title: finance_add,
         content: "toAddFinance.do"
     });
 }

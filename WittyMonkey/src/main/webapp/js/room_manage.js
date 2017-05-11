@@ -107,7 +107,7 @@ function refreshTable(obj) {
                     '<li class="btn_change" onclick="toChange(' + obj[i]["id"] + ')">' +
                     '<svg class="icon" aria-hidden="true">' +
                     '<use xlink:href="#icon-huanfang"></use>' +
-                    '</svg> ' + btn_change +
+                    '</svg> ' + btn_change_room +
                     '</li>' +
                     '<li class="btn_checkout" onclick="toCheckout(' + obj[i]["id"] + ')">' +
                     '<svg class="icon" aria-hidden="true">' +

@@ -470,7 +470,7 @@ public class ChangeToSimple {
             }
         });
         List<LeaveDetail> details = header.getLeaveDetails();
-        if (details != null || details.size() > 0) {
+        if (details != null && details.size() > 0) {
             leaveVO.setFrom(details.get(0).getFromDate());
             leaveVO.setTo(details.get(details.size() - 1).getToDate());
         }

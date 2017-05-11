@@ -74,7 +74,7 @@ var btn_reserve = "RV";
 var btn_unsubscribe = "US";
 var btn_checkin = "IN";
 var btn_checkout = "OUT";
-var btn_change = "CG";
+var btn_change_room = "CG";
 var btn_clean = "CN";
 var room_hint_checkin = "Checked In";
 var room_hint_free = "Free";
@@ -205,6 +205,7 @@ var money_error = "Amount error";
 var money_only_positive = "Amount can only be positive";
 var finance_add_success = "Add finance successfully";
 var finance_type_all = "All";
+var finance_add = "Finance Add";
 
 var reimburse_pending = "Pending";
 var reimburse_approved = "Approved";
@@ -309,7 +310,7 @@ var leave_not_exist = "Leave application does not exist, may have been deleted";
 var leave_changed = "Leave application has changed, please try again";
 var leave_approve_success = "Approve successfully";
 var leave_reject_success = "Reject successfully";
-
+var leave_type_null = "Deleted";
 var leave_apply_title = "Leave Apply";
 var leave_apply_success = "Apply leave successfully. Please wait for the application";
 var leave_apply_edit_title = "Edit Leave Apply";

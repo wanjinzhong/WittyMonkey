@@ -96,7 +96,7 @@ public class UserDaoImpl extends GenericDaoImpl<User> implements IUserDao {
 		getCurrentSession().doWork(new Work() {
 			@Override
 			public void execute(Connection connection) throws SQLException {
-				CallableStatement call = connection.prepareCall("{call get_next_staff_id(?)}");
+				CallableStatement call = connection.prepareCall("{call get_next_staff_no(?)}");
 				call.setInt(1,hotelId);
 				ResultSet resultSet = call.executeQuery();
 				if (resultSet != null){
