@@ -14,4 +14,6 @@ public interface ISalaryHistoryService {
     SalaryHistory getSalaryHistoryByUserIdAndSalaryDate(Integer userId, Date salaryDate);
 
     void batchSave(List<SalaryHistory> salaryHistories);
+
+    void save(SalaryHistory salaryHistory);
 }

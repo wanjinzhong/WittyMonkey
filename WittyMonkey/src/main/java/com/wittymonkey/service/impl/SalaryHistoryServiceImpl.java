@@ -34,4 +34,9 @@ public class SalaryHistoryServiceImpl implements ISalaryHistoryService {
             salaryHistoryDao.save(history);
         }
     }
+
+    @Override
+    public void save(SalaryHistory salaryHistory) {
+        salaryHistoryDao.save(salaryHistory);
+    }
 }

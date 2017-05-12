@@ -31,4 +31,9 @@ public class LeaveDetailServiceImpl implements ILeaveDetailService {
         Date firstDayOfLastMonth = DateUtil.nextMonthFirstDate(firstDayOfMonth);
         return leaveDetailDao.getLeaveDetailByUserAndDateRange(userId, firstDayOfMonth, firstDayOfLastMonth);
     }
+
+    @Override
+    public List<LeaveDetail> getLeaveDateilByUserInRange(Integer userId, Date from, Date to) {
+        return leaveDetailDao.getLeaveDetailByUserAndDateRange(userId, from, to);
+    }
 }

@@ -14,4 +14,6 @@ public interface ILeaveDetailService {
     void deleteByLeaveHeader(LeaveHeader header);
 
     List<LeaveDetail> getLeaveDetailByUserAndMonth(Integer userId, Date firstDayOfMonth);
+
+    List<LeaveDetail> getLeaveDateilByUserInRange(Integer userId, Date from, Date to);
 }

@@ -3,15 +3,9 @@ package com.wittymonkey.controller;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.wittymonkey.entity.*;
-import com.wittymonkey.service.IHotelService;
-import com.wittymonkey.service.IRoleService;
-import com.wittymonkey.service.IUserService;
-import com.wittymonkey.util.ChangeToSimple;
-import com.wittymonkey.util.IDCardValidate;
-import com.wittymonkey.util.MD5Util;
-import com.wittymonkey.vo.Constraint;
-import com.wittymonkey.vo.SimpleRole;
-import com.wittymonkey.vo.SimpleUser;
+import com.wittymonkey.service.*;
+import com.wittymonkey.util.*;
+import com.wittymonkey.vo.*;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -38,6 +32,15 @@ public class StaffController {
 
     @Autowired
     private IRoleService roleService;
+
+    @Autowired
+    private ISalaryService salaryService;
+
+    @Autowired
+    private ILeaveDetailService leaveDetailService;
+
+    @Autowired
+    private ISalaryHistoryService salaryHistoryService;
 
     @RequestMapping(value = "getStaffByPage", method = RequestMethod.GET)
     @ResponseBody
@@ -267,11 +270,97 @@ public class StaffController {
         return json.toJSONString();
     }
 
-    @RequestMapping(value = "toDimission", method = RequestMethod.POST)
+    @RequestMapping(value = "toDimission", method = RequestMethod.GET)
     public String toDimission(HttpServletRequest request) {
-        Integer id = Integer.parseInt((String) request.getParameter("id"));
+        Integer id = Integer.parseInt(request.getParameter("id"));
         User user = userService.getUserById(id);
         request.getSession().setAttribute("dimissionUser", user);
+        Date thisMonth = DateUtil.thisMonthFirstDate(new Date());
+        Integer dateDiff = DateUtil.dateDiffDays(thisMonth, new Date()) + 1;
+        Salary salary = salaryService.getSalaryByStaffId(user.getId());
+        SalaryVO salaryVO = ChangeToSimple.convertSalaryByTime(salary, thisMonth);
+        SalaryPayroll salaryPayroll = new SalaryPayroll();
+        if (salaryVO != null && salaryVO.getMoney() != null) {
+            salaryPayroll.setStaffId(user.getId());
+            salaryPayroll.setStaffNo(user.getStaffNo());
+            salaryPayroll.setStaffName(user.getRealName());
+            salaryPayroll.setBasic(salaryVO.getMoney() * dateDiff / user.getWorkDays());
+            salaryPayroll.setSalaryDate(thisMonth);
+            List<LeaveDetail> leaveDetails = leaveDetailService.getLeaveDateilByUserInRange(user.getId(), thisMonth, new Date());
+            Double leavePay = 0.0;
+            for (LeaveDetail detail : leaveDetails) {
+                leavePay += detail.getDeduct();
+            }
+            salaryPayroll.setLeave(NumberUtil.round(leavePay, 2));
+        }
+        request.getSession().setAttribute("dimissionPayroll", salaryPayroll);
         return "staff_dimission";
+    }
+
+    @RequestMapping(value = "dimission", method = RequestMethod.POST)
+    @ResponseBody
+    public String dimission(HttpServletRequest request) {
+        JSONObject json = new JSONObject();
+        User loginUser = (User) request.getSession().getAttribute("loginUser");
+        User user = (User) request.getSession().getAttribute("dimissionUser");
+        SalaryPayroll payroll = (SalaryPayroll) request.getSession().getAttribute("dimissionPayroll");
+        Double otherPay = null;
+        Double bonusPay = null;
+        try {
+            String other = request.getParameter("other");
+            if (StringUtils.isBlank(other)) {
+                otherPay = 0.0;
+            } else {
+                otherPay = Double.parseDouble(other);
+            }
+        } catch (NumberFormatException e) {
+            json.put("status", 400);
+            return json.toJSONString();
+        }
+        try {
+            String bonus = request.getParameter("benefits");
+            if (StringUtils.isBlank(bonus)) {
+                bonusPay = 0.0;
+            } else {
+                bonusPay = Double.parseDouble(bonus);
+            }
+        } catch (NumberFormatException e) {
+            json.put("status", 401);
+            return json.toJSONString();
+        }
+        String note = request.getParameter("note");
+        if (StringUtils.isNotBlank(note) && note.length() > 1024){
+            json.put("status", 410);
+            return json.toJSONString();
+        }
+        payroll.setOther(otherPay);
+        payroll.setBonus(bonusPay);
+        User dimissionUser = userService.getUserById(user.getId());
+        SalaryHistory history = assymblyByPayRoll(payroll, loginUser);
+        salaryHistoryService.save(history);
+        dimissionUser.setDimissionDate(new Date());
+        dimissionUser.setDimissionNote(note);
+        userService.saveUser(dimissionUser);
+        json.put("status", 200);
+        return json.toJSONString();
+    }
+
+    public SalaryHistory assymblyByPayRoll(SalaryPayroll payroll, User entryUser) {
+        Date now = new Date();
+        SalaryHistory history = new SalaryHistory();
+        history.setEntryUser(userService.getUserById(entryUser.getId()));
+        history.setEntryDatetime(now);
+        history.setBonus(payroll.getBonus());
+        history.setLeavePay(payroll.getLeave());
+        history.setOtherPay(payroll.getOther());
+        history.setSalary(salaryService.getSalaryByStaffId(payroll.getStaffId()));
+        history.setSalaryDate(payroll.getSalaryDate());
+        history.setTotal(payroll.getBasic());
+        Double amount = payroll.getBasic() - payroll.getLeave() - payroll.getOther() + payroll.getBonus();
+        if (amount < 0) {
+            amount = 0.0;
+        }
+        history.setAmount(amount);
+        return history;
     }
 }

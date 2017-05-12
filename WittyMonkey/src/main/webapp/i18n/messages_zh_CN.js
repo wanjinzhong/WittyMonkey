@@ -162,6 +162,8 @@ var operation = "操作"
 var staff_initpassword = "初始密码";
 var staff_edit = "编辑员工";
 var staff_edit_success = "员工修改成功";
+var dimission_benefits_wrong = "补贴不正确";
+var dimission_success = "员工离职成功";
 
 var role_delete_hint = "确定要删除这个角色吗？该动作会影响到相关用户";
 var role_delete_title = "删除角色";
