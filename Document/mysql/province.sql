@@ -1,4 +1,3 @@
-
 INSERT INTO `province` (`id`, `code`, `name`) VALUES('1','110000','北京市');
 INSERT INTO `province` (`id`, `code`, `name`) VALUES('2','120000','天津市');
 INSERT INTO `province` (`id`, `code`, `name`) VALUES('3','130000','河北省');

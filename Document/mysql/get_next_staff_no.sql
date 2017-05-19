@@ -2,9 +2,9 @@ DELIMITER $$
 
 USE `wittymonkey`$$
 
-DROP PROCEDURE IF EXISTS `get_next_staff_id`$$
+DROP PROCEDURE IF EXISTS `get_next_staff_no`$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `get_next_staff_id`(
+CREATE DEFINER=`root`@`localhost` PROCEDURE `get_next_staff_no`(
 		IN hotelId INT)
 BEGIN
 DECLARE curr_no INT;

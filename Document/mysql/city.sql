@@ -1,16 +1,3 @@
-/*
-SQLyog Ultimate v11.25 (64 bit)
-MySQL - 5.7.16-log 
-*********************************************************************
-*/
-/*!40101 SET NAMES utf8 */;
-
-create table `city` (
-	`id` int (11),
-	`code` varchar (765),
-	`name` varchar (765),
-	`province_code` varchar (765)
-); 
 insert into `city` (`id`, `code`, `name`, `province_code`) values('1','110100','市辖区','110000');
 insert into `city` (`id`, `code`, `name`, `province_code`) values('2','110200','县','110000');
 insert into `city` (`id`, `code`, `name`, `province_code`) values('3','120100','市辖区','120000');
