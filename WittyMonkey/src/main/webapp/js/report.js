@@ -10,7 +10,7 @@ var outReport;
 var message_total;
 var message_net_margin;
 var message_in;
-var messafe_out;
+var message_out;
 layui.use(["layer", "form"], function () {
     layer = layui.layer;
     form = layui.form();

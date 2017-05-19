@@ -1,4 +1,5 @@
 var error_500 = "服务器错误";
+var password_change_success = "密码修改成功";
 var regist_title = "注册";
 var regist_get_code_first = "请先获取验证码";
 var regist_regist_success = "注册成功";
@@ -167,6 +168,7 @@ var operation = "操作";
 var staff_edit_success = "员工修改成功";
 var dimission_benefits_wrong = "补贴不正确";
 var dimission_success = "员工离职成功";
+var staff_no_not_exist = "编号不存在";
 
 var role_delete_hint = "确定要删除这个角色吗？该动作会影响到相关用户";
 var role_delete_title = "删除角色";
@@ -350,3 +352,5 @@ var send_success = "发送成功";
 var inbox_null = "收件箱为空";
 var outbox_null = "发件箱为空";
 var trashbin_null = "垃圾箱为空";
+
+var forget_password = "忘记密码";

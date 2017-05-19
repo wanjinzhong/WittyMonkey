@@ -1,4 +1,5 @@
 var error_500 = "Server Error !";
+var password_change_success = "Change password successfully";
 var regist_title = "Regist";
 var regist_get_code_first = "Please get validate code first";
 var regist_regist_success = "Regist Success";
@@ -25,7 +26,7 @@ function messageOfValidateLength(name, length) {
     return name + " No More than" + length + "characters";
 }
 function messageOfValidateNull(name) {
-    return "Please Input" + name;
+    return "Please Input " + name;
 }
 var regist_validate_hotel_licenseNo_null = "Please input number";
 var regist_validate_hotel_licenseNo_wrong = "Wrong number";
@@ -167,6 +168,7 @@ var operation = "Operation";
 var staff_edit_success = "Edit staff successfully";
 var dimission_benefits_wrong = "Benefits wrong";
 var dimission_success = "Staff dimiss successfully";
+var staff_no_not_exist = "No. is not exist";
 
 var role_delete_hint = "Are you sure to delete this role? This action will affect the relevant users";
 var role_delete_title = "Delete Role";
@@ -349,3 +351,5 @@ var send_success = "Send notify successfully";
 var inbox_null = "Inbox is empty";
 var outbox_null = "Outbox is empty";
 var trashbin_null = "Trash bin is empty";
+
+var forget_password = "Forget Password";

@@ -6,6 +6,7 @@ import com.wittymonkey.entity.*;
 import com.wittymonkey.service.*;
 import com.wittymonkey.util.*;
 import com.wittymonkey.vo.SimplePlace;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -216,8 +217,7 @@ public class LoginController {
             json.put("status", 421);
             return json.toJSONString();
         } else {
-            if (!userService.validateLoginByLoginName(loginName, password) &&
-                    !userService.validateLoginByEmail(loginName, password)) {
+            if (!userService.validateLoginByLoginName(loginName, password)) {
                 json.put("status", 430);
             } else {
                 User loginUser = userService.getUserByStaffNo(loginName);
@@ -835,4 +835,36 @@ public class LoginController {
         }
     }
 
+    @RequestMapping(value = "toForgetPassword", method = RequestMethod.GET)
+    public String toForgetPassword(HttpServletRequest request){
+        return "forget_password";
+    }
+
+    @RequestMapping(value = "forgetPassword", method = RequestMethod.POST)
+    @ResponseBody
+    public String forgetPassword(HttpServletRequest request){
+        JSONObject json = new JSONObject();
+        String staffNo = request.getParameter("staffNo");
+        String idCard = request.getParameter("idcard");
+        String newPwd = request.getParameter("newPassword");
+        String rePwd = request.getParameter("rePassword");
+        Integer no = null;
+        User user = userService.getUserByStaffNo(staffNo);
+        if (user == null){
+            json.put("status", 400);
+            return json.toJSONString();
+        }
+        if (!user.getIdCardNo().equals(idCard)){
+            json.put("status", 410);
+            return json.toJSONString();
+        }
+        if (!newPwd.equals(rePwd)){
+            json.put("status", 420);
+            return json.toJSONString();
+        }
+        user.setPassword(MD5Util.encrypt(newPwd));
+        userService.saveUser(user);
+        json.put("status", 200);
+        return json.toJSONString();
+    }
 }

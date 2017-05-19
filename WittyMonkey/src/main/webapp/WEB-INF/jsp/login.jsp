@@ -54,6 +54,9 @@
                             <img id="codeImage" src="ValidateCodeServlet"/></a></td>
                 </tr>
                 <tr>
+                    <td colspan="2" style="text-align: right;"><a href="javascript:forgetPassword()"><fmt:message key="login.forget_password"/></a></td>
+                </tr>
+                <tr>
                     <td><input type="button" class="layui-btn layui-btn-radius"
                                value="<fmt:message key="login.loginbtn"/>" onclick="login()"/> <input
                             type="button" id="regist" class="layui-btn layui-btn-radius layui-btn-normal"

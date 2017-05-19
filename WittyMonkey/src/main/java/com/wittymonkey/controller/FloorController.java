@@ -259,7 +259,7 @@ public class FloorController {
         Hotel hotel = (Hotel) request.getSession().getAttribute("hotel");
         try {
             floorNo = Integer.parseInt(floorNoStr);
-            if (method.equals(Constraint.UPDATE)) {
+            if (Constraint.UPDATE.equals(method)) {
                 editFloorNo = ((Floor) request.getSession().getAttribute("editFloor")).getFloorNo();
             }
         } catch (NumberFormatException e) {
