@@ -42,19 +42,19 @@
                         </span>
                     </a>
                     <dl class="layui-nav-child">
+                        <%--<dd>--%>
+                            <%--<a href="javascript:;"><i class="fa fa-user-circle" aria-hidden="true"></i> 个人信息</a>--%>
+                        <%--</dd>--%>
+                        <%--<dd>--%>
+                            <%--<a href="javascript:;"><i class="fa fa-gear" aria-hidden="true"></i> 设置</a>--%>
+                        <%--</dd>--%>
+                        <%--<dd id="lock">--%>
+                            <%--<a href="javascript:;">--%>
+                                <%--<i class="fa fa-lock" aria-hidden="true" style="padding-right: 3px;padding-left: 1px;"></i> 锁屏 (Alt+L)--%>
+                            <%--</a>--%>
+                        <%--</dd>--%>
                         <dd>
-                            <a href="javascript:;"><i class="fa fa-user-circle" aria-hidden="true"></i> 个人信息</a>
-                        </dd>
-                        <dd>
-                            <a href="javascript:;"><i class="fa fa-gear" aria-hidden="true"></i> 设置</a>
-                        </dd>
-                        <dd id="lock">
-                            <a href="javascript:;">
-                                <i class="fa fa-lock" aria-hidden="true" style="padding-right: 3px;padding-left: 1px;"></i> 锁屏 (Alt+L)
-                            </a>
-                        </dd>
-                        <dd>
-                            <a href="login.html"><i class="fa fa-sign-out" aria-hidden="true"></i> 注销</a>
+                            <a href="logout.do"><i class="fa fa-sign-out" aria-hidden="true"></i><fmt:message key="logout"/></a>
                         </dd>
                     </dl>
                 </li>

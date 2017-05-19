@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -54,6 +55,12 @@ public class LoginController {
     @RequestMapping(value = "toLogin", method = RequestMethod.GET)
     public String toLogin(HttpServletRequest request) {
 
+        return "login";
+    }
+
+    @RequestMapping(value = "logout", method = RequestMethod.GET)
+    public String logout(HttpServletRequest request){
+        request.getSession().invalidate();
         return "login";
     }
 
