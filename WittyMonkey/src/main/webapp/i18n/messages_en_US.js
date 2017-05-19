@@ -132,7 +132,6 @@ var reserve_not_exist = "Reserve is not exist";
 var unsubscribe_checkedin = "Already checkin";
 var unsubscribe_unsubscribe = "Already unsubscribe";
 var choose_room_title = "Choose Room";
-var name = "name";
 var materiel_type_delete_hint = "After deleting the material type, all the types of the material will be moved to an unknown type. Do you want to delete?";
 var materiel_type_delete_title = "Delete Materiel Type";
 var materiel_type_not_exist = "Materiel Type not exist";
