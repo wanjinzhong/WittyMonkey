@@ -207,6 +207,12 @@ public class IndexController {
             leaveApplyChild.put("href", "toLeaveApply.do");
             personalChildren.add(leaveApplyChild);
             peronalMenu.put("children", personalChildren);
+            //我的工资子菜单
+            JSONObject mySalaryChild = new JSONObject();
+            mySalaryChild.put("title", props.getProperty("index.menu.personal.my_salary"));
+            mySalaryChild.put("href", "toMySalary.do");
+            personalChildren.add(mySalaryChild);
+            peronalMenu.put("children", personalChildren);
             jsonArray.add(peronalMenu);
 
             //通知
