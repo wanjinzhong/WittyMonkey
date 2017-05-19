@@ -486,7 +486,7 @@ public class LoginController {
      * @param email
      */
     private User registToDatabase(Hotel hotel, String password, String realName, String email) {
-        User system = userService.getUserById(0);
+        User system = userService.getUserById(1);
         Date now = new Date();
         // 添加初始化请假类型
         // 事假

@@ -19,8 +19,8 @@ function refreshTable(obj) {
     } else {
         for (var i in obj) {
             html += '<tr>'+
-                '<td>' + obj[i]["customer"]["name"] + '</td>'+
-                '<td>' + obj[i]["customer"]["tel"] + '</td>'+
+                '<td>' + obj[i]["custName"] + '</td>'+
+                '<td>' + obj[i]["custTel"] + '</td>'+
                 '<td>' + new Date(obj[i]["reserveDate"]).format("yyyy-MM-dd") + '</td>'+
                 '<td>' + new Date(obj[i]["estCheckinDate"]).format("yyyy-MM-dd") + '</td>'+
                 '<td>' + new Date(obj[i]["estCheckoutDate"]).format("yyyy-MM-dd") + '</td>'+

@@ -58,7 +58,7 @@ public class  ReserveDaoImpl extends GenericDaoImpl<Reserve> implements IReserve
 
     @Override
     public List<Reserve> getReservesViaEstCheckIn(Integer hotelId, Date from, Date to) {
-        String hql = "from Reserve where room.floor.hotel.id = :hotelId and estCheckinDate >= :from and estCheckinDate <= :to  and status = 0";
+        String hql = "from Reserve where room.floor.hotel.id = :hotelId and estCheckinDate >= :from and estCheckinDate < :to  and status = 0";
         Map<String, Object> param = new HashMap<String, Object>();
         param.put("hotelId", hotelId);
         param.put("from", from);

@@ -26,7 +26,7 @@
 <div class="responsive">
     <img id="logo" src="pic/logo.gif"/>
     <div class="layui-form">
-        <form id="login_form" style=" background-image: url(pic/login/login_background.png);" class="layui-form"
+        <form id="login_form" style=" background-image: url(pic/login/login_background.png);" class="layui-form" onkeydown="pressEnterToLogin()"
               action="login.do" method="post">
 			<span id="fullname">
 				<fmt:message key="fullname"/>

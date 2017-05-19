@@ -15,9 +15,13 @@ layui.use(['layer', 'form'], function () {
             content: "toRegist.do",
             scrollbar: false
         });
-
     });
 });
+function pressEnterToLogin() {
+    if (event.keyCode == "13") {
+        login();
+    }
+}
 function changeCode() {
     var time = new Date().getTime();
     $("#codeImage").attr("src", "ValidateCodeServlet?time=" + time);
@@ -98,7 +102,7 @@ function login() {
     }
 }
 
-function forgetPassword(){
+function forgetPassword() {
     layer.open({
         type: 2,
         area: ['700px', '400px'],

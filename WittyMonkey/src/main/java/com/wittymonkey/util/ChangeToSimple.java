@@ -61,7 +61,8 @@ public class ChangeToSimple {
         for (Reserve reserve : reserves) {
             SimpleReserve simpleReserve = new SimpleReserve();
             simpleReserve.setId(reserve.getId());
-            simpleReserve.setCustomer(reserve.getCustomer());
+            simpleReserve.setCustName(reserve.getCustomer().getName());
+            simpleReserve.setCustTel(reserve.getCustomer().getTel());
             simpleReserve.setReserveDate(reserve.getReserveDate());
             simpleReserve.setEstCheckinDate(reserve.getEstCheckinDate());
             simpleReserve.setEstCheckoutDate(reserve.getEstCheckoutDate());
