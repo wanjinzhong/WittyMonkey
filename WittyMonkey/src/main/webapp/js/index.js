@@ -84,3 +84,20 @@ function getIndexInfo() {
         }
     });
 }
+// 创建socket
+var socket = new WebSocket("ws://localhost:8080");
+
+// 打开socket
+socket.onopen = function (event) {
+
+}
+// 收到消息
+socket.onmessage = function (event) {
+    var data = eval("(" + event.data + ")");
+    var from = data["from"];
+    var subject = data["subject"];
+};
+// socket关闭
+socket.onclose = function (event) {
+
+}

@@ -34,7 +34,7 @@
 <form>
     <table>
         <tr>
-            <td style="width: 70px; padding: 0;"><span class="layui-btn layui-btn-primary" style="padding: 0 5px"><fmt:message key="notify.receiver"/></span></td>
+            <td style="width: 70px; padding: 0;"><span class="layui-btn layui-btn-primary" style="padding: 0 5px" onclick="chooseReceiver();"><fmt:message key="notify.receiver"/></span></td>
             <td><input class="layui-input" id="receivers" name="receivers" placeholder="<fmt:message key="notify.choose_receiver"/>"/></td>
         </tr>
         <tr>

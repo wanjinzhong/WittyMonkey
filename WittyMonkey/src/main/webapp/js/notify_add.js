@@ -8,7 +8,7 @@ layui.use(['layer'], function () {
     element = layui.element;
     ueditor = UE.getEditor('container');
     ueditor.ready(function () {
-        // 删除 路径一行
+        // 隐藏 路径一行
         $(".edui-editor-bottomContainer").hide();
     });
 });
@@ -23,6 +23,10 @@ function showAddNotify(){
     layer.full(index);
 }
 
+
+function chooseReceiver(){
+
+}
 
 function send(){
     var reciever = $("#receivers").val();
