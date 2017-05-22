@@ -1,4 +1,3 @@
-
 INSERT  INTO `menu`(`id`,`description`,`name`) VALUES (1,'floor','floor'),
 (2,'room','room'),
 (3,'materiel','materiel'),

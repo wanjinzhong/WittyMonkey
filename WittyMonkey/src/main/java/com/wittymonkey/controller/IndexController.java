@@ -207,6 +207,12 @@ public class IndexController {
             leaveApplyChild.put("href", "toLeaveApply.do");
             personalChildren.add(leaveApplyChild);
             peronalMenu.put("children", personalChildren);
+            //我的工资子菜单
+            JSONObject mySalaryChild = new JSONObject();
+            mySalaryChild.put("title", props.getProperty("index.menu.personal.my_salary"));
+            mySalaryChild.put("href", "toMySalary.do");
+            personalChildren.add(mySalaryChild);
+            peronalMenu.put("children", personalChildren);
             jsonArray.add(peronalMenu);
 
             //通知
@@ -217,24 +223,24 @@ public class IndexController {
             notifyMenu.put("href", "toNotify.do");
             jsonArray.add(notifyMenu);
 
-            //信息
-            JSONObject infoMenu = new JSONObject();
-            infoMenu.put("title", props.getProperty("index.menu.information"));
-            infoMenu.put("icon", "#icon-info");
-            infoMenu.put("spread", false);
-            JSONArray infoChildren = new JSONArray();
-            //个人信息
-            JSONObject myInfo = new JSONObject();
-            myInfo.put("title", props.getProperty("index.menu.information.myinfo"));
-            myInfo.put("href", "toMyInfo.do");
-            infoChildren.add(myInfo);
-            //酒店信息
-            JSONObject hotelInfo = new JSONObject();
-            hotelInfo.put("title", props.getProperty("index.menu.information.hotelinfo"));
-            hotelInfo.put("href", "toHotelInfo.do");
-            infoChildren.add(hotelInfo);
-            infoMenu.put("children", infoChildren);
-            jsonArray.add(infoMenu);
+//            //信息
+//            JSONObject infoMenu = new JSONObject();
+//            infoMenu.put("title", props.getProperty("index.menu.information"));
+//            infoMenu.put("icon", "#icon-info");
+//            infoMenu.put("spread", false);
+//            JSONArray infoChildren = new JSONArray();
+//            //个人信息
+//            JSONObject myInfo = new JSONObject();
+//            myInfo.put("title", props.getProperty("index.menu.information.myinfo"));
+//            myInfo.put("href", "toMyInfo.do");
+//            infoChildren.add(myInfo);
+//            //酒店信息
+//            JSONObject hotelInfo = new JSONObject();
+//            hotelInfo.put("title", props.getProperty("index.menu.information.hotelinfo"));
+//            hotelInfo.put("href", "toHotelInfo.do");
+//            infoChildren.add(hotelInfo);
+//            infoMenu.put("children", infoChildren);
+//            jsonArray.add(infoMenu);
             //设置
             JSONObject settingMenu = new JSONObject();
             settingMenu.put("title", props.getProperty("index.menu.settting"));

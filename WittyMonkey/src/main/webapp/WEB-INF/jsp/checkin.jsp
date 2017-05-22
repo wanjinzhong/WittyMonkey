@@ -13,6 +13,7 @@
     <link href="style/common.css" rel="stylesheet" type="text/css"/>
     <script type="text/javascript" src="i18n/messages_${loginUser.setting.lang }.js"></script>
     <script type="text/javascript" src="js/checkin.js"></script>
+    <script type="text/javascript" src="js/common.js"></script>
     <link rel="stylesheet" href="style/checkin.css"/>
     <script type="text/javascript" src="lib/My97DatePicker/WdatePicker.js"></script>
 

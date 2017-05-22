@@ -132,7 +132,6 @@ var reserve_not_exist = "预订不存在";
 var unsubscribe_checkedin = "已经入住";
 var unsubscribe_unsubscribe = "已经退定";
 var choose_room_title = "选择房间";
-var name = "名称";
 var materiel_type_delete_hint = "删除物料类型后该类型的所有物料将移动到未知类型，确定删除吗？";
 var materiel_type_delete_title = "删除物料类型";
 var materiel_type_not_exist = "该物料类型不存在";

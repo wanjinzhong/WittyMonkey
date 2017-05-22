@@ -778,8 +778,8 @@ public class RoomController {
         }
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         try {
-            fromDate = sdf.parse(from + " 12:00:00");
-            toDate = sdf.parse(to + " 11:59:59");
+            fromDate = sdf.parse(from + " 00:00:00");
+            toDate = sdf.parse(to + " 00:00:00");
         } catch (ParseException e) {
             jsonObject.put("status", 431);
             return jsonObject.toJSONString();
@@ -1005,7 +1005,7 @@ public class RoomController {
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             Date toDate = null;
             try {
-                toDate = sdf.parse(to + " 12:00:00");
+                toDate = sdf.parse(to + " 00:00:00");
                 days = DateUtil.dateDiffDays(new Date(), toDate);
             } catch (ParseException e) {
                 json.put("status", 440);
@@ -1351,8 +1351,8 @@ public class RoomController {
              * 已预定时间：         \________________\
              * 要预定时间：  \________\ \_______\ \______\
              */
-            if (!((start.before(reserve.getEstCheckinDate()) && end.before(reserve.getEstCheckinDate()))
-                    || start.after(reserve.getEstCheckoutDate()) && end.after(reserve.getEstCheckoutDate()))) {
+            if (!((!start.after(reserve.getEstCheckinDate()) && !end.after(reserve.getEstCheckinDate()))
+                    || !start.before(reserve.getEstCheckoutDate()) && !end.before(reserve.getEstCheckoutDate()))) {
                 return false;
             }
         }

@@ -73,3 +73,15 @@ function deleteSalaryRecord(id) {
 function showAddSalaryRecord(id){
     window.location.href="toSalaryAdd.do?id=" + id;
 }
+
+function showSalaryHistory(id){
+    layer.open({
+        title: salary_history,
+        content: "toSalaryHistory.do?id=" + id,
+        area: ['850px', '520px'],
+        maxmin: false,
+        shade: 0.4,
+        scrollbar: false,
+        type: 2
+    });
+}

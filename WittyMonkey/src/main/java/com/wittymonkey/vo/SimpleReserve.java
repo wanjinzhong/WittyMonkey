@@ -1,7 +1,5 @@
 package com.wittymonkey.vo;
 
-import com.wittymonkey.entity.Customer;
-
 import java.util.Date;
 
 /**
@@ -9,7 +7,8 @@ import java.util.Date;
  */
 public class SimpleReserve {
     private Integer id;
-    private Customer customer;
+    private String custName;
+    private String custTel;
     private Date reserveDate;
     private Date estCheckinDate;
     private Date estCheckoutDate;
@@ -27,12 +26,20 @@ public class SimpleReserve {
         this.id = id;
     }
 
-    public Customer getCustomer() {
-        return customer;
+    public String getCustName() {
+        return custName;
     }
 
-    public void setCustomer(Customer customer) {
-        this.customer = customer;
+    public void setCustName(String custName) {
+        this.custName = custName;
+    }
+
+    public String getCustTel() {
+        return custTel;
+    }
+
+    public void setCustTel(String custTel) {
+        this.custTel = custTel;
     }
 
     public Date getReserveDate() {

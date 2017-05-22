@@ -478,4 +478,12 @@ public class SalaryController {
         }
         return histories;
     }
+
+    @RequestMapping(value = "toMySalary", method = GET)
+    public String toMySalary(HttpServletRequest request){
+        User loginUser = (User) request.getSession().getAttribute("loginUser");
+        Salary salary = salaryService.getSalaryByStaffId(loginUser.getId());
+        request.getSession().setAttribute("salary", salary);
+        return "my_salary";
+    }
 }
