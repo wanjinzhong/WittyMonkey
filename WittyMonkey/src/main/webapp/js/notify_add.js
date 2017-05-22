@@ -9,7 +9,7 @@ layui.use(['layer'], function () {
     ueditor = UE.getEditor('container');
     ueditor.ready(function () {
         // 删除 路径一行
-        $(".edui-editor-bottomContainer").remove();
+        $(".edui-editor-bottomContainer").hide();
     });
 });
 

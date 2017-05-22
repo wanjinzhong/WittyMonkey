@@ -59,45 +59,45 @@ function login() {
                 var result = eval("(" + data + ")");
                 switch (result.status) {
                     case 400:
+                        changeCode();
                         layer.msg(regist_input_name_first, {
                             time: 3000,
                             icon: 5
                         });
-                        return;
                         break;
                     case 410:
+                        changeCode();
                         layer.msg(regist_input_password_first, {
                             time: 3000,
                             icon: 5
                         });
-                        return;
                         break;
                     case 420:
+                        changeCode();
                         layer.msg(regist_input_validate_code_first, {
                             time: 3000,
                             icon: 5
                         });
-                        return;
                         break;
                     case 421:
+                        changeCode();
                         layer.msg(regist_code_is_wrong, {
                             time: 3000,
                             icon: 5
                         });
-                        return;
                         break;
                     case 430:
+                        changeCode();
                         layer.msg(regist_login_error, {
                             time: 3000,
                             icon: 5
                         });
-                        return;
                         break;
                     case 200:
                         window.location = result.url;
                         break;
                 }
-            },
+            }
         });
     }
 }

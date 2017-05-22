@@ -13,8 +13,8 @@
 <html>
 <head>
     <link href="style/common.css" rel="stylesheet" type="text/css"/>
-    <script type="text/javascript" src="lib/ueditor/1.4.3/ueditor.config.js"></script>
-    <script type="text/javascript" src="lib/ueditor/1.4.3/ueditor.all.js"></script>
+    <script type="text/javascript" src="lib/ueditor/ueditor.config.js"></script>
+    <script type="text/javascript" src="lib/ueditor/ueditor.all.js"></script>
     <script type="text/javascript" src="js/notify_add.js"></script>
 </head>
 <script type="text/javascript" src="js/common.js"></script>
