@@ -274,27 +274,28 @@ public class LeaveController {
             SalaryRecord salaryRecord = salaryRecordService.getSalaryRecordAtDate(salary.getId(), thisMonthFrom);
             // 当月扣薪
             Double thisMonthDeduct = 0.0;
-            // 如果这个月没有找到工资记录，则跳过扣薪
-            if (salaryRecord == null) {
-                thisMonthFrom = nextFirstDayOfMonth;
-                continue;
-            }
             // 当月请假天数
             Integer day;
             // 如果结束时间小于下个月1号，说明请假这个月结束，计算结束
             if (!nextFirstDayOfMonth.before(to)) {
                 day = DateUtil.dateDiffDays(thisMonthFrom, to) + 1;
-                thisMonthDeduct = day * (salaryRecord.getMoney() / user.getWorkDays() * type.getDeduct());
+
+
+                if (salaryRecord != null) {
+                    thisMonthDeduct = day * (salaryRecord.getMoney() / user.getWorkDays() * type.getDeduct());
+                }
                 thisMonthTo = to;
             }
             // 如果结束时间大于等于下个月1号，说明这个月到月底均为请假
             else {
                 day = DateUtil.dateDiffDays(thisMonthFrom, nextFirstDayOfMonth);
-                thisMonthDeduct = day * (salaryRecord.getMoney() / user.getWorkDays() * type.getDeduct());
+                if (salaryRecord != null) {
+                    thisMonthDeduct = day * (salaryRecord.getMoney() / user.getWorkDays() * type.getDeduct());
+                }
                 thisMonthTo = DateUtil.lastDayOfMonth(thisMonthFrom);
             }
             // 防止扣薪到负数
-            if (thisMonthDeduct >= salaryRecord.getMoney()) {
+            if (salaryRecord != null && thisMonthDeduct >= salaryRecord.getMoney()) {
                 thisMonthDeduct = salaryRecord.getMoney();
             }
             LeaveDetail detail = new LeaveDetail();

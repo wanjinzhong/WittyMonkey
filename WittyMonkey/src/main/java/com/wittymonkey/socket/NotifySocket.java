@@ -16,7 +16,7 @@ public class NotifySocket {
 
     @OnOpen
     public void onOpen(Session session){
-        Noti
+
     }
 
     @OnMessage
@@ -32,11 +32,5 @@ public class NotifySocket {
     public void onClose(Session session){
 
     }
-
-    @OnError
-    public void onError(Session session){
-
-    }
-
 
 }
