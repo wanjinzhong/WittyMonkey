@@ -60,7 +60,8 @@ public class LoginController {
 
     @RequestMapping(value = "logout", method = RequestMethod.GET)
     public String logout(HttpServletRequest request){
-        request.getSession().invalidate();
+        request.getSession().removeAttribute("loginUser");
+        request.getSession().removeAttribute("hotel");
         return "login";
     }
 
