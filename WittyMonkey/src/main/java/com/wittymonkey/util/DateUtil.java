@@ -9,6 +9,19 @@ import java.util.GregorianCalendar;
  */
 public class DateUtil {
     public static Integer dateDiffDays(Date d1, Date d2) {
+        Calendar calendar1 = Calendar.getInstance();
+        calendar1.setTime(d1);
+        calendar1.set(Calendar.HOUR_OF_DAY, 0);
+        calendar1.set(Calendar.MINUTE, 0);
+        calendar1.set(Calendar.SECOND, 0);
+        calendar1.set(Calendar.MILLISECOND, 0);
+
+        Calendar calendar2 = Calendar.getInstance();
+        calendar2.setTime(d2);
+        calendar2.set(Calendar.HOUR_OF_DAY, 0);
+        calendar2.set(Calendar.MINUTE, 0);
+        calendar2.set(Calendar.SECOND, 0);
+        calendar2.set(Calendar.MILLISECOND, 0);
         return (int) Math.ceil((d2.getTime() - d1.getTime()) * 1.0 / (1000 * 60 * 60 * 24));
     }
 
