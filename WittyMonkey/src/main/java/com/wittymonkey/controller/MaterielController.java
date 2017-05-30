@@ -257,8 +257,12 @@ public class MaterielController {
         String barcode = request.getParameter("barcode").trim();
         String name = request.getParameter("name").trim();
         String unit = request.getParameter("unit").trim();
+        String price = request.getParameter("sellPrice");
+        Double sellPrice = 0.0;
+        if (StringUtils.isNotBlank(price)){
+            sellPrice = Double.parseDouble(price.trim());
+        }
         Double warnStock = Double.parseDouble(request.getParameter("warnStock").trim());
-        Double sellPrice = Double.parseDouble(request.getParameter("sellPrice").trim());
         String note = request.getParameter("note").trim();
         Hotel hotel = (Hotel) request.getSession().getAttribute("hotel");
         User user = (User) request.getSession().getAttribute("loginUser");
@@ -291,8 +295,12 @@ public class MaterielController {
         String barcode = request.getParameter("barcode").trim();
         String name = request.getParameter("name").trim();
         String unit = request.getParameter("unit").trim();
+        String price = request.getParameter("sellPrice");
+        Double sellPrice = 0.0;
+        if (StringUtils.isNotBlank(price)){
+            sellPrice = Double.parseDouble(price.trim());
+        }
         Double warnStock = Double.parseDouble(request.getParameter("warnStock").trim());
-        Double sellPrice = Double.parseDouble(request.getParameter("sellPrice").trim());
         String note = request.getParameter("note").trim();
         Hotel hotel = (Hotel) request.getSession().getAttribute("hotel");
         User user = (User) request.getSession().getAttribute("loginUser");
