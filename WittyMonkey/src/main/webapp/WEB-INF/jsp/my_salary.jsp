@@ -14,7 +14,7 @@
 <head>
     <link href="style/common.css" rel="stylesheet" type="text/css"/>
     <script type="text/javascript" src="js/common.js"></script>
-    <script type="text/javascript" src="js/salary_record.js"></script>
+    <script type="text/javascript" src="js/my_salary.js"></script>
     <!-- 根据设置动态加载js语言 -->
     <script type="text/javascript" src="i18n/messages_${loginUser.setting.lang }.js"></script>
     <fmt:setBundle basename="i18n/messages_${loginUser.setting.lang }"/>
@@ -33,7 +33,6 @@
                 <th><fmt:message key="note"/></th>
                 <th width="80px"><fmt:message key="entry_user"/></th>
                 <th width="150px"><fmt:message key="entry_date"/></th>
-                <th width="150px"><fmt:message key="operation"/></th>
             </thead>
             <tbody id="dataTable">
             </tbody>
