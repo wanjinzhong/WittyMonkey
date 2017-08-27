@@ -33,27 +33,27 @@
     <mvc:interceptors>
         <!-- 多个拦截器，顺序执行 -->
         <mvc:interceptor>
-            <mvc:mapping path="/*.do"/>
+            <mvc:mapping path="*.do"/>
             <bean class="com.wittymonkey.interceptor.LoginInterceptor">
                 <property name="except">
                     <list>
-                        <value>/toLogin.do</value>
-                        <value>/login.do</value>
-                        <value>/toRegist.do</value>
-                        <value>/toRegistHotel.do</value>
-                        <value>/toRegistUser.do</value>
-                        <value>/toComplete.do</value>
-                        <value>/toPrev.do</value>
-                        <value>/validateIdCard.do</value>
-                        <value>/getValidateCode.do</value>
-                        <value>/validateEmailCode.do</value>
-                        <value>/validatePicCode.do</value>
-                        <value>/validatePlace.do</value>
-                        <value>/regist.do</value>
-                        <value>/validateLoginName.do</value>
-                        <value>/validateEmail.do</value>
-                        <value>/toForgetPassword.do</value>
-                        <value>/forgetPassword.do</value>
+                        <value>toLogin.do</value>
+                        <value>login.do</value>
+                        <value>toRegist.do</value>
+                        <value>toRegistHotel.do</value>
+                        <value>toRegistUser.do</value>
+                        <value>toComplete.do</value>
+                        <value>toPrev.do</value>
+                        <value>validateIdCard.do</value>
+                        <value>getValidateCode.do</value>
+                        <value>validateEmailCode.do</value>
+                        <value>validatePicCode.do</value>
+                        <value>validatePlace.do</value>
+                        <value>regist.do</value>
+                        <value>validateLoginName.do</value>
+                        <value>validateEmail.do</value>
+                        <value>toForgetPassword.do</value>
+                        <value>forgetPassword.do</value>
                     </list>
                 </property>
             </bean>

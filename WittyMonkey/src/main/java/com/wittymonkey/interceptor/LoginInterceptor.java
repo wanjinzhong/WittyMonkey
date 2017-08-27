@@ -29,7 +29,7 @@ public class LoginInterceptor implements HandlerInterceptor {
         if (user == null){
             String url = httpServletRequest.getRequestURI();
             if (!except.contains(url)) {
-                httpServletResponse.sendRedirect("/toLogin.do");
+                httpServletResponse.sendRedirect("toLogin.do");
             }
         }
         return true;
