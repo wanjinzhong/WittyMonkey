@@ -1,6 +1,5 @@
 package com.wittymonkey.dao.impl;
 
-import com.sun.xml.internal.bind.v2.runtime.reflect.opt.Const;
 import com.wittymonkey.vo.ConditionModel;
 import com.wittymonkey.vo.Constraint;
 import org.springframework.stereotype.Repository;
